@@ -1,0 +1,102 @@
+// transition mixin
+@mixin transition($speed) {
+  -webkit-transition: all $speed ease;
+  -moz-transition: all $speed ease;
+  -o-transition: all $speed ease;
+  transition: all $speed ease;
+}
+
+// transform mixin
+@mixin transform($deg) {
+  -webkit-transform: scale($deg, $deg);
+  -ms-transform: scale($deg, $deg);
+  transform: scale($deg, $deg);
+}
+
+// flexbox
+@mixin flex() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+// flex wrap
+@mixin flex-wrap($value) {
+  -webkit-flex-wrap: $value;
+  -ms-flex-wrap: $value;
+  flex-wrap: $value;
+}
+
+// width fit
+@mixin width-fit() {
+  width: intrinsic; /* Safari/WebKit uses a non-standard name */
+  width: -moz-max-content; /* Firefox/Gecko */
+  width: -webkit-max-content; /* Chrome */
+}
+
+// icon styles
+@mixin icon($icon, $width, $height) {
+  background-image: $icon;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: $width;
+  width: $height;
+}
+
+// badge styles
+@mixin badge() {
+  background-color: $badge;
+  border-radius: 100%;
+  color: $white;
+  font-size: 0.6rem;
+  font-weight: 600;
+  height: 16px;
+  line-height: 18px;
+  position: absolute;
+  right: -5px;
+  text-align: center;
+  top: -5px;
+  width: 16px;
+}
+
+// text ellipsis ...
+@mixin text-ellipsis($line) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// dark overflow
+@mixin dark-overflow {
+  background: $dark-overflow-bg;
+  cursor: pointer;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+@mixin placeholder {
+  ::-webkit-input-placeholder {
+    @content;
+  }
+
+  ::-moz-placeholder {
+    @content;
+  }
+
+  :-moz-placeholder {
+    @content;
+  }
+
+  :-ms-input-placeholder {
+    @content;
+  }
+}

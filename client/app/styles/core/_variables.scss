@@ -1,0 +1,73 @@
+// sass variables
+
+// Theme colors
+$theme-green: #00acac;
+$theme-gray: #f1f1f1;
+$theme-blue: #145086;
+$theme-purple: #727cb6;
+$theme-red: #c20030;
+$theme-white: #f6f7f8;
+$theme-black: #323232;
+$theme-orange: #e4853f;
+$theme-yellow: #ffdd57;
+$theme-pink: #ff3860;
+$theme-light-blue: #4a68aa;
+
+// standard colors
+$blue: #20a8d8;
+$indigo: #6610f2 !default;
+$purple: #6f42c1 !default;
+$pink: #e83e8c !default;
+$red: #ff5454;
+$white: #fff;
+$orange: #fabb3d;
+$yellow: #ffc107 !default;
+$green: #79c447;
+$gray: #808081;
+$teal: #20c997 !default;
+$cyan: #67c2ef;
+$black: #000;
+
+$font-family-heading: 'Roboto', sans-serif;
+$font-family-body: 'Roboto', sans-serif;
+$font-size-x-small: 12px;
+$font-size-small: 13px;
+$font-size-medium: 14px;
+$font-size-large: 15px;
+$font-size-x-large: 16px;
+$font-size-huge: 20px;
+$font-size-heading-small: 16px;
+$font-size-heading-medium: 18px;
+$font-size-heading-large: 20px;
+$font-size-heading-x-large: 24px;
+$font-weight-normal: normal;
+$font-weight-bold-light: 600;
+$font-weight-bold: 700;
+
+// layout variables
+$btn-bg: $white;
+$btn-bg-hover: $red;
+$font-color: #808081;
+$font-hover-color: #a8a8a8;
+$focus-font-color: #262626;
+$font-heading-color: #262626;
+$border-color: #f0f3f5;
+$dark-border-color: #e6e5ea;
+$separator-color: #e6e5ea;
+$dark-overflow-bg: #0006;
+$transparent-bg: #0006;
+
+$box-shadow: 0 0 10px 0 #e6e5ea;
+$border-radius-default: 3px;
+$line-height: 1.5;
+$letter-spacing: 0.5px;
+$border-default: 1px solid $border-color;
+$layout-max-width: 1200px;
+$layout-transition-speed: 0.3s !default;
+
+// icons
+$twitter: url('/images/social_icons/twitter.png');
+$pinterest: url('/images/social_icons/pinterest.png');
+$instagram: url('/images/social_icons/instagram.png');
+$facebook: url('/images/social_icons/facebook.png');
+$google: url('/images/social_icons/google.png');

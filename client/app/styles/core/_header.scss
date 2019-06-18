@@ -1,0 +1,18 @@
+.nav-menu {
+  background-color: $red !important;
+
+  .nav-item a,
+  .navbar-brand {
+    color: $white !important;
+    font-size: $font-size-large;
+    font-weight: $font-weight-bold-light;
+  }
+
+  .navbar-toggler {
+    border-color: $white !important;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

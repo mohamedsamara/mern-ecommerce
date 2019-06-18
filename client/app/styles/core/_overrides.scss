@@ -1,0 +1,23 @@
+// overrides styles
+
+// bootstrap overrides
+.form-control {
+  &:focus {
+    box-shadow: $box-shadow;
+  }
+}
+
+.lead {
+  font-size: $font-size-medium;
+}
+
+// fontawesome overrides
+.fa-plus-circle {
+  color: $red;
+}
+
+// simple-line-icons overrides
+.icon-check {
+  margin-right: 10px;
+  color: $red;
+}

@@ -1,0 +1,107 @@
+// layout styles
+
+html {
+  overflow: visible;
+}
+
+body {
+  background-color: $white;
+  color: $font-color !important;
+  font-family: $font-family-body;
+  font-size: $font-size-small;
+  font-weight: $font-weight-normal;
+  height: 100%;
+  letter-spacing: $letter-spacing;
+  line-height: $line-height;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.application {
+  @include flex();
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  padding-top: 30px;
+}
+
+i {
+  cursor: pointer;
+}
+
+img {
+  border-style: none;
+  vertical-align: middle;
+}
+
+span,
+label,
+a,
+p {
+  font-size: $font-size-small;
+}
+
+label {
+  cursor: default;
+  margin: 0;
+}
+
+a {
+  color: $font-color !important;
+  text-decoration: none !important;
+
+  &:hover {
+    color: $font-hover-color !important;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  color: $font-heading-color !important;
+  font-family: $font-family-heading;
+  font-size: $font-size-heading-small !important;
+  line-height: $line-height !important;
+  text-transform: capitalize;
+}
+
+/* scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $theme-light-blue;
+}
+
+::-webkit-scrollbar-track {
+  background: $theme-gray;
+}
+/* scrollbar styles */

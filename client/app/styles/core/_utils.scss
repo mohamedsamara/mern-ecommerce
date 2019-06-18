@@ -1,0 +1,14 @@
+// utils styles
+
+.no-data {
+  text-align: center;
+  margin: 20px 0px;
+  color: $red;
+}
+
+.message-box {
+  p {
+    margin: 0;
+    text-transform: capitalize;
+  }
+}
