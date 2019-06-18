@@ -1,0 +1,4 @@
+{
+  "verbose": false,
+  "watch": ["./server"]
+}
