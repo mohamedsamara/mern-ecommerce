@@ -8,7 +8,7 @@ const CURRENT_WORKING_DIR = process.cwd();
 module.exports = {
   entry: [path.join(CURRENT_WORKING_DIR, 'client/app/index.js')],
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json', '.css', '.scss', '.html'],
+    extensions: ['.js', '.json', '.css', '.scss', '.html'],
     alias: {
       app: 'client/app'
     }
