@@ -8,9 +8,11 @@ const historyApiFallback = require('connect-history-api-fallback');
 const compression = require('compression');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const passport = require('passport');
 const path = require('path');
 
 const webpackConfig = require('../webpack.config');
+const routes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -27,6 +29,9 @@ mongoose
     console.log(`${chalk.green('✓')} ${chalk.blue('MongoDB Connected!')}`)
   )
   .catch(err => console.log(err));
+
+app.use('/api', routes);
+require('./auth/passport')(passport);
 
 // if development
 if (process.env.NODE_ENV !== 'production') {

@@ -10,7 +10,7 @@ import Notifications from 'react-notification-system-redux';
 
 import actions from '../../actions';
 
-export class Notification extends React.PureComponent {
+class Notification extends React.PureComponent {
   componentDidMount() {}
 
   render() {

@@ -13,15 +13,19 @@ import { Container } from 'reactstrap';
 import actions from '../../actions';
 
 // routes
+import LoginPage from '../Login';
+import SignupPage from '../Signup';
 import HomePage from '../Homepage';
 import Dashboard from '../Dashboard';
 import Navigation from '../Navigation';
+import Authentication from '../Authentication';
 import Notification from '../Notification';
+import ForgotPassword from '../ForgotPassword';
 
 import Page404 from '../../components/Page404';
 import Footer from '../../components/Footer';
 
-export class Application extends React.PureComponent {
+class Application extends React.PureComponent {
   componentDidMount() {}
 
   render() {
@@ -34,7 +38,13 @@ export class Application extends React.PureComponent {
             <div className='wrapper'>
               <Switch>
                 <Route exact path='/' component={HomePage} />
-                <Route path='/dashboard' component={Dashboard} />
+                <Route path='/login' component={LoginPage} />
+                <Route path='/register' component={SignupPage} />
+                <Route path='/forgot-password' component={ForgotPassword} />
+                <Route
+                  path='/dashboard'
+                  component={Authentication(Dashboard)}
+                />
                 <Route path='*' component={Page404} />
               </Switch>
             </div>

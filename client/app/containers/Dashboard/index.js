@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-export class Dashboard extends React.PureComponent {
+class Dashboard extends React.PureComponent {
   componentDidMount() {}
 
   render() {

@@ -11,7 +11,11 @@ import { reducer as notifications } from 'react-notification-system-redux';
 // import reducers
 import applicationReducer from './containers/Application/reducer';
 import homepageReducer from './containers/Homepage/reducer';
+import signupReducer from './containers/Signup/reducer';
+import loginReducer from './containers/Login/reducer';
+import forgotPasswordReducer from './containers/ForgotPassword/reducer';
 import navigationReducer from './containers/Navigation/reducer';
+import authenticationReducer from './containers/Authentication/reducer';
 
 const createReducer = history =>
   combineReducers({
@@ -19,7 +23,11 @@ const createReducer = history =>
     notifications,
     applicaiton: applicationReducer,
     homepage: homepageReducer,
-    navigation: navigationReducer
+    signup: signupReducer,
+    login: loginReducer,
+    forgotPassword: forgotPasswordReducer,
+    navigation: navigationReducer,
+    authentication: authenticationReducer
   });
 
 export default createReducer;

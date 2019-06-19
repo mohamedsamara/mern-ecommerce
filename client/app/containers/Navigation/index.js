@@ -11,7 +11,7 @@ import actions from '../../actions';
 
 import Header from '../../components/Header';
 
-export class Navigation extends React.PureComponent {
+class Navigation extends React.PureComponent {
   componentDidMount() {}
 
   render() {

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-export class Homepage extends React.PureComponent {
+class Homepage extends React.PureComponent {
   componentDidMount() {}
 
   render() {

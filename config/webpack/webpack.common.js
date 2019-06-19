@@ -6,7 +6,10 @@ const NODE_ENV = process.env.NODE_ENV;
 const CURRENT_WORKING_DIR = process.cwd();
 
 module.exports = {
-  entry: [path.join(CURRENT_WORKING_DIR, 'client/app/index.js')],
+  entry: [
+    '@babel/polyfill',
+    path.join(CURRENT_WORKING_DIR, 'client/app/index.js')
+  ],
   resolve: {
     extensions: ['.js', '.json', '.css', '.scss', '.html'],
     alias: {
