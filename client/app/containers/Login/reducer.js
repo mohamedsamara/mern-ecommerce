@@ -4,7 +4,7 @@
  *
  */
 
-import { LOGIN_CHANGE, SIGNOUT_SUCCESS, SET_LOGIN_LOADING } from './constants';
+import { LOGIN_CHANGE, LOGIN_RESET, SET_LOGIN_LOADING } from './constants';
 
 const initialState = {
   loginFormData: {
@@ -23,9 +23,13 @@ const loginReducer = (state = initialState, action) => {
         loginFormData: { ...state.loginFormData, ...action.payload }
       };
       return newState;
-    case SIGNOUT_SUCCESS:
+    case LOGIN_RESET:
       newState = {
         ...state,
+        loginFormData: {
+          email: '',
+          password: ''
+        },
         isLoading: false
       };
       return newState;

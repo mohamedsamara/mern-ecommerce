@@ -34,7 +34,7 @@
     padding-bottom: 10px;
 
     h2 {
-      color: $theme-blue !important;
+      color: $red !important;
     }
   }
 
@@ -59,6 +59,10 @@
   a {
     display: inline-block;
     vertical-align: top;
+
+    &:hover {
+      opacity: 0.9;
+    }
   }
 
   li {

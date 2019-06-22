@@ -28,8 +28,9 @@ $teal: #20c997 !default;
 $cyan: #67c2ef;
 $black: #000;
 
-$font-family-heading: 'Roboto', sans-serif;
-$font-family-body: 'Roboto', sans-serif;
+$font-family: 'Roboto Slab', serif;
+$font-family-heading: 'Roboto Slab', serif;
+$font-family-body: 'Roboto Slab', serif;
 $font-size-x-small: 12px;
 $font-size-small: 13px;
 $font-size-medium: 14px;
@@ -55,7 +56,9 @@ $border-color: #f0f3f5;
 $dark-border-color: #e6e5ea;
 $separator-color: #e6e5ea;
 $dark-overflow-bg: #0006;
-$transparent-bg: #0006;
+$transparent-bg: #3232321f;
+$transparent-gray-bg: #f1f3f4f5;
+$badge: $theme-red;
 
 $box-shadow: 0 0 10px 0 #e6e5ea;
 $border-radius-default: 3px;
@@ -64,6 +67,7 @@ $letter-spacing: 0.5px;
 $border-default: 1px solid $border-color;
 $layout-max-width: 1200px;
 $layout-transition-speed: 0.3s !default;
+$layout-transition-higher-speed: 0.6s !default;
 
 // icons
 $twitter: url('/images/social_icons/twitter.png');
@@ -71,3 +75,8 @@ $pinterest: url('/images/social_icons/pinterest.png');
 $instagram: url('/images/social_icons/instagram.png');
 $facebook: url('/images/social_icons/facebook.png');
 $google: url('/images/social_icons/google.png');
+
+$shopping-cart: url('/images/cart.svg');
+$bars: url('/images/bars.png');
+$arrow-right: url('/images/arrow-right.svg');
+$close: url('/images/close.svg');

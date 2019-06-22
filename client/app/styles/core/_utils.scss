@@ -12,3 +12,62 @@
     text-transform: capitalize;
   }
 }
+
+// set bootstrap column's padding to 0
+.col-no-padding {
+  padding: 0;
+}
+
+.coming-soon {
+  @include flex();
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  background-color: $transparent-gray-bg;
+  -webkit-transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease;
+}
+
+.signup-provider {
+  @include flex();
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
+  -o-transition: transform 0.2s;
+  transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
+
+  span {
+    margin: 10px;
+  }
+
+  &:hover {
+    -webkit-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+
+    .coming-soon {
+      opacity: 1;
+      color: $red;
+      font-size: $font-size-large;
+      background-color: $transparent-gray-bg;
+      -webkit-transition: opacity 0.25s ease;
+      transition: opacity 0.25s ease;
+    }
+  }
+}

@@ -9,7 +9,7 @@ import { success, error, info } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-import { LOGIN_CHANGE, SIGNOUT_SUCCESS, SET_LOGIN_LOADING } from './constants';
+import { LOGIN_CHANGE, LOGIN_RESET, SET_LOGIN_LOADING } from './constants';
 
 import { setAuth, setUnAuth } from '../Authentication/actions';
 
@@ -36,6 +36,7 @@ export const login = () => {
       cookie.save('user', response.data.user.id, { path: '/' });
 
       dispatch(setAuth());
+      dispatch({ type: LOGIN_RESET });
     } catch (error) {
       console.log(error);
     }

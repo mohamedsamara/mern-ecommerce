@@ -9,7 +9,7 @@ import { success, error } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-import { SIGNUP_CHANGE, SIGNUP_SUCCESS, SET_SIGNUP_LOADING } from './constants';
+import { SIGNUP_CHANGE, SIGNUP_RESET, SET_SIGNUP_LOADING } from './constants';
 
 import { setAuth } from '../Authentication/actions';
 
@@ -35,6 +35,7 @@ export const signUp = () => {
       cookie.save('user', response.data.user.id, { path: '/' });
 
       dispatch(setAuth());
+      dispatch({ type: SIGNUP_RESET });
     } catch (error) {
       console.log(error);
     }

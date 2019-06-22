@@ -1,0 +1,16 @@
+// (Login, SignUp, forgetPassword) => Styles
+
+.login-actions {
+  @include flex();
+  align-items: center;
+  justify-content: space-between;
+
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+    align-items: normal;
+
+    .input-btn {
+      margin-bottom: 10px;
+    }
+  }
+}

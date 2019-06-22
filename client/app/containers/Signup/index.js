@@ -13,6 +13,7 @@ import { Redirect } from 'react-router-dom';
 import actions from '../../actions';
 import Input from '../../components/Input';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import SignupProvider from '../../components/SignupProvider';
 
 class Signup extends React.PureComponent {
   render() {
@@ -37,7 +38,7 @@ class Signup extends React.PureComponent {
         <h1>SignUp</h1>
         <hr />
         <Row>
-          <Col xs='12' md='6'>
+          <Col xs='12' md='6' className='col-no-padding'>
             <Col xs='12' md='12'>
               <Input
                 type={'text'}
@@ -86,25 +87,17 @@ class Signup extends React.PureComponent {
                 }}
               />
             </Col>
-            <Col xs='12' md='12'>
-              <hr />
-              <button
-                className='input-btn'
-                type='submit'
-                onClick={() => signUp()}
-              >
-                Sign Up
-              </button>
-            </Col>
           </Col>
-          <Col xs='12' md='1'>
-            <div className='separation'>
-              <div className='sub-separation' />
-              <p>OR</p>
-              <div className='sub-separation' />
-            </div>
+          <Col xs='12' md='6'>
+            <SignupProvider />
           </Col>
         </Row>
+        <hr />
+        <div className='login-actions'>
+          <button className='input-btn' type='submit' onClick={() => signUp()}>
+            Sign Up
+          </button>
+        </div>
       </div>
     );
   }

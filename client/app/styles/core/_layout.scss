@@ -35,7 +35,11 @@ body {
 }
 
 .wrapper {
-  padding-top: 30px;
+  padding: 60px 0px;
+
+  @include media-breakpoint-down(sm) {
+    padding: 100px 0px;
+  }
 }
 
 i {
@@ -65,6 +69,10 @@ a {
 
   &:hover {
     color: $font-hover-color !important;
+    -moz-transition: color $layout-transition-speed ease-in-out;
+    -webkit-transition: color $layout-transition-speed ease-in-out;
+    -ms-transition: color $layout-transition-speed ease-in-out;
+    transition: color $layout-transition-speed ease-in-out;
   }
 
   &:focus {

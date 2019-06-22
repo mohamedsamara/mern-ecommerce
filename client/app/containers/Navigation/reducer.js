@@ -4,21 +4,27 @@
  *
  */
 
-import { TOGGLE_MENU } from './constants';
+import { TOGGLE_MENU, TOGGLE_CART } from './constants';
 
 const initialState = {
-  isMenuOpen: false
+  isMenuOpen: false,
+  isCartOpen: false
 };
 
 const navigationReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case TOGGLE_MENU:
-      newState = {
+      return {
         ...state,
-        isMenuOpen: !state.isMenuOpen
+        isMenuOpen: !state.isMenuOpen,
+        isCartOpen: false
       };
-      return newState;
+    case TOGGLE_CART:
+      return {
+        ...state,
+        isCartOpen: !state.isCartOpen,
+        isMenuOpen: false
+      };
     default:
       return state;
   }

@@ -4,7 +4,7 @@
  *
  */
 
-import { SIGNUP_CHANGE, SIGNUP_SUCCESS, SET_SIGNUP_LOADING } from './constants';
+import { SIGNUP_CHANGE, SIGNUP_RESET, SET_SIGNUP_LOADING } from './constants';
 
 const initialState = {
   signupFormData: {
@@ -25,7 +25,7 @@ const signupReducer = (state = initialState, action) => {
         signupFormData: { ...state.signupFormData, ...action.payload }
       };
       return newState;
-    case SIGNUP_SUCCESS:
+    case SIGNUP_RESET:
       newState = {
         ...state,
         signupFormData: {

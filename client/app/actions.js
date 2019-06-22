@@ -12,6 +12,7 @@ import * as signup from './containers/Signup/actions';
 import * as login from './containers/Login/actions';
 import * as forgotPassword from './containers/ForgotPassword/actions';
 import * as navigation from './containers/Navigation/actions';
+import * as cart from './containers/Cart/actions';
 
 export default function mapDispatchToProps(dispatch) {
   return bindActionCreators(
@@ -21,7 +22,8 @@ export default function mapDispatchToProps(dispatch) {
       ...signup,
       ...login,
       ...forgotPassword,
-      ...navigation
+      ...navigation,
+      ...cart
     },
     dispatch
   );

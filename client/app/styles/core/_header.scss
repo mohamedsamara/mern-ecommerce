@@ -1,18 +1,91 @@
-.nav-menu {
-  background-color: $red !important;
+// header styles
 
-  .nav-item a,
-  .navbar-brand {
-    color: $white !important;
-    font-size: $font-size-large;
-    font-weight: $font-weight-bold-light;
+.header {
+  background-color: $white;
+  border-bottom: $border-default;
+  border-color: $dark-border-color;
+}
+
+.fixed-mobile-header {
+  @include media-breakpoint-down(sm) {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 998;
+  }
+}
+
+.top-header {
+  align-items: center;
+
+  .brand {
+    margin: 0;
+
+    @include media-breakpoint-down(sm) {
+      margin-top: 10px;
+    }
+
+    a {
+      font-size: $font-size-heading-medium;
+    }
   }
 
-  .navbar-toggler {
-    border-color: $white !important;
+  .header-links {
+    @include flex();
+    flex-wrap: wrap;
+    justify-content: flex-end;
 
-    &:focus {
-      outline: none;
+    span {
+      &:hover {
+        opacity: 0.5;
+      }
     }
+
+    @include media-breakpoint-down(sm) {
+      justify-content: space-between;
+    }
+
+    .cart-icon {
+      margin: 0 5px;
+      position: relative;
+      display: inline-block;
+      @include icon($shopping-cart, 25px, 25px);
+    }
+
+    .cart-badge {
+      @include badge();
+    }
+
+    .close-cart {
+      margin: 0 5px;
+      position: relative;
+      display: inline-block;
+      background-size: 16px;
+      @include icon($close, 25px, 25px);
+    }
+
+    .bars-icon {
+      display: none;
+      background-size: 28px;
+      @include icon($bars, 25px, 25px);
+      @include media-breakpoint-down(sm) {
+        display: block;
+      }
+    }
+  }
+}
+
+.navbar-nav {
+  a {
+    &:hover {
+      color: $red !important;
+    }
+  }
+}
+
+.brand {
+  a {
+    color: $red !important;
   }
 }

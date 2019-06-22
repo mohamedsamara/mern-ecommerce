@@ -13,6 +13,7 @@ import { Redirect, Link } from 'react-router-dom';
 import actions from '../../actions';
 import Input from '../../components/Input';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import SignupProvider from '../../components/SignupProvider';
 
 class Login extends React.PureComponent {
   render() {
@@ -37,7 +38,7 @@ class Login extends React.PureComponent {
         <h1>Login</h1>
         <hr />
         <Row>
-          <Col xs='12' md='6'>
+          <Col xs='12' md='6' className='col-no-padding'>
             <Col xs='12' md='12'>
               <Input
                 type={'text'}
@@ -62,34 +63,20 @@ class Login extends React.PureComponent {
                 }}
               />
             </Col>
-            <Col xs='12' md='12'>
-              <hr />
-              <Row className='login-actions'>
-                <Col xs='6' md='6'>
-                  <button
-                    className='input-btn'
-                    type='submit'
-                    onClick={() => login()}
-                  >
-                    Login
-                  </button>
-                </Col>
-                <Col xs='6' md='6' className='text-right'>
-                  <Link className='redirect-link' to={'/forgot-password'}>
-                    Forgot Password?
-                  </Link>
-                </Col>
-              </Row>
-            </Col>
           </Col>
-          <Col xs='12' md='1'>
-            <div className='separation'>
-              <div className='sub-separation' />
-              <p>OR</p>
-              <div className='sub-separation' />
-            </div>
+          <Col xs='12' md='6'>
+            <SignupProvider />
           </Col>
         </Row>
+        <hr />
+        <div className='login-actions'>
+          <button className='input-btn' type='submit' onClick={() => login()}>
+            Login
+          </button>
+          <Link className='redirect-link' to={'/forgot-password'}>
+            Forgot Password?
+          </Link>
+        </div>
       </div>
     );
   }

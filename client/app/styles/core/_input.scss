@@ -35,28 +35,35 @@ button[type='reset'] {
 }
 // end input button styles
 
-.input-box label {
-  margin: 5px;
-  color: $theme-blue;
-  font-size: $font-size-large;
-  font-weight: $font-weight-bold-light;
+.input-box {
+  margin: 10px 0px;
+
+  label {
+    margin-bottom: 5px;
+    color: $theme-blue;
+    font-size: $font-size-large;
+    font-weight: $font-weight-bold-light;
+  }
 }
 
 .input-btn {
-  width: 100%;
+  min-width: 150px;
   border: $border-default !important;
   border-width: 3px !important;
   color: $black !important;
   background-color: $btn-bg;
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
 
   &:hover {
     color: $white !important;
     background-color: $btn-bg-hover;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
   }
 }
 
 @include placeholder {
-  font-style: italic;
   font-size: $font-size-small;
   line-height: $line-height;
   text-transform: capitalize;

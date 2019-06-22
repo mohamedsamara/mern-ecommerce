@@ -29,40 +29,33 @@ class ForgotPassword extends React.PureComponent {
         <h1>Forgot Password</h1>
         <hr />
         <Row>
-          <Col xs='12' md='12'>
-            <Col xs='12' md='12'>
-              <Input
-                type={'text'}
-                label={'Email Address'}
-                name={'email'}
-                placeholder={'Please Enter Your Email'}
-                value={forgotFormData.email}
-                onInputChange={(name, value) => {
-                  forgotPasswordChange(name, value);
-                }}
-              />
-            </Col>
-            <Col xs='12' md='12'>
-              <hr />
-              <Row className='forgot-password-actions'>
-                <Col xs='6' md='6'>
-                  <button
-                    className='input-btn'
-                    type='submit'
-                    onClick={() => forgotPassowrd()}
-                  >
-                    Send Email
-                  </button>
-                </Col>
-                <Col xs='6' md='6' className='text-right'>
-                  <Link className='redirect-link' to={'/login'}>
-                    Back to login
-                  </Link>
-                </Col>
-              </Row>
-            </Col>
+          <Col xs='12' md='6'>
+            <Input
+              type={'text'}
+              label={'Email Address'}
+              name={'email'}
+              placeholder={'Please Enter Your Email'}
+              value={forgotFormData.email}
+              onInputChange={(name, value) => {
+                forgotPasswordChange(name, value);
+              }}
+            />
           </Col>
         </Row>
+        <hr />
+        <div className='login-actions'>
+          <button
+            className='input-btn'
+            type='submit'
+            onClick={() => forgotPassowrd()}
+          >
+            Send Email
+          </button>
+
+          <Link className='redirect-link' to={'/login'}>
+            Back to login
+          </Link>
+        </div>
       </div>
     );
   }
