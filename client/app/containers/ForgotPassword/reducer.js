@@ -13,24 +13,21 @@ const initialState = {
 };
 
 const forgotPasswordReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case FORGOT_PASSWORD_CHANGE:
-      newState = {
+      return {
         ...state,
         forgotFormData: {
           email: action.payload
         }
       };
-      return newState;
     case FORGOT_PASSWORD_SUCCESS:
-      newState = {
+      return {
         ...state,
         forgotFormData: {
           email: ''
         }
       };
-      return newState;
     default:
       return state;
   }

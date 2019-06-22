@@ -15,16 +15,14 @@ const initialState = {
 };
 
 const loginReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case LOGIN_CHANGE:
-      newState = {
+      return {
         ...state,
         loginFormData: { ...state.loginFormData, ...action.payload }
       };
-      return newState;
     case LOGIN_RESET:
-      newState = {
+      return {
         ...state,
         loginFormData: {
           email: '',
@@ -32,13 +30,11 @@ const loginReducer = (state = initialState, action) => {
         },
         isLoading: false
       };
-      return newState;
     case SET_LOGIN_LOADING:
-      newState = {
+      return {
         ...state,
         isLoading: true
       };
-      return newState;
     default:
       return state;
   }

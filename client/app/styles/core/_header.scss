@@ -1,5 +1,21 @@
 // header styles
 
+.header-info {
+  padding: 10px 0px;
+  background-color: $red;
+
+  .fa,
+  span {
+    color: $white;
+    font-size: $font-size-medium !important;
+    margin: 0px 5px;
+
+    @include media-breakpoint-down(sm) {
+      font-size: $font-size-small !important;
+    }
+  }
+}
+
 .header {
   background-color: $white;
   border-bottom: $border-default;

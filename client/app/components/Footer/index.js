@@ -9,6 +9,8 @@ import React from 'react';
 import { Container } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
+import Newsletter from '../../containers/Newsletter';
+
 const Footer = props => {
   const infoLinks = [
     { id: 0, name: 'Contact Us', to: 'contact' },
@@ -19,7 +21,7 @@ const Footer = props => {
   const footerBusinessLinks = (
     <ul className='support-links'>
       <li className='footer-link'>
-        <Link to='/signup'>SignUp</Link>
+        <Link to='/register'>SignUp</Link>
       </li>
       <li className='footer-link'>
         <Link to='/login'>Login</Link>
@@ -58,13 +60,13 @@ const Footer = props => {
           <div className='footer-block'>
             <div className='block-title'>
               <h2>Newsletter</h2>
+              <Newsletter />
             </div>
-            <div className='block-content'>{footerBusinessLinks}</div>
           </div>
         </div>
 
         <div className='footer-copyright'>
-          <span>© {new Date().getFullYear()} MERN TypeScript Boilerplate</span>
+          <span>© {new Date().getFullYear()} MERN Store</span>
         </div>
         <ul className='footer-social-item'>
           <li>

@@ -17,6 +17,7 @@ import forgotPasswordReducer from './containers/ForgotPassword/reducer';
 import navigationReducer from './containers/Navigation/reducer';
 import authenticationReducer from './containers/Authentication/reducer';
 import cartReducer from './containers/Cart/reducer';
+import newsletterReducer from './containers/Newsletter/reducer';
 
 const createReducer = history =>
   combineReducers({
@@ -29,7 +30,8 @@ const createReducer = history =>
     forgotPassword: forgotPasswordReducer,
     navigation: navigationReducer,
     authentication: authenticationReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    newsletter: newsletterReducer
   });
 
 export default createReducer;

@@ -17,16 +17,14 @@ const initialState = {
 };
 
 const signupReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case SIGNUP_CHANGE:
-      newState = {
+      return {
         ...state,
         signupFormData: { ...state.signupFormData, ...action.payload }
       };
-      return newState;
     case SIGNUP_RESET:
-      newState = {
+      return {
         ...state,
         signupFormData: {
           email: '',
@@ -38,11 +36,10 @@ const signupReducer = (state = initialState, action) => {
       };
       return newState;
     case SET_SIGNUP_LOADING:
-      newState = {
+      return {
         ...state,
         isLoading: true
       };
-      return newState;
     default:
       return state;
   }

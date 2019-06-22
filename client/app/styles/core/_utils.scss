@@ -18,6 +18,10 @@
   padding: 0;
 }
 
+.fa {
+  font-size: $font-size-small !important;
+}
+
 .coming-soon {
   @include flex();
   -ms-flex-wrap: wrap;

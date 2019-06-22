@@ -40,6 +40,23 @@ class Navigation extends React.PureComponent {
 
     return (
       <header className='header fixed-mobile-header'>
+        <div className='header-info'>
+          <Container>
+            <Row>
+              <Col xs='6' md='4' className='text-center'>
+                <i className='fa fa-truck' /> <span>Free Shipping</span>
+              </Col>
+              <Col xs='6' md='4' className='text-center'>
+                <i className='fa fa-credit-card' />
+                <span>Payment Methods</span>
+              </Col>
+              <Col xs='12' md='4' className='text-center'>
+                <i className='fa fa-phone' />
+                <span>Call us 951-999-9999</span>
+              </Col>
+            </Row>
+          </Container>
+        </div>
         <Container>
           <Row className='top-header'>
             <Col

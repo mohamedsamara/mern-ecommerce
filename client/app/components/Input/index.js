@@ -7,7 +7,7 @@
 import React from 'react';
 
 const Input = props => {
-  const { type, value, placeholder, label, name, onInputChange } = props;
+  const { type, value, placeholder, label, name, onInputChange, dom } = props;
 
   function onChange(e) {
     onInputChange(e.target.name, e.target.value);
@@ -15,7 +15,7 @@ const Input = props => {
 
   return (
     <div className='input-box'>
-      <label>{label}</label>
+      {label && <label>{label}</label>}
       <input
         autoComplete='off'
         type={type}
@@ -27,6 +27,7 @@ const Input = props => {
         placeholder={placeholder}
         className={'input-text'}
       />
+      {dom}
     </div>
   );
 };
