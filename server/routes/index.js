@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
         jwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
           res.status(200).json({
             success: true,
-            token: token,
+            token: `Bearer ${token}`,
             user: {
               id: user.id,
               firstName: user.profile.firstName,
@@ -97,7 +97,7 @@ router.post('/register', (req, res, next) => {
           jwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
             res.status(200).json({
               success: true,
-              token: token,
+              token: `Bearer ${token}`,
               user: {
                 id: user.id,
                 firstName: user.profile.firstName,
@@ -118,5 +118,4 @@ router.post('/subscribe', (req, res) => {
   mailchimp.subscribeToNewsletter(email);
 });
 
-mailchimp;
 module.exports = router;

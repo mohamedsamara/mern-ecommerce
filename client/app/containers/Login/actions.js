@@ -11,6 +11,7 @@ import cookie from 'react-cookies';
 
 import { LOGIN_CHANGE, LOGIN_RESET, SET_LOGIN_LOADING } from './constants';
 import { setAuth, setUnAuth } from '../Authentication/actions';
+import setToken from '../../utils/token';
 
 export const loginChange = (name, value) => {
   let formData = {};
@@ -30,9 +31,12 @@ export const login = () => {
 
     try {
       const response = await axios.post('/api/login', user);
+      console.log('token', response.data.token);
 
       cookie.save('token', response.data.token, { path: '/' });
       cookie.save('user', response.data.user.id, { path: '/' });
+
+      setToken(response.data.token);
 
       dispatch(setAuth());
       dispatch({ type: LOGIN_RESET });
