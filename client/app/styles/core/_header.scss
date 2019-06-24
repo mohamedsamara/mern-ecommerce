@@ -62,11 +62,10 @@
       justify-content: space-between;
     }
 
-    .cart-icon {
-      margin: 0 5px;
-      position: relative;
-      display: inline-block;
-      @include icon($shopping-cart, 25px, 25px);
+    .fa-cart-plus {
+      cursor: pointer;
+      color: $red;
+      font-size: $font-size-x-huge !important;
     }
 
     .cart-badge {

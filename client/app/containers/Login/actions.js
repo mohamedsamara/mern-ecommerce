@@ -10,7 +10,6 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 
 import { LOGIN_CHANGE, LOGIN_RESET, SET_LOGIN_LOADING } from './constants';
-
 import { setAuth, setUnAuth } from '../Authentication/actions';
 
 export const loginChange = (name, value) => {

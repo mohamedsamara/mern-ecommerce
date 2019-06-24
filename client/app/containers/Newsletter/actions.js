@@ -19,10 +19,11 @@ export const newsletterChange = (name, value) => {
 
 export const subscribe = () => {
   return async (dispatch, getState) => {
-    const email = getState().newsletter.email;
+    const user = {};
+    user.email = getState().newsletter.email;
 
     try {
-      const response = await axios.post('/api/subscribe', email);
+      const response = await axios.post('/api/subscribe', user);
 
       console.log('response', response);
     } catch (error) {

@@ -21,6 +21,8 @@ const mongoURI = process.env.MONGO_URI;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Connect to MongoDB
 mongoose
@@ -30,8 +32,8 @@ mongoose
   )
   .catch(err => console.log(err));
 
+require('./config/passport')(passport);
 app.use('/api', routes);
-require('./auth/passport')(passport);
 
 // if development
 if (process.env.NODE_ENV !== 'production') {

@@ -73,13 +73,13 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 7, order: 1 }}
-              lg={{ size: 7, order: 3 }}
+              md={{ size: 6, order: 1 }}
+              lg={{ size: 6, order: 3 }}
             >
               <div className='header-links'>
                 <span className='bars-icon' onClick={toggleMenu} />
                 <span
-                  className={isCartOpen ? 'close-cart' : 'cart-icon'}
+                  className={isCartOpen ? 'close-cart' : 'fa fa-cart-plus'}
                   onClick={toggleCart}
                 >
                   {cart.length > 0 && (
@@ -91,8 +91,8 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 2, order: 1 }}
-              lg={{ size: 2, order: 3 }}
+              md={{ size: 3, order: 1 }}
+              lg={{ size: 3, order: 3 }}
             >
               <Navbar color='light' light expand='md'>
                 <Collapse isOpen={isMenuOpen} navbar>

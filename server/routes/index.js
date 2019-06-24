@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const passport = require('passport');
 
 // Bring in Models
 const User = require('../models/User');
+const mailchimp = require('../config/mailchimp');
 
 const key = process.env.SECRET_OR_KEY;
 
@@ -110,4 +112,11 @@ router.post('/register', (req, res, next) => {
   });
 });
 
+router.post('/subscribe', (req, res) => {
+  const email = req.body.email;
+
+  mailchimp.subscribeToNewsletter(email);
+});
+
+mailchimp;
 module.exports = router;
