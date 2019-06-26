@@ -70,6 +70,14 @@
         padding: 10px 10px 10px 25px;
         text-transform: capitalize;
       }
+
+      a.active-link {
+        color: $red !important;
+
+        &:hover {
+          color: $white !important;
+        }
+      }
     }
   }
 }

@@ -5,9 +5,10 @@
  */
 
 import { push } from 'connected-react-router';
-import { success, error } from 'react-notification-system-redux';
+import { success, error, info } from 'react-notification-system-redux';
+import axios from 'axios';
 
-import { FORGOT_PASSWORD_CHANGE, FORGOT_PASSWORD_SUCCESS } from './constants';
+import { FORGOT_PASSWORD_CHANGE, FORGOT_PASSWORD_RESET } from './constants';
 
 export const forgotPasswordChange = (name, value) => {
   return {
@@ -17,19 +18,15 @@ export const forgotPasswordChange = (name, value) => {
 };
 
 export const forgotPassowrd = () => {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     const user = getState().forgotPassword.forgotFormData;
 
-    const successfulOptions = {
-      title: 'Hey, Please check you email to reset your password!',
-      position: 'tr',
-      autoDismiss: 1
-    };
+    try {
+      const response = await axios.post('/api/forgot', user);
 
-    const unsuccessfulOptions = {
-      title: 'Hey, Please try again!',
-      position: 'tr',
-      autoDismiss: 1
-    };
+      dispatch({ type: FORGOT_PASSWORD_RESET });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

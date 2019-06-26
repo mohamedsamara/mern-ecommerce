@@ -1,12 +1,12 @@
 /**
  *
- * AdminMenu
+ * AccountMenu
  *
  */
 
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Collapse, Navbar } from 'reactstrap';
 
 const AccountMenu = props => {
@@ -26,7 +26,13 @@ const AccountMenu = props => {
           <ul className='panel-links'>
             {accountLinks.map((link, index) => (
               <li key={index}>
-                <Link to={'/dashboard' + link.to}>{link.name}</Link>
+                <NavLink
+                  to={'/dashboard' + link.to}
+                  activeClassName='active-link'
+                  exact
+                >
+                  {link.name}
+                </NavLink>
               </li>
             ))}
           </ul>

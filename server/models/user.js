@@ -20,7 +20,9 @@ const UserSchema = new Schema({
     type: String,
     enum: ['ROLE_MEMBER', 'ROLE_ADMIN'],
     default: 'ROLE_MEMBER'
-  }
+  },
+  resetPasswordToken: { type: String },
+  resetPasswordExpires: { type: Date }
 });
 
 module.exports = Mongoose.model('User', UserSchema);

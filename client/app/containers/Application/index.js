@@ -21,6 +21,7 @@ import Navigation from '../Navigation';
 import Authentication from '../Authentication';
 import Notification from '../Notification';
 import ForgotPassword from '../ForgotPassword';
+import ResetPassword from '../ResetPassword';
 
 import Page404 from '../../components/Page404';
 import Footer from '../../components/Footer';
@@ -41,6 +42,10 @@ class Application extends React.PureComponent {
                 <Route path='/login' component={LoginPage} />
                 <Route path='/register' component={SignupPage} />
                 <Route path='/forgot-password' component={ForgotPassword} />
+                <Route
+                  path='/reset-password/:token'
+                  component={ResetPassword}
+                />
                 <Route
                   path='/dashboard'
                   component={Authentication(Dashboard)}

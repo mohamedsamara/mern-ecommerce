@@ -17,6 +17,7 @@ import * as newsletter from './containers/Newsletter/actions';
 import * as customer from './containers/Customer/actions';
 import * as admin from './containers/Admin/actions';
 import * as account from './containers/Account/actions';
+import * as resetPassword from './containers/ResetPassword/actions';
 
 export default function mapDispatchToProps(dispatch) {
   return bindActionCreators(
@@ -31,7 +32,8 @@ export default function mapDispatchToProps(dispatch) {
       ...newsletter,
       ...customer,
       ...admin,
-      ...account
+      ...account,
+      ...resetPassword
     },
     dispatch
   );

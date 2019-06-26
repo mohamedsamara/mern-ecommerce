@@ -1,4 +1,4 @@
-// (Login, SignUp, forgetPassword) => Styles
+// (Login, SignUp, forgetPassword,resetPassword) => Styles
 
 .login-actions {
   @include flex();
@@ -14,3 +14,5 @@
     }
   }
 }
+
+// reset passowrd styles
