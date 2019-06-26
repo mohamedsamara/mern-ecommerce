@@ -28,6 +28,10 @@ main {
   flex: 1 0 auto;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   height: 100%;

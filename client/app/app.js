@@ -12,6 +12,7 @@ import store, { history } from './store';
 
 import Application from './containers/Application';
 
+import ScrollToTop from './scrollToTop';
 // Import application sass styles
 import './styles/style.scss';
 
@@ -24,7 +25,9 @@ import 'simple-line-icons/css/simple-line-icons.css';
 const app = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Application />
+      <ScrollToTop>
+        <Application />
+      </ScrollToTop>
     </ConnectedRouter>
   </Provider>
 );
