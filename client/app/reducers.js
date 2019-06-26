@@ -18,6 +18,9 @@ import navigationReducer from './containers/Navigation/reducer';
 import authenticationReducer from './containers/Authentication/reducer';
 import cartReducer from './containers/Cart/reducer';
 import newsletterReducer from './containers/Newsletter/reducer';
+import customerReducer from './containers/Customer/reducer';
+import adminReducer from './containers/Admin/reducer';
+import accountReducer from './containers/Account/reducer';
 
 const createReducer = history =>
   combineReducers({
@@ -31,7 +34,10 @@ const createReducer = history =>
     navigation: navigationReducer,
     authentication: authenticationReducer,
     cart: cartReducer,
-    newsletter: newsletterReducer
+    newsletter: newsletterReducer,
+    customer: customerReducer,
+    admin: adminReducer,
+    account: accountReducer
   });
 
 export default createReducer;

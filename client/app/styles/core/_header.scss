@@ -4,6 +4,12 @@
   padding: 10px 0px;
   background-color: $red;
 
+  @include media-breakpoint-down(sm) {
+    .info-col {
+      margin-top: 10px;
+    }
+  }
+
   .fa,
   span {
     color: $white;
@@ -34,6 +40,10 @@
 
 .top-header {
   align-items: center;
+
+  .log-out {
+    cursor: pointer;
+  }
 
   .brand {
     margin: 0;

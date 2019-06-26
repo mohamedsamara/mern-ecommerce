@@ -33,6 +33,7 @@ export const signUp = () => {
 
       cookie.save('token', response.data.token, { path: '/' });
       cookie.save('user', response.data.user.id, { path: '/' });
+      cookie.save('role', response.data.user.role, { path: '/' });
 
       dispatch(setAuth());
       dispatch({ type: SIGNUP_RESET });

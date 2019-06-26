@@ -5,25 +5,22 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
-import actions from '../../actions';
+import cookie from 'react-cookies';
+
+import Admin from '../Admin';
+import Customer from '../Customer';
 
 class Dashboard extends React.PureComponent {
-  componentDidMount() {}
-
   render() {
-    return <div className='dashboard'>This is Dashboard</div>;
+    const role = cookie.load('role');
+
+    if (role == 'ROLE_MEMBER') {
+      return <Customer />;
+    } else {
+      return <Admin />;
+    }
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    isMenuOpen: state.navigation.isMenuOpen
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  actions
-)(Dashboard);
+export default Dashboard;

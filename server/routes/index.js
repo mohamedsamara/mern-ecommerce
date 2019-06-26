@@ -31,7 +31,8 @@ router.post('/login', (req, res) => {
               id: user.id,
               firstName: user.profile.firstName,
               lastName: user.profile.lastName,
-              email: user.email
+              email: user.email,
+              role: user.role
             }
           });
         });
@@ -102,12 +103,35 @@ router.post('/register', (req, res, next) => {
                 id: user.id,
                 firstName: user.profile.firstName,
                 lastName: user.profile.lastName,
-                email: user.email
+                email: user.email,
+                role: user.role
               }
             });
           });
         });
       });
+    });
+  });
+});
+
+router.get('/profile/:userId', (req, res) => {
+  const userId = req.params.userId;
+
+  User.findById(userId, (err, user) => {
+    res.status(200).json({
+      user: user
+    });
+  });
+});
+
+router.post('/profile/:userId', (req, res) => {
+  const profile = req.body.profile;
+  let query = { _id: req.params.userId };
+
+  User.updateOne(query, { profile: profile }, (err, user) => {
+    res.status(200).json({
+      success: 'updated',
+      user: user
     });
   });
 });

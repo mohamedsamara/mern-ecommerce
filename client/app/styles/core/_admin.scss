@@ -1,0 +1,75 @@
+.panel-body {
+  padding: 10px;
+  @include media-breakpoint-down(sm) {
+    margin-top: 20px;
+  }
+}
+
+.panel-sidebar {
+  .panel-title,
+  .menu-panel {
+    margin: 0;
+    padding: 10px;
+    text-align: center;
+    color: $red !important;
+    border-top: $border-default;
+    border-right: $border-default;
+    border-left: $border-default;
+    border-color: $dark-border-color;
+  }
+
+  .menu-panel.collapse {
+    border-bottom: $border-default;
+    border-color: $dark-border-color;
+  }
+
+  .panel-title {
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+
+  .navbar {
+    padding: 0px;
+    background-color: $white;
+  }
+
+  .menu-panel {
+    display: none;
+
+    @include media-breakpoint-down(sm) {
+      display: block;
+      cursor: pointer;
+    }
+  }
+
+  .panel-links {
+    width: 100%;
+
+    li {
+      border-top: $border-default;
+      border-right: $border-default;
+      border-left: $border-default;
+      border-color: $dark-border-color;
+
+      &:hover {
+        background-color: $red;
+
+        a {
+          color: $white !important;
+        }
+      }
+
+      &:last-child {
+        border-bottom: $border-default;
+        border-color: $dark-border-color;
+      }
+
+      a {
+        display: block;
+        padding: 10px 10px 10px 25px;
+        text-transform: capitalize;
+      }
+    }
+  }
+}

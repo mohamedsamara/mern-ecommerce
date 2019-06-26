@@ -16,8 +16,6 @@ import {
   Col,
   Collapse,
   Navbar,
-  NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink
@@ -50,7 +48,7 @@ class Navigation extends React.PureComponent {
                 <i className='fa fa-credit-card' />
                 <span>Payment Methods</span>
               </Col>
-              <Col xs='12' md='4' className='text-center'>
+              <Col xs='12' md='4' className='text-center info-col'>
                 <i className='fa fa-phone' />
                 <span>Call us 951-999-9999</span>
               </Col>
@@ -73,7 +71,7 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 6, order: 1 }}
+              md={{ size: 5, order: 1 }}
               lg={{ size: 6, order: 3 }}
             >
               <div className='header-links'>
@@ -91,7 +89,7 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 3, order: 1 }}
+              md={{ size: 4, order: 1 }}
               lg={{ size: 3, order: 3 }}
             >
               <Navbar color='light' light expand='md'>

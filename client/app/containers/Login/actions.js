@@ -31,10 +31,10 @@ export const login = () => {
 
     try {
       const response = await axios.post('/api/login', user);
-      console.log('token', response.data.token);
 
       cookie.save('token', response.data.token, { path: '/' });
       cookie.save('user', response.data.user.id, { path: '/' });
+      cookie.save('role', response.data.user.role, { path: '/' });
 
       setToken(response.data.token);
 

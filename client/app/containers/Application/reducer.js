@@ -9,10 +9,9 @@ import { DEFAULT_ACTION } from './constants';
 const initialState = {};
 
 const applicationReducer = (state = initialState, action) => {
-  let newState;
   switch (action.type) {
     case DEFAULT_ACTION:
-      return newState;
+      return state;
     default:
       return state;
   }
