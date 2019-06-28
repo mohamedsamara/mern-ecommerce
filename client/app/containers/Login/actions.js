@@ -51,5 +51,6 @@ export const signOut = () => {
     dispatch(setUnAuth());
     cookie.remove('token', { path: '/' });
     cookie.remove('user', { path: '/' });
+    cookie.remove('role', { path: '/' });
   };
 };
