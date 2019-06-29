@@ -21,7 +21,41 @@
       color: $white;
     }
   }
+
+  .checkbox {
+    margin-top: 20px;
+  }
 }
 
-.profile-actions {
+// start reset password form styles
+
+.reset-form {
+  position: relative;
+  margin: 10px 0px;
+  padding: 15px;
+  background: $white;
+  height: 0;
+  opacity: 0;
+  z-index: 1000;
+  -webkit-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
+  @include transition($layout-transition-higher-speed);
 }
+
+.reset-form-open {
+  .reset-form {
+    opacity: 1;
+    height: 100%;
+    @include transition($layout-transition-higher-speed);
+  }
+
+  .dark-overflow {
+    @include dark-overflow();
+    // @include media-breakpoint-down(xs) {
+    //   width: 100%;
+    //   top: 138px;
+    // }
+  }
+}
+
+// end reset password form styles

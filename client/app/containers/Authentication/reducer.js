@@ -7,7 +7,7 @@
 import { SET_AUTH, SET_UN_AUTH } from './constants';
 
 const initialState = {
-  authenticated: false
+  authenticated: true
 };
 
 const authenticationReducer = (state = initialState, action) => {

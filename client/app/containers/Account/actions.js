@@ -9,7 +9,12 @@ import { success, error, info } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-import { ACCOUNT_CHANGE, FETCH_PROFILE, ACCOUNT_RESET } from './constants';
+import {
+  ACCOUNT_CHANGE,
+  FETCH_PROFILE,
+  ACCOUNT_RESET,
+  TOGGLE_RESET_FORM
+} from './constants';
 
 export const accountChange = (name, value) => {
   let formData = {};
@@ -18,6 +23,12 @@ export const accountChange = (name, value) => {
   return {
     type: ACCOUNT_CHANGE,
     payload: formData
+  };
+};
+
+export const toggleResetForm = () => {
+  return {
+    type: TOGGLE_RESET_FORM
   };
 };
 
