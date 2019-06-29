@@ -7,12 +7,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import cookie from 'react-cookies';
 
 import store, { history } from './store';
-
+import { SET_AUTH } from './containers/Authentication/constants';
 import Application from './containers/Application';
-
 import ScrollToTop from './scrollToTop';
+import setToken from './utils/token';
+
 // Import application sass styles
 import './styles/style.scss';
 
@@ -21,6 +23,17 @@ import 'font-awesome/css/font-awesome.min.css';
 
 // Import Simple Line Icons Set
 import 'simple-line-icons/css/simple-line-icons.css';
+
+// Authentication
+const token = cookie.load('token');
+
+if (token) {
+  // authenticate api authorization
+  setToken(token);
+
+  // authenticate routes
+  store.dispatch({ type: SET_AUTH });
+}
 
 const app = () => (
   <Provider store={store}>
