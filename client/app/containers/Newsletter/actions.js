@@ -23,7 +23,7 @@ export const subscribe = () => {
     user.email = getState().newsletter.email;
 
     try {
-      const response = await axios.post('/api/subscribe', user);
+      const response = await axios.post('/api/newsletter/subscribe', user);
 
       console.log('response', response);
     } catch (error) {

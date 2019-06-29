@@ -12,6 +12,7 @@ import cookie from 'react-cookies';
 import { SIGNUP_CHANGE, SIGNUP_RESET, SET_SIGNUP_LOADING } from './constants';
 
 import { setAuth } from '../Authentication/actions';
+import setToken from '../../utils/token';
 
 export const signupChange = (name, value) => {
   let formData = {};
@@ -29,11 +30,13 @@ export const signUp = () => {
     const user = getState().signup.signupFormData;
 
     try {
-      const response = await axios.post('/api/register', user);
+      const response = await axios.post('/api/auth/register', user);
 
       cookie.save('token', response.data.token, { path: '/' });
       cookie.save('user', response.data.user.id, { path: '/' });
       cookie.save('role', response.data.user.role, { path: '/' });
+
+      setToken(response.data.token);
 
       dispatch(setAuth());
       dispatch({ type: SIGNUP_RESET });

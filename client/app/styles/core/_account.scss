@@ -28,7 +28,6 @@
 }
 
 // start reset password form styles
-
 .reset-form {
   position: relative;
   margin: 10px 0px;
@@ -51,11 +50,6 @@
 
   .dark-overflow {
     @include dark-overflow();
-    // @include media-breakpoint-down(xs) {
-    //   width: 100%;
-    //   top: 138px;
-    // }
   }
 }
-
 // end reset password form styles

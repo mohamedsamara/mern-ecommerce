@@ -22,7 +22,7 @@ export const forgotPassowrd = () => {
     const user = getState().forgotPassword.forgotFormData;
 
     try {
-      const response = await axios.post('/api/forgot', user);
+      const response = await axios.post('/api/auth/forgot', user);
 
       dispatch({ type: FORGOT_PASSWORD_RESET });
     } catch (error) {

@@ -35,7 +35,7 @@ export const toggleResetForm = () => {
 export const fetchProfile = userId => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`api/profile/${userId}`);
+      const response = await axios.get(`api/user/${userId}`);
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
@@ -50,7 +50,7 @@ export const updateProfile = () => {
     const userId = cookie.load('user');
 
     try {
-      const response = await axios.post(`/api/profile/${userId}`, {
+      const response = await axios.post(`/api/user/${userId}`, {
         profile: profile
       });
     } catch (error) {

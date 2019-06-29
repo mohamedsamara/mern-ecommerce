@@ -30,7 +30,7 @@ export const login = () => {
     const user = getState().login.loginFormData;
 
     try {
-      const response = await axios.post('/api/login', user);
+      const response = await axios.post('/api/auth/login', user);
 
       cookie.save('token', response.data.token, { path: '/' });
       cookie.save('user', response.data.user.id, { path: '/' });

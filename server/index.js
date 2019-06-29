@@ -33,7 +33,7 @@ mongoose
   .catch(err => console.log(err));
 
 require('./config/passport')(passport);
-app.use('/api', routes);
+app.use(routes);
 
 // if development
 if (process.env.NODE_ENV !== 'production') {

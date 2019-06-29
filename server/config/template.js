@@ -15,8 +15,32 @@ exports.confirmResetPasswordEmail = () => {
   const message = {
     subject: 'Password Changed',
     text:
-      'You are receiving this email because you changed your password. \n\n' +
-      'If you did not request this change, please contact us immediately.'
+      `You are receiving this email because you changed your password. \n\n` +
+      `If you did not request this change, please contact us immediately.`
+  };
+
+  return message;
+};
+
+exports.signupEmail = name => {
+  const message = {
+    subject: 'Account Registration',
+    text:
+      `Hi ${name.firstName} ${
+        name.lastName
+      }! Thank you for creating an account with Us!. \n\n` +
+      `If you did not request this change, please contact us immediately.`
+  };
+
+  return message;
+};
+
+exports.subscribeEmail = () => {
+  const message = {
+    subject: 'Newsletter Subscription',
+    text:
+      `You are receiving this email because you subscribed to our newsletter. \n\n` +
+      `If you did not request this change, please contact us immediately.`
   };
 
   return message;

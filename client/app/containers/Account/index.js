@@ -30,7 +30,8 @@ class Account extends React.PureComponent {
       updateProfile,
       resetFormData,
       resetPasswordChange,
-      toggleResetForm
+      toggleResetForm,
+      resetAccountPassword
     } = this.props;
 
     return (
@@ -58,7 +59,7 @@ class Account extends React.PureComponent {
             <ResetPasswordForm
               resetFormData={resetFormData}
               resetPasswordChange={resetPasswordChange}
-              resetPassowrd={() => this.handleResetPassowrd()}
+              resetPassowrd={resetAccountPassword}
             />
           </div>
           <div
