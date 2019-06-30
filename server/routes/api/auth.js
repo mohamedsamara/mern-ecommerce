@@ -15,6 +15,14 @@ router.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
+  if (!email) {
+    return res.status(422).json({ error: 'You must enter an email address.' });
+  }
+
+  if (!password) {
+    return res.status(422).json({ error: 'You must enter a password.' });
+  }
+
   User.findOne({ email }).then(user => {
     if (!user) {
       return res
@@ -38,7 +46,7 @@ router.post('/login', (req, res) => {
           });
         });
       } else {
-        res.status(404).json({
+        return res.status(404).json({
           success: false,
           error: 'Password Incorrect'
         });
@@ -150,6 +158,7 @@ router.post('/forgot', (req, res, next) => {
         mailgun.sendEmail(existingUser.email, message);
 
         return res.status(200).json({
+          success: true,
           message:
             'Please check your email for the link to reset your password.'
         });
@@ -159,6 +168,12 @@ router.post('/forgot', (req, res, next) => {
 });
 
 router.post('/reset/:token', (req, res, next) => {
+  const password = req.body.password;
+
+  if (!password) {
+    return res.status(422).json({ error: 'You must enter a password.' });
+  }
+
   User.findOne(
     {
       resetPasswordToken: req.params.token,
@@ -191,6 +206,7 @@ router.post('/reset/:token', (req, res, next) => {
             mailgun.sendEmail(resetUser.email, message);
 
             return res.status(200).json({
+              success: true,
               message:
                 'Password changed successfully. Please login with your new password.'
             });
@@ -203,6 +219,11 @@ router.post('/reset/:token', (req, res, next) => {
 
 router.post('/reset', (req, res, next) => {
   const email = req.body.email;
+  const password = req.body.password;
+
+  if (!password) {
+    return res.status(422).json({ error: 'You must enter a password.' });
+  }
 
   User.findOne({ email }, (err, existingUser) => {
     if (err || existingUser == null) {

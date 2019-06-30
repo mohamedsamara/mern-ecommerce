@@ -12,6 +12,12 @@ router.get(
     const userId = req.params.userId;
 
     User.findById(userId, (err, user) => {
+      if (err) {
+        res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+
       res.status(200).json({
         user: user
       });
@@ -27,8 +33,15 @@ router.post(
     let query = { _id: req.params.userId };
 
     User.updateOne(query, { profile: profile }, (err, user) => {
+      if (err) {
+        res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+
       res.status(200).json({
-        success: 'updated',
+        success: true,
+        message: 'Your profile is successfully updated!',
         user: user
       });
     });

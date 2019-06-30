@@ -34,11 +34,10 @@ const signupReducer = (state = initialState, action) => {
         },
         isLoading: false
       };
-      return newState;
     case SET_SIGNUP_LOADING:
       return {
         ...state,
-        isLoading: true
+        isLoading: action.payload
       };
     default:
       return state;

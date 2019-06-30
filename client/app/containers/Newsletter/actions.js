@@ -4,11 +4,11 @@
  *
  */
 
-import { push } from 'connected-react-router';
-import { success, error, info } from 'react-notification-system-redux';
+import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 
-import { NEWSLETTER_CHANGE } from './constants';
+import { NEWSLETTER_CHANGE, NEWSLETTER_RESET } from './constants';
+import handleError from '../../utils/error';
 
 export const newsletterChange = (name, value) => {
   return {
@@ -25,9 +25,17 @@ export const subscribe = () => {
     try {
       const response = await axios.post('/api/newsletter/subscribe', user);
 
-      console.log('response', response);
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      dispatch(success(successfulOptions));
+      dispatch({ type: NEWSLETTER_RESET });
     } catch (error) {
-      console.log(error);
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
     }
   };
 };

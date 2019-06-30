@@ -33,7 +33,7 @@ const loginReducer = (state = initialState, action) => {
     case SET_LOGIN_LOADING:
       return {
         ...state,
-        isLoading: true
+        isLoading: action.payload
       };
     default:
       return state;

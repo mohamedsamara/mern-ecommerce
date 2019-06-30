@@ -4,8 +4,7 @@
  *
  */
 
-import { push } from 'connected-react-router';
-import { success, error } from 'react-notification-system-redux';
+import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
@@ -13,6 +12,7 @@ import { SIGNUP_CHANGE, SIGNUP_RESET, SET_SIGNUP_LOADING } from './constants';
 
 import { setAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
+import handleError from '../../utils/error';
 
 export const signupChange = (name, value) => {
   let formData = {};
@@ -26,11 +26,17 @@ export const signupChange = (name, value) => {
 
 export const signUp = () => {
   return async (dispatch, getState) => {
-    dispatch({ type: SET_SIGNUP_LOADING });
+    dispatch({ type: SET_SIGNUP_LOADING, payload: true });
     const user = getState().signup.signupFormData;
 
     try {
       const response = await axios.post('/api/auth/register', user);
+
+      const successfulOptions = {
+        title: `You have signed up! You will be receiving an email as well. Thank you!`,
+        position: 'tr',
+        autoDismiss: 1
+      };
 
       cookie.save('token', response.data.token, { path: '/' });
       cookie.save('user', response.data.user.id, { path: '/' });
@@ -39,15 +45,14 @@ export const signUp = () => {
       setToken(response.data.token);
 
       dispatch(setAuth());
+      dispatch(success(successfulOptions));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
-      console.log(error);
+      const title = `Please try to signup again!`;
+
+      handleError(error, title, dispatch);
+    } finally {
+      dispatch({ type: SET_SIGNUP_LOADING, payload: false });
     }
   };
-
-  // const successfulOptions = {
-  //   title: `Hey ${user.firstName}, Thank you for signing up`,
-  //   position: 'tr',
-  //   autoDismiss: 1
-  // };
 };

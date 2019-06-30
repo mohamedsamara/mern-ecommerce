@@ -1,3 +1,9 @@
+/**
+ *
+ * token.js
+ * Here is the setup of axios default headers
+ */
+
 import axios from 'axios';
 
 const setToken = token => {

@@ -4,14 +4,14 @@
  *
  */
 
-import { push } from 'connected-react-router';
-import { success, error, info } from 'react-notification-system-redux';
+import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
 import { LOGIN_CHANGE, LOGIN_RESET, SET_LOGIN_LOADING } from './constants';
 import { setAuth, setUnAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
+import handleError from '../../utils/error';
 
 export const loginChange = (name, value) => {
   let formData = {};
@@ -25,12 +25,18 @@ export const loginChange = (name, value) => {
 
 export const login = () => {
   return async (dispatch, getState) => {
-    dispatch({ type: SET_LOGIN_LOADING });
+    dispatch({ type: SET_LOGIN_LOADING, payload: true });
 
     const user = getState().login.loginFormData;
 
     try {
       const response = await axios.post('/api/auth/login', user);
+
+      const successfulOptions = {
+        title: `Hey ${response.data.user.firstName}, Welcome Back!`,
+        position: 'tr',
+        autoDismiss: 1
+      };
 
       cookie.save('token', response.data.token, { path: '/' });
       cookie.save('user', response.data.user.id, { path: '/' });
@@ -39,9 +45,15 @@ export const login = () => {
       setToken(response.data.token);
 
       dispatch(setAuth());
+      dispatch(success(successfulOptions));
+
       dispatch({ type: LOGIN_RESET });
     } catch (error) {
-      console.log(error);
+      const title = `Please try to login again!`;
+
+      handleError(error, title, dispatch);
+    } finally {
+      dispatch({ type: SET_LOGIN_LOADING, payload: false });
     }
   };
 };
@@ -49,6 +61,15 @@ export const login = () => {
 export const signOut = () => {
   return (dispatch, getState) => {
     dispatch(setUnAuth());
+
+    const successfulOptions = {
+      title: `You have signed out!`,
+      position: 'tr',
+      autoDismiss: 1
+    };
+
+    dispatch(success(successfulOptions));
+
     cookie.remove('token', { path: '/' });
     cookie.remove('user', { path: '/' });
     cookie.remove('role', { path: '/' });

@@ -4,17 +4,12 @@
  *
  */
 
-import { push } from 'connected-react-router';
-import { success, error, info } from 'react-notification-system-redux';
+import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-import {
-  ACCOUNT_CHANGE,
-  FETCH_PROFILE,
-  ACCOUNT_RESET,
-  TOGGLE_RESET_FORM
-} from './constants';
+import { ACCOUNT_CHANGE, FETCH_PROFILE, TOGGLE_RESET_FORM } from './constants';
+import handleError from '../../utils/error';
 
 export const accountChange = (name, value) => {
   let formData = {};
@@ -39,7 +34,8 @@ export const fetchProfile = userId => {
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
-      console.log(error);
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
     }
   };
 };
@@ -53,8 +49,17 @@ export const updateProfile = () => {
       const response = await axios.post(`/api/user/${userId}`, {
         profile: profile
       });
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      dispatch(success(successfulOptions));
     } catch (error) {
-      console.log(error);
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
     }
   };
 };

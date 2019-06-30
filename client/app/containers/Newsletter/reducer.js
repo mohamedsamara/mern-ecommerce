@@ -4,7 +4,7 @@
  *
  */
 
-import { NEWSLETTER_CHANGE } from './constants';
+import { NEWSLETTER_CHANGE, NEWSLETTER_RESET } from './constants';
 
 const initialState = {
   email: ''
@@ -17,7 +17,11 @@ const newsletterReducer = (state = initialState, action) => {
         ...state,
         email: action.payload
       };
-
+    case NEWSLETTER_RESET:
+      return {
+        ...state,
+        email: ''
+      };
     default:
       return state;
   }
