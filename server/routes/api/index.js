@@ -4,6 +4,7 @@ const userRoutes = require('./user');
 const newsletterRoutes = require('./newsletter');
 const productRoutes = require('./product');
 const categoryRoutes = require('./category');
+const brandRoutes = require('./brand');
 
 // auth routes
 router.use('/auth', authRoutes);
@@ -19,5 +20,8 @@ router.use('/product', productRoutes);
 
 // category routes
 router.use('/category', categoryRoutes);
+
+// brand routes
+router.use('/brand', brandRoutes);
 
 module.exports = router;

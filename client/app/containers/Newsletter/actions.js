@@ -32,10 +32,11 @@ export const subscribe = () => {
       };
 
       dispatch(success(successfulOptions));
-      dispatch({ type: NEWSLETTER_RESET });
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);
+    } finally {
+      dispatch({ type: NEWSLETTER_RESET });
     }
   };
 };

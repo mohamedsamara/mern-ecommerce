@@ -4,10 +4,14 @@
  *
  */
 
-import { FETCH_CATEGORIES } from './constants';
+import { FETCH_CATEGORIES, CATEGORY_CHANGE, RESET_CATEGORY } from './constants';
 
 const initialState = {
-  categories: []
+  categories: [],
+  categoryFormData: {
+    name: '',
+    description: ''
+  }
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -15,7 +19,20 @@ const categoryReducer = (state = initialState, action) => {
     case FETCH_CATEGORIES:
       return {
         ...state,
-        categories: action.payload.profile
+        categories: action.payload
+      };
+    case CATEGORY_CHANGE:
+      return {
+        ...state,
+        categoryFormData: { ...state.categoryFormData, ...action.payload }
+      };
+    case RESET_CATEGORY:
+      return {
+        ...state,
+        categoryFormData: {
+          name: '',
+          description: ''
+        }
       };
     default:
       return state;

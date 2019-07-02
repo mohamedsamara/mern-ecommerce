@@ -16,6 +16,7 @@ import AccountMenu from '../../components/AccountMenu';
 import Page404 from '../../components/Page404';
 import AddCategory from '../../components/AddCategory';
 import AddProduct from '../../components/AddProduct';
+import AddBrand from '../../components/AddBrand';
 
 import Account from '../Account';
 import Users from '../Users';
@@ -28,7 +29,13 @@ class Admin extends React.PureComponent {
       toggleAdminMenu,
       productFormData,
       productChange,
-      addProduct
+      addProduct,
+      categoryFormData,
+      categoryChange,
+      addCategory,
+      brandFormData,
+      brandChange,
+      addBrand
     } = this.props;
 
     return (
@@ -57,7 +64,23 @@ class Admin extends React.PureComponent {
                 />
                 <Route
                   path='/dashboard/categories'
-                  render={props => <AddCategory />}
+                  render={props => (
+                    <AddCategory
+                      categoryFormData={categoryFormData}
+                      categoryChange={categoryChange}
+                      addCategory={addCategory}
+                    />
+                  )}
+                />
+                <Route
+                  path='/dashboard/brands'
+                  render={props => (
+                    <AddBrand
+                      brandFormData={brandFormData}
+                      brandChange={brandChange}
+                      addBrand={addBrand}
+                    />
+                  )}
                 />
                 <Route path='/dashboard/users' component={Users} />
                 <Route path='*' component={Page404} />
@@ -74,7 +97,9 @@ const mapStateToProps = state => {
   return {
     isMenuOpen: state.admin.isMenuOpen,
     adminLinks: state.admin.adminLinks,
-    productFormData: state.product.productFormData
+    productFormData: state.product.productFormData,
+    categoryFormData: state.category.categoryFormData,
+    brandFormData: state.brand.brandFormData
   };
 };
 

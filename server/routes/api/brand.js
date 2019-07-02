@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 // Bring in Models & Helpers
-const Category = require('../../models/Category');
+const Brand = require('../../models/Brand');
 
 router.post(
   '/add',
@@ -18,20 +18,20 @@ router.post(
         .json({ error: 'You must enter description & name.' });
     }
 
-    const category = new Category({
+    const brand = new Brand({
       name,
       description
     });
 
-    category.save((err, category) => {
+    brand.save((err, brand) => {
       if (err) {
         return next(err);
       }
 
       res.status(200).json({
         success: true,
-        message: `Category has been added successfully!`,
-        category: category
+        message: `Brand has been added successfully!`,
+        brand: brand
       });
     });
   }

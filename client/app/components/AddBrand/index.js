@@ -1,6 +1,6 @@
 /**
  *
- * AddCategory
+ * AddBrand
  *
  */
 
@@ -10,22 +10,22 @@ import { Row, Col } from 'reactstrap';
 
 import Input from '../Input';
 
-const AddCategory = props => {
-  const { categoryFormData, categoryChange, addCategory } = props;
+const AddBrand = props => {
+  const { brandFormData, brandChange, addBrand } = props;
 
   return (
-    <div className='add-category'>
-      <h1>Add Category</h1>
+    <div className='add-brand'>
+      <h1>Add Brand</h1>
       <Row>
         <Col xs='12' md='6'>
           <Input
             type={'text'}
             label={'Name'}
             name={'name'}
-            placeholder={'Category Name'}
-            value={categoryFormData.name}
+            placeholder={'Brand Name'}
+            value={brandFormData.name}
             onInputChange={(name, value) => {
-              categoryChange(name, value);
+              brandChange(name, value);
             }}
           />
         </Col>
@@ -34,26 +34,22 @@ const AddCategory = props => {
             type={'textarea'}
             label={'Description'}
             name={'description'}
-            placeholder={'Category Description'}
-            value={categoryFormData.description}
+            placeholder={'Brand Description'}
+            value={brandFormData.description}
             onInputChange={(name, value) => {
-              categoryChange(name, value);
+              brandChange(name, value);
             }}
           />
         </Col>
       </Row>
       <hr />
-      <div className='add-category-actions'>
-        <button
-          className='input-btn'
-          type='submit'
-          onClick={() => addCategory()}
-        >
-          Add Category
+      <div className='add-brand-actions'>
+        <button className='input-btn' type='submit' onClick={() => addBrand()}>
+          Add Brand
         </button>
       </div>
     </div>
   );
 };
 
-export default AddCategory;
+export default AddBrand;

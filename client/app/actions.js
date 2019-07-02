@@ -21,6 +21,7 @@ import * as resetPassword from './containers/ResetPassword/actions';
 import * as users from './containers/Users/actions';
 import * as product from './containers/Product/actions';
 import * as category from './containers/Category/actions';
+import * as brand from './containers/Brand/actions';
 
 export default function mapDispatchToProps(dispatch) {
   return bindActionCreators(
@@ -39,7 +40,8 @@ export default function mapDispatchToProps(dispatch) {
       ...resetPassword,
       ...users,
       ...product,
-      ...category
+      ...category,
+      ...brand
     },
     dispatch
   );

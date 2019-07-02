@@ -25,6 +25,7 @@ import resetPasswordReducer from './containers/ResetPassword/reducer';
 import usersReducer from './containers/Users/reducer';
 import productReducer from './containers/Product/reducer';
 import categoryReducer from './containers/Category/reducer';
+import brandReducer from './containers/Brand/reducer';
 
 const createReducer = history =>
   combineReducers({
@@ -45,7 +46,8 @@ const createReducer = history =>
     resetPassword: resetPasswordReducer,
     users: usersReducer,
     product: productReducer,
-    category: categoryReducer
+    category: categoryReducer,
+    brand: brandReducer
   });
 
 export default createReducer;
