@@ -22,6 +22,7 @@ import customerReducer from './containers/Customer/reducer';
 import adminReducer from './containers/Admin/reducer';
 import accountReducer from './containers/Account/reducer';
 import resetPasswordReducer from './containers/ResetPassword/reducer';
+import usersReducer from './containers/Users/reducer';
 
 const createReducer = history =>
   combineReducers({
@@ -39,7 +40,8 @@ const createReducer = history =>
     customer: customerReducer,
     admin: adminReducer,
     account: accountReducer,
-    resetPassword: resetPasswordReducer
+    resetPassword: resetPasswordReducer,
+    users: usersReducer
   });
 
 export default createReducer;

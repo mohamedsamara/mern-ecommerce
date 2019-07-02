@@ -4,7 +4,12 @@
  *
  */
 
-import { SIGNUP_CHANGE, SIGNUP_RESET, SET_SIGNUP_LOADING } from './constants';
+import {
+  SIGNUP_CHANGE,
+  SIGNUP_RESET,
+  SET_SIGNUP_LOADING,
+  SUBSCRIBE_CHANGE
+} from './constants';
 
 const initialState = {
   signupFormData: {
@@ -13,7 +18,8 @@ const initialState = {
     lastName: '',
     password: ''
   },
-  isLoading: false
+  isLoading: false,
+  isSubscribed: false
 };
 
 const signupReducer = (state = initialState, action) => {
@@ -39,6 +45,8 @@ const signupReducer = (state = initialState, action) => {
         ...state,
         isLoading: action.payload
       };
+    case SUBSCRIBE_CHANGE:
+      return { ...state, isSubscribed: !state.isSubscribed };
     default:
       return state;
   }

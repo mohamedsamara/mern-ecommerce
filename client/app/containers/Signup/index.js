@@ -14,15 +14,18 @@ import actions from '../../actions';
 import Input from '../../components/Input';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import SignupProvider from '../../components/SignupProvider';
+import Checkbox from '../../components/Checkbox';
 
 class Signup extends React.PureComponent {
   render() {
     const {
       authenticated,
       signupFormData,
+      isLoading,
+      isSubscribed,
       signupChange,
       signUp,
-      isLoading
+      subscribeChange
     } = this.props;
 
     if (authenticated) return <Redirect to='/dashboard' />;
@@ -93,6 +96,12 @@ class Signup extends React.PureComponent {
           </Col>
         </Row>
         <hr />
+        <Checkbox
+          id={'subscribe'}
+          label={'Subscribe to newsletter'}
+          checked={isSubscribed}
+          toggleCheckboxChange={subscribeChange}
+        />
         <div className='login-actions'>
           <button className='input-btn' type='submit' onClick={() => signUp()}>
             Sign Up
@@ -107,7 +116,8 @@ const mapStateToProps = state => {
   return {
     authenticated: state.authentication.authenticated,
     signupFormData: state.signup.signupFormData,
-    isLoading: state.signup.isLoading
+    isLoading: state.signup.isLoading,
+    isSubscribed: state.signup.isSubscribed
   };
 };
 

@@ -60,6 +60,7 @@ router.post('/register', (req, res, next) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const password = req.body.password;
+  const is_subscribed = req.body.isSubscribed;
 
   if (!email) {
     return res.status(422).json({ error: 'You must enter an email address.' });
@@ -87,7 +88,7 @@ router.post('/register', (req, res, next) => {
     const user = new User({
       email,
       password,
-      profile: { firstName, lastName }
+      profile: { firstName, lastName, is_subscribed }
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -113,7 +114,8 @@ router.post('/register', (req, res, next) => {
                 firstName: user.profile.firstName,
                 lastName: user.profile.lastName,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                is_subscribed: user.is_subscribed
               }
             });
           });

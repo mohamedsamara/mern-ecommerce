@@ -16,7 +16,7 @@ import ResetPasswordForm from '../../components/ResetPasswordForm';
 import Checkbox from '../../components/Checkbox';
 
 class Account extends React.PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     const userId = cookie.load('user');
     this.props.fetchProfile(userId);
   }
@@ -40,6 +40,7 @@ class Account extends React.PureComponent {
         <div className='info'>
           <p>{user.email}</p>
           {user.role !== 'ROLE_MEMBER' && <span>Admin</span>}
+          {profile.is_subscribed && <span>Subscribed</span>}
         </div>
         <AccountDetails
           profile={profile}

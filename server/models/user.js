@@ -10,7 +10,8 @@ const UserSchema = new Schema({
   },
   profile: {
     firstName: { type: String },
-    lastName: { type: String }
+    lastName: { type: String },
+    is_subscribed: { type: Boolean }
   },
   password: {
     type: String,

@@ -13,9 +13,11 @@ import { Row, Col } from 'reactstrap';
 import actions from '../../actions';
 
 import AccountMenu from '../../components/AccountMenu';
+import Page404 from '../../components/Page404';
 
 import Account from '../Account';
 import Homepage from '../Homepage';
+import Users from '../Users';
 
 class Admin extends React.PureComponent {
   render() {
@@ -36,6 +38,8 @@ class Admin extends React.PureComponent {
               <Switch>
                 <Route exact path='/dashboard' component={Account} />
                 <Route path='/dashboard/products' component={Homepage} />
+                <Route path='/dashboard/users' component={Users} />
+                <Route path='*' component={Page404} />
               </Switch>
             </div>
           </Col>

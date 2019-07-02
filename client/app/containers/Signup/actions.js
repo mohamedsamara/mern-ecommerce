@@ -8,7 +8,12 @@ import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-import { SIGNUP_CHANGE, SIGNUP_RESET, SET_SIGNUP_LOADING } from './constants';
+import {
+  SIGNUP_CHANGE,
+  SIGNUP_RESET,
+  SET_SIGNUP_LOADING,
+  SUBSCRIBE_CHANGE
+} from './constants';
 
 import { setAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
@@ -24,10 +29,22 @@ export const signupChange = (name, value) => {
   };
 };
 
+export const subscribeChange = () => {
+  return {
+    type: SUBSCRIBE_CHANGE
+  };
+};
+
 export const signUp = () => {
   return async (dispatch, getState) => {
     dispatch({ type: SET_SIGNUP_LOADING, payload: true });
-    const user = getState().signup.signupFormData;
+    const newUser = getState().signup.signupFormData;
+    const isSubscribed = getState().signup.isSubscribed;
+
+    const user = {
+      isSubscribed: isSubscribed,
+      ...newUser
+    };
 
     try {
       const response = await axios.post('/api/auth/register', user);

@@ -19,3 +19,13 @@
   color: $red !important;
   font-weight: $font-weight-bold-light;
 }
+
+.signup-form {
+  .checkbox {
+    margin-bottom: 20px;
+
+    label {
+      color: $theme-orange;
+    }
+  }
+}

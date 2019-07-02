@@ -18,6 +18,7 @@ import * as customer from './containers/Customer/actions';
 import * as admin from './containers/Admin/actions';
 import * as account from './containers/Account/actions';
 import * as resetPassword from './containers/ResetPassword/actions';
+import * as users from './containers/Users/actions';
 
 export default function mapDispatchToProps(dispatch) {
   return bindActionCreators(
@@ -33,7 +34,8 @@ export default function mapDispatchToProps(dispatch) {
       ...customer,
       ...admin,
       ...account,
-      ...resetPassword
+      ...resetPassword,
+      ...users
     },
     dispatch
   );
