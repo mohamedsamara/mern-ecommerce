@@ -3,9 +3,11 @@ const mailgun = require('mailgun-js')({
   domain: process.env.MAILGUN_DOMAIN
 });
 
+const sender = process.env.MAILGUN_EMAIL_SENDER;
+
 exports.sendEmail = (recipient, message) => {
   const data = {
-    from: 'Mo Store!! <mohamedysamara@gmail.com>',
+    from: `Mo Store!! <${sender}>`,
     to: recipient,
     subject: message.subject,
     text: message.text

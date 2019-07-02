@@ -14,14 +14,22 @@ import actions from '../../actions';
 
 import AccountMenu from '../../components/AccountMenu';
 import Page404 from '../../components/Page404';
+import AddCategory from '../../components/AddCategory';
+import AddProduct from '../../components/AddProduct';
 
 import Account from '../Account';
-import Homepage from '../Homepage';
 import Users from '../Users';
 
 class Admin extends React.PureComponent {
   render() {
-    const { isMenuOpen, adminLinks, toggleAdminMenu } = this.props;
+    const {
+      isMenuOpen,
+      adminLinks,
+      toggleAdminMenu,
+      productFormData,
+      productChange,
+      addProduct
+    } = this.props;
 
     return (
       <div className='admin'>
@@ -37,7 +45,20 @@ class Admin extends React.PureComponent {
             <div className='panel-body'>
               <Switch>
                 <Route exact path='/dashboard' component={Account} />
-                <Route path='/dashboard/products' component={Homepage} />
+                <Route
+                  path='/dashboard/products'
+                  render={props => (
+                    <AddProduct
+                      productFormData={productFormData}
+                      productChange={productChange}
+                      addProduct={addProduct}
+                    />
+                  )}
+                />
+                <Route
+                  path='/dashboard/categories'
+                  render={props => <AddCategory />}
+                />
                 <Route path='/dashboard/users' component={Users} />
                 <Route path='*' component={Page404} />
               </Switch>
@@ -52,7 +73,8 @@ class Admin extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     isMenuOpen: state.admin.isMenuOpen,
-    adminLinks: state.admin.adminLinks
+    adminLinks: state.admin.adminLinks,
+    productFormData: state.product.productFormData
   };
 };
 

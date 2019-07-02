@@ -7,10 +7,15 @@
 
   .info {
     margin: 20px 0px 10px 0px;
+    @include flex();
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
 
     p,
     span {
-      display: inline;
+      margin: 0;
       margin-right: 10px;
     }
 

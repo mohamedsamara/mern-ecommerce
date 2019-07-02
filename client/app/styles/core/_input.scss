@@ -35,13 +35,28 @@ button[type='reset'] {
 }
 // end input button styles
 
-.input-box {
+.input-box,
+.textarea-box {
   margin: 10px 0px;
 
   label {
     margin-bottom: 5px;
     color: $theme-blue;
     font-size: $font-size-large;
+  }
+}
+
+.textarea,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: $border-default;
+  cursor: text;
+
+  &:focus {
+    outline: none;
+    color: $focus-font-color;
+    border-color: $dark-border-color !important;
   }
 }
 

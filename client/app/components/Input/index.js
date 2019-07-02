@@ -13,23 +13,43 @@ const Input = props => {
     onInputChange(e.target.name, e.target.value);
   }
 
-  return (
-    <div className='input-box'>
-      {label && <label>{label}</label>}
-      <input
-        autoComplete='off'
-        type={type}
-        onChange={e => {
-          onChange(e);
-        }}
-        name={name}
-        value={value}
-        placeholder={placeholder}
-        className={'input-text'}
-      />
-      {dom}
-    </div>
-  );
+  if (type == 'textarea') {
+    return (
+      <div className='textarea-box'>
+        {label && <label>{label}</label>}
+        <textarea
+          type={'textarea'}
+          onChange={e => {
+            onChange(e);
+          }}
+          rows='2'
+          name={name}
+          value={value}
+          placeholder={placeholder}
+          className={'textarea-text'}
+        />
+        {dom}
+      </div>
+    );
+  } else {
+    return (
+      <div className='input-box'>
+        {label && <label>{label}</label>}
+        <input
+          autoComplete='off'
+          type={type}
+          onChange={e => {
+            onChange(e);
+          }}
+          name={name}
+          value={value}
+          placeholder={placeholder}
+          className={'input-text'}
+        />
+        {dom}
+      </div>
+    );
+  }
 };
 
 export default Input;

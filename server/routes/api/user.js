@@ -43,7 +43,7 @@ router.get(
   }
 );
 
-router.post(
+router.put(
   '/:userId',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {

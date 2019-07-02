@@ -18,12 +18,14 @@
   width: 100%;
   margin: 0px 15px;
   border-right: $border-default;
-  padding-right: 20px;
   padding: 20px 20px 40px 0;
 
   @include media-breakpoint-down(sm) {
     text-align: center;
     margin: 10px 0px;
+    border-right: none;
+    border-bottom: $border-default;
+    padding: 20px 0px;
   }
 
   &:last-child {

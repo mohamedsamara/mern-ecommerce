@@ -1,6 +1,6 @@
 /*
  *
- * Account actions
+ * Product actions
  *
  */
 
@@ -8,31 +8,23 @@ import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-import { ACCOUNT_CHANGE, FETCH_PROFILE, TOGGLE_RESET_FORM } from './constants';
+import { FETCH_PRODUCTS, PRODUCT_CHANGE, RESET_PRODUCT } from './constants';
 import handleError from '../../utils/error';
 
-export const accountChange = (name, value) => {
+export const productChange = (name, value) => {
   let formData = {};
   formData[name] = value;
 
   return {
-    type: ACCOUNT_CHANGE,
+    type: PRODUCT_CHANGE,
     payload: formData
   };
 };
 
-export const toggleResetForm = () => {
-  return {
-    type: TOGGLE_RESET_FORM
-  };
-};
-
-export const fetchProfile = userId => {
+export const fetchProducts = () => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`api/user/${userId}`);
-
-      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
+      const response = await axios.get(`api/product/list`);
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);
@@ -40,15 +32,12 @@ export const fetchProfile = userId => {
   };
 };
 
-export const updateProfile = () => {
+export const addProduct = () => {
   return async (dispatch, getState) => {
-    const profile = getState().account.profile;
-    const userId = cookie.load('user');
-
     try {
-      const response = await axios.put(`/api/user/${userId}`, {
-        profile: profile
-      });
+      const product = getState().product.productFormData;
+
+      const response = await axios.post(`/api/product/add`, product);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -56,7 +45,10 @@ export const updateProfile = () => {
         autoDismiss: 1
       };
 
-      dispatch(success(successfulOptions));
+      if (response.data.success == true) {
+        dispatch(success(successfulOptions));
+        dispatch({ type: RESET_PRODUCT });
+      }
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);
