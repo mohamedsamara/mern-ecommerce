@@ -15,7 +15,6 @@ const AddCategory = props => {
 
   return (
     <div className='add-category'>
-      <h1>Add Category</h1>
       <Row>
         <Col xs='12' md='6'>
           <Input

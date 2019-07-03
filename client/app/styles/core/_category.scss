@@ -1,10 +1,8 @@
 // start add category component
 
-.add-category {
-  h1 {
-    padding-bottom: 10px;
-    border-bottom: $border-default;
-    border-color: $dark-border-color;
+.category {
+  .table-section {
+    margin: 20px 0px;
   }
 }
 

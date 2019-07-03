@@ -37,4 +37,41 @@ router.post(
   }
 );
 
+// fetch all categories api
+router.get(
+  '/list',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Category.find({}, (err, data) => {
+      if (err) {
+        res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+      res.status(200).json({
+        categories: data
+      });
+    });
+  }
+);
+
+// fetch categories selection api
+router.get(
+  '/list/select',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Category.find({}, 'name description', (err, data, fieldNames) => {
+      if (err) {
+        res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+
+      res.status(200).json({
+        categories: data
+      });
+    });
+  }
+);
+
 module.exports = router;

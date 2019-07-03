@@ -14,6 +14,7 @@ router.post(
     const description = req.body.description;
     const quantity = req.body.quantity;
     const price = req.body.price;
+    const category = req.body.category;
 
     if (!sku) {
       return res.status(422).json({ error: 'You must enter sku.' });
@@ -47,7 +48,8 @@ router.post(
         name,
         description,
         quantity,
-        price
+        price,
+        category
       });
 
       product.save((err, user) => {
@@ -60,6 +62,24 @@ router.post(
           message: `Product has been added successfully!`,
           product: product
         });
+      });
+    });
+  }
+);
+
+// fetch all products api
+router.get(
+  '/list',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Product.find({}, (err, data) => {
+      if (err) {
+        res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+      res.status(200).json({
+        products: data
       });
     });
   }

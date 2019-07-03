@@ -25,10 +25,12 @@ const ProductSchema = new Schema({
   price: {
     type: Number
   },
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: 'Category'
-  },
+  category: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Category'
+    }
+  ],
   brand: {
     type: Schema.Types.ObjectId,
     ref: 'Brand'

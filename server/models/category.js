@@ -4,6 +4,10 @@ const { Schema } = Mongoose;
 
 // Category Schema
 const CategorySchema = new Schema({
+  _id: {
+    type: Schema.ObjectId,
+    auto: true
+  },
   name: {
     type: String,
     trim: true

@@ -1,0 +1,31 @@
+/**
+ *
+ * SubPage
+ *
+ */
+
+import React from 'react';
+
+const SubPage = props => {
+  const { title, isMenuOpen, toggleMenu, children } = props;
+
+  return (
+    <div className='sub-page'>
+      <div className='subpage-header'>
+        <h1>{title}</h1>
+        {isMenuOpen ? (
+          <div className='back' onClick={toggleMenu}>
+            <i className='fa fa-chevron-left'>Back</i>
+          </div>
+        ) : (
+          <div className='add' onClick={toggleMenu}>
+            <i className='fa fa-plus' />
+          </div>
+        )}
+      </div>
+      {children}
+    </div>
+  );
+};
+
+export default SubPage;

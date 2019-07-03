@@ -1,0 +1,26 @@
+.sub-page {
+  .subpage-header {
+    @include flex();
+    justify-content: space-between;
+    color: $red !important;
+    border-bottom: $border-default;
+    border-color: $dark-border-color;
+    padding-bottom: 10px;
+
+    h1 {
+      margin: 0;
+    }
+
+    .fa {
+      cursor: pointer;
+    }
+
+    .back {
+      .fa {
+        &::before {
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

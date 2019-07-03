@@ -9,18 +9,30 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
+import AddBrand from '../../components/AddBrand';
+
 class Brand extends React.PureComponent {
   componentDidMount() {}
 
   render() {
-    const {} = this.props;
+    const { brandFormData, brandChange, addBrand } = this.props;
 
-    return <div className='brand' />;
+    return (
+      <div className='brand'>
+        <AddBrand
+          brandFormData={brandFormData}
+          brandChange={brandChange}
+          addBrand={addBrand}
+        />
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    brandFormData: state.brand.brandFormData
+  };
 };
 
 export default connect(

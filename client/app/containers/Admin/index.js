@@ -14,29 +14,16 @@ import actions from '../../actions';
 
 import AccountMenu from '../../components/AccountMenu';
 import Page404 from '../../components/Page404';
-import AddCategory from '../../components/AddCategory';
-import AddProduct from '../../components/AddProduct';
-import AddBrand from '../../components/AddBrand';
 
 import Account from '../Account';
 import Users from '../Users';
+import Category from '../Category';
+import Product from '../Product';
+import Brand from '../Brand';
 
 class Admin extends React.PureComponent {
   render() {
-    const {
-      isMenuOpen,
-      adminLinks,
-      toggleAdminMenu,
-      productFormData,
-      productChange,
-      addProduct,
-      categoryFormData,
-      categoryChange,
-      addCategory,
-      brandFormData,
-      brandChange,
-      addBrand
-    } = this.props;
+    const { isMenuOpen, adminLinks, toggleAdminMenu } = this.props;
 
     return (
       <div className='admin'>
@@ -52,36 +39,9 @@ class Admin extends React.PureComponent {
             <div className='panel-body'>
               <Switch>
                 <Route exact path='/dashboard' component={Account} />
-                <Route
-                  path='/dashboard/products'
-                  render={props => (
-                    <AddProduct
-                      productFormData={productFormData}
-                      productChange={productChange}
-                      addProduct={addProduct}
-                    />
-                  )}
-                />
-                <Route
-                  path='/dashboard/categories'
-                  render={props => (
-                    <AddCategory
-                      categoryFormData={categoryFormData}
-                      categoryChange={categoryChange}
-                      addCategory={addCategory}
-                    />
-                  )}
-                />
-                <Route
-                  path='/dashboard/brands'
-                  render={props => (
-                    <AddBrand
-                      brandFormData={brandFormData}
-                      brandChange={brandChange}
-                      addBrand={addBrand}
-                    />
-                  )}
-                />
+                <Route path='/dashboard/products' component={Product} />
+                <Route path='/dashboard/categories' component={Category} />
+                <Route path='/dashboard/brands' component={Brand} />
                 <Route path='/dashboard/users' component={Users} />
                 <Route path='*' component={Page404} />
               </Switch>
@@ -96,10 +56,7 @@ class Admin extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     isMenuOpen: state.admin.isMenuOpen,
-    adminLinks: state.admin.adminLinks,
-    productFormData: state.product.productFormData,
-    categoryFormData: state.category.categoryFormData,
-    brandFormData: state.brand.brandFormData
+    adminLinks: state.admin.adminLinks
   };
 };
 
