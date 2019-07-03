@@ -12,8 +12,10 @@ import {
   PRODUCT_CHANGE,
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
-  ADD_PRODUCT
+  ADD_PRODUCT,
+  REMOVE_PRODUCT
 } from './constants';
+
 import handleError from '../../utils/error';
 import { formCategoriesServerSelect } from '../../helpers/select';
 
@@ -42,6 +44,31 @@ export const fetchProducts = () => {
         type: FETCH_PRODUCTS,
         payload: response.data.products
       });
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+export const deleteProduct = (id, index) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.delete(`/api/product/delete/${id}`);
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      if (response.data.success == true) {
+        dispatch(success(successfulOptions));
+        dispatch({
+          type: REMOVE_PRODUCT,
+          payload: index
+        });
+      }
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);

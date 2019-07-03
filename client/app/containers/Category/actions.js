@@ -15,7 +15,8 @@ import {
   RESET_CATEGORY,
   CATEGORY_SELECT,
   TOGGLE_ADD_CATEGORY,
-  ADD_CATEGORY
+  ADD_CATEGORY,
+  REMOVE_CATEGORY
 } from './constants';
 
 import handleError from '../../utils/error';
@@ -73,6 +74,31 @@ export const fetchCategories = () => {
         type: FETCH_CATEGORIES,
         payload: response.data.categories
       });
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+export const deleteCategory = (id, index) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.delete(`/api/category/delete/${id}`);
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      if (response.data.success == true) {
+        dispatch(success(successfulOptions));
+        dispatch({
+          type: REMOVE_CATEGORY,
+          payload: index
+        });
+      }
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);

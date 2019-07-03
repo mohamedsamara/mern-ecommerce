@@ -11,7 +11,8 @@ import {
   RESET_CATEGORY,
   CATEGORY_SELECT,
   TOGGLE_ADD_CATEGORY,
-  ADD_CATEGORY
+  ADD_CATEGORY,
+  REMOVE_CATEGORY
 } from './constants';
 
 const initialState = {
@@ -47,13 +48,20 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         categories: action.payload
       };
-
     case FETCH_CATEGORIES_SELECT:
       return { ...state, categoriesSelect: action.payload };
     case ADD_CATEGORY:
       return {
         ...state,
         categories: [...state.categories, action.payload]
+      };
+    case REMOVE_CATEGORY:
+      return {
+        ...state,
+        categories: [
+          ...state.categories.slice(0, action.payload),
+          ...state.categories.slice(action.payload + 1)
+        ]
       };
     case CATEGORY_CHANGE:
       return {

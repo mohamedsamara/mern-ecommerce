@@ -85,4 +85,24 @@ router.get(
   }
 );
 
+router.delete(
+  '/delete/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Product.deleteOne({ _id: req.params.id }, (err, data) => {
+      if (err) {
+        res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: `Product has been deleted successfully!`,
+        product: data
+      });
+    });
+  }
+);
+
 module.exports = router;

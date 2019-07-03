@@ -26,7 +26,8 @@ class Category extends React.PureComponent {
       categories,
       columns,
       isCategoryAddOpen,
-      toggleAddCategory
+      toggleAddCategory,
+      deleteCategory
     } = this.props;
 
     return (
@@ -51,6 +52,8 @@ class Category extends React.PureComponent {
               condensed={true}
               csv={true}
               search={true}
+              isRowEvents={true}
+              clickAction={(id, index) => deleteCategory(id, index)}
             />
           )}
         </SubPage>

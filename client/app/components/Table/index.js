@@ -20,7 +20,23 @@ const { ExportCSVButton } = CSVExport;
 const { SearchBar } = Search;
 
 const Table = props => {
-  const { data, columns, striped, hover, condensed, csv, search } = props;
+  const {
+    data,
+    columns,
+    striped,
+    hover,
+    condensed,
+    csv,
+    search,
+    clickAction,
+    isRowEvents
+  } = props;
+
+  const rowEvents = {
+    onClick: (e, row, rowIndex) => {
+      clickAction(row._id, rowIndex);
+    }
+  };
 
   return (
     <ToolkitProvider
@@ -51,6 +67,7 @@ const Table = props => {
             hover={hover}
             condensed={condensed}
             noDataIndication={indication}
+            rowEvents={isRowEvents ? rowEvents : null}
           />
         </div>
       )}

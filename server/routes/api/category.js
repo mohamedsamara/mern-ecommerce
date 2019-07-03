@@ -74,4 +74,24 @@ router.get(
   }
 );
 
+router.delete(
+  '/delete/:id',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Category.deleteOne({ _id: req.params.id }, (err, data) => {
+      if (err) {
+        res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: `Category has been deleted successfully!`,
+        brand: data
+      });
+    });
+  }
+);
+
 module.exports = router;

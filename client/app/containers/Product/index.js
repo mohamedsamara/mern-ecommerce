@@ -30,7 +30,8 @@ class Product extends React.PureComponent {
       products,
       columns,
       toggleAddProduct,
-      isProductAddOpen
+      isProductAddOpen,
+      deleteProduct
     } = this.props;
 
     return (
@@ -58,6 +59,8 @@ class Product extends React.PureComponent {
               condensed={true}
               csv={true}
               search={true}
+              isRowEvents={true}
+              clickAction={(id, index) => deleteProduct(id, index)}
             />
           )}
         </SubPage>

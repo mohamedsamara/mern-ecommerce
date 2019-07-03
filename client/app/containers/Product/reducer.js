@@ -9,7 +9,8 @@ import {
   PRODUCT_CHANGE,
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
-  ADD_PRODUCT
+  ADD_PRODUCT,
+  REMOVE_PRODUCT
 } from './constants';
 
 const initialState = {
@@ -34,7 +35,8 @@ const initialState = {
     },
     {
       dataField: 'name',
-      text: 'Product Name'
+      text: 'Product Name',
+      sort: true
     },
     {
       dataField: 'description',
@@ -42,11 +44,13 @@ const initialState = {
     },
     {
       dataField: 'quantity',
-      text: 'Product Quantity'
+      text: 'Product Quantity',
+      sort: true
     },
     {
       dataField: 'price',
-      text: 'Product Price'
+      text: 'Product Price',
+      sort: true
     }
   ]
 };
@@ -62,6 +66,14 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         products: [...state.products, action.payload]
+      };
+    case REMOVE_PRODUCT:
+      return {
+        ...state,
+        products: [
+          ...state.products.slice(0, action.payload),
+          ...state.products.slice(action.payload + 1)
+        ]
       };
     case PRODUCT_CHANGE:
       return {

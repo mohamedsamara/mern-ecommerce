@@ -15,7 +15,6 @@ const AddBrand = props => {
 
   return (
     <div className='add-brand'>
-      <h1>Add Brand</h1>
       <Row>
         <Col xs='12' md='6'>
           <Input
