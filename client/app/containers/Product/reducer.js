@@ -10,11 +10,15 @@ import {
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
   ADD_PRODUCT,
-  REMOVE_PRODUCT
+  REMOVE_PRODUCT,
+  PRODUCT_SELECT,
+  FETCH_PRODUCTS_SELECT
 } from './constants';
 
 const initialState = {
   products: [],
+  productsSelect: [],
+  selectedProducts: [],
   isProductAddOpen: false,
   productFormData: {
     sku: '',
@@ -51,6 +55,11 @@ const initialState = {
       dataField: 'price',
       text: 'Product Price',
       sort: true
+    },
+    {
+      dataField: 'brand.name',
+      text: 'Product Brand',
+      sort: true
     }
   ]
 };
@@ -62,6 +71,8 @@ const productReducer = (state = initialState, action) => {
         ...state,
         products: action.payload
       };
+    case FETCH_PRODUCTS_SELECT:
+      return { ...state, productsSelect: action.payload };
     case ADD_PRODUCT:
       return {
         ...state,
@@ -79,6 +90,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         productFormData: { ...state.productFormData, ...action.payload }
+      };
+    case PRODUCT_SELECT:
+      return {
+        ...state,
+        selectedProducts: action.payload
       };
     case RESET_PRODUCT:
       return {

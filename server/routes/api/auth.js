@@ -94,13 +94,17 @@ router.post('/register', (req, res, next) => {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
         if (err) {
-          console.log(err);
+          return res.status(422).json({
+            error: 'Your request could not be processed. Please try again.'
+          });
         }
         user.password = hash;
 
         user.save((err, user) => {
           if (err) {
-            return next(err);
+            return res.status(422).json({
+              error: 'Your request could not be processed. Please try again.'
+            });
           }
 
           const payload = { id: user.id };
@@ -134,17 +138,18 @@ router.post('/forgot', (req, res, next) => {
 
   User.findOne({ email }, (err, existingUser) => {
     if (err || existingUser == null) {
-      res.status(422).json({
+      return res.status(422).json({
         error:
           'Your request could not be processed as entered. Please try again.'
       });
-      return next(err);
     }
 
     crypto.randomBytes(48, (err, buffer) => {
       const resetToken = buffer.toString('hex');
       if (err) {
-        return next(err);
+        return res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
       }
 
       existingUser.resetPasswordToken = resetToken;
@@ -152,7 +157,9 @@ router.post('/forgot', (req, res, next) => {
 
       existingUser.save(err => {
         if (err) {
-          return next(err);
+          return res.status(422).json({
+            error: 'Your request could not be processed. Please try again.'
+          });
         }
 
         const message = template.resetEmail(req, resetToken);
@@ -191,7 +198,10 @@ router.post('/reset/:token', (req, res, next) => {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(req.body.password, salt, (err, hash) => {
           if (err) {
-            console.log(err);
+            return res.status(422).json({
+              error:
+                'Your request could not be processed as entered. Please try again.'
+            });
           }
           req.body.password = hash;
 
@@ -201,7 +211,10 @@ router.post('/reset/:token', (req, res, next) => {
 
           resetUser.save(err => {
             if (err) {
-              return next(err);
+              return res.status(422).json({
+                error:
+                  'Your request could not be processed as entered. Please try again.'
+              });
             }
 
             const message = template.confirmResetPasswordEmail();
@@ -229,17 +242,19 @@ router.post('/reset', (req, res, next) => {
 
   User.findOne({ email }, (err, existingUser) => {
     if (err || existingUser == null) {
-      res.status(422).json({
+      return res.status(422).json({
         error:
           'Your request could not be processed as entered. Please try again.'
       });
-      return next(err);
     }
 
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(req.body.password, salt, (err, hash) => {
         if (err) {
-          console.log(err);
+          return res.status(422).json({
+            error:
+              'Your request could not be processed as entered. Please try again.'
+          });
         }
         req.body.password = hash;
 
@@ -247,7 +262,10 @@ router.post('/reset', (req, res, next) => {
 
         existingUser.save(err => {
           if (err) {
-            return next(err);
+            return res.status(422).json({
+              error:
+                'Your request could not be processed as entered. Please try again.'
+            });
           }
 
           const message = template.confirmResetPasswordEmail();

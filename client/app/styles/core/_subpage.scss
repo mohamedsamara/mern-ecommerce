@@ -16,6 +16,10 @@
     }
 
     .back {
+      &:hover {
+        color: $theme-blue;
+      }
+
       .fa {
         &::before {
           margin-right: 5px;

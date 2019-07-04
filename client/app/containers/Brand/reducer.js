@@ -10,12 +10,16 @@ import {
   RESET_BRAND,
   TOGGLE_ADD_BRAND,
   ADD_BRAND,
-  REMOVE_BRAND
+  REMOVE_BRAND,
+  FETCH_BRANDS_SELECT,
+  BRAND_SELECT
 } from './constants';
 
 const initialState = {
   brands: [],
   isBrandAddOpen: false,
+  brandsSelect: [],
+  selectedBrands: [],
   brandFormData: {
     name: '',
     description: ''
@@ -28,7 +32,8 @@ const initialState = {
     },
     {
       dataField: 'name',
-      text: 'Brand Name'
+      text: 'Brand Name',
+      sort: true
     },
     {
       dataField: 'description',
@@ -43,6 +48,13 @@ const brandReducer = (state = initialState, action) => {
       return {
         ...state,
         brands: action.payload
+      };
+    case FETCH_BRANDS_SELECT:
+      return { ...state, brandsSelect: action.payload };
+    case BRAND_SELECT:
+      return {
+        ...state,
+        selectedBrands: action.payload
       };
     case ADD_BRAND:
       return {

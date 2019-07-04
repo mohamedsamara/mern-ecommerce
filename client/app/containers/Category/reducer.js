@@ -18,12 +18,12 @@ import {
 const initialState = {
   categories: [],
   categoriesSelect: [],
+  selectedCategories: [],
   isCategoryAddOpen: false,
   categoryFormData: {
     name: '',
     description: ''
   },
-  selectedCategories: [],
   columns: [
     {
       hidden: true,
@@ -32,7 +32,8 @@ const initialState = {
     },
     {
       dataField: 'name',
-      text: 'Category Name'
+      text: 'Category Name',
+      sort: true
     },
     {
       dataField: 'description',

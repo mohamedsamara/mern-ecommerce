@@ -16,6 +16,7 @@ import SubPage from '../../components/SubPage';
 class Brand extends React.PureComponent {
   componentDidMount() {
     this.props.fetchBrands();
+    this.props.fetchProductsSelect();
   }
 
   render() {
@@ -27,7 +28,10 @@ class Brand extends React.PureComponent {
       brands,
       columns,
       toggleAddBrand,
-      deleteBrand
+      deleteBrand,
+      products,
+      selectedProducts,
+      productSelect
     } = this.props;
 
     return (
@@ -42,6 +46,9 @@ class Brand extends React.PureComponent {
               brandFormData={brandFormData}
               brandChange={brandChange}
               addBrand={addBrand}
+              products={products}
+              selectedProducts={selectedProducts}
+              productSelect={productSelect}
             />
           ) : (
             <Table
@@ -67,7 +74,9 @@ const mapStateToProps = state => {
     brandFormData: state.brand.brandFormData,
     isBrandAddOpen: state.brand.isBrandAddOpen,
     brands: state.brand.brands,
-    columns: state.brand.columns
+    columns: state.brand.columns,
+    products: state.product.productsSelect,
+    selectedProducts: state.product.selectedProducts
   };
 };
 

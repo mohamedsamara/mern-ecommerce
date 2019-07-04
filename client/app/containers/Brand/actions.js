@@ -13,10 +13,13 @@ import {
   RESET_BRAND,
   TOGGLE_ADD_BRAND,
   ADD_BRAND,
-  REMOVE_BRAND
+  REMOVE_BRAND,
+  BRAND_SELECT,
+  FETCH_BRANDS_SELECT
 } from './constants';
 
 import handleError from '../../utils/error';
+import { formSelect, unformSelect } from '../../helpers/select';
 
 export const brandChange = (name, value) => {
   let formData = {};
@@ -42,6 +45,31 @@ export const fetchBrands = () => {
       dispatch({
         type: FETCH_BRANDS,
         payload: response.data.brands
+      });
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+export const brandSelect = value => {
+  return {
+    type: BRAND_SELECT,
+    payload: value
+  };
+};
+
+export const fetchBrandsSelect = () => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(`/api/brand/list/select`);
+
+      let formulatedBrands = formSelect(response.data.brands);
+
+      dispatch({
+        type: FETCH_BRANDS_SELECT,
+        payload: formulatedBrands
       });
     } catch (error) {
       const title = `Please try again!`;
@@ -79,8 +107,16 @@ export const addBrand = () => {
   return async (dispatch, getState) => {
     try {
       const brand = getState().brand.brandFormData;
+      const products = getState().product.selectedProducts;
 
-      const response = await axios.post(`/api/brand/add`, brand);
+      let newProducts = unformSelect(products);
+
+      let newBrand = {
+        products: newProducts,
+        ...brand
+      };
+
+      const response = await axios.post(`/api/brand/add`, newBrand);
 
       const successfulOptions = {
         title: `${response.data.message}`,

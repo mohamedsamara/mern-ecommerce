@@ -9,9 +9,17 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../Input';
+import SelectOption from '../SelectOption';
 
 const AddCategory = props => {
-  const { categoryFormData, categoryChange, addCategory } = props;
+  const {
+    categoryFormData,
+    categoryChange,
+    addCategory,
+    products,
+    selectedProducts,
+    productSelect
+  } = props;
 
   return (
     <div className='add-category'>
@@ -37,6 +45,17 @@ const AddCategory = props => {
             value={categoryFormData.description}
             onInputChange={(name, value) => {
               categoryChange(name, value);
+            }}
+          />
+        </Col>
+        <Col xs='12' md='12'>
+          <SelectOption
+            label={'Select Products'}
+            multi={true}
+            options={products}
+            value={selectedProducts}
+            handleSelectChange={value => {
+              productSelect(value);
             }}
           />
         </Col>

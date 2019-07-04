@@ -62,6 +62,12 @@ textarea {
 
 .select-box {
   margin: 10px 0px;
+
+  label {
+    margin-bottom: 5px;
+    color: $theme-blue;
+    font-size: $font-size-large;
+  }
 }
 
 .input-btn {

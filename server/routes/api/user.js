@@ -12,7 +12,7 @@ router.get(
   (req, res) => {
     User.find({}, (err, data) => {
       if (err) {
-        res.status(422).json({
+        return res.status(422).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -31,7 +31,7 @@ router.get(
 
     User.findById(userId, (err, user) => {
       if (err) {
-        res.status(422).json({
+        return res.status(422).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -52,7 +52,7 @@ router.put(
 
     User.updateOne(query, { profile: profile }, (err, user) => {
       if (err) {
-        res.status(422).json({
+        return res.status(422).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

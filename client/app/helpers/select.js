@@ -1,10 +1,10 @@
 /**
  *
  * select.js
- * this helper formulate categories to client and server
+ * this helper formulate data to select component
  */
 
-export const formCategoriesClientSelect = data => {
+export const formSelect = data => {
   let newCategories = [];
 
   data.map(category => {
@@ -19,7 +19,7 @@ export const formCategoriesClientSelect = data => {
   return newCategories;
 };
 
-export const formCategoriesServerSelect = data => {
+export const unformSelect = data => {
   let newCategories = [];
 
   data.map(category => {

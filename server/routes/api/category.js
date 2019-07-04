@@ -11,6 +11,7 @@ router.post(
   (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
+    const products = req.body.products;
 
     if (!description || !name) {
       return res
@@ -20,12 +21,15 @@ router.post(
 
     const category = new Category({
       name,
-      description
+      description,
+      products
     });
 
     category.save((err, category) => {
       if (err) {
-        return next(err);
+        return res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
       }
 
       res.status(200).json({
@@ -44,7 +48,7 @@ router.get(
   (req, res) => {
     Category.find({}, (err, data) => {
       if (err) {
-        res.status(422).json({
+        return res.status(422).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -60,9 +64,9 @@ router.get(
   '/list/select',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Category.find({}, 'name description', (err, data, fieldNames) => {
+    Category.find({}, 'name', (err, data) => {
       if (err) {
-        res.status(422).json({
+        return res.status(422).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

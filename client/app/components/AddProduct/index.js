@@ -18,7 +18,10 @@ const AddProduct = props => {
     addProduct,
     selectedCategories,
     categories,
-    categorySelect
+    categorySelect,
+    brandSelect,
+    selectedBrands,
+    brands
   } = props;
 
   return (
@@ -87,11 +90,23 @@ const AddProduct = props => {
         </Col>
         <Col xs='12' md='12'>
           <SelectOption
+            label={'Select Categories'}
             multi={true}
             options={categories}
             value={selectedCategories}
             handleSelectChange={value => {
               categorySelect(value);
+            }}
+          />
+        </Col>
+        <Col xs='12' md='12'>
+          <SelectOption
+            label={'Select Brand'}
+            multi={false}
+            options={brands}
+            value={selectedBrands}
+            handleSelectChange={value => {
+              brandSelect(value);
             }}
           />
         </Col>

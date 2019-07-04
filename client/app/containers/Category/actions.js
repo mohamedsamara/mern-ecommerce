@@ -20,7 +20,7 @@ import {
 } from './constants';
 
 import handleError from '../../utils/error';
-import { formCategoriesClientSelect } from '../../helpers/select';
+import { formSelect, unformSelect } from '../../helpers/select';
 
 export const categoryChange = (name, value) => {
   let formData = {};
@@ -50,9 +50,7 @@ export const fetchCategoriesSelect = () => {
     try {
       const response = await axios.get(`/api/category/list/select`);
 
-      let formulatedCategories = formCategoriesClientSelect(
-        response.data.categories
-      );
+      let formulatedCategories = formSelect(response.data.categories);
 
       dispatch({
         type: FETCH_CATEGORIES_SELECT,
@@ -110,8 +108,16 @@ export const addCategory = () => {
   return async (dispatch, getState) => {
     try {
       const category = getState().category.categoryFormData;
+      const products = getState().product.selectedProducts;
 
-      const response = await axios.post(`/api/category/add`, category);
+      let newProducts = unformSelect(products);
+
+      let newCategory = {
+        products: newProducts,
+        ...category
+      };
+
+      const response = await axios.post(`/api/category/add`, newCategory);
 
       const successfulOptions = {
         title: `${response.data.message}`,

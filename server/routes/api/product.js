@@ -6,7 +6,7 @@ const passport = require('passport');
 const Product = require('../../models/Product');
 
 router.post(
-  '/add',
+  '/add/:id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const sku = req.body.sku;
@@ -14,7 +14,8 @@ router.post(
     const description = req.body.description;
     const quantity = req.body.quantity;
     const price = req.body.price;
-    const category = req.body.category;
+    const categories = req.body.categories;
+    const brand = req.params.id;
 
     if (!sku) {
       return res.status(422).json({ error: 'You must enter sku.' });
@@ -36,7 +37,9 @@ router.post(
 
     Product.findOne({ sku }, (err, existingProduct) => {
       if (err) {
-        return next(err);
+        return res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
       }
 
       if (existingProduct) {
@@ -49,19 +52,31 @@ router.post(
         description,
         quantity,
         price,
-        category
+        categories,
+        brand
       });
 
-      product.save((err, user) => {
+      product.save((err, product) => {
         if (err) {
-          return next(err);
+          return res.status(422).json({
+            error: 'Your request could not be processed. Please try again.'
+          });
         }
 
-        res.status(200).json({
-          success: true,
-          message: `Product has been added successfully!`,
-          product: product
-        });
+        Product.findById(product._id)
+          .populate('brand', 'name')
+          .exec((err, doc) => {
+            if (err) {
+              return res.status(422).json({
+                error: 'Your request could not be processed. Please try again.'
+              });
+            }
+            res.status(200).json({
+              success: true,
+              message: `Product has been added successfully!`,
+              product: doc
+            });
+          });
       });
     });
   }
@@ -72,12 +87,32 @@ router.get(
   '/list',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Product.find({}, (err, data) => {
+    Product.find({})
+      .populate('brand', 'name')
+      .exec((err, data) => {
+        if (err) {
+          return res.status(422).json({
+            error: 'Your request could not be processed. Please try again.'
+          });
+        }
+        res.status(200).json({
+          products: data
+        });
+      });
+  }
+);
+
+router.get(
+  '/list/select',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Product.find({}, 'name', (err, data) => {
       if (err) {
-        res.status(422).json({
+        return res.status(422).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
+
       res.status(200).json({
         products: data
       });
@@ -91,7 +126,7 @@ router.delete(
   (req, res) => {
     Product.deleteOne({ _id: req.params.id }, (err, data) => {
       if (err) {
-        res.status(422).json({
+        return res.status(422).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
