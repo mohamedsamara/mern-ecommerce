@@ -33,7 +33,7 @@ export const login = () => {
       const response = await axios.post('/api/auth/login', user);
 
       const successfulOptions = {
-        title: `Hey ${response.data.user.firstName}, Welcome Back!`,
+        title: `Hey ${response.data.user.profile.firstName}, Welcome Back!`,
         position: 'tr',
         autoDismiss: 1
       };

@@ -38,8 +38,11 @@ router.post('/login', (req, res) => {
             token: `Bearer ${token}`,
             user: {
               id: user.id,
-              firstName: user.profile.firstName,
-              lastName: user.profile.lastName,
+              profile: {
+                firstName: user.profile.firstName,
+                lastName: user.profile.lastName,
+                is_subscribed: user.profile.is_subscribed
+              },
               email: user.email,
               role: user.role
             }
@@ -115,11 +118,13 @@ router.post('/register', (req, res, next) => {
               token: `Bearer ${token}`,
               user: {
                 id: user.id,
-                firstName: user.profile.firstName,
-                lastName: user.profile.lastName,
+                profile: {
+                  firstName: user.profile.firstName,
+                  lastName: user.profile.lastName,
+                  is_subscribed: user.profile.is_subscribed
+                },
                 email: user.email,
-                role: user.role,
-                is_subscribed: user.is_subscribed
+                role: user.role
               }
             });
           });

@@ -10,18 +10,23 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import { Link } from 'react-router-dom';
+
 import {
   Container,
   Row,
   Col,
-  Collapse,
   Navbar,
   Nav,
   NavItem,
-  NavLink
+  NavLink,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from 'reactstrap';
 
 import Cart from '../Cart';
+import Menu from '../NavigationMenu';
 
 class Navigation extends React.PureComponent {
   render() {
@@ -41,16 +46,33 @@ class Navigation extends React.PureComponent {
         <div className='header-info'>
           <Container>
             <Row>
-              <Col xs='6' md='4' className='text-center'>
-                <i className='fa fa-truck' /> <span>Free Shipping</span>
+              <Col
+                xs='4'
+                md='4'
+                className='text-center info-col d-none d-sm-block'
+              >
+                <i className='fa fa-truck' />
+                <span>Free Shipping</span>
               </Col>
-              <Col xs='6' md='4' className='text-center'>
+              <Col
+                xs='4'
+                md='4'
+                className='text-center info-col d-none d-sm-block'
+              >
                 <i className='fa fa-credit-card' />
                 <span>Payment Methods</span>
               </Col>
-              <Col xs='12' md='4' className='text-center info-col'>
+              <Col
+                xs='4'
+                md='4'
+                className='text-center info-col d-none d-sm-block'
+              >
                 <i className='fa fa-phone' />
                 <span>Call us 951-999-9999</span>
+              </Col>
+              <Col xs='12' className='text-center d-block d-sm-none'>
+                <i className='fa fa-phone' />
+                <span> Need advice? Call us 951-999-9999</span>
               </Col>
             </Row>
           </Container>
@@ -62,22 +84,30 @@ class Navigation extends React.PureComponent {
               sm={{ size: 12, order: 1 }}
               md={{ size: 3, order: 1 }}
               lg={{ size: 3, order: 1 }}
-              className='text-center'
             >
-              <h1 className='brand'>
-                <Link to='/'>MERN Store</Link>
-              </h1>
+              <div className='brand'>
+                <span className='bars-icon fa fa-bars' onClick={toggleMenu} />
+                <h1>
+                  <Link to='/'>MERN Store</Link>
+                </h1>
+              </div>
             </Col>
             <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
               md={{ size: 5, order: 1 }}
               lg={{ size: 6, order: 3 }}
+              className='col-no-padding'
             >
               <div className='header-links'>
-                <span className='bars-icon' onClick={toggleMenu} />
                 <span
-                  className={isCartOpen ? 'close-cart' : 'fa fa-cart-plus'}
+                  className={
+                    isMenuOpen ? 'bars-icon close-icon' : 'bars-icon fa fa-bars'
+                  }
+                  onClick={toggleMenu}
+                />
+                <span
+                  className={isCartOpen ? 'close-icon' : 'fa fa-cart-plus'}
                   onClick={toggleCart}
                 >
                   {cart.length > 0 && (
@@ -93,38 +123,52 @@ class Navigation extends React.PureComponent {
               lg={{ size: 3, order: 3 }}
             >
               <Navbar color='light' light expand='md'>
-                <Collapse isOpen={isMenuOpen} navbar>
-                  <Nav className='ml-auto' navbar>
-                    {authenticated ? (
-                      <Nav navbar>
-                        <NavItem>
-                          <NavLink>{user}</NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink tag={Link} to='/dashboard'>
-                            Dashboard
-                          </NavLink>
-                        </NavItem>
-                        <NavItem className='log-out'>
-                          <NavLink onClick={signOut}>Log Out</NavLink>
-                        </NavItem>
-                      </Nav>
-                    ) : (
-                      <Nav navbar>
-                        <NavItem>
-                          <NavLink tag={Link} to='/login'>
-                            Login
-                          </NavLink>
-                        </NavItem>
-                        <NavItem>
-                          <NavLink tag={Link} to='/register'>
-                            SignUp
-                          </NavLink>
-                        </NavItem>
-                      </Nav>
-                    )}
-                  </Nav>
-                </Collapse>
+                <Nav navbar>
+                  <NavItem>
+                    <NavLink tag={Link} to='/brands'>
+                      Brands
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink tag={Link} to='/shop'>
+                      Shop
+                    </NavLink>
+                  </NavItem>
+                  {authenticated ? (
+                    <UncontrolledDropdown nav inNavbar>
+                      <DropdownToggle nav caret>
+                        {Object.keys(user).length == 0
+                          ? 'Welcome'
+                          : user.profile.firstName}
+                      </DropdownToggle>
+                      <DropdownMenu right>
+                        <DropdownItem>
+                          <Link to={'/dashboard'}>Dashboard</Link>
+                        </DropdownItem>
+                        <DropdownItem divider />
+                        <DropdownItem>
+                          <span className='log-out' onClick={signOut}>
+                            Log Out
+                          </span>
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                  ) : (
+                    <UncontrolledDropdown nav inNavbar>
+                      <DropdownToggle nav caret>
+                        Welcome!
+                      </DropdownToggle>
+                      <DropdownMenu right>
+                        <DropdownItem>
+                          <Link to={'/login'}>Login</Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                          <Link to={'/register'}>SignUp</Link>
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+                  )}
+                </Nav>
               </Navbar>
             </Col>
           </Row>
@@ -140,6 +184,17 @@ class Navigation extends React.PureComponent {
             onClick={toggleCart}
           />
         </div>
+
+        {/* hidden menu drawer */}
+        <div className={isMenuOpen ? 'mini-menu-open' : 'hidden-mini-menu'}>
+          <div className='mini-menu'>
+            <Menu />
+          </div>
+          <div
+            className={isMenuOpen ? 'dark-overflow' : ''}
+            onClick={toggleMenu}
+          />
+        </div>
       </header>
     );
   }
@@ -150,7 +205,8 @@ const mapStateToProps = state => {
     isMenuOpen: state.navigation.isMenuOpen,
     isCartOpen: state.navigation.isCartOpen,
     cart: state.cart.cartItems,
-    authenticated: state.authentication.authenticated
+    authenticated: state.authentication.authenticated,
+    user: state.account.user
   };
 };
 

@@ -23,8 +23,8 @@ input[type='checkbox'] + label:last-child {
 input[type='checkbox'] + label:before {
   content: '';
   display: block;
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   border: $border-default;
   border-color: $theme-blue;
   position: absolute;
@@ -45,4 +45,8 @@ input[type='checkbox']:checked + label:before {
   border-left-color: transparent;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+input[type='checkbox']:checked + label {
+  color: $red;
 }

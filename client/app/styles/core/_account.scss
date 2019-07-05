@@ -40,6 +40,7 @@
   background: $white;
   height: 0;
   opacity: 0;
+  visibility: hidden;
   z-index: 1000;
   -webkit-box-shadow: $box-shadow;
   box-shadow: $box-shadow;
@@ -50,6 +51,7 @@
   .reset-form {
     opacity: 1;
     height: 100%;
+    visibility: visible;
     @include transition($layout-transition-higher-speed);
   }
 

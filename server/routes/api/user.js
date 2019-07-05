@@ -29,7 +29,7 @@ router.get(
   (req, res) => {
     const userId = req.params.userId;
 
-    User.findById(userId, (err, user) => {
+    User.findById(userId, { password: 0 }, (err, user) => {
       if (err) {
         return res.status(422).json({
           error: 'Your request could not be processed. Please try again.'

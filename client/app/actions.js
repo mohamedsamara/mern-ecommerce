@@ -22,6 +22,7 @@ import * as users from './containers/Users/actions';
 import * as product from './containers/Product/actions';
 import * as category from './containers/Category/actions';
 import * as brand from './containers/Brand/actions';
+import * as menu from './containers/NavigationMenu/actions';
 
 export default function mapDispatchToProps(dispatch) {
   return bindActionCreators(
@@ -41,7 +42,8 @@ export default function mapDispatchToProps(dispatch) {
       ...users,
       ...product,
       ...category,
-      ...brand
+      ...brand,
+      ...menu
     },
     dispatch
   );
