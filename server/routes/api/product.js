@@ -4,6 +4,8 @@ const passport = require('passport');
 
 // Bring in Models & Helpers
 const Product = require('../../models/Product');
+const Brand = require('../../models/Brand');
+const Category = require('../../models/Category');
 
 router.post(
   '/add/:id',
@@ -83,14 +85,8 @@ router.post(
 );
 
 // fetch all products api
-router.get('/list/:filter/:slug', (req, res) => {
-  const slug = req.params.slug;
-  const filter = req.params.filter;
-
-  console.log('slug', slug);
-  console.log('filter', filter);
-
-  Product.find({ filter: slug })
+router.get('/list', (req, res) => {
+  Product.find({})
     .populate('brand', 'name')
     .exec((err, data) => {
       if (err) {
@@ -102,6 +98,51 @@ router.get('/list/:filter/:slug', (req, res) => {
         products: data
       });
     });
+});
+
+// fetch all products by category api
+router.get('/list/category/:slug', (req, res) => {
+  const slug = req.params.slug;
+
+  Category.findOne({ slug: slug }, 'products -_id')
+    .populate('products')
+    .exec((err, data) => {
+      if (err) {
+        return res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+
+      res.status(200).json({
+        products: data.products
+      });
+    });
+});
+
+// fetch all products by brand api
+router.get('/list/brand/:slug', (req, res) => {
+  const slug = req.params.slug;
+
+  Brand.find({ slug: slug }, (err, brand) => {
+    if (err) {
+      return res.status(422).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+
+    Product.find({ brand: brand[0]._id })
+      .populate('brand', 'name')
+      .exec((err, data) => {
+        if (err) {
+          return res.status(422).json({
+            error: 'Your request could not be processed. Please try again.'
+          });
+        }
+        res.status(200).json({
+          products: data
+        });
+      });
+  });
 });
 
 router.get(

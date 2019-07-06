@@ -17,12 +17,6 @@ class Brands extends React.PureComponent {
     this.props.fetchProducts('brand', slug);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params.slug !== prevProps.match.params.slug) {
-      console.log('what is the slug now?', this.props.match.params.slug);
-    }
-  }
-
   render() {
     const { products } = this.props;
 

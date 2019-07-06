@@ -14,12 +14,13 @@ import ProductList from '../../components/ProductList';
 class Products extends React.PureComponent {
   componentWillMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchProducts(slug);
+    this.props.fetchProducts('category', slug);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.slug !== prevProps.match.params.slug) {
-      console.log('what is the slug now?', this.props.match.params.slug);
+      const slug = this.props.match.params.slug;
+      this.props.fetchProducts('category', slug);
     }
   }
 

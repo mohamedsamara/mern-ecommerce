@@ -12,8 +12,6 @@ import { Link } from 'react-router-dom';
 const BrandList = props => {
   const { brands } = props;
 
-  console.log('brands', brands);
-
   return (
     <div className='brand-list'>
       <Row>

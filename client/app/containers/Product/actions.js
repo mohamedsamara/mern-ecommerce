@@ -40,9 +40,15 @@ export const toggleAddProduct = () => {
 export const fetchProducts = (filter, slug) => {
   return async (dispatch, getState) => {
     try {
-      console.log('slug', slug);
+      let api = '';
 
-      const response = await axios.get(`/api/product/list/${filter}/${slug}`);
+      if (!slug) {
+        api = filterProductApi('all', slug);
+      } else {
+        api = filterProductApi(filter, slug);
+      }
+
+      const response = await axios.get(`/api/product/list${api}`);
 
       dispatch({
         type: FETCH_PRODUCTS,
@@ -144,4 +150,21 @@ export const addProduct = () => {
       handleError(error, title, dispatch);
     }
   };
+};
+
+const filterProductApi = (filter, slug) => {
+  let api = '';
+  switch (filter) {
+    case 'all':
+      api = ``;
+      break;
+    case 'category':
+      api = `/${filter}/${slug}`;
+      break;
+    case 'brand':
+      api = `/${filter}/${slug}`;
+      break;
+    default:
+  }
+  return api;
 };
