@@ -37,10 +37,12 @@ export const toggleAddProduct = () => {
   };
 };
 
-export const fetchProducts = () => {
+export const fetchProducts = (filter, slug) => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`/api/product/list`);
+      console.log('slug', slug);
+
+      const response = await axios.get(`/api/product/list/${filter}/${slug}`);
 
       dispatch({
         type: FETCH_PRODUCTS,

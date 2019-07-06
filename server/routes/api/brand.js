@@ -42,22 +42,18 @@ router.post(
 );
 
 // fetch all brands api
-router.get(
-  '/list',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Brand.find({}, (err, data) => {
-      if (err) {
-        return res.status(422).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
-      res.status(200).json({
-        brands: data
+router.get('/list', (req, res) => {
+  Brand.find({}, (err, data) => {
+    if (err) {
+      return res.status(422).json({
+        error: 'Your request could not be processed. Please try again.'
       });
+    }
+    res.status(200).json({
+      brands: data
     });
-  }
-);
+  });
+});
 
 router.get(
   '/list/select',

@@ -80,7 +80,8 @@ const brandReducer = (state = initialState, action) => {
         brandFormData: {
           name: '',
           description: ''
-        }
+        },
+        selectedBrands: []
       };
     case TOGGLE_ADD_BRAND:
       return { ...state, isBrandAddOpen: !state.isBrandAddOpen };

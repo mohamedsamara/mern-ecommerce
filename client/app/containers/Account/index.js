@@ -14,6 +14,7 @@ import actions from '../../actions';
 import AccountDetails from '../../components/AccountDetails';
 import ResetPasswordForm from '../../components/ResetPasswordForm';
 import Checkbox from '../../components/Checkbox';
+import SubPage from '../../components/SubPage';
 
 class Account extends React.PureComponent {
   componentDidMount() {
@@ -36,7 +37,7 @@ class Account extends React.PureComponent {
 
     return (
       <div className='account'>
-        <h1>Account Page</h1>
+        <SubPage title={'Account Page'} isMenuOpen={null} />
         <div className='info'>
           <p>{user.email}</p>
           {user.role !== 'ROLE_MEMBER' && <span>Admin</span>}

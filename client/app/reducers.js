@@ -27,6 +27,7 @@ import productReducer from './containers/Product/reducer';
 import categoryReducer from './containers/Category/reducer';
 import brandReducer from './containers/Brand/reducer';
 import navigationMenuReducer from './containers/NavigationMenu/reducer';
+import shopReducer from './containers/Shop/reducer';
 
 const createReducer = history =>
   combineReducers({
@@ -49,7 +50,8 @@ const createReducer = history =>
     product: productReducer,
     category: categoryReducer,
     brand: brandReducer,
-    menu: navigationMenuReducer
+    menu: navigationMenuReducer,
+    shop: shopReducer
   });
 
 export default createReducer;

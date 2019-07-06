@@ -42,22 +42,18 @@ router.post(
 );
 
 // fetch all categories api
-router.get(
-  '/list',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Category.find({}, (err, data) => {
-      if (err) {
-        return res.status(422).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
-      res.status(200).json({
-        categories: data
+router.get('/list', (req, res) => {
+  Category.find({}, (err, data) => {
+    if (err) {
+      return res.status(422).json({
+        error: 'Your request could not be processed. Please try again.'
       });
+    }
+    res.status(200).json({
+      categories: data
     });
-  }
-);
+  });
+});
 
 // fetch categories selection api
 router.get(

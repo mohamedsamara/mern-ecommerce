@@ -11,6 +11,7 @@
     position: absolute;
     right: 0;
     height: 100%;
+    border-width: 1px !important;
 
     @include media-breakpoint-between(md, lg) {
       position: relative;

@@ -67,6 +67,7 @@
   -webkit-box-orient: vertical;
   display: -webkit-box;
   -webkit-line-clamp: $line;
+  -o-text-overflow: ellipsis;
   overflow: hidden;
   text-overflow: ellipsis;
 }

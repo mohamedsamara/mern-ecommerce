@@ -22,6 +22,8 @@ import Authentication from '../Authentication';
 import Notification from '../Notification';
 import ForgotPassword from '../ForgotPassword';
 import ResetPassword from '../ResetPassword';
+import Shop from '../Shop';
+import BrandPage from '../BrandPage';
 
 import Page404 from '../../components/Page404';
 import Footer from '../../components/Footer';
@@ -39,6 +41,8 @@ class Application extends React.PureComponent {
             <div className='wrapper'>
               <Switch>
                 <Route exact path='/' component={HomePage} />
+                <Route path='/shop' component={Shop} />
+                <Route path='/brands' component={BrandPage} />
                 <Route path='/login' component={LoginPage} />
                 <Route path='/register' component={SignupPage} />
                 <Route path='/forgot-password' component={ForgotPassword} />

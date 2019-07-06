@@ -83,24 +83,26 @@ router.post(
 );
 
 // fetch all products api
-router.get(
-  '/list',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Product.find({})
-      .populate('brand', 'name')
-      .exec((err, data) => {
-        if (err) {
-          return res.status(422).json({
-            error: 'Your request could not be processed. Please try again.'
-          });
-        }
-        res.status(200).json({
-          products: data
+router.get('/list/:filter/:slug', (req, res) => {
+  const slug = req.params.slug;
+  const filter = req.params.filter;
+
+  console.log('slug', slug);
+  console.log('filter', filter);
+
+  Product.find({ filter: slug })
+    .populate('brand', 'name')
+    .exec((err, data) => {
+      if (err) {
+        return res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
         });
+      }
+      res.status(200).json({
+        products: data
       });
-  }
-);
+    });
+});
 
 router.get(
   '/list/select',

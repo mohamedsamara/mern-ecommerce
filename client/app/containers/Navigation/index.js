@@ -100,16 +100,8 @@ class Navigation extends React.PureComponent {
               className='col-no-padding'
             >
               <div className='header-links'>
-                <span
-                  className={
-                    isMenuOpen ? 'bars-icon close-icon' : 'bars-icon fa fa-bars'
-                  }
-                  onClick={toggleMenu}
-                />
-                <span
-                  className={isCartOpen ? 'close-icon' : 'fa fa-cart-plus'}
-                  onClick={toggleCart}
-                >
+                <span className='bars-icon fa fa-bars' onClick={toggleMenu} />
+                <span className='fa fa-cart-plus' onClick={toggleCart}>
                   {cart.length > 0 && (
                     <span className='cart-badge'>{cart.length}</span>
                   )}

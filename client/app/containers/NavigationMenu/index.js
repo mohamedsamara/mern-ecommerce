@@ -9,18 +9,48 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 class NavigationMenu extends React.PureComponent {
-  render() {
-    const {} = this.props;
+  componentDidMount() {
+    this.props.fetchCategories();
+  }
 
-    return <div className='navigation-menu'>Test</div>;
+  render() {
+    const { isMenuOpen, categories, toggleMenu } = this.props;
+
+    return (
+      <div className='navigation-menu'>
+        <div className='menu-header'>
+          <h1>MERN Store</h1>
+
+          {isMenuOpen && <span className='close-icon' onClick={toggleMenu} />}
+        </div>
+        <div className='menu-body'>
+          <ul className='menu-list'>
+            {categories.map((link, index) => (
+              <li key={index} className='menu-item'>
+                <NavLink
+                  to={'/shop/category/' + link.slug}
+                  activeClassName='active-link'
+                  exact
+                >
+                  {link.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    );
   }
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    isMenuOpen: state.navigation.isMenuOpen,
+    categories: state.category.categories
+  };
 };
 
 export default connect(

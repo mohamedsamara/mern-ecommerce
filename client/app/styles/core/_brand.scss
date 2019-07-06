@@ -3,3 +3,25 @@
     margin: 20px 0px;
   }
 }
+
+.brand-list {
+  .brand-box {
+    padding: 10px;
+    border: $border-default;
+
+    &:hover {
+      border-color: $red;
+      -moz-transition: border-color $layout-transition-speed ease-in-out;
+      -webkit-transition: border-color $layout-transition-speed ease-in-out;
+      -ms-transition: border-color $layout-transition-speed ease-in-out;
+      transition: border-color $layout-transition-speed ease-in-out;
+    }
+
+    h1 {
+      a {
+        font-size: $font-size-heading-small !important;
+        color: $red !important;
+      }
+    }
+  }
+}

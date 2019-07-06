@@ -12,8 +12,8 @@
   @include transition($layout-transition-higher-speed);
 
   @include media-breakpoint-down(xs) {
-    width: 100%;
-    top: 148px;
+    width: 88%;
+    top: 0;
   }
 }
 
@@ -28,13 +28,34 @@
     @include dark-overflow();
     @include media-breakpoint-down(xs) {
       width: 100%;
-      top: 148px;
+      top: 0;
     }
   }
 }
 
 .cart {
   height: 100%;
+
+  .cart-header {
+    padding: 5px;
+    @include flex();
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    .close-icon {
+      cursor: pointer;
+      margin: 0 5px;
+      position: relative;
+      display: inline-block;
+      background-size: 16px;
+      @include icon($close, 25px, 25px);
+
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
 
   .empty-cart {
     height: 100%;

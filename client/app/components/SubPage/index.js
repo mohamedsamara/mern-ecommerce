@@ -13,13 +13,17 @@ const SubPage = props => {
     <div className='sub-page'>
       <div className='subpage-header'>
         <h1>{title}</h1>
-        {isMenuOpen ? (
-          <div className='back' onClick={toggleMenu}>
-            <i className='fa fa-chevron-left'>Back</i>
-          </div>
-        ) : (
-          <div className='add' onClick={toggleMenu}>
-            <i className='fa fa-plus' />
+        {isMenuOpen !== null && (
+          <div className='action'>
+            {isMenuOpen ? (
+              <div className='back' onClick={toggleMenu}>
+                <i className='fa fa-chevron-left'>Back</i>
+              </div>
+            ) : (
+              <div className='add' onClick={toggleMenu}>
+                <i className='fa fa-plus' />
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -1,6 +1,14 @@
 const Mongoose = require('mongoose');
-
+const slug = require('mongoose-slug-generator');
 const { Schema } = Mongoose;
+
+const options = {
+  separator: '-',
+  lang: 'en',
+  truncate: 120
+};
+
+Mongoose.plugin(slug, options);
 
 // Brand Schema
 const BrandSchema = new Schema({
@@ -8,6 +16,7 @@ const BrandSchema = new Schema({
     type: String,
     trim: true
   },
+  slug: { type: String, slug: 'name', unique: true },
   image: {
     data: Buffer,
     contentType: String

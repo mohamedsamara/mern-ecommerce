@@ -43,14 +43,6 @@
     }
   }
 
-  .close-icon {
-    margin: 0 5px;
-    position: relative;
-    display: inline-block;
-    background-size: 16px;
-    @include icon($close, 25px, 25px);
-  }
-
   .fa {
     cursor: pointer;
     color: $red;
@@ -71,6 +63,7 @@
     @include media-breakpoint-down(sm) {
       padding-top: 0;
       justify-content: center;
+      padding: 0;
     }
   }
 

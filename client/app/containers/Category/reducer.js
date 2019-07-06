@@ -80,7 +80,8 @@ const categoryReducer = (state = initialState, action) => {
         categoryFormData: {
           name: '',
           description: ''
-        }
+        },
+        selectedCategories: []
       };
     case TOGGLE_ADD_CATEGORY:
       return { ...state, isCategoryAddOpen: !state.isCategoryAddOpen };

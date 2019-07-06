@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import Table from '../../components/Table';
+import SubPage from '../../components/SubPage';
 
 class Users extends React.PureComponent {
   componentDidMount() {
@@ -21,6 +22,7 @@ class Users extends React.PureComponent {
 
     return (
       <div className='users'>
+        <SubPage title={'User List'} isMenuOpen={null} />
         <Table
           data={users}
           columns={columns}

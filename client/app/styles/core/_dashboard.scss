@@ -21,6 +21,10 @@
   .menu-panel.collapse {
     border-bottom: $border-default;
     border-color: $dark-border-color;
+
+    &:hover {
+      background-color: $theme-gray;
+    }
   }
 
   .panel-title {

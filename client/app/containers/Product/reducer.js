@@ -105,7 +105,8 @@ const productReducer = (state = initialState, action) => {
           description: '',
           quantity: '0',
           price: '0'
-        }
+        },
+        selectedProducts: []
       };
     case TOGGLE_ADD_PRODUCT:
       return { ...state, isProductAddOpen: !state.isProductAddOpen };

@@ -3,3 +3,32 @@
     margin: 20px 0px;
   }
 }
+
+.product-list {
+  .product-container {
+    background-color: $white;
+    box-shadow: $box-shadow;
+
+    .product-box {
+      padding: 15px;
+    }
+
+    h1 {
+      color: $theme-blue !important;
+    }
+
+    .product-desc {
+      @include text-ellipsis(1);
+    }
+
+    .price {
+    }
+
+    .by {
+      span {
+        color: $red;
+        margin-right: 8px;
+      }
+    }
+  }
+}
