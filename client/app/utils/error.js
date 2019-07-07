@@ -16,11 +16,13 @@ const handleError = (err, title, dispatch) => {
     autoDismiss: 1
   };
 
-  if (err.response.data.error) {
+  if (err.hasOwnProperty('response') && err.response.status != 401) {
     unsuccessfulOptions.message = err.response.data.error;
-  } else if (err.response.status == 401) {
+  } else if (err.hasOwnProperty('response') && err.response.status == 401) {
     unsuccessfulOptions.message = 'Unauthorized Access! Please login again';
     dispatch(signOut());
+  } else if (err.message) {
+    unsuccessfulOptions.message = err.message;
   } else if (err.request) {
     unsuccessfulOptions.message = err.request;
   } else {

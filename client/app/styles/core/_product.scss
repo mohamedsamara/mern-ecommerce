@@ -2,6 +2,10 @@
   .table-section {
     margin: 20px 0px;
   }
+
+  .desc-column {
+    @include text-ellipsis(2);
+  }
 }
 
 .product-list {
@@ -17,18 +21,80 @@
       color: $theme-blue !important;
     }
 
+    .stock {
+      font-weight: $font-weight-bold-light;
+    }
+
+    .in-stock {
+      color: $theme-blue;
+    }
+
+    .out-of-stock {
+      color: $theme-bright-red;
+    }
+
     .product-desc {
-      @include text-ellipsis(1);
+      max-height: 40px;
+      overflow: hidden;
     }
 
     .price {
+      color: $font-custom-color;
+      font-weight: $font-weight-bold-light;
     }
 
     .by {
+      margin-bottom: 5px;
+      color: $theme-blue;
+
       span {
-        color: $red;
+        color: $font-custom-color !important;
         margin-right: 8px;
       }
     }
+  }
+}
+
+.item-page {
+  .item-image {
+    position: relative;
+
+    .stock {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      background-color: $white;
+      font-weight: $font-weight-bold-light;
+    }
+
+    .out-of-stock {
+      color: $red;
+    }
+
+    .in-stock {
+      color: $theme-blue;
+    }
+  }
+}
+
+.item-box {
+  h1 {
+    margin: 0px;
+    color: $red !important;
+  }
+
+  .item-desc {
+    color: $font-custom-color !important;
+  }
+
+  .price {
+    color: $font-custom-color;
+    font-weight: $font-weight-bold-light;
+    font-size: $font-size-large;
+  }
+
+  .item-actions {
+    margin-top: 20px;
   }
 }

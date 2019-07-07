@@ -27,9 +27,13 @@ const ProductList = props => {
                       {product.brand.name}
                     </p>
                   )}
-
                   <p className='product-desc'>{product.description}</p>
                   <p className='price'>${product.price}</p>
+                  {product.quantity > 0 ? (
+                    <p className='stock in-stock'>In stock</p>
+                  ) : (
+                    <p className='stock out-of-stock'>Out of stock</p>
+                  )}
                 </Link>
               </div>
             </div>

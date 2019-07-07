@@ -2,6 +2,10 @@
   .table-section {
     margin: 20px 0px;
   }
+
+  .desc-column {
+    @include text-ellipsis(2);
+  }
 }
 
 .brand-list {
@@ -15,6 +19,11 @@
       -webkit-transition: border-color $layout-transition-speed ease-in-out;
       -ms-transition: border-color $layout-transition-speed ease-in-out;
       transition: border-color $layout-transition-speed ease-in-out;
+    }
+
+    .brand-desc {
+      max-height: 40px;
+      overflow: hidden;
     }
 
     h1 {

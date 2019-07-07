@@ -33,7 +33,8 @@ const initialState = {
     },
     {
       dataField: 'description',
-      text: 'Category Description'
+      text: 'Category Description',
+      classes: 'desc-column'
     }
   ]
 };

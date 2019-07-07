@@ -16,7 +16,8 @@ const initialState = {
     },
     {
       dataField: 'email',
-      text: 'User Email'
+      text: 'User Email',
+      classes: 'email-column'
     },
     {
       dataField: 'role',

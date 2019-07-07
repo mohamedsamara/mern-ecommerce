@@ -32,17 +32,4 @@
   font-size: $font-size-medium;
 }
 
-.table {
-  overflow: auto;
-  table-layout: auto;
-
-  @include media-breakpoint-down(md) {
-    display: block;
-  }
-}
-
-.react-bootstrap-table table {
-  table-layout: auto !important;
-}
-
 // end bootstrap overrides

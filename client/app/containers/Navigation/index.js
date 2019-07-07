@@ -87,9 +87,9 @@ class Navigation extends React.PureComponent {
             >
               <div className='brand'>
                 <span className='bars-icon fa fa-bars' onClick={toggleMenu} />
-                <h1>
-                  <Link to='/'>MERN Store</Link>
-                </h1>
+                <Link to='/'>
+                  <h1>MERN Store</h1>
+                </Link>
               </div>
             </Col>
             <Col

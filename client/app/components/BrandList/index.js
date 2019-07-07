@@ -14,6 +14,8 @@ const BrandList = props => {
 
   return (
     <div className='brand-list'>
+      <h2>Brands</h2>
+      <hr />
       <Row>
         {brands.map((brand, index) => (
           <Col xs='6' md='4' lg='3' key={index} className='mb-3'>

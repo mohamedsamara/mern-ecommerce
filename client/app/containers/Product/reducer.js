@@ -6,6 +6,7 @@
 
 import {
   FETCH_PRODUCTS,
+  FETCH_PRODUCT,
   PRODUCT_CHANGE,
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
@@ -17,6 +18,7 @@ import {
 
 const initialState = {
   products: [],
+  product: {},
   productsSelect: [],
   selectedProducts: [],
   isProductAddOpen: false,
@@ -44,7 +46,8 @@ const initialState = {
     },
     {
       dataField: 'description',
-      text: 'Product Description'
+      text: 'Product Description',
+      classes: 'desc-column'
     },
     {
       dataField: 'quantity',
@@ -70,6 +73,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload
+      };
+    case FETCH_PRODUCT:
+      return {
+        ...state,
+        product: action.payload
       };
     case FETCH_PRODUCTS_SELECT:
       return { ...state, productsSelect: action.payload };

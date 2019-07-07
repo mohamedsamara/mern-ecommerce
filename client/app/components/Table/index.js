@@ -67,7 +67,7 @@ const Table = props => {
             hover={hover}
             condensed={condensed}
             noDataIndication={indication}
-            rowEvents={isRowEvents ? rowEvents : null}
+            // rowEvents={isRowEvents ? rowEvents : null}
           />
         </div>
       )}

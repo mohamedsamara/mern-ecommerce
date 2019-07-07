@@ -37,7 +37,8 @@ const initialState = {
     },
     {
       dataField: 'description',
-      text: 'Brand Description'
+      text: 'Brand Description',
+      classes: 'desc-column'
     }
   ]
 };

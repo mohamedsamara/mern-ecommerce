@@ -82,6 +82,24 @@ router.post(
   }
 );
 
+// fetch product api
+router.get('/item/:slug', (req, res) => {
+  const slug = req.params.slug;
+
+  Product.findOne({ slug: slug })
+    .populate('brand', 'name')
+    .exec((err, product) => {
+      if (err) {
+        return res.status(422).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+      res.status(200).json({
+        product: product
+      });
+    });
+});
+
 // fetch all products api
 router.get('/list', (req, res) => {
   Product.find({})

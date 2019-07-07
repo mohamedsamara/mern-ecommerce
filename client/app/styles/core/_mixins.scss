@@ -65,11 +65,11 @@
 // text ellipsis ...
 @mixin text-ellipsis($line) {
   -webkit-box-orient: vertical;
-  display: -webkit-box;
   -webkit-line-clamp: $line;
   -o-text-overflow: ellipsis;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 // dark overflow

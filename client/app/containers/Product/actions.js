@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import {
   FETCH_PRODUCTS,
+  FETCH_PRODUCT,
   PRODUCT_CHANGE,
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
@@ -55,6 +56,22 @@ export const fetchProducts = (filter, slug) => {
       dispatch({
         type: FETCH_PRODUCTS,
         payload: response.data.products
+      });
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+export const fetchProduct = slug => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(`/api/product/item/${slug}`);
+
+      dispatch({
+        type: FETCH_PRODUCT,
+        payload: response.data.product
       });
     } catch (error) {
       const title = `Please try again!`;

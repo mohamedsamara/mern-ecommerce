@@ -15,8 +15,22 @@ export const fetchCart = () => {
     try {
       const response = await axios.post('/api/cart');
 
-      cookie.save('token', response.data.token, { path: '/' });
+      cookie.save('cart', response.data.cart._id, { path: '/' });
       cookie.save('user', response.data.user.id, { path: '/' });
+
+      dispatch({ type: FETCH_CART });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const addToCart = itemId => {
+  return async (dispatch, getState) => {
+    try {
+      console.log('itemId---', itemId);
+
+      const response = await axios.post('/api/cart');
 
       dispatch({ type: FETCH_CART });
     } catch (error) {

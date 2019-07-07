@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 import { Switch, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
+import cookie from 'react-cookies';
 
 import actions from '../../actions';
 
@@ -24,6 +25,7 @@ import ForgotPassword from '../ForgotPassword';
 import ResetPassword from '../ResetPassword';
 import Shop from '../Shop';
 import BrandPage from '../BrandPage';
+import ProductPage from '../ProductPage';
 
 import Page404 from '../../components/Page404';
 import Footer from '../../components/Footer';
@@ -43,6 +45,7 @@ class Application extends React.PureComponent {
                 <Route exact path='/' component={HomePage} />
                 <Route path='/shop' component={Shop} />
                 <Route path='/brands' component={BrandPage} />
+                <Route path='/product/:slug' component={ProductPage} />
                 <Route path='/login' component={LoginPage} />
                 <Route path='/register' component={SignupPage} />
                 <Route path='/forgot-password' component={ForgotPassword} />

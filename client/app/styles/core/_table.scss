@@ -11,3 +11,13 @@
     margin: 20px 0px;
   }
 }
+
+.table {
+  overflow: auto;
+  table-layout: auto;
+
+  @include media-breakpoint-down(md) {
+    display: block;
+  }
+}
+
