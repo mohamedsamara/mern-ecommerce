@@ -55,25 +55,6 @@ router.get('/list', (req, res) => {
   });
 });
 
-// fetch categories selection api
-router.get(
-  '/list/select',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Category.find({}, 'name', (err, data) => {
-      if (err) {
-        return res.status(422).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
-
-      res.status(200).json({
-        categories: data
-      });
-    });
-  }
-);
-
 router.delete(
   '/delete/:id',
   passport.authenticate('jwt', { session: false }),

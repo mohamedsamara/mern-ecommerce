@@ -6,21 +6,20 @@
 
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
-import cookie from 'react-cookies';
 
 import {
   FETCH_CATEGORIES,
-  FETCH_CATEGORIES_SELECT,
   CATEGORY_CHANGE,
   RESET_CATEGORY,
-  CATEGORY_SELECT,
   TOGGLE_ADD_CATEGORY,
   ADD_CATEGORY,
   REMOVE_CATEGORY
 } from './constants';
 
+import { RESET_PRODUCT } from '../Product/constants';
+
 import handleError from '../../utils/error';
-import { formSelect, unformSelect } from '../../helpers/select';
+import { unformSelect } from '../../helpers/select';
 
 export const categoryChange = (name, value) => {
   let formData = {};
@@ -42,24 +41,6 @@ export const categorySelect = value => {
   return {
     type: CATEGORY_SELECT,
     payload: value
-  };
-};
-
-export const fetchCategoriesSelect = () => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await axios.get(`/api/category/list/select`);
-
-      let formulatedCategories = formSelect(response.data.categories);
-
-      dispatch({
-        type: FETCH_CATEGORIES_SELECT,
-        payload: formulatedCategories
-      });
-    } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
-    }
   };
 };
 
@@ -132,6 +113,7 @@ export const addCategory = () => {
           payload: response.data.category
         });
         dispatch({ type: RESET_CATEGORY });
+        dispatch({ type: RESET_PRODUCT });
         dispatch(toggleAddCategory());
       }
     } catch (error) {

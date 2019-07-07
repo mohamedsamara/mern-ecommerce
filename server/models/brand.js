@@ -25,12 +25,6 @@ const BrandSchema = new Schema({
     type: String,
     trim: true
   },
-  products: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product'
-    }
-  ],
   updated: Date,
   created: {
     type: Date,

@@ -18,8 +18,10 @@ import {
   FETCH_PRODUCTS_SELECT
 } from './constants';
 
+import { RESET_BRAND } from '../Brand/constants';
+
 import handleError from '../../utils/error';
-import { formSelect, unformSelect } from '../../helpers/select';
+import { formSelect } from '../../helpers/select';
 
 export const productChange = (name, value) => {
   let formData = {};
@@ -115,20 +117,14 @@ export const addProduct = () => {
   return async (dispatch, getState) => {
     try {
       const product = getState().product.productFormData;
-      const categories = getState().category.selectedCategories;
       const brand = getState().brand.selectedBrands.value;
 
-      let newCategories = unformSelect(categories);
-
-      let newProduct = {
-        categories: newCategories,
-        ...product
+      const newProduct = {
+        ...product,
+        brand: brand
       };
 
-      const response = await axios.post(
-        `/api/product/add/${brand}`,
-        newProduct
-      );
+      const response = await axios.post(`/api/product/add`, newProduct);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -143,6 +139,7 @@ export const addProduct = () => {
           payload: response.data.product
         });
         dispatch({ type: RESET_PRODUCT });
+        dispatch({ type: RESET_BRAND });
         dispatch(toggleAddProduct());
       }
     } catch (error) {

@@ -6,10 +6,8 @@
 
 import {
   FETCH_CATEGORIES,
-  FETCH_CATEGORIES_SELECT,
   CATEGORY_CHANGE,
   RESET_CATEGORY,
-  CATEGORY_SELECT,
   TOGGLE_ADD_CATEGORY,
   ADD_CATEGORY,
   REMOVE_CATEGORY
@@ -17,8 +15,6 @@ import {
 
 const initialState = {
   categories: [],
-  categoriesSelect: [],
-  selectedCategories: [],
   isCategoryAddOpen: false,
   categoryFormData: {
     name: '',
@@ -49,8 +45,6 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         categories: action.payload
       };
-    case FETCH_CATEGORIES_SELECT:
-      return { ...state, categoriesSelect: action.payload };
     case ADD_CATEGORY:
       return {
         ...state,
@@ -69,19 +63,13 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         categoryFormData: { ...state.categoryFormData, ...action.payload }
       };
-    case CATEGORY_SELECT:
-      return {
-        ...state,
-        selectedCategories: action.payload
-      };
     case RESET_CATEGORY:
       return {
         ...state,
         categoryFormData: {
           name: '',
           description: ''
-        },
-        selectedCategories: []
+        }
       };
     case TOGGLE_ADD_CATEGORY:
       return { ...state, isCategoryAddOpen: !state.isCategoryAddOpen };

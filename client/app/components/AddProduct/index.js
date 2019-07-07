@@ -16,9 +16,6 @@ const AddProduct = props => {
     productFormData,
     productChange,
     addProduct,
-    selectedCategories,
-    categories,
-    categorySelect,
     brandSelect,
     selectedBrands,
     brands
@@ -85,17 +82,6 @@ const AddProduct = props => {
             value={productFormData.price}
             onInputChange={(name, value) => {
               productChange(name, value);
-            }}
-          />
-        </Col>
-        <Col xs='12' md='12'>
-          <SelectOption
-            label={'Select Categories'}
-            multi={true}
-            options={categories}
-            value={selectedCategories}
-            handleSelectChange={value => {
-              categorySelect(value);
             }}
           />
         </Col>

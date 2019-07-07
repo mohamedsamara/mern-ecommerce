@@ -11,7 +11,6 @@ router.post(
   (req, res) => {
     const name = req.body.name;
     const description = req.body.description;
-    const products = req.body.products;
 
     if (!description || !name) {
       return res
@@ -21,8 +20,7 @@ router.post(
 
     const brand = new Brand({
       name,
-      description,
-      products
+      description
     });
 
     brand.save((err, brand) => {

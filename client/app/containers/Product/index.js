@@ -15,7 +15,6 @@ import SubPage from '../../components/SubPage';
 
 class Product extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchCategoriesSelect();
     this.props.fetchBrandsSelect();
     this.props.fetchProducts();
   }
@@ -25,9 +24,6 @@ class Product extends React.PureComponent {
       productFormData,
       productChange,
       addProduct,
-      selectedCategories,
-      categories,
-      categorySelect,
       products,
       columns,
       toggleAddProduct,
@@ -48,9 +44,6 @@ class Product extends React.PureComponent {
           {isProductAddOpen ? (
             <AddProduct
               productFormData={productFormData}
-              categories={categories}
-              selectedCategories={selectedCategories}
-              categorySelect={categorySelect}
               productChange={productChange}
               addProduct={addProduct}
               brandSelect={brandSelect}
@@ -79,8 +72,6 @@ class Product extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     productFormData: state.product.productFormData,
-    selectedCategories: state.category.selectedCategories,
-    categories: state.category.categoriesSelect,
     products: state.product.products,
     columns: state.product.columns,
     isProductAddOpen: state.product.isProductAddOpen,

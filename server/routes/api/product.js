@@ -8,7 +8,7 @@ const Brand = require('../../models/Brand');
 const Category = require('../../models/Category');
 
 router.post(
-  '/add/:id',
+  '/add',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const sku = req.body.sku;
@@ -16,8 +16,7 @@ router.post(
     const description = req.body.description;
     const quantity = req.body.quantity;
     const price = req.body.price;
-    const categories = req.body.categories;
-    const brand = req.params.id;
+    const brand = req.body.brand;
 
     if (!sku) {
       return res.status(422).json({ error: 'You must enter sku.' });
@@ -54,7 +53,6 @@ router.post(
         description,
         quantity,
         price,
-        categories,
         brand
       });
 
@@ -67,7 +65,7 @@ router.post(
 
         Product.findById(product._id)
           .populate('brand', 'name')
-          .exec((err, doc) => {
+          .exec((err, product) => {
             if (err) {
               return res.status(422).json({
                 error: 'Your request could not be processed. Please try again.'
@@ -76,7 +74,7 @@ router.post(
             res.status(200).json({
               success: true,
               message: `Product has been added successfully!`,
-              product: doc
+              product: product
             });
           });
       });

@@ -19,7 +19,7 @@ import {
 } from './constants';
 
 import handleError from '../../utils/error';
-import { formSelect, unformSelect } from '../../helpers/select';
+import { formSelect } from '../../helpers/select';
 
 export const brandChange = (name, value) => {
   let formData = {};
@@ -107,16 +107,8 @@ export const addBrand = () => {
   return async (dispatch, getState) => {
     try {
       const brand = getState().brand.brandFormData;
-      const products = getState().product.selectedProducts;
 
-      let newProducts = unformSelect(products);
-
-      let newBrand = {
-        products: newProducts,
-        ...brand
-      };
-
-      const response = await axios.post(`/api/brand/add`, newBrand);
+      const response = await axios.post(`/api/brand/add`, brand);
 
       const successfulOptions = {
         title: `${response.data.message}`,
