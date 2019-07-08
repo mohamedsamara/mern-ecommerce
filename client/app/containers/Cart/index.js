@@ -7,11 +7,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Row, Col } from 'reactstrap';
-
 import actions from '../../actions';
 
 import CartList from '../../components/CartList';
+import CartSummary from '../../components/CartSummary';
 import Checkout from '../../components/Checkout';
 
 class Cart extends React.PureComponent {
@@ -19,9 +18,12 @@ class Cart extends React.PureComponent {
     const {
       isCartOpen,
       cartItems,
+      cartTotal,
       toggleCart,
       handleShopping,
-      handleCheckout
+      handleCheckout,
+      handleRemoveFromCart,
+      authenticated
     } = this.props;
 
     return (
@@ -30,18 +32,27 @@ class Cart extends React.PureComponent {
           {isCartOpen && <span className='close-icon' onClick={toggleCart} />}
         </div>
         {cartItems.length > 0 ? (
-          <CartList cartItems={cartItems} />
+          <div className='cart-body'>
+            <CartList
+              cartItems={cartItems}
+              handleRemoveFromCart={handleRemoveFromCart}
+            />
+          </div>
         ) : (
           <div className='empty-cart'>
             <p>Your shopping cart is empty</p>
           </div>
         )}
-        <div className='cart-checkout'>
-          <Checkout
-            handleShopping={handleShopping}
-            handleCheckout={handleCheckout}
-          />
-        </div>
+        {cartItems.length > 0 && (
+          <div className='cart-checkout'>
+            <CartSummary cartTotal={cartTotal} />
+            <Checkout
+              handleShopping={handleShopping}
+              handleCheckout={handleCheckout}
+              authenticated={authenticated}
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -50,7 +61,9 @@ class Cart extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     isCartOpen: state.navigation.isCartOpen,
-    cartItems: state.cart.cartItems
+    cartItems: state.cart.cartItems,
+    cartTotal: state.cart.cartTotal,
+    authenticated: state.authentication.authenticated
   };
 };
 

@@ -13,9 +13,9 @@ import Newsletter from '../../containers/Newsletter';
 
 const Footer = props => {
   const infoLinks = [
-    { id: 0, name: 'Contact Us', to: 'contact' },
-    { id: 1, name: 'Returns', to: 'return' },
-    { id: 2, name: 'Shipping', to: 'shipping' }
+    { id: 0, name: 'Contact Us', to: '/contact' },
+    { id: 1, name: 'Returns', to: '/return' },
+    { id: 2, name: 'Shipping', to: '/shipping' }
   ];
 
   const footerBusinessLinks = (

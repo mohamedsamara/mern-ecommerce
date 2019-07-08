@@ -1,7 +1,7 @@
 /**
  *
  * token.js
- * Here is the setup of axios default headers
+ * axios default headers setup
  */
 
 import axios from 'axios';

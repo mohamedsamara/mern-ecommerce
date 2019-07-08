@@ -9,7 +9,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CartList = props => {
-  const { cartItems } = props;
+  const { cartItems, handleRemoveFromCart } = props;
 
   return (
     <div className='cart-list'>
@@ -25,6 +25,10 @@ const CartList = props => {
             <label>quantity</label>
             {item.quantity}
           </p>
+          <i
+            className='icon-close'
+            onClick={() => handleRemoveFromCart(item)}
+          />
         </div>
       ))}
     </div>

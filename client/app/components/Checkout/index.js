@@ -7,7 +7,7 @@
 import React from 'react';
 
 const Checkout = props => {
-  const { handleShopping, handleCheckout } = props;
+  const { authenticated, handleShopping, handleCheckout } = props;
 
   return (
     <div className='checkout'>
@@ -19,14 +19,23 @@ const Checkout = props => {
         >
           Continue shopping
         </button>
-
-        <button
-          className='input-btn'
-          type='submit'
-          onClick={() => handleCheckout()}
-        >
-          Proceed To Checkout
-        </button>
+        {authenticated ? (
+          <button
+            className='input-btn'
+            type='submit'
+            onClick={() => placeOrder()}
+          >
+            Place Order
+          </button>
+        ) : (
+          <button
+            className='input-btn'
+            type='submit'
+            onClick={() => handleCheckout()}
+          >
+            Proceed To Checkout
+          </button>
+        )}
       </div>
     </div>
   );

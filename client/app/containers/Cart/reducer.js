@@ -10,12 +10,14 @@ import {
   FETCH_CART,
   FETCH_IN_CART,
   ADD_TO_CART,
-  REMOVE_FROM_CART
+  REMOVE_FROM_CART,
+  HANDLE_CART_TOTAL
 } from './constants';
 
 const initialState = {
   cartItems: [],
-  itemsInCart: []
+  itemsInCart: [],
+  cartTotal: 0
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -33,6 +35,13 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         itemsInCart: action.payload
       };
+      return newState;
+    case HANDLE_CART_TOTAL:
+      newState = {
+        ...state,
+        cartTotal: action.payload
+      };
+      cookie.save('cartTotal', newState.cartTotal, { path: '/' });
       return newState;
     case ADD_TO_CART:
       newState = {

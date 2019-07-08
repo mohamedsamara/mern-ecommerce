@@ -43,7 +43,22 @@
     border-top: $border-default;
   }
 
-  .cart-list {
+  .total-item {
+    margin-bottom: 10px;
+
+    label {
+      color: $font-custom-color;
+      font-weight: $font-weight-bold-light;
+    }
+  }
+
+  .cart-summary {
+    padding: 5px 15px;
+    background-color: $theme-light-white;
+  }
+
+  .cart-body {
+    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 100%;
@@ -51,12 +66,26 @@
   }
 
   .item-box {
+    position: relative;
     padding: 10px;
     margin-bottom: 5px;
     border-bottom: $border-default;
 
     &:last-child {
       border-bottom: none;
+    }
+
+    h1 {
+      display: inline-block;
+    }
+
+    .icon-close {
+      color: $theme-bright-red;
+      position: absolute;
+      top: 7px;
+      font-size: $font-size-x-large;
+      right: 10px;
+      cursor: pointer;
     }
 
     p {
