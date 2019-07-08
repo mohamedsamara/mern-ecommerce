@@ -33,7 +33,7 @@ class Navigation extends React.PureComponent {
     const {
       authenticated,
       user,
-      cart,
+      cartItems,
       signOut,
       isCartOpen,
       isMenuOpen,
@@ -102,8 +102,8 @@ class Navigation extends React.PureComponent {
               <div className='header-links'>
                 <span className='bars-icon fa fa-bars' onClick={toggleMenu} />
                 <span className='fa fa-cart-plus' onClick={toggleCart}>
-                  {cart.length > 0 && (
-                    <span className='cart-badge'>{cart.length}</span>
+                  {cartItems.length > 0 && (
+                    <span className='cart-badge'>{cartItems.length}</span>
                   )}
                 </span>
               </div>
@@ -196,7 +196,7 @@ const mapStateToProps = state => {
   return {
     isMenuOpen: state.navigation.isMenuOpen,
     isCartOpen: state.navigation.isCartOpen,
-    cart: state.cart.cartItems,
+    cartItems: state.cart.cartItems,
     authenticated: state.authentication.authenticated,
     user: state.account.user
   };

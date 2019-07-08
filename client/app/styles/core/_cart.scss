@@ -35,20 +35,51 @@
 
 .cart {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .cart-checkout {
+    background-color: $white;
+    border-top: $border-default;
+  }
+
+  .cart-list {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100%;
+    background-color: $theme-white;
+  }
+
+  .item-box {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-bottom: $border-default;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    p {
+      margin: 5px 0 0 0;
+    }
+
+    label {
+      margin-right: 10px;
+      color: $font-custom-color;
+      font-weight: $font-weight-bold-light;
+    }
+  }
 
   .cart-header {
-    padding: 5px;
-    @include flex();
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    border-bottom: $border-default;
+    text-align: right;
 
     .close-icon {
       cursor: pointer;
-      margin: 0 5px;
       position: relative;
       display: inline-block;
       background-size: 16px;
+      padding: 20px;
       @include icon($close, 25px, 25px);
 
       &:hover {

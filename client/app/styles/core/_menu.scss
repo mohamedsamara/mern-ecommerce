@@ -43,6 +43,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
+    background-color: $white;
 
     h1 {
       margin: 0;
@@ -74,6 +75,7 @@
 
           a {
             color: $red !important;
+            font-weight: $font-weight-bold-light;
           }
         }
 
@@ -85,6 +87,7 @@
         }
 
         a.active-link {
+          font-weight: $font-weight-bold-light;
           color: $red !important;
         }
       }

@@ -5,7 +5,6 @@ $theme-green: #00acac;
 $theme-gray: #f1f1f1;
 $theme-blue: #145086;
 $theme-purple: #727cb6;
-$theme-red: #4b4a4a;
 $theme-white: #f6f7f8;
 $theme-light-white: #e8f0fe;
 $theme-black: #323232;
@@ -63,7 +62,8 @@ $separator-color: #e6e5ea;
 $dark-overflow-bg: #0006;
 $transparent-bg: #3232321f;
 $transparent-gray-bg: #f1f3f4f5;
-$badge: $theme-red;
+$badge: $red;
+$disabled-bg: #cccccc;
 
 $box-shadow: 0 0 10px 0 #e6e5ea;
 $border-radius-default: 3px;

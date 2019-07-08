@@ -31,7 +31,20 @@ import Page404 from '../../components/Page404';
 import Footer from '../../components/Footer';
 
 class Application extends React.PureComponent {
-  componentDidMount() {}
+  componentDidMount() {
+    const cart = cookie.load('cart');
+    const InCart = cookie.load('InCart');
+    const user = cookie.load('user');
+
+    if (user != undefined) {
+      this.props.fetchProfile(user);
+    }
+
+    if (cart != undefined || InCart != undefined) {
+      this.props.handleFetchCart(cart);
+      this.props.handleFetchInCart(InCart);
+    }
+  }
 
   render() {
     return (

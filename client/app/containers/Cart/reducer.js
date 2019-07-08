@@ -4,19 +4,63 @@
  *
  */
 
-import { FETCH_CART } from './constants';
+import cookie from 'react-cookies';
+
+import {
+  FETCH_CART,
+  FETCH_IN_CART,
+  ADD_TO_CART,
+  REMOVE_FROM_CART
+} from './constants';
 
 const initialState = {
-  cartItems: []
+  cartItems: [],
+  itemsInCart: []
 };
 
 const cartReducer = (state = initialState, action) => {
+  let newState;
+
   switch (action.type) {
     case FETCH_CART:
-      return {
+      newState = {
         ...state,
         cartItems: action.payload
       };
+      return newState;
+    case FETCH_IN_CART:
+      newState = {
+        ...state,
+        itemsInCart: action.payload
+      };
+      return newState;
+    case ADD_TO_CART:
+      newState = {
+        ...state,
+        cartItems: [...state.cartItems, action.payload],
+        itemsInCart: [...state.itemsInCart, action.payload._id]
+      };
+      cookie.save('cart', newState.cartItems, { path: '/' });
+      cookie.save('InCart', newState.itemsInCart, { path: '/' });
+      return newState;
+    case REMOVE_FROM_CART:
+      let itemIndex = state.cartItems.findIndex(
+        x => x._id == action.payload._id
+      );
+      newState = {
+        ...state,
+        cartItems: [
+          ...state.cartItems.slice(0, itemIndex),
+          ...state.cartItems.slice(itemIndex + 1)
+        ],
+        itemsInCart: [
+          ...state.itemsInCart.slice(0, itemIndex),
+          ...state.itemsInCart.slice(itemIndex + 1)
+        ]
+      };
+      cookie.save('cart', newState.cartItems, { path: '/' });
+      cookie.save('InCart', newState.itemsInCart, { path: '/' });
+      return newState;
     default:
       return state;
   }

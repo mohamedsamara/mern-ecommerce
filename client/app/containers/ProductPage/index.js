@@ -17,6 +17,7 @@ class ProductPage extends React.PureComponent {
   componentWillMount() {
     const slug = this.props.match.params.slug;
     this.props.fetchProduct(slug);
+    document.body.classList.add('product-page');
   }
 
   componentDidUpdate(prevProps) {
@@ -26,8 +27,19 @@ class ProductPage extends React.PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    document.body.classList.remove('product-page');
+  }
+
   render() {
-    const { product, productFormData, productChange, addToCart } = this.props;
+    const {
+      product,
+      productFormData,
+      itemsInCart,
+      productChange,
+      handleAddToCart,
+      handleRemoveFromCart
+    } = this.props;
 
     return (
       <div className='item-page'>
@@ -54,6 +66,7 @@ class ProductPage extends React.PureComponent {
                   type={'number'}
                   label={'Quantity'}
                   name={'quantity'}
+                  disabled={!product.quantity > 0}
                   placeholder={'Product Quantity'}
                   value={productFormData.quantity}
                   onInputChange={(name, value) => {
@@ -61,13 +74,25 @@ class ProductPage extends React.PureComponent {
                   }}
                 />
                 <div className='item-actions'>
-                  <button
-                    className='input-btn'
-                    type='submit'
-                    onClick={() => addToCart(product._id)}
-                  >
-                    AddToCart
-                  </button>
+                  {itemsInCart.includes(product._id) ? (
+                    <button
+                      disabled={!product.quantity > 0}
+                      className='input-btn'
+                      type='submit'
+                      onClick={() => handleRemoveFromCart(product)}
+                    >
+                      Remove To Cart
+                    </button>
+                  ) : (
+                    <button
+                      disabled={!product.quantity > 0}
+                      className='input-btn'
+                      type='submit'
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add To Cart
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -81,7 +106,8 @@ class ProductPage extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     product: state.product.product,
-    productFormData: state.product.productFormData
+    productFormData: state.product.productFormData,
+    itemsInCart: state.cart.itemsInCart
   };
 };
 

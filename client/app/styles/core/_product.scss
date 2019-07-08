@@ -19,6 +19,8 @@
 
     h1 {
       color: $theme-blue !important;
+      max-height: 30px;
+      overflow: hidden;
     }
 
     .stock {
@@ -52,6 +54,12 @@
         margin-right: 8px;
       }
     }
+  }
+}
+
+.product-page {
+  .main {
+    background-color: $theme-white;
   }
 }
 

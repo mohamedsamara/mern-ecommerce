@@ -48,7 +48,7 @@
 
 // badge styles
 @mixin badge() {
-  background-color: $badge;
+  background-color: $theme-light-blue;
   border-radius: 100%;
   color: $white;
   font-size: 0.6rem;

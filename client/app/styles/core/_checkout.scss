@@ -1,0 +1,22 @@
+.checkout {
+  margin-top: 20px;
+
+  .checkout-actions {
+    padding: 10px;
+
+    .input-btn {
+      margin-right: 10px;
+      background-color: $theme-black;
+      color: $white !important;
+
+      &:hover {
+        background-color: black;
+      }
+
+      @include media-breakpoint-down(xs) {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

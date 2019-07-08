@@ -11,22 +11,37 @@ import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
 
+import CartList from '../../components/CartList';
+import Checkout from '../../components/Checkout';
+
 class Cart extends React.PureComponent {
   render() {
-    const { isCartOpen, cart, toggleCart } = this.props;
+    const {
+      isCartOpen,
+      cartItems,
+      toggleCart,
+      handleShopping,
+      handleCheckout
+    } = this.props;
 
     return (
       <div className='cart'>
         <div className='cart-header'>
           {isCartOpen && <span className='close-icon' onClick={toggleCart} />}
         </div>
-        {cart.length > 0 ? (
-          'test'
+        {cartItems.length > 0 ? (
+          <CartList cartItems={cartItems} />
         ) : (
           <div className='empty-cart'>
             <p>Your shopping cart is empty</p>
           </div>
         )}
+        <div className='cart-checkout'>
+          <Checkout
+            handleShopping={handleShopping}
+            handleCheckout={handleCheckout}
+          />
+        </div>
       </div>
     );
   }
@@ -35,7 +50,7 @@ class Cart extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     isCartOpen: state.navigation.isCartOpen,
-    cart: state.cart.cartItems
+    cartItems: state.cart.cartItems
   };
 };
 

@@ -5,6 +5,7 @@ const newsletterRoutes = require('./newsletter');
 const productRoutes = require('./product');
 const categoryRoutes = require('./category');
 const brandRoutes = require('./brand');
+const cartRoutes = require('./cart');
 
 // auth routes
 router.use('/auth', authRoutes);
@@ -23,5 +24,7 @@ router.use('/category', categoryRoutes);
 
 // brand routes
 router.use('/brand', brandRoutes);
+
+router.use('/cart', cartRoutes);
 
 module.exports = router;

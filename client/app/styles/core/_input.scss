@@ -12,6 +12,13 @@ input[type='password'] {
     color: $focus-font-color;
     border-color: $dark-border-color !important;
   }
+
+  &:disabled {
+    background-color: $disabled-bg;
+    color: $font-custom-color !important;
+    border: none !important;
+    cursor: not-allowed;
+  }
 }
 
 // end input text styles
@@ -31,6 +38,13 @@ button[type='reset'] {
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled {
+    background-color: $disabled-bg;
+    color: $font-custom-color !important;
+    border: none !important;
+    cursor: not-allowed;
   }
 }
 // end input button styles

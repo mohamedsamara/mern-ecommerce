@@ -30,7 +30,7 @@ export const toggleResetForm = () => {
 export const fetchProfile = userId => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`api/user/${userId}`);
+      const response = await axios.get(`/api/user/${userId}`);
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
