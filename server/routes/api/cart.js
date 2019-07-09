@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 // Bring in Models & Helpers
-const Cart = require('../../models/Cart');
+const Cart = require('../../models/cart');
 
 router.post(
   '/add',

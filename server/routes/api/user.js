@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 // Bring in Models & Helpers
-const User = require('../../models/User');
+const User = require('../../models/user');
 
 // fetch all users api
 router.get(

@@ -3,7 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 
 // Bring in Models & Helpers
-const Category = require('../../models/Category');
+const Category = require('../../models/category');
 
 router.post(
   '/add',

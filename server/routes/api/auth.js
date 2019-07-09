@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 // Bring in Models & Helpers
-const User = require('../../models/User');
+const User = require('../../models/user');
 const mailgun = require('../../config/mailgun');
 const template = require('../../config/template');
 
