@@ -27,7 +27,7 @@ export const sellFormChange = (name, value) => {
 
 export const sellWithUs = () => {
   return async (dispatch, getState) => {
-    const merchant = getState().sell.sellFormData;
+    const merchant = getState().merchant.sellFormData;
 
     try {
       const response = await axios.post('/api/merchant/add', merchant);
