@@ -191,6 +191,21 @@ export const handleCheckout = () => {
   };
 };
 
+export const placeOrder = () => {
+  return (dispatch, getState) => {
+
+    const successfulOptions = {
+      title: `Your order has been placed`,
+      position: 'tr',
+      autoDismiss: 1
+    };
+
+    dispatch(success(successfulOptions));
+    dispatch(push('/dashboard/orders'));
+    dispatch(toggleCart());
+  };
+};
+
 // Continue shopping use case
 export const handleShopping = () => {
   return (dispatch, getState) => {

@@ -7,7 +7,7 @@
 import React from 'react';
 
 const Checkout = props => {
-  const { authenticated, handleShopping, handleCheckout } = props;
+  const { authenticated, handleShopping, handleCheckout, placeOrder } = props;
 
   return (
     <div className='checkout'>

@@ -26,6 +26,8 @@ import ResetPassword from '../ResetPassword';
 import Shop from '../Shop';
 import BrandPage from '../BrandPage';
 import ProductPage from '../ProductPage';
+import Sell from '../Sell';
+import Contact from '../Contact';
 
 import Page404 from '../../components/Page404';
 import Footer from '../../components/Footer';
@@ -52,6 +54,8 @@ class Application extends React.PureComponent {
               <Switch>
                 <Route exact path='/' component={HomePage} />
                 <Route path='/shop' component={Shop} />
+                <Route path='/sell' component={Sell} />
+                <Route path='/contact' component={Contact} />
                 <Route path='/brands' component={BrandPage} />
                 <Route path='/product/:slug' component={ProductPage} />
                 <Route path='/login' component={LoginPage} />
