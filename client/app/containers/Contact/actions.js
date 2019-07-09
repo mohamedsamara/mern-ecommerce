@@ -22,10 +22,10 @@ export const contactFormChange = (name, value) => {
 
 export const contactUs = () => {
   return async (dispatch, getState) => {
-    let merchant = getState().sell.sellFormData;
-
     try {
-      const response = await axios.post('/api/merchant', merchant);
+      const contact = getState().contact.contactFormData;
+
+      const response = await axios.post('/api/contact/add', contact);
 
       const successfulOptions = {
         title: `${response.data.message}`,

@@ -20,6 +20,7 @@ import Users from '../Users';
 import Category from '../Category';
 import Product from '../Product';
 import Brand from '../Brand';
+import Merchants from '../Merchant';
 
 class Admin extends React.PureComponent {
   render() {
@@ -43,6 +44,7 @@ class Admin extends React.PureComponent {
                 <Route path='/dashboard/categories' component={Category} />
                 <Route path='/dashboard/brands' component={Brand} />
                 <Route path='/dashboard/users' component={Users} />
+                <Route path='/dashboard/merchants' component={Merchants} />
                 <Route path='*' component={Page404} />
               </Switch>
             </div>

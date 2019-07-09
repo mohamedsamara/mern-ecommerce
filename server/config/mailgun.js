@@ -17,16 +17,3 @@ exports.sendEmail = (recipient, message) => {
     console.log(body);
   });
 };
-
-exports.contactForm = (sender, message) => {
-  const data = {
-    from: sender,
-    to: 'you@yourdomain.com',
-    subject: message.subject,
-    text: message.text
-  };
-
-  mailgun.messages().send(data, (error, body) => {
-    console.log(body);
-  });
-};

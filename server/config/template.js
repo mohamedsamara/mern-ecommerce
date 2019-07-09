@@ -45,3 +45,21 @@ exports.subscribeEmail = () => {
 
   return message;
 };
+
+exports.contactEmail = () => {
+  const message = {
+    subject: 'Contact Us',
+    text: `We received your message! one of our customer service will call you soon. \n\n`
+  };
+
+  return message;
+};
+
+exports.sellApplyEmail = () => {
+  const message = {
+    subject: 'Sell With Mo Store',
+    text: `We received your application! Our team will contact you soon. \n\n`
+  };
+
+  return message;
+};

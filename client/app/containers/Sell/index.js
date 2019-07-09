@@ -37,6 +37,18 @@ class Sell extends React.PureComponent {
           <Col xs='12' md='6'>
             <Input
               type={'text'}
+              label={'Email Address'}
+              name={'email'}
+              placeholder={'Your Email Address'}
+              value={sellFormData.email}
+              onInputChange={(name, value) => {
+                sellFormChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='6'>
+            <Input
+              type={'text'}
               label={'Phone Number'}
               name={'phoneNumber'}
               placeholder={'Your Phone Number'}
@@ -88,7 +100,7 @@ class Sell extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    sellFormData: state.sell.sellFormData
+    sellFormData: state.merchant.sellFormData
   };
 };
 
