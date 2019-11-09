@@ -1,15 +1,19 @@
-# Compiled files
-dist/
+# dependencies
+/node_modules
 
-# Config file
-config/config.js
+# production
+/build
+/dist
+  
+# misc
+package-lock.json
+.DS_Store
+
+# config file
+.vscode
 .env
 
-# Dependencies
-node_modules
-package-lock.json
-
-# Cruft
-.DS_Store
-npm-debug.log
-.vscode
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log* 
