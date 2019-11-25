@@ -27,7 +27,11 @@ $ npm install
 
 ```
 > .env file must be added to run the application
-> .env file must include PORT & MONGO_URI
+> .env file must include: 
+  * PORT & MONGO_URI
+  * SECRET_OR_KEY => secret key for JWT
+  * MAILCHIMP_KEY & MAILCHIMP_LIST_KEY => Mailchimp configuration
+  * MAILGUN_KEY & MAILGUN_DOMAIN & MAILGUN_EMAIL_SENDER => Mailgun configuration
 
 ```
 

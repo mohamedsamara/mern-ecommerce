@@ -4,24 +4,24 @@
  *
  */
 
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import actions from '../../actions';
+import actions from "../../actions";
 
-import ProductList from '../../components/ProductList';
+import ProductList from "../../components/ProductList";
 
 class Brands extends React.PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchProducts('brand', slug);
+    this.props.fetchProducts("brand", slug);
   }
 
   render() {
     const { products } = this.props;
 
     return (
-      <div className='brands'>
+      <div className="brands">
         <ProductList products={products} />
       </div>
     );
@@ -34,7 +34,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Brands);
+export default connect(mapStateToProps, actions)(Brands);
