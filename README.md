@@ -26,8 +26,7 @@ $ npm install
 ## Setup
 
 ```
-> .env file must be added to run the application
-> .env file must include: 
+> Create .env file that include:
   * PORT & MONGO_URI
   * SECRET_OR_KEY => secret key for JWT
   * MAILCHIMP_KEY & MAILCHIMP_LIST_KEY => Mailchimp configuration
@@ -38,8 +37,15 @@ $ npm install
 ## Heroku Deployment
 
 ```
-> Procfile should be added with the following command **web: npm run start:production**
-> Make sure all modules are listed under dependencies and no devDependencies
+> Create a Procfile in the root directory of your application with the following command **web: npm run start:production**
+
+```
+
+
+## Simple build for production
+
+```
+$ npm run production
 
 ```
 
@@ -65,7 +71,7 @@ $ npm run start:production
 
 - [Mongoose](https://mongoosejs.com/)
 
-- [Webpack](https://webpack.js.org/)
-
 - [React](https://reactjs.org/)
+
+- [Webpack](https://webpack.js.org/)
 

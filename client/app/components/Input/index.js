@@ -45,7 +45,7 @@ const Input = props => {
       <div className='input-box'>
         {label && <label>{label}</label>}
         <input
-          autoComplete='off'
+          autoComplete='on'
           type={type}
           onChange={e => {
             onChange(e);

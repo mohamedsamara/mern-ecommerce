@@ -51,7 +51,10 @@ const brandReducer = (state = initialState, action) => {
         brands: action.payload
       };
     case FETCH_BRANDS_SELECT:
-      return { ...state, brandsSelect: action.payload };
+      return {
+        ...state,
+        brandsSelect: action.payload
+      };
     case BRAND_SELECT:
       return {
         ...state,
@@ -73,7 +76,10 @@ const brandReducer = (state = initialState, action) => {
     case BRAND_CHANGE:
       return {
         ...state,
-        brandFormData: { ...state.brandFormData, ...action.payload }
+        brandFormData: {
+          ...state.brandFormData,
+          ...action.payload
+        }
       };
     case RESET_BRAND:
       return {
@@ -85,7 +91,10 @@ const brandReducer = (state = initialState, action) => {
         selectedBrands: []
       };
     case TOGGLE_ADD_BRAND:
-      return { ...state, isBrandAddOpen: !state.isBrandAddOpen };
+      return {
+        ...state,
+        isBrandAddOpen: !state.isBrandAddOpen
+      };
     default:
       return state;
   }

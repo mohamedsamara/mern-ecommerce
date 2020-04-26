@@ -7,17 +7,28 @@
     }
   }
 
+  .csv {
+    .react-bs-table-csv-btn {
+      &:hover {
+        background-color: $theme-light-blue;
+        color: $white;
+      }
+    }
+  }
+
   .react-bootstrap-table {
-    margin: 20px 0px;
+    .table {
+      overflow-x: scroll;
+      display: block;
+      margin: 20px 0px;
+
+      td,
+      th {
+        white-space: nowrap;
+        text-overflow: unset;
+        overflow-wrap: break-word;
+        width: 100%;
+      }
+    }
   }
 }
-
-.table {
-  overflow: auto;
-  table-layout: auto;
-
-  @include media-breakpoint-down(md) {
-    display: block;
-  }
-}
-

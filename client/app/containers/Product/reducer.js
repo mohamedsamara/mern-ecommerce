@@ -26,8 +26,8 @@ const initialState = {
     sku: '',
     name: '',
     description: '',
-    quantity: '0',
-    price: '0'
+    quantity: 1,
+    price: 0
   },
   columns: [
     {
@@ -111,8 +111,8 @@ const productReducer = (state = initialState, action) => {
           sku: '',
           name: '',
           description: '',
-          quantity: '0',
-          price: '0'
+          quantity: 1,
+          price: 0
         },
         selectedProducts: []
       };

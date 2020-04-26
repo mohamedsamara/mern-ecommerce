@@ -72,7 +72,7 @@ module.exports = {
     compress: true,
     noInfo: true,
     hot: true,
-    disableHostCheck: true,
+    disableHostCheck: false,
     historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:5000'

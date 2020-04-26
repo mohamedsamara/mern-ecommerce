@@ -21,7 +21,7 @@ router.post(
 
     cart.save((err, cart) => {
       if (err) {
-        return res.status(422).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -30,7 +30,7 @@ router.post(
         .populate('item', 'name price slug')
         .exec((err, cart) => {
           if (err) {
-            return res.status(422).json({
+            return res.status(400).json({
               error: 'Your request could not be processed. Please try again.'
             });
           }
@@ -54,7 +54,7 @@ router.get(
       .populate('item', 'name price slug')
       .exec((err, data) => {
         if (err) {
-          return res.status(422).json({
+          return res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }
@@ -71,7 +71,7 @@ router.delete(
   (req, res) => {
     Cart.deleteOne({ item: req.params.id }, (err, data) => {
       if (err) {
-        return res.status(422).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

@@ -19,7 +19,7 @@ class Sell extends React.PureComponent {
 
     return (
       <div className='sell'>
-        <h1>You want to sell with us! We will reach you instantly!</h1>
+        <h1>Would you like to show your products on MERN Store!</h1>
         <hr />
         <Row>
           <Col xs='12' md='6'>
@@ -73,7 +73,7 @@ class Sell extends React.PureComponent {
           <Col xs='12' md='12'>
             <Input
               type={'textarea'}
-              label={'What the business is?'}
+              label={'Business'}
               name={'business'}
               placeholder={'Please Describe Your Business'}
               value={sellFormData.business}
@@ -90,7 +90,7 @@ class Sell extends React.PureComponent {
             type='submit'
             onClick={() => sellWithUs()}
           >
-            Apply
+            Submit
           </button>
         </div>
       </div>
@@ -104,7 +104,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Sell);
+export default connect(mapStateToProps, actions)(Sell);

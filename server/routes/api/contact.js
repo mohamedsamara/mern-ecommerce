@@ -12,17 +12,17 @@ router.post('/add', (req, res) => {
   const message = req.body.message;
 
   if (!email) {
-    return res.status(422).json({ error: 'You must enter an email address.' });
+    return res.status(400).json({ error: 'You must enter an email address.' });
   }
 
   if (!name) {
     return res
-      .status(422)
+      .status(400)
       .json({ error: 'You must enter description & name.' });
   }
 
   if (!message) {
-    return res.status(422).json({ error: 'You must enter a message.' });
+    return res.status(400).json({ error: 'You must enter a message.' });
   }
 
   const contact = new Contact({
@@ -33,7 +33,7 @@ router.post('/add', (req, res) => {
 
   contact.save((err, data) => {
     if (err) {
-      return res.status(422).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
@@ -44,7 +44,7 @@ router.post('/add', (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: `We receved your application, we will reach you on your email address ${email}!`,
+      message: `We receved your message, we will reach you on your email address ${email}!`,
       contact: data
     });
   });

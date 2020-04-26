@@ -8,10 +8,10 @@ import { push } from 'connected-react-router';
 import { success, error, info } from 'react-notification-system-redux';
 import axios from 'axios';
 
-import { TOGGLE_ADMIN_MENU } from './constants';
+import { TOGGLE_CUSTOMER_MENU } from './constants';
 
-export const toggleAdminMenu = () => {
+export const toggleCustomerMenu = () => {
   return {
-    type: TOGGLE_ADMIN_MENU
+    type: TOGGLE_CUSTOMER_MENU
   };
 };

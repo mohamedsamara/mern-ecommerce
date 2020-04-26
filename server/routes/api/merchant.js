@@ -14,18 +14,18 @@ router.post('/add', (req, res) => {
   const brand = req.body.brand;
 
   if (!name) {
-    return res.status(422).json({ error: 'You must enter your name.' });
+    return res.status(400).json({ error: 'You must enter your name.' });
   }
 
   if (!business) {
     return res
-      .status(422)
+      .status(400)
       .json({ error: 'You must enter a business description.' });
   }
 
   if (!phoneNumber || !email) {
     return res
-      .status(422)
+      .status(400)
       .json({ error: 'You must enter a phone number and an email address.' });
   }
 
@@ -38,7 +38,7 @@ router.post('/add', (req, res) => {
 
   merchant.save((err, data) => {
     if (err) {
-      return res.status(422).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
@@ -49,7 +49,7 @@ router.post('/add', (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: `We received your application! we will reach you on your phone number ${phoneNumber}!`,
+      message: `We received your request! we will reach you on your phone number ${phoneNumber}!`,
       merchant: data
     });
   });
@@ -59,7 +59,7 @@ router.post('/add', (req, res) => {
 router.get('/list', (req, res) => {
   Merchant.find({}, (err, data) => {
     if (err) {
-      return res.status(422).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }

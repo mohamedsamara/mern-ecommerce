@@ -2,7 +2,7 @@
 
 .header-info {
   padding: 10px 0px;
-  background-color: $red;
+  background-color: $black;
 
   @include media-breakpoint-down(sm) {
     .info-col {
@@ -14,6 +14,7 @@
   span {
     color: $white;
     font-size: $font-size-medium !important;
+    font-weight: $font-weight-bold-one;
     margin: 0px 5px;
   }
 }
@@ -84,6 +85,24 @@
   .navbar-nav {
     flex-direction: row;
 
+    // a,
+    // span {
+    //   &:hover {
+    //     color: $red !important;
+    //   }
+    // }
+
+    a,
+    span {
+      &:hover {
+        color: $theme-black !important;
+      }
+    }
+
+    .dropdown-toggle.nav-link {
+      text-transform: capitalize;
+    }
+
     .dropdown-menu {
       position: absolute;
       z-index: 1001;
@@ -150,15 +169,6 @@
 
     .cart-badge {
       @include badge();
-    }
-  }
-}
-
-.navbar-nav {
-  a,
-  span {
-    &:hover {
-      color: $red !important;
     }
   }
 }

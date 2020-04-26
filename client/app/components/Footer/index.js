@@ -70,20 +70,24 @@ const Footer = props => {
         </div>
         <ul className='footer-social-item'>
           <li>
-            <span className='facebook-icon' />
-            <a href='/facebook.com/' rel='noreferrer' target='_blank' />
+            <a href='/#facebook' rel='noreferrer noopener' target='_blank'>
+              <span className='facebook-icon' />
+            </a>
           </li>
           <li>
-            <span className='instagram-icon' />
-            <a href='/instagram.com/' rel='noreferrer' target='_blank' />
+            <a href='/#instagram' rel='noreferrer noopener' target='_blank'>
+              <span className='instagram-icon' />
+            </a>
           </li>
           <li>
-            <span className='pinterest-icon' />
-            <a href='/pinterest.com/' rel='noreferrer' target='_blank' />
+            <a href='/#pinterest' rel='noreferrer noopener' target='_blank'>
+              <span className='pinterest-icon' />
+            </a>
           </li>
           <li>
-            <span className='twitter-icon' />
-            <a href='/twitter.com/' rel='noreferrer' target='_blank' />
+            <a href='/#twitter' rel='noreferrer noopener' target='_blank'>
+              <span className='twitter-icon' />
+            </a>
           </li>
         </ul>
       </Container>

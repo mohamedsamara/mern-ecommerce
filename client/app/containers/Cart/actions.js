@@ -193,7 +193,6 @@ export const handleCheckout = () => {
 
 export const placeOrder = () => {
   return (dispatch, getState) => {
-
     const successfulOptions = {
       title: `Your order has been placed`,
       position: 'tr',

@@ -26,7 +26,7 @@ const CartList = props => {
             {item.quantity}
           </p>
           <i
-            className='icon-close'
+            className='icon-trash'
             onClick={() => handleRemoveFromCart(item)}
           />
         </div>

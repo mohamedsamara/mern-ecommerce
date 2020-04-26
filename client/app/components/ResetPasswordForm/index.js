@@ -21,7 +21,7 @@ const ResetPasswordForm = props => {
             type={'password'}
             label={'Password'}
             name={'password'}
-            placeholder={'Please Enter Your Email'}
+            placeholder={'Password'}
             value={resetFormData.password}
             onInputChange={(name, value) => {
               resetPasswordChange(name, value);
@@ -33,7 +33,7 @@ const ResetPasswordForm = props => {
             type={'password'}
             label={'Confirm Password'}
             name={'confirmPassword'}
-            placeholder={'Please Enter Your Email'}
+            placeholder={'Confirm Password'}
             value={resetFormData.confirmPassword}
             onInputChange={(name, value) => {
               resetPasswordChange(name, value);

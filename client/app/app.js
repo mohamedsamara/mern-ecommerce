@@ -1,7 +1,7 @@
 /**
  *
  * app.js
- * This is the application component. setup and configuration
+ *
  */
 
 import React from 'react';

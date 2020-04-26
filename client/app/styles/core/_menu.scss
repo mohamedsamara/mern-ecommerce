@@ -43,7 +43,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    background-color: $white;
+    // background-color: $white;
 
     h1 {
       margin: 0;
@@ -68,14 +68,14 @@
 
     .menu-list {
       .menu-item {
-        border-bottom: $border-default;
+        // border-bottom: $border-default;
 
         &:hover {
           background-color: $white;
 
           a {
             color: $red !important;
-            font-weight: $font-weight-bold-light;
+            font-weight: $font-weight-bold-one;
           }
         }
 
@@ -87,8 +87,9 @@
         }
 
         a.active-link {
-          font-weight: $font-weight-bold-light;
+          font-weight: $font-weight-bold-one;
           color: $red !important;
+          border-left: 3px solid $red;
         }
       }
     }

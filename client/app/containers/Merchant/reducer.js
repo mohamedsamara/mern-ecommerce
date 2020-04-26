@@ -34,8 +34,16 @@ const initialState = {
       text: 'Phone Number'
     },
     {
+      dataField: 'status',
+      text: 'Status'
+    },
+    {
       dataField: 'brand',
       text: 'Brand'
+    },
+    {
+      dataField: 'business',
+      text: 'Business Description'
     }
   ]
 };

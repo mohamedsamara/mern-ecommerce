@@ -19,12 +19,13 @@
 
     h1 {
       color: $theme-blue !important;
+      font-weight: $font-weight-bold-two;
       max-height: 30px;
       overflow: hidden;
     }
 
     .stock {
-      font-weight: $font-weight-bold-light;
+      font-weight: $font-weight-bold-one;
     }
 
     .in-stock {
@@ -42,12 +43,14 @@
 
     .price {
       color: $font-custom-color;
-      font-weight: $font-weight-bold-light;
+      font-weight: $font-weight-bold-one;
+      font-size: $font-size-large;
     }
 
     .by {
       margin-bottom: 5px;
       color: $theme-blue;
+      font-weight: $font-weight-bold-one;
 
       span {
         color: $font-custom-color !important;
@@ -73,7 +76,7 @@
       right: 0;
       padding: 10px;
       background-color: $white;
-      font-weight: $font-weight-bold-light;
+      font-weight: $font-weight-bold-one;
     }
 
     .out-of-stock {
@@ -98,7 +101,7 @@
 
   .price {
     color: $font-custom-color;
-    font-weight: $font-weight-bold-light;
+    font-weight: $font-weight-bold-two;
     font-size: $font-size-large;
   }
 

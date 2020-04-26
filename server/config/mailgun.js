@@ -7,7 +7,7 @@ const sender = process.env.MAILGUN_EMAIL_SENDER;
 
 exports.sendEmail = (recipient, message) => {
   const data = {
-    from: `Mo Store!! <${sender}>`,
+    from: `MERN Store! <${sender}>`,
     to: recipient,
     subject: message.subject,
     text: message.text

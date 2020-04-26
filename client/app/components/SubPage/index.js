@@ -17,11 +17,11 @@ const SubPage = props => {
           <div className='action'>
             {isMenuOpen ? (
               <div className='back' onClick={toggleMenu}>
-                <i className='fa fa-chevron-left'>Back</i>
+                <i className='fa fa-chevron-left' />
               </div>
             ) : (
               <div className='add' onClick={toggleMenu}>
-                <i className='fa fa-plus' />
+                <i className='fa fa-chevron-right' />
               </div>
             )}
           </div>

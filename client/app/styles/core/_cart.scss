@@ -48,7 +48,7 @@
 
     label {
       color: $font-custom-color;
-      font-weight: $font-weight-bold-light;
+      font-weight: $font-weight-bold-one;
     }
   }
 
@@ -79,11 +79,11 @@
       display: inline-block;
     }
 
-    .icon-close {
+    .icon-trash {
       color: $theme-bright-red;
       position: absolute;
       top: 7px;
-      font-size: $font-size-x-large;
+      font-size: $font-size-xx-large;
       right: 10px;
       cursor: pointer;
     }
@@ -95,7 +95,7 @@
     label {
       margin-right: 10px;
       color: $font-custom-color;
-      font-weight: $font-weight-bold-light;
+      font-weight: $font-weight-bold-one;
     }
   }
 
@@ -125,6 +125,7 @@
 
     p {
       color: $red;
+      font-weight: $font-weight-bold-one;
     }
   }
 }

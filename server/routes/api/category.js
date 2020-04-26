@@ -15,7 +15,7 @@ router.post(
 
     if (!description || !name) {
       return res
-        .status(422)
+        .status(400)
         .json({ error: 'You must enter description & name.' });
     }
 
@@ -27,7 +27,7 @@ router.post(
 
     category.save((err, category) => {
       if (err) {
-        return res.status(422).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -45,7 +45,7 @@ router.post(
 router.get('/list', (req, res) => {
   Category.find({}, (err, data) => {
     if (err) {
-      return res.status(422).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
@@ -61,7 +61,7 @@ router.delete(
   (req, res) => {
     Category.deleteOne({ _id: req.params.id }, (err, data) => {
       if (err) {
-        res.status(422).json({
+        res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

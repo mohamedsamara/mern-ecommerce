@@ -4,7 +4,7 @@
  *
  */
 
-import { TOGGLE_ADMIN_MENU } from './constants';
+import { TOGGLE_CUSTOMER_MENU } from './constants';
 
 const initialState = {
   isMenuOpen: false,
@@ -16,7 +16,7 @@ const initialState = {
 
 const customerReducer = (state = initialState, action) => {
   switch (action.type) {
-    case TOGGLE_ADMIN_MENU:
+    case TOGGLE_CUSTOMER_MENU:
       return { ...state, isMenuOpen: !state.isMenuOpen };
     default:
       return state;

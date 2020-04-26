@@ -11,6 +11,7 @@ input[type='password'] {
     outline: none;
     color: $focus-font-color;
     border-color: $dark-border-color !important;
+    box-shadow: $box-shadow;
   }
 
   &:disabled {
@@ -31,7 +32,8 @@ button[type='submit'],
 button[type='reset'] {
   padding: 10px;
   border: none;
-  color: white;
+  color: $theme-black !important;
+  font-weight: $font-weight-bold-two;
   text-decoration: none;
   text-transform: capitalize;
   cursor: pointer;
@@ -71,6 +73,7 @@ textarea {
     outline: none;
     color: $focus-font-color;
     border-color: $dark-border-color !important;
+    box-shadow: $box-shadow;
   }
 }
 

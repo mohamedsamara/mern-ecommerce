@@ -1,15 +1,5 @@
 .category {
   .table-section {
     margin: 20px 0px;
-
-    .table {
-      @include media-breakpoint-down(md) {
-        display: block;
-      }
-
-      .desc-column {
-        @include text-ellipsis(2);
-      }
-    }
   }
 }

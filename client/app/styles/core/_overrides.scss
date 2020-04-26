@@ -11,7 +11,8 @@
   min-width: 150px;
   border: $border-default !important;
   border-width: 3px !important;
-  color: $black !important;
+  font-weight: $font-weight-bold-two;
+  color: $theme-black !important;
   background-color: $btn-bg;
   -webkit-transition: $layout-transition-speed;
   transition: $layout-transition-speed;
@@ -33,3 +34,13 @@
 }
 
 // end bootstrap overrides
+
+// start react-notification-system-redux overrides
+
+.notification {
+  .notification-title {
+    font-weight: $font-weight-normal !important;
+  }
+}
+
+// end react-notification-system-redux overrides

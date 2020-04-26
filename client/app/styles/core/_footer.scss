@@ -30,6 +30,7 @@
 
   &:last-child {
     border-right: 0;
+    border-bottom: 0;
   }
 
   .block-title {
@@ -45,7 +46,8 @@
 
     a {
       &:hover {
-        color: $red !important;
+        // color: $red !important;
+        color: $theme-black !important;
       }
     }
   }
@@ -63,7 +65,7 @@
     vertical-align: top;
 
     &:hover {
-      opacity: 0.6;
+      opacity: 0.8;
     }
   }
 
@@ -72,8 +74,7 @@
     margin: 0 auto;
     display: inline-block;
     @include media-breakpoint-down(sm) {
-      float: left;
-      width: 25%;
+      margin: 0 4px;
     }
 
     a {

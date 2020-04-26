@@ -47,7 +47,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Newsletter);
+export default connect(mapStateToProps, actions)(Newsletter);

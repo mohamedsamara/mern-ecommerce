@@ -30,14 +30,15 @@ $teal: #20c997 !default;
 $cyan: #67c2ef;
 $black: #000;
 
-$font-family: 'Roboto Slab', serif;
-$font-family-heading: 'Roboto Slab', serif;
-$font-family-body: 'Roboto Slab', serif;
+$font-family: 'Raleway', sans-serif;
+$font-family-heading: 'Raleway', sans-serif;
+$font-family-body: 'Raleway', sans-serif;
 $font-size-x-small: 12px;
 $font-size-small: 13px;
 $font-size-medium: 14px;
 $font-size-large: 15px;
 $font-size-x-large: 16px;
+$font-size-xx-large: 18px;
 $font-size-huge: 20px;
 $font-size-x-huge: 24px;
 $font-size-heading-small: 16px;
@@ -45,8 +46,9 @@ $font-size-heading-medium: 18px;
 $font-size-heading-large: 20px;
 $font-size-heading-x-large: 24px;
 $font-weight-normal: normal;
-$font-weight-bold-light: 600;
-$font-weight-bold: 700;
+$font-weight-bold-one: 500;
+$font-weight-bold-two: 600;
+$font-weight-bold-three: 700;
 
 // layout variables
 $btn-bg: $white;
@@ -63,7 +65,7 @@ $dark-overflow-bg: #0006;
 $transparent-bg: #3232321f;
 $transparent-gray-bg: #f1f3f4f5;
 $badge: $red;
-$disabled-bg: #cccccc;
+$disabled-bg: #d9dbdea1;
 
 $box-shadow: 0 0 10px 0 #e6e5ea;
 $border-radius-default: 3px;

@@ -14,7 +14,7 @@
     border: $border-default;
 
     &:hover {
-      border-color: $red;
+      border-color: $theme-black;
       -moz-transition: border-color $layout-transition-speed ease-in-out;
       -webkit-transition: border-color $layout-transition-speed ease-in-out;
       -ms-transition: border-color $layout-transition-speed ease-in-out;

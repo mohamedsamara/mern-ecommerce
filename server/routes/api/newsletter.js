@@ -7,7 +7,7 @@ router.post('/subscribe', (req, res) => {
   const email = req.body.email;
 
   if (!email) {
-    return res.status(422).json({ error: 'You must enter an email address.' });
+    return res.status(400).json({ error: 'You must enter an email address.' });
   }
 
   mailchimp.subscribeToNewsletter(email, res);

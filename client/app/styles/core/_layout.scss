@@ -55,12 +55,13 @@ span,
 label,
 a,
 p {
-  font-size: $font-size-small;
+  font-size: $font-size-medium;
 }
 
 label {
   cursor: default;
   margin: 0;
+  font-weight: $font-weight-bold-one;
 }
 
 a {
@@ -106,7 +107,7 @@ h6,
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $theme-light-blue;
+  background: $black;
 }
 
 ::-webkit-scrollbar-track {

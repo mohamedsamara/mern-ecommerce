@@ -18,8 +18,8 @@ class Contact extends React.PureComponent {
     const { contactFormData, contactFormChange, contactUs } = this.props;
 
     return (
-      <div className='sell'>
-        <h1>Contact Us and we will reach you</h1>
+      <div className='contact'>
+        <h1>Contact Information</h1>
         <hr />
         <Row>
           <Col xs='12' md='6'>
@@ -60,13 +60,13 @@ class Contact extends React.PureComponent {
           </Col>
         </Row>
         <hr />
-        <div className='sell-actions'>
+        <div className='contact-actions'>
           <button
             className='input-btn'
             type='submit'
             onClick={() => contactUs()}
           >
-            Send
+            Submit
           </button>
         </div>
       </div>
@@ -80,7 +80,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Contact);
+export default connect(mapStateToProps, actions)(Contact);

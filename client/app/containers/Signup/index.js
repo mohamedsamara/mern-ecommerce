@@ -121,7 +121,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Signup);
+export default connect(mapStateToProps, actions)(Signup);
