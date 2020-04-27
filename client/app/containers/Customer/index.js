@@ -16,6 +16,7 @@ import AccountMenu from '../../components/AccountMenu';
 import Page404 from '../../components/Page404';
 
 import Account from '../Account';
+import Order from '../Order';
 
 class Customer extends React.PureComponent {
   render() {
@@ -35,7 +36,7 @@ class Customer extends React.PureComponent {
             <div className='panel-body'>
               <Switch>
                 <Route exact path='/dashboard' component={Account} />
-                <Route path='/dashboard/orders' component={Account} />
+                <Route path='/dashboard/orders' component={Order} />
                 <Route path='*' component={Page404} />
               </Switch>
             </div>

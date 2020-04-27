@@ -14,7 +14,8 @@ const initialState = {
     { to: '/categories', name: 'manage categories' },
     { to: '/brands', name: 'manage brands' },
     { to: '/users', name: 'Manage Users' },
-    { to: '/merchants', name: 'Manage Merchants' }
+    { to: '/merchants', name: 'Manage Merchants' },
+    { to: '/orders', name: 'Manage Orders' }
   ]
 };
 

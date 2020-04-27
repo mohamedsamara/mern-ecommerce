@@ -30,6 +30,7 @@ import navigationMenuReducer from './containers/NavigationMenu/reducer';
 import shopReducer from './containers/Shop/reducer';
 import merchantReducer from './containers/Merchant/reducer';
 import contactReducer from './containers/Contact/reducer';
+import orderReducer from './containers/Order/reducer';
 
 const createReducer = history =>
   combineReducers({
@@ -55,7 +56,8 @@ const createReducer = history =>
     menu: navigationMenuReducer,
     shop: shopReducer,
     merchant: merchantReducer,
-    contact: contactReducer
+    contact: contactReducer,
+    order: orderReducer
   });
 
 export default createReducer;

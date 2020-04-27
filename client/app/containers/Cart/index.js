@@ -69,7 +69,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Cart);
+export default connect(mapStateToProps, actions)(Cart);

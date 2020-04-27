@@ -21,6 +21,7 @@ import Category from '../Category';
 import Product from '../Product';
 import Brand from '../Brand';
 import Merchants from '../Merchant';
+import Order from '../Order';
 
 class Admin extends React.PureComponent {
   render() {
@@ -45,6 +46,7 @@ class Admin extends React.PureComponent {
                 <Route path='/dashboard/brands' component={Brand} />
                 <Route path='/dashboard/users' component={Users} />
                 <Route path='/dashboard/merchants' component={Merchants} />
+                <Route path='/dashboard/orders' component={Order} />
                 <Route path='*' component={Page404} />
               </Switch>
             </div>
@@ -62,7 +64,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Admin);
+export default connect(mapStateToProps, actions)(Admin);

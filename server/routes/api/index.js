@@ -6,9 +6,9 @@ const newsletterRoutes = require('./newsletter');
 const productRoutes = require('./product');
 const categoryRoutes = require('./category');
 const brandRoutes = require('./brand');
-const cartRoutes = require('./cart');
 const contactRoutes = require('./contact');
 const merchantRoutes = require('./merchant');
+const orderRoutes = require('./order');
 
 // auth routes
 router.use('/auth', authRoutes);
@@ -28,13 +28,13 @@ router.use('/category', categoryRoutes);
 // brand routes
 router.use('/brand', brandRoutes);
 
-// cart routes
-router.use('/cart', cartRoutes);
-
 // contact routes
 router.use('/contact', contactRoutes);
 
 // merchant routes
 router.use('/merchant', merchantRoutes);
+
+// order routes
+router.use('/order', orderRoutes);
 
 module.exports = router;

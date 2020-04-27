@@ -43,6 +43,14 @@ class Application extends React.PureComponent {
     this.props.checkCart();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.authenticated !== prevProps.authenticated) {
+      if (this.props.authenticated) {
+        this.props.toggleCart();
+      }
+    }
+  }
+
   render() {
     return (
       <div className='application'>
@@ -81,10 +89,9 @@ class Application extends React.PureComponent {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    authenticated: state.authentication.authenticated
+  };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Application);
+export default connect(mapStateToProps, actions)(Application);

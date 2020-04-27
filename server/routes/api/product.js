@@ -62,6 +62,12 @@ router.post(
             error: 'Your request could not be processed. Please try again.'
           });
         }
+
+        res.status(200).json({
+          success: true,
+          message: `Product has been added successfully!`,
+          product: product
+        });
       });
     });
   }
