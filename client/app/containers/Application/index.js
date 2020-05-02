@@ -28,6 +28,7 @@ import BrandPage from '../BrandPage';
 import ProductPage from '../ProductPage';
 import Sell from '../Sell';
 import Contact from '../Contact';
+import OrderSuccess from '../OrderSuccess';
 
 import Page404 from '../../components/Page404';
 import Footer from '../../components/Footer';
@@ -64,6 +65,7 @@ class Application extends React.PureComponent {
                 <Route path='/contact' component={Contact} />
                 <Route path='/brands' component={BrandPage} />
                 <Route path='/product/:slug' component={ProductPage} />
+                <Route path='/order/success/:id' component={OrderSuccess} />
                 <Route path='/login' component={LoginPage} />
                 <Route path='/register' component={SignupPage} />
                 <Route path='/forgot-password' component={ForgotPassword} />

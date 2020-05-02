@@ -4,10 +4,11 @@
  *
  */
 
-import { FETCH_ORDERS, TOGGLE_ADD_ORDER } from './constants';
+import { FETCH_ORDERS, FETCH_ORDER, TOGGLE_ADD_ORDER } from './constants';
 
 const initialState = {
   orders: [],
+  order: {},
   isOrderAddOpen: false
 };
 
@@ -17,6 +18,11 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         orders: action.payload
+      };
+    case FETCH_ORDER:
+      return {
+        ...state,
+        order: action.payload
       };
     case TOGGLE_ADD_ORDER:
       return {

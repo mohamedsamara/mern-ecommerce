@@ -102,4 +102,44 @@ router.get(
   }
 );
 
+// fetch order api
+router.get('/:orderId', (req, res) => {
+  const orderId = req.params.orderId;
+
+  Order.findById(orderId)
+    .populate({
+      path: 'cart'
+    })
+    .exec((err, doc) => {
+      if (err) {
+        return res.status(400).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+      Cart.findById(doc.cart._id)
+        .populate({
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        })
+        .exec((err, data) => {
+          if (err) {
+            return res.status(400).json({
+              error: 'Your request could not be processed. Please try again.'
+            });
+          }
+
+          const order = {
+            _id: doc._id,
+            products: data.products
+          };
+
+          res.status(200).json({
+            order
+          });
+        });
+    });
+});
+
 module.exports = router;
