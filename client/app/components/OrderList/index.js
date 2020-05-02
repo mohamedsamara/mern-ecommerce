@@ -8,10 +8,10 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
-import ComingSoon from '../ComingSoon';
-
 const OrderList = props => {
   const { orders } = props;
+
+  console.log('orders', orders);
 
   return (
     <div className='order-list'>
@@ -22,7 +22,6 @@ const OrderList = props => {
               <div className='order-box'></div>
             </Col>
           ))}
-        <ComingSoon />
       </Row>
     </div>
   );

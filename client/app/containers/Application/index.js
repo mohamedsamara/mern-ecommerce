@@ -40,14 +40,12 @@ class Application extends React.PureComponent {
       this.props.fetchProfile(user);
     }
 
-    this.props.checkCart();
+    this.props.handleCart();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.authenticated !== prevProps.authenticated) {
-      if (this.props.authenticated) {
-        this.props.toggleCart();
-      }
+      this.props.handleCartStatus();
     }
   }
 

@@ -48,7 +48,7 @@ router.put(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const profile = req.body.profile;
-    let query = { _id: req.params.userId };
+    const query = { _id: req.params.userId };
 
     User.updateOne(query, { profile: profile }, (err, user) => {
       if (err) {

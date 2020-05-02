@@ -26,7 +26,7 @@ app.use(passport.session());
 
 // Connect to MongoDB
 mongoose
-  .connect(mongoURI, { useNewUrlParser: true })
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() =>
     console.log(`${chalk.green('✓')} ${chalk.blue('MongoDB Connected!')}`)
   )

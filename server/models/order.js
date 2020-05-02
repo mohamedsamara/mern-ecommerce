@@ -3,15 +3,18 @@ const { Schema } = Mongoose;
 
 // Order Schema
 const OrderSchema = new Schema({
-  products: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product'
-    }
-  ],
+  cart: {
+    type: Schema.Types.ObjectId,
+    ref: 'Cart'
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
+  },
+  updated: Date,
+  created: {
+    type: Date,
+    default: Date.now
   }
 });
 

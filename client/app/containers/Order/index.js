@@ -20,7 +20,7 @@ class Order extends React.PureComponent {
   }
 
   render() {
-    const { isOrderAddOpen, toggleAddOrder, orders } = this.props;
+    const { orders, isOrderAddOpen, toggleAddOrder } = this.props;
 
     return (
       <div className='order'>
@@ -38,8 +38,8 @@ class Order extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    isOrderAddOpen: state.order.isOrderAddOpen,
-    orders: state.order.orders
+    orders: state.order.orders,
+    isOrderAddOpen: state.order.isOrderAddOpen
   };
 };
 

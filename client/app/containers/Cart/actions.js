@@ -10,32 +10,20 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 
 import {
-  FETCH_CART,
+  HANDLE_CART,
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  FETCH_IN_CART,
-  HANDLE_CART_TOTAL
+  HANDLE_CART_TOTAL,
+  SET_CART_ID,
+  CLEAR_CART
 } from './constants';
+import handleError from '../../utils/error';
 import { toggleCart } from '../Navigation/actions';
-import { addOrder } from '../Order/actions';
-
-export const checkCart = () => {
-  const cart = cookie.load('cart');
-  const InCart = cookie.load('InCart');
-  const cartTotal = cookie.load('cartTotal');
-
-  return (dispatch, getState) => {
-    if (cart != undefined || InCart != undefined) {
-      dispatch(handleFetchCart(cart));
-      dispatch(handleFetchInCart(InCart));
-      dispatch(handleCartTotal(cartTotal));
-    }
-  };
-};
 
 // Handle Add To Cart
 export const handleAddToCart = product => {
   return (dispatch, getState) => {
+    const token = cookie.load('token');
     product.quantity = getState().product.productFormData.quantity;
 
     dispatch({
@@ -43,6 +31,7 @@ export const handleAddToCart = product => {
       payload: product
     });
     dispatch(calculateCartTotal());
+    dispatch(addToCart(product));
     dispatch(toggleCart());
   };
 };
@@ -55,36 +44,8 @@ export const handleRemoveFromCart = product => {
       payload: product
     });
     dispatch(calculateCartTotal());
-  };
-};
-
-// fetch cart items from cookie
-export const handleFetchCart = items => {
-  return (dispatch, getState) => {
-    dispatch({
-      type: FETCH_CART,
-      payload: items
-    });
-  };
-};
-
-// fetch in cart items from cookie
-export const handleFetchInCart = items => {
-  return (dispatch, getState) => {
-    dispatch({
-      type: FETCH_IN_CART,
-      payload: items
-    });
-  };
-};
-
-// fetch in cart total from cookie
-export const handleCartTotal = total => {
-  return (dispatch, getState) => {
-    dispatch({
-      type: HANDLE_CART_TOTAL,
-      payload: total
-    });
+    dispatch(removeFromCart(product));
+    // dispatch(toggleCart());
   };
 };
 
@@ -105,6 +66,85 @@ export const calculateCartTotal = () => {
   };
 };
 
+// Add to cart API
+export const addToCart = item => {
+  return async (dispatch, getState) => {
+    try {
+      const token = cookie.load('token');
+      const cartId = getState().cart.cartId;
+
+      const product = {
+        product: item._id,
+        quantity: item.quantity
+      };
+
+      if (token) {
+        const response = await axios.post(`/api/cart/add/${cartId}`, {
+          product
+        });
+      }
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+// Remove from cart API
+export const removeFromCart = item => {
+  return async (dispatch, getState) => {
+    try {
+      const token = cookie.load('token');
+      const cartId = getState().cart.cartId;
+      const productId = item._id;
+
+      if (token) {
+        const response = await axios.delete(
+          `/api/cart/delete/${cartId}/${productId}`
+        );
+      }
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+// set cart store from cookie
+export const handleCart = () => {
+  const cart = {
+    cartItems: cookie.load('cart_items'),
+    itemsInCart: cookie.load('items_in_cart'),
+    cartTotal: cookie.load('cart_total'),
+    cartId: cookie.load('cart_id')
+  };
+
+  return (dispatch, getState) => {
+    if (cart.cartItems != undefined || cart.itemsInCart != undefined) {
+      dispatch({
+        type: HANDLE_CART,
+        payload: cart
+      });
+    }
+  };
+};
+
+export const handleCartStatus = () => {
+  return (dispatch, getState) => {
+    const token = cookie.load('token');
+    const cartItems = getState().cart.cartItems;
+
+    if (token) {
+      Promise.all([dispatch(getCartId())]).then(() => {
+        if (cartItems.length > 0) {
+          dispatch(addCart(cartItems));
+          dispatch(toggleCart());
+        }
+      });
+    }
+  };
+};
+
 export const handleCheckout = () => {
   return (dispatch, getState) => {
     const successfulOptions = {
@@ -119,14 +159,6 @@ export const handleCheckout = () => {
   };
 };
 
-export const placeOrder = () => {
-  return (dispatch, getState) => {
-    dispatch(toggleCart());
-    dispatch(push('/dashboard/orders'));
-    dispatch(addOrder());
-  };
-};
-
 // Continue shopping use case
 export const handleShopping = () => {
   return (dispatch, getState) => {
@@ -135,14 +167,73 @@ export const handleShopping = () => {
   };
 };
 
-// This function handles the flow of what happen when the user log in or signup to make an order
-// Current Flow: toggle the cart.
-export const handleCartStatus = () => {
-  const token = cookie.load('token');
+// add the entire cart items api
+export const addCart = cartItems => {
+  return async (dispatch, getState) => {
+    try {
+      const cartId = getState().cart.cartId;
+      const products = getCartItems(cartItems);
 
-  return (dispatch, getState) => {
-    if (token) {
-      dispatch(toggleCart());
+      const response = await axios.post(`/api/cart/push/${cartId}`, {
+        products
+      });
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
     }
   };
+};
+
+// create cart id api
+export const getCartId = () => {
+  return async (dispatch, getState) => {
+    try {
+      const userId = cookie.load('user');
+      const cartId = getState().cart.cartId;
+
+      // create cart id if there is no one
+      if (!cartId) {
+        const response = await axios.get(`/api/cart/create/${userId}`);
+
+        dispatch(setCartId(response.data.cartId));
+      }
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+export const setCartId = cartId => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: SET_CART_ID,
+      payload: cartId
+    });
+  };
+};
+
+export const clearCart = () => {
+  return (dispatch, getState) => {
+    cookie.remove('cart_items', { path: '/' });
+    cookie.remove('items_in_cart', { path: '/' });
+    cookie.remove('cart_total', { path: '/' });
+    cookie.remove('cart_id', { path: '/' });
+
+    dispatch({
+      type: CLEAR_CART
+    });
+  };
+};
+
+const getCartItems = cartItems => {
+  const newCartItems = [];
+  cartItems.map(item => {
+    const newItem = {};
+    newItem.quantity = item.quantity;
+    newItem.product = item._id;
+    newCartItems.push(newItem);
+  });
+
+  return newCartItems;
 };

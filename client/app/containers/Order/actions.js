@@ -4,11 +4,14 @@
  *
  */
 
+import { push } from 'connected-react-router';
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
 import { FETCH_ORDERS, TOGGLE_ADD_ORDER } from './constants';
+import { clearCart, getCartId } from '../Cart/actions';
+import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
 
 export const toggleAddOrder = () => {
@@ -23,12 +26,9 @@ export const fetchOrders = () => {
       const userId = cookie.load('user');
       const response = await axios.get(`/api/order/list/${userId}`);
 
-      console.log('response', response);
-
       dispatch({
         type: FETCH_ORDERS,
-        // payload: response.data.orders
-        payload: []
+        payload: response.data.orders
       });
     } catch (error) {
       const title = `Please try again!`;
@@ -40,19 +40,27 @@ export const fetchOrders = () => {
 export const addOrder = () => {
   return async (dispatch, getState) => {
     try {
+      const cartId = getState().cart.cartId;
       const userId = cookie.load('user');
-      const products = getState().cart.itemsInCart;
-      console.log('products', products);
 
       const response = await axios.post(`/api/order/add`, {
-        userId,
-        products
+        cartId,
+        userId
       });
 
-      console.log('response', response);
+      dispatch(clearCart());
+      dispatch(getCartId());
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);
     }
+  };
+};
+
+export const placeOrder = () => {
+  return (dispatch, getState) => {
+    dispatch(toggleCart());
+    dispatch(push('/dashboard/orders'));
+    dispatch(addOrder());
   };
 };

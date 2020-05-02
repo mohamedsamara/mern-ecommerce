@@ -7,50 +7,33 @@
 import cookie from 'react-cookies';
 
 import {
-  FETCH_CART,
-  FETCH_IN_CART,
+  HANDLE_CART,
   ADD_TO_CART,
   REMOVE_FROM_CART,
-  HANDLE_CART_TOTAL
+  HANDLE_CART_TOTAL,
+  SET_CART_ID,
+  CLEAR_CART
 } from './constants';
 
 const initialState = {
   cartItems: [],
   itemsInCart: [],
-  cartTotal: 0
+  cartTotal: 0,
+  cartId: ''
 };
 
 const cartReducer = (state = initialState, action) => {
   let newState;
 
   switch (action.type) {
-    case FETCH_CART:
-      newState = {
-        ...state,
-        cartItems: action.payload
-      };
-      return newState;
-    case FETCH_IN_CART:
-      newState = {
-        ...state,
-        itemsInCart: action.payload
-      };
-      return newState;
-    case HANDLE_CART_TOTAL:
-      newState = {
-        ...state,
-        cartTotal: action.payload
-      };
-      cookie.save('cartTotal', newState.cartTotal, { path: '/' });
-      return newState;
     case ADD_TO_CART:
       newState = {
         ...state,
         cartItems: [...state.cartItems, action.payload],
         itemsInCart: [...state.itemsInCart, action.payload._id]
       };
-      cookie.save('cart', newState.cartItems, { path: '/' });
-      cookie.save('InCart', newState.itemsInCart, { path: '/' });
+      cookie.save('cart_items', newState.cartItems, { path: '/' });
+      cookie.save('items_in_cart', newState.itemsInCart, { path: '/' });
       return newState;
     case REMOVE_FROM_CART:
       let itemIndex = state.cartItems.findIndex(
@@ -67,9 +50,42 @@ const cartReducer = (state = initialState, action) => {
           ...state.itemsInCart.slice(itemIndex + 1)
         ]
       };
-      cookie.save('cart', newState.cartItems, { path: '/' });
-      cookie.save('InCart', newState.itemsInCart, { path: '/' });
+      cookie.save('cart_items', newState.cartItems, { path: '/' });
+      cookie.save('items_in_cart', newState.itemsInCart, { path: '/' });
       return newState;
+    case HANDLE_CART_TOTAL:
+      newState = {
+        ...state,
+        cartTotal: action.payload
+      };
+      cookie.save('cart_total', newState.cartTotal, { path: '/' });
+      return newState;
+    case HANDLE_CART:
+      newState = {
+        ...state,
+        cartItems: action.payload.cartItems,
+        itemsInCart: action.payload.itemsInCart,
+        cartTotal: action.payload.cartTotal,
+        cartId: action.payload.cartId
+      };
+      return newState;
+    case SET_CART_ID:
+      newState = {
+        ...state,
+        cartId: action.payload
+      };
+      cookie.save('cart_id', newState.cartId, { path: '/' });
+      return newState;
+    case CLEAR_CART:
+      newState = {
+        ...state,
+        cartItems: [],
+        itemsInCart: [],
+        cartTotal: 0,
+        cartId: ''
+      };
+      return newState;
+
     default:
       return state;
   }
