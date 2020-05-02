@@ -10,7 +10,7 @@ const Checkout = props => {
   const { authenticated, handleShopping, handleCheckout, placeOrder } = props;
 
   return (
-    <div className='checkout'>
+    <div className='easy-checkout'>
       <div className='checkout-actions'>
         <button
           className='input-btn'

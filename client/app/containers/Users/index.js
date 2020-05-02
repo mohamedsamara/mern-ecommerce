@@ -21,7 +21,7 @@ class Users extends React.PureComponent {
     const { users, columns } = this.props;
 
     return (
-      <div className='users'>
+      <div className='users-dashboard'>
         <SubPage title={'User List'} isMenuOpen={null} />
         <Table
           data={users}
@@ -44,7 +44,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Users);
+export default connect(mapStateToProps, actions)(Users);

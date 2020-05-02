@@ -21,7 +21,7 @@ class Merchant extends React.PureComponent {
     const { merchants, columns } = this.props;
 
     return (
-      <div className='merchants'>
+      <div className='merchant-dashboard'>
         <SubPage title={'Merchant List'} isMenuOpen={null} />
         <Table
           data={merchants}
@@ -44,7 +44,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Merchant);
+export default connect(mapStateToProps, actions)(Merchant);

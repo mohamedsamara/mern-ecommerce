@@ -24,11 +24,12 @@ import Notification from '../Notification';
 import ForgotPassword from '../ForgotPassword';
 import ResetPassword from '../ResetPassword';
 import Shop from '../Shop';
-import BrandPage from '../BrandPage';
+import BrandsPage from '../BrandsPage';
 import ProductPage from '../ProductPage';
 import Sell from '../Sell';
 import Contact from '../Contact';
 import OrderSuccess from '../OrderSuccess';
+import OrderPage from '../OrderPage';
 
 import Page404 from '../../components/Page404';
 import Footer from '../../components/Footer';
@@ -63,9 +64,10 @@ class Application extends React.PureComponent {
                 <Route path='/shop' component={Shop} />
                 <Route path='/sell' component={Sell} />
                 <Route path='/contact' component={Contact} />
-                <Route path='/brands' component={BrandPage} />
+                <Route path='/brands' component={BrandsPage} />
                 <Route path='/product/:slug' component={ProductPage} />
                 <Route path='/order/success/:id' component={OrderSuccess} />
+                <Route path='/order/:id' component={OrderPage} />
                 <Route path='/login' component={LoginPage} />
                 <Route path='/register' component={SignupPage} />
                 <Route path='/forgot-password' component={ForgotPassword} />

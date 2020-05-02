@@ -7,8 +7,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Link } from 'react-router-dom';
-
 import actions from '../../actions';
 
 import SubPage from '../../components/SubPage';
@@ -20,16 +18,12 @@ class Order extends React.PureComponent {
   }
 
   render() {
-    const { orders, isOrderAddOpen, toggleAddOrder } = this.props;
+    const { orders } = this.props;
 
     return (
-      <div className='order'>
-        <SubPage
-          title={isOrderAddOpen ? 'Recommended Items' : 'Order List'}
-          isMenuOpen={isOrderAddOpen}
-          toggleMenu={toggleAddOrder}
-        >
-          {isOrderAddOpen ? <p>Nothing...</p> : <OrderList orders={orders} />}
+      <div className='order-dashboard'>
+        <SubPage title={'Order List'} isMenuOpen={null}>
+          <OrderList orders={orders} />
         </SubPage>
       </div>
     );

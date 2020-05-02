@@ -1,6 +1,6 @@
 /**
  *
- * Products
+ * ProductsShop
  *
  */
 
@@ -11,7 +11,7 @@ import actions from '../../actions';
 
 import ProductList from '../../components/ProductList';
 
-class Products extends React.PureComponent {
+class ProductsShop extends React.PureComponent {
   componentWillMount() {
     const slug = this.props.match.params.slug;
     this.props.fetchProducts('category', slug);
@@ -28,7 +28,7 @@ class Products extends React.PureComponent {
     const { products } = this.props;
 
     return (
-      <div className='products'>
+      <div className='products-shop'>
         <ProductList products={products} />
       </div>
     );
@@ -41,7 +41,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Products);
+export default connect(mapStateToProps, actions)(ProductsShop);

@@ -35,7 +35,7 @@ class Category extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className='category'>
+      <div className='category-dashboard'>
         <SubPage
           title={isCategoryAddOpen ? 'Add Category' : 'Category List'}
           isMenuOpen={isCategoryAddOpen}
@@ -80,7 +80,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Category);
+export default connect(mapStateToProps, actions)(Category);

@@ -35,7 +35,7 @@ class Product extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className='product'>
+      <div className='product-dashboard'>
         <SubPage
           title={isProductAddOpen ? 'Add Product' : 'Product List'}
           isMenuOpen={isProductAddOpen}
@@ -80,7 +80,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Product);
+export default connect(mapStateToProps, actions)(Product);

@@ -4,20 +4,20 @@
  *
  */
 
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
-import actions from "../../actions";
+import actions from '../../actions';
 
-import { Row, Col } from "reactstrap";
+import { Row, Col } from 'reactstrap';
 
-import Input from "../../components/Input";
+import Input from '../../components/Input';
 
 class ProductPage extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
     this.props.fetchProduct(slug);
-    document.body.classList.add("product-page");
+    document.body.classList.add('product-page');
   }
 
   componentDidUpdate(prevProps) {
@@ -28,7 +28,7 @@ class ProductPage extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    document.body.classList.remove("product-page");
+    document.body.classList.remove('product-page');
   }
 
   render() {
@@ -42,43 +42,43 @@ class ProductPage extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className="item-page">
+      <div className='product-shop'>
         <Row>
-          <Col xs="12" md="5" lg="5" className="mb-3">
-            <div className="item-image">
-              <img src={"/images/placeholder-image.png"} />
+          <Col xs='12' md='5' lg='5' className='mb-3'>
+            <div className='item-image'>
+              <img src={'/images/placeholder-image.png'} />
               {product.quantity > 0 ? (
-                <p className="stock in-stock">In stock</p>
+                <p className='stock in-stock'>In stock</p>
               ) : (
-                <p className="stock out-of-stock">Out of stock</p>
+                <p className='stock out-of-stock'>Out of stock</p>
               )}
             </div>
           </Col>
-          <Col xs="12" md="7" lg="7" className="mb-3">
-            <div className="item-box">
+          <Col xs='12' md='7' lg='7' className='mb-3'>
+            <div className='item-box'>
               <h1>{product.name}</h1>
-              <p className="sku">{product.sku}</p>
+              <p className='sku'>{product.sku}</p>
               <hr />
-              <div className="item-details">
-                <p className="item-desc">{product.description}</p>
-                <p className="price">${product.price}</p>
+              <div className='item-details'>
+                <p className='item-desc'>{product.description}</p>
+                <p className='price'>${product.price}</p>
                 <Input
-                  type={"number"}
-                  label={"Quantity"}
-                  name={"quantity"}
+                  type={'number'}
+                  label={'Quantity'}
+                  name={'quantity'}
                   disabled={!product.quantity > 0}
-                  placeholder={"Product Quantity"}
+                  placeholder={'Product Quantity'}
                   value={productFormData.quantity}
                   onInputChange={(name, value) => {
                     productChange(name, value);
                   }}
                 />
-                <div className="item-actions">
+                <div className='item-actions'>
                   {itemsInCart.includes(product._id) ? (
                     <button
                       disabled={!product.quantity > 0}
-                      className="input-btn"
-                      type="submit"
+                      className='input-btn'
+                      type='submit'
                       onClick={() => handleRemoveFromCart(product)}
                     >
                       Remove To Cart
@@ -86,8 +86,8 @@ class ProductPage extends React.PureComponent {
                   ) : (
                     <button
                       disabled={!product.quantity > 0}
-                      className="input-btn"
-                      type="submit"
+                      className='input-btn'
+                      type='submit'
                       onClick={() => handleAddToCart(product)}
                     >
                       Add To Cart

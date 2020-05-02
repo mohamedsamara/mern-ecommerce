@@ -7,6 +7,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router-dom';
+
 import actions from '../../actions';
 
 import SubPage from '../../components/SubPage';
@@ -26,9 +28,12 @@ class OrderSuccess extends React.PureComponent {
         <div className='order-message'>
           <h2>Thank you for your order.</h2>
           <p>
-            Order #<span className='order-id'>{order._id}</span> is complete.
+            Order #<span className='order-label'>{order._id}</span> is complete.
           </p>
           <p>A confirmation email wil be sent to you shortly.</p>
+          <Link to='dashboard/orders' className='redirect-link'>
+            Manage Orders
+          </Link>
         </div>
       </div>
     );

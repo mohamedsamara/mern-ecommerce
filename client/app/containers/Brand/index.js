@@ -31,7 +31,7 @@ class Brand extends React.PureComponent {
     } = this.props;
 
     return (
-      <div className='brand'>
+      <div className='brand-dashboard'>
         <SubPage
           title={isBrandAddOpen ? 'Add Brand' : 'Brand List'}
           isMenuOpen={isBrandAddOpen}
@@ -71,7 +71,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Brand);
+export default connect(mapStateToProps, actions)(Brand);

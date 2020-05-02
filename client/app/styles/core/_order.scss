@@ -1,4 +1,45 @@
-.order-list {
+.order-dashboard {
+  .order-list {
+    margin: 20px 0px 10px 0px;
 
-    margin:20px 0px 10px 0px
-}  
+    .order-details {
+      padding: 20px;
+      @include flex();
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .order-box {
+      border-radius: 5px;
+      box-shadow: $box-shadow;
+
+      .order-first-item {
+        .item-image {
+          img {
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+          }
+        }
+      }
+
+      p {
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+
+/* start order success styles */
+.order-success {
+  .order-message {
+    text-align: center;
+  }
+}
+/* end order success styles */
+
+/* start order common styles */
+.order-label {
+  font-weight: $font-weight-bold-two;
+  color: $font-custom-color;
+}
+/* end order common styles */

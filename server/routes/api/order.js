@@ -80,6 +80,7 @@ router.get(
 
                 const order = {
                   _id: doc._id,
+                  created: doc.created,
                   products: data.products
                 };
 
