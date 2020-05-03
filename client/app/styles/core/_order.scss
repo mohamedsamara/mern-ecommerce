@@ -37,6 +37,16 @@
 }
 /* end order success styles */
 
+/* start order meta styles */
+.order-meta {
+  p {
+    text-transform: capitalize;
+    margin-bottom: 5px;
+  }
+}
+
+/* end order meta styles */
+
 /* start order common styles */
 .order-label {
   font-weight: $font-weight-bold-two;

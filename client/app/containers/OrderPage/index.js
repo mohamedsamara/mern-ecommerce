@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import { Row, Col } from 'reactstrap';
+import OrderDetails from '../../components/OrderDetails';
 
 class OrderPage extends React.PureComponent {
   componentDidMount() {
@@ -19,15 +19,19 @@ class OrderPage extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
-      const id = this.props.match.params.slug;
-      this.props.fetchOrder(slug);
+      const id = this.props.match.params.id;
+      this.props.fetchOrder(id);
     }
   }
 
   render() {
     const { order } = this.props;
 
-    return <div className='order-page'></div>;
+    return (
+      <div className='order-page'>
+        <OrderDetails order={order} />
+      </div>
+    );
   }
 }
 
