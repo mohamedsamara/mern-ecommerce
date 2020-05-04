@@ -17,16 +17,15 @@ const OrderDetails = props => {
   return (
     <div className='order-details'>
       <Row>
-        <Col xs='12' md='8'>
+        <Col xs='12' md='12'>
           <OrderMeta order={order} />
         </Col>
       </Row>
-      <hr />
-      <Row>
-        <Col xs='12' md='8'>
+      <Row className='mt-3'>
+        <Col xs='12' lg='8'>
           <OrderItems order={order} />
         </Col>
-        <Col xs='12' md='4'>
+        <Col xs='12' lg='4'>
           <OrderSummary order={order} />
         </Col>
       </Row>

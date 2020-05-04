@@ -3,15 +3,16 @@
 
   .checkout-actions {
     padding: 10px;
+    text-align: center;
 
     .input-btn {
       margin-right: 10px;
-      background-color: $theme-black;
-      color: $white !important;
+      // background-color: $theme-black;
+      // color: $white !important;
 
-      &:hover {
-        background-color: black;
-      }
+      // &:hover {
+      //   background-color: black;
+      // }
 
       @include media-breakpoint-down(xs) {
         width: 100%;

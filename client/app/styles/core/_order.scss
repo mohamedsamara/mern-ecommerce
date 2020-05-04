@@ -44,8 +44,16 @@
     margin-bottom: 5px;
   }
 }
-
 /* end order meta styles */
+
+/* start order details styles */
+.order-details {
+  h4 {
+    border-bottom: $border-default;
+    padding-bottom: 8px;
+  }
+}
+/* end order details styles */
 
 /* start order common styles */
 .order-label {

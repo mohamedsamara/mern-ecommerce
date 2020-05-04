@@ -26,7 +26,7 @@ export const fetchOrders = () => {
       const userId = cookie.load('user');
       const response = await axios.get(`/api/order/list/${userId}`);
 
-      const orders = calculateOrderTotal(response.data.orders);
+      const orders = calculateOrdersTotal(response.data.orders);
 
       dispatch({
         type: FETCH_ORDERS,
@@ -42,12 +42,13 @@ export const fetchOrders = () => {
 export const fetchOrder = id => {
   return async (dispatch, getState) => {
     try {
-      const userId = cookie.load('user');
+      // const userId = cookie.load('user');
       const response = await axios.get(`/api/order/${id}`);
+      const order = calculateOrderTotal(response.data.order);
 
       dispatch({
         type: FETCH_ORDER,
-        payload: response.data.order
+        payload: order
       });
     } catch (error) {
       const title = `Please try again!`;
@@ -89,12 +90,25 @@ export const placeOrder = () => {
   };
 };
 
-const calculateOrderTotal = orderItems => {
-  orderItems.map(order => {
+const calculateOrdersTotal = orders => {
+  orders.map(order => {
+    order.total = 0;
     order.products.map(item => {
-      order.total = item.quantity * item.product.price;
+      order.total += item.quantity * item.product.price;
     });
   });
 
-  return orderItems;
+  return orders;
+};
+
+const calculateOrderTotal = order => {
+  order.total = 0;
+
+  order.products.map(item => {
+    item.total = 0;
+    order.total += item.quantity * item.product.price;
+    item.total += item.quantity * item.product.price;
+  });
+
+  return order;
 };

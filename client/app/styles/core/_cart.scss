@@ -38,25 +38,6 @@
   display: flex;
   flex-direction: column;
 
-  .cart-checkout {
-    background-color: $white;
-    border-top: $border-default;
-  }
-
-  .total-item {
-    margin-bottom: 10px;
-    color: $font-custom-color;
-
-    label {
-      font-weight: $font-weight-bold-two;
-    }
-  }
-
-  .cart-summary {
-    padding: 5px 15px;
-    background-color: $theme-light-white;
-  }
-
   .cart-body {
     flex: 1;
     overflow-y: auto;
@@ -66,7 +47,6 @@
   }
 
   .item-box {
-    position: relative;
     padding: 10px;
     margin-bottom: 5px;
     border-bottom: $border-default;
@@ -75,40 +55,30 @@
       border-bottom: none;
     }
 
-    h1 {
-      display: inline-block;
-    }
+    .item-details {
+      .icon-trash {
+        color: $theme-bright-red;
+        font-size: $font-size-xx-large;
+        cursor: pointer;
+      }
 
-    .icon-trash {
-      color: $theme-bright-red;
-      position: absolute;
-      top: 7px;
-      font-size: $font-size-xx-large;
-      right: 10px;
-      cursor: pointer;
-    }
-
-    p {
-      margin: 5px 0 0 0;
-    }
-
-    label {
-      margin-right: 10px;
-      color: $font-custom-color;
-      font-weight: $font-weight-bold-one;
+      p {
+        margin-bottom: 0;
+      }
     }
   }
 
   .cart-header {
     border-bottom: $border-default;
     text-align: right;
+    height: 40px;
 
     .close-icon {
       cursor: pointer;
       position: relative;
       display: inline-block;
-      background-size: 16px;
       padding: 20px;
+      background-size: 16px;
       @include icon($close, 25px, 25px);
 
       &:hover {
@@ -128,4 +98,35 @@
       font-weight: $font-weight-bold-one;
     }
   }
+
+  .cart-checkout {
+    background-color: $white;
+    border-top: $border-default;
+
+    .cart-summary {
+      padding: 10px;
+      background-color: $theme-light-white;
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
+
+/* start cart common styles */
+
+.summary-item {
+  .summary-label {
+    color: $font-custom-color;
+    font-weight: $font-weight-bold-one;
+    text-transform: capitalize;
+  }
+
+  .summary-value {
+    color: $font-custom-color;
+    font-weight: $font-weight-bold-two;
+  }
+}
+
+/* end cart common styles */

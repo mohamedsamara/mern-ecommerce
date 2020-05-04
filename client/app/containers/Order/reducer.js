@@ -8,7 +8,11 @@ import { FETCH_ORDERS, FETCH_ORDER, TOGGLE_ADD_ORDER } from './constants';
 
 const initialState = {
   orders: [],
-  order: {},
+  order: {
+    _id: '',
+    products: [],
+    total: 0
+  },
   isOrderAddOpen: false
 };
 

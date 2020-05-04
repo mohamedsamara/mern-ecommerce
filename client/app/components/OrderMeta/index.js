@@ -15,6 +15,7 @@ const OrderMeta = props => {
 
   return (
     <div className='order-meta'>
+      <h4>Order Details</h4>
       <Row>
         <Col xs='12' md='8'>
           <Row>

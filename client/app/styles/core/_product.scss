@@ -16,48 +16,45 @@
     background-color: $white;
     box-shadow: $box-shadow;
 
-    .product-box {
+    .item-box {
       padding: 15px;
-    }
 
-    h1 {
-      color: $theme-blue !important;
-      font-weight: $font-weight-bold-two;
-      max-height: 30px;
-      overflow: hidden;
-    }
+      .item-details {
+        .item-name {
+          color: $theme-blue !important;
+          font-weight: $font-weight-bold-two;
+          max-height: 30px;
+          overflow: hidden;
+          margin-bottom: 8px;
+        }
 
-    .stock {
-      font-weight: $font-weight-bold-one;
-    }
+        .stock {
+          font-weight: $font-weight-bold-one;
+        }
 
-    .in-stock {
-      color: $theme-blue;
-    }
+        .in-stock {
+          color: $theme-blue;
+        }
 
-    .out-of-stock {
-      color: $theme-bright-red;
-    }
+        .out-of-stock {
+          color: $theme-bright-red;
+        }
 
-    .product-desc {
-      max-height: 40px;
-      overflow: hidden;
-    }
+        .item-desc {
+          max-height: 40px;
+          overflow: hidden;
+        }
 
-    .price {
-      color: $font-custom-color;
-      font-weight: $font-weight-bold-one;
-      font-size: $font-size-large;
-    }
+        .by {
+          margin-bottom: 5px;
+          color: $theme-blue;
+          font-weight: $font-weight-bold-one;
 
-    .by {
-      margin-bottom: 5px;
-      color: $theme-blue;
-      font-weight: $font-weight-bold-one;
-
-      span {
-        color: $font-custom-color !important;
-        margin-right: 8px;
+          span {
+            color: $font-custom-color !important;
+            margin-right: 8px;
+          }
+        }
       }
     }
   }
@@ -94,18 +91,10 @@
   }
 
   .item-box {
-    h1 {
-      margin: 0px;
-    }
-
-    .item-desc {
-      color: $font-custom-color !important;
-    }
-
-    .price {
-      color: $font-custom-color;
-      font-weight: $font-weight-bold-two;
-      font-size: $font-size-large;
+    .item-details {
+      .item-desc {
+        color: $font-custom-color !important;
+      }
     }
 
     .item-actions {
@@ -117,8 +106,26 @@
 
 /* start product common styles */
 .item-box {
-  h1 {
+  .item-name {
     color: $red !important;
+    margin: 0px;
+  }
+
+  .item-label {
+    color: $font-custom-color;
+    font-weight: $font-weight-bold-one;
+    text-transform: capitalize;
+  }
+
+  .item-value {
+    color: $font-custom-color;
+    font-weight: $font-weight-bold-two;
+  }
+
+  .price {
+    color: $font-custom-color;
+    font-weight: $font-weight-bold-two;
+    font-size: $font-size-large;
   }
 }
 /* end product common styles */
