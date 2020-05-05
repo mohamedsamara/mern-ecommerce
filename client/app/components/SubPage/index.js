@@ -17,17 +17,17 @@ const SubPage = props => {
           <div className='action'>
             {isMenuOpen ? (
               <div className='back' onClick={toggleMenu}>
-                <i className='fa fa-chevron-left' />
+                <i className='fa fa-ellipsis-h' />
               </div>
             ) : (
               <div className='add' onClick={toggleMenu}>
-                <i className='fa fa-chevron-right' />
+                <i className='fa fa-ellipsis-v' />
               </div>
             )}
           </div>
         )}
       </div>
-      {children}
+      <div className='subpage-body'>{children}</div>
     </div>
   );
 };

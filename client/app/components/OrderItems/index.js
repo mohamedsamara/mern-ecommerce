@@ -12,8 +12,6 @@ import { Row, Col } from 'reactstrap';
 const OrderItems = props => {
   const { order } = props;
 
-  console.log(order);
-
   return (
     <div className='order-items'>
       <h4>Order Items</h4>
@@ -37,16 +35,16 @@ const OrderItems = props => {
                   </div>
                 </div>
               </Col>
-              <Col xs='4' md='2' className='text-center'>
+              <Col xs={{ size: '4', offset: 4 }} md={{ size: '3', offset: 0 }}>
                 <p>
                   Quantity
                   <span className='order-label'>{` ${item.quantity}`}</span>
                 </p>
               </Col>
-              <Col xs='4' md='2' className='text-center'>
+              <Col xs='4' md='3'>
                 <p>
                   Total Price
-                  <span className='order-label'>{` ${item.total}`}</span>
+                  <span className='order-label'>{` $${item.total}`}</span>
                 </p>
               </Col>
             </Row>

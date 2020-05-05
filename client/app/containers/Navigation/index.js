@@ -116,10 +116,11 @@ class Navigation extends React.PureComponent {
                   </NavItem>
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
-                      <DropdownToggle nav caret>
+                      <DropdownToggle nav>
                         {Object.keys(user).length == 0
                           ? 'Welcome'
                           : user.profile.firstName}
+                        <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
                       <DropdownMenu right>
                         <DropdownItem>
@@ -127,23 +128,24 @@ class Navigation extends React.PureComponent {
                         </DropdownItem>
                         <DropdownItem divider />
                         <DropdownItem>
-                          <span className='log-out' onClick={signOut}>
+                          <a className='log-out' onClick={signOut}>
                             Log Out
-                          </span>
+                          </a>
                         </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
                   ) : (
                     <UncontrolledDropdown nav inNavbar>
-                      <DropdownToggle nav caret>
+                      <DropdownToggle nav>
                         Welcome!
+                        <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
                       <DropdownMenu right>
                         <DropdownItem>
                           <Link to={'/login'}>Login</Link>
                         </DropdownItem>
                         <DropdownItem>
-                          <Link to={'/register'}>SignUp</Link>
+                          <Link to={'/register'}>Sign Up</Link>
                         </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>

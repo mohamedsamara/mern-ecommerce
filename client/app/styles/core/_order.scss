@@ -1,6 +1,6 @@
 .order-dashboard {
   .order-list {
-    margin: 20px 0px 10px 0px;
+    // margin: 20px 0px 10px 0px;
 
     .order-details {
       padding: 20px;
@@ -10,14 +10,14 @@
     }
 
     .order-box {
-      border-radius: 5px;
+      border-radius: $border-radius-default;
       box-shadow: $box-shadow;
 
       .order-first-item {
         .item-image {
           img {
-            border-top-right-radius: 5px;
-            border-top-left-radius: 5px;
+            border-top-right-radius: $border-radius-default;
+            border-top-left-radius: $border-radius-default;
           }
         }
       }
@@ -51,9 +51,25 @@
   h4 {
     border-bottom: $border-default;
     padding-bottom: 8px;
+    margin-bottom: 16px;
   }
 }
 /* end order details styles */
+
+/* start order items styles */
+.order-items {
+  p {
+    margin-bottom: 0;
+  }
+}
+/* end order items styles */
+
+/* start order summary styles */
+.order-summary {
+  padding: 10px;
+  border: $border-default;
+}
+/* end order summary styles */
 
 /* start order common styles */
 .order-label {

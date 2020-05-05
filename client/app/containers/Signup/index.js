@@ -38,7 +38,7 @@ class Signup extends React.PureComponent {
             <div className='popup-background' />
           </div>
         )}
-        <h1>SignUp</h1>
+        <h1>Sign Up</h1>
         <hr />
         <Row>
           <Col xs='12' md='6' className='col-no-padding'>

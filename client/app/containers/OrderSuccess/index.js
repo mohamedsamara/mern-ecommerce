@@ -36,7 +36,7 @@ class OrderSuccess extends React.PureComponent {
           <p>
             Order #<span className='order-label'>{order._id}</span> is complete.
           </p>
-          <p>A confirmation email wil be sent to you shortly.</p>
+          <p>A confirmation email will be sent to you shortly.</p>
           <Link to='/dashboard/orders' className='btn-link'>
             Manage Orders
           </Link>

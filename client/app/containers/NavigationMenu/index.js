@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import { NavLink } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap';
 
 class NavigationMenu extends React.PureComponent {
   componentDidMount() {
@@ -21,26 +22,27 @@ class NavigationMenu extends React.PureComponent {
 
     return (
       <div className='navigation-menu'>
-        <div className='menu-header'>
-          <h1>MERN Store</h1>
-
-          {isMenuOpen && <span className='close-icon' onClick={toggleMenu} />}
-        </div>
-        <div className='menu-body'>
-          <ul className='menu-list'>
-            {categories.map((link, index) => (
-              <li key={index} className='menu-item'>
-                <NavLink
-                  to={'/shop/category/' + link.slug}
-                  activeClassName='active-link'
-                  exact
-                >
-                  {link.name}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <Container>
+          <div className='menu-header'>
+            <h1>MERN Store</h1>
+            {isMenuOpen && <span className='close-icon' onClick={toggleMenu} />}
+          </div>
+          <div className='menu-body'>
+            <ul className='menu-list'>
+              {categories.map((link, index) => (
+                <li key={index} className='menu-item'>
+                  <NavLink
+                    to={'/shop/category/' + link.slug}
+                    activeClassName='active-link'
+                    exact
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
       </div>
     );
   }
@@ -53,7 +55,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(NavigationMenu);
+export default connect(mapStateToProps, actions)(NavigationMenu);

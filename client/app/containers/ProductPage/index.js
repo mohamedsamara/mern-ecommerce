@@ -55,45 +55,47 @@ class ProductPage extends React.PureComponent {
             </div>
           </Col>
           <Col xs='12' md='7' lg='7' className='mb-3'>
-            <div className='item-box'>
-              <div className='item-details'>
-                <h1 className='item-name'>{product.name}</h1>
-                <p className='sku'>{product.sku}</p>
-                <hr />
-                <p className='item-desc'>{product.description}</p>
-                <p className='price'>${product.price}</p>
-              </div>
-              <Input
-                type={'number'}
-                label={'Quantity'}
-                name={'quantity'}
-                disabled={!product.quantity > 0}
-                placeholder={'Product Quantity'}
-                value={productFormData.quantity}
-                onInputChange={(name, value) => {
-                  productChange(name, value);
-                }}
-              />
-              <div className='item-actions'>
-                {itemsInCart.includes(product._id) ? (
-                  <button
-                    disabled={!product.quantity > 0}
-                    className='input-btn'
-                    type='submit'
-                    onClick={() => handleRemoveFromCart(product)}
-                  >
-                    Remove To Cart
-                  </button>
-                ) : (
-                  <button
-                    disabled={!product.quantity > 0}
-                    className='input-btn'
-                    type='submit'
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    Add To Cart
-                  </button>
-                )}
+            <div className='product-container'>
+              <div className='item-box'>
+                <div className='item-details'>
+                  <h1 className='item-name'>{product.name}</h1>
+                  <p className='sku'>{product.sku}</p>
+                  <hr />
+                  <p className='item-desc'>{product.description}</p>
+                  <p className='price'>${product.price}</p>
+                </div>
+                <Input
+                  type={'number'}
+                  label={'Quantity'}
+                  name={'quantity'}
+                  disabled={!product.quantity > 0}
+                  placeholder={'Product Quantity'}
+                  value={productFormData.quantity}
+                  onInputChange={(name, value) => {
+                    productChange(name, value);
+                  }}
+                />
+                <div className='item-actions'>
+                  {itemsInCart.includes(product._id) ? (
+                    <button
+                      disabled={!product.quantity > 0}
+                      className='input-btn'
+                      type='submit'
+                      onClick={() => handleRemoveFromCart(product)}
+                    >
+                      Remove To Cart
+                    </button>
+                  ) : (
+                    <button
+                      disabled={!product.quantity > 0}
+                      className='input-btn'
+                      type='submit'
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add To Cart
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </Col>

@@ -38,7 +38,7 @@
   background-color: $theme-white;
 
   .menu-header {
-    padding: 10px 20px 10px 30px;
+    padding: 10px 0px 10px 30px;
     @include flex();
     flex-wrap: wrap;
     justify-content: space-between;
@@ -51,9 +51,7 @@
 
     .close-icon {
       cursor: pointer;
-      margin: 0 5px;
       position: relative;
-      display: inline-block;
       background-size: 16px;
       @include icon($close, 25px, 25px);
 
@@ -69,27 +67,34 @@
     .menu-list {
       .menu-item {
         // border-bottom: $border-default;
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
 
         &:hover {
           background-color: $white;
+          -webkit-transition: $layout-transition-speed;
+          transition: $layout-transition-speed;
 
           a {
             color: $red !important;
-            font-weight: $font-weight-bold-one;
           }
         }
 
         a {
           color: $font-custom-color !important;
+          font-weight: $font-weight-bold-one;
           text-transform: capitalize;
           display: block;
           padding: 10px 30px 10px 30px;
+          border-left: 3px solid transparent;
         }
 
         a.active-link {
-          font-weight: $font-weight-bold-one;
+          font-weight: $font-weight-bold-two;
           color: $red !important;
-          border-left: 3px solid $red;
+          border-color: $red;
+          -webkit-transition: border-color ease-in $layout-transition-speed;
+          transition: border-color ease-in $layout-transition-speed;
         }
       }
     }

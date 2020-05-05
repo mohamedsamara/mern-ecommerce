@@ -3,6 +3,7 @@
 .footer {
   flex-shrink: 0;
   border-top: $border-default;
+  border-color: $light-border-color;
 }
 
 .footer-content {
@@ -18,6 +19,7 @@
   width: 100%;
   margin: 0px 15px;
   border-right: $border-default;
+  border-color: $light-border-color;
   padding: 20px 20px 40px 0;
 
   @include media-breakpoint-down(sm) {
@@ -25,6 +27,7 @@
     margin: 10px 0px;
     border-right: none;
     border-bottom: $border-default;
+    border-color: $light-border-color;
     padding: 20px 0px;
   }
 
@@ -47,7 +50,7 @@
     a {
       &:hover {
         // color: $red !important;
-        color: $theme-black !important;
+        color: $font-hover-color !important;
       }
     }
   }

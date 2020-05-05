@@ -102,15 +102,15 @@ h6,
 
 /* scrollbar styles */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $black;
+  background: $white;
 }
 
 ::-webkit-scrollbar-track {
-  background: $gray;
+  background: $theme-dark-gray;
 }
 /* scrollbar styles */

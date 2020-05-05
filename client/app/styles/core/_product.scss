@@ -1,8 +1,8 @@
 /* start product dashboard styles */
 .product-dashboard {
-  .table-section {
-    margin: 20px 0px;
-  }
+  // .table-section {
+  //   margin: 20px 0px;
+  // }
 
   .desc-column {
     @include text-ellipsis(2);
@@ -22,22 +22,10 @@
       .item-details {
         .item-name {
           color: $theme-blue !important;
-          font-weight: $font-weight-bold-two;
+          // font-weight: $font-weight-bold-two;
           max-height: 30px;
           overflow: hidden;
           margin-bottom: 8px;
-        }
-
-        .stock {
-          font-weight: $font-weight-bold-one;
-        }
-
-        .in-stock {
-          color: $theme-blue;
-        }
-
-        .out-of-stock {
-          color: $theme-bright-red;
         }
 
         .item-desc {
@@ -78,16 +66,17 @@
       right: 0;
       padding: 10px;
       background-color: $white;
-      font-weight: $font-weight-bold-one;
+      border-bottom-left-radius: $border-radius-default;
     }
+  }
 
-    .out-of-stock {
-      color: $red;
-    }
-
-    .in-stock {
-      color: $theme-blue;
-    }
+  .product-container {
+    background-color: $white;
+    padding: 20px;
+    border-radius: $border-radius-default;
+    @include flex();
+    flex-direction: column;
+    height: 100%;
   }
 
   .item-box {
@@ -127,5 +116,17 @@
     font-weight: $font-weight-bold-two;
     font-size: $font-size-large;
   }
+}
+
+.stock {
+  font-weight: $font-weight-bold-one;
+}
+
+.in-stock {
+  color: $theme-blue;
+}
+
+.out-of-stock {
+  color: $theme-bright-red;
 }
 /* end product common styles */

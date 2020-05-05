@@ -56,13 +56,14 @@
       border-top: $border-default;
       border-right: $border-default;
       border-left: $border-default;
-      border-color: $dark-border-color;
+      border-color: $light-border-color;
+      // border-color: $dark-border-color;
 
       &:hover {
         background-color: $white;
 
         a {
-          color: $theme-black !important;
+          color: $font-custom-color !important;
         }
       }
 
@@ -75,14 +76,17 @@
         display: block;
         padding: 10px 0px;
         text-transform: capitalize;
+        color: $font-custom-color !important;
+        font-weight: $font-weight-bold-one;
       }
 
       a.active-link {
         color: $red !important;
+        font-weight: $font-weight-bold-two;
 
-        &:hover {
-          color: $theme-black !important;
-        }
+        // &:hover {
+        //   color: $font-hover-color !important;
+        // }
       }
     }
   }
