@@ -40,6 +40,24 @@ const Input = props => {
         {dom}
       </div>
     );
+  } else if (type == 'number') {
+    return (
+      <div className='input-box'>
+        {label && <label>{label}</label>}
+        <input
+          autoComplete='on'
+          type={type}
+          onChange={e => {
+            onChange(e);
+          }}
+          disabled={disabled}
+          name={name}
+          value={value}
+          placeholder={placeholder}
+          className={'input-number'}
+        />
+      </div>
+    );
   } else {
     return (
       <div className='input-box'>

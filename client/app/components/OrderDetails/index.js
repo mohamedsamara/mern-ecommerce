@@ -25,7 +25,7 @@ const OrderDetails = props => {
         <Col xs='12' lg='8'>
           <OrderItems order={order} />
         </Col>
-        <Col xs='12' lg='4'>
+        <Col xs='12' lg='4' className='mt-3 mt-lg-0'>
           <OrderSummary order={order} />
         </Col>
       </Row>

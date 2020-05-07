@@ -16,7 +16,7 @@ const OrderSummary = props => {
   };
 
   return (
-    <div className='order-summary'>
+    <Col className='order-summary'>
       <h4>Order Summary</h4>
       <Row className='mb-2 summary-item'>
         <Col xs='9'>
@@ -51,7 +51,7 @@ const OrderSummary = props => {
           <p className='summary-value'>${getTotal()}</p>
         </Col>
       </Row>
-    </div>
+    </Col>
   );
 };
 

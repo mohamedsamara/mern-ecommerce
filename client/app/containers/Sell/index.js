@@ -12,6 +12,7 @@ import { Row, Col } from 'reactstrap';
 import actions from '../../actions';
 
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 class Sell extends React.PureComponent {
   render() {
@@ -85,13 +86,7 @@ class Sell extends React.PureComponent {
         </Row>
         <hr />
         <div className='sell-actions'>
-          <button
-            className='input-btn'
-            type='submit'
-            onClick={() => sellWithUs()}
-          >
-            Submit
-          </button>
+          <Button text='Submit' onClick={() => sellWithUs()} />
         </div>
       </div>
     );

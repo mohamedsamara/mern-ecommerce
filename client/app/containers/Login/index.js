@@ -12,6 +12,7 @@ import { Redirect, Link } from 'react-router-dom';
 
 import actions from '../../actions';
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import SignupProvider from '../../components/SignupProvider';
 
@@ -70,9 +71,7 @@ class Login extends React.PureComponent {
         </Row>
         <hr />
         <div className='login-actions'>
-          <button className='input-btn' type='submit' onClick={() => login()}>
-            Login
-          </button>
+          <Button text='Login' onClick={() => login()} />
           <Link className='redirect-link' to={'/forgot-password'}>
             Forgot Password?
           </Link>
@@ -90,7 +89,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Login);
+export default connect(mapStateToProps, actions)(Login);

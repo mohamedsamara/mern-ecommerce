@@ -86,6 +86,13 @@
       }
     }
 
+    .item-customize {
+      .input-number {
+        width: 170px;
+        display: block;
+      }
+    }
+
     .item-actions {
       margin-top: 20px;
     }
@@ -128,5 +135,52 @@
 
 .out-of-stock {
   color: $theme-bright-red;
+}
+
+.bag-btn {
+  position: relative;
+  z-index: 1;
+  min-width: 170px;
+
+  &:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 0%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: $theme-light-white;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
+
+  &:hover {
+    background-color: transparent;
+    color: $font-custom-color !important;
+
+    .bag-icon {
+      // fill: $red;
+      stroke: $red !important;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+
+    &:after {
+      width: 100%;
+    }
+  }
+
+  .btn-icon {
+    .bag-icon {
+      width: 20px;
+      height: 20px;
+      margin-left: 10px;
+      stroke-width: 20px;
+      stroke: $black;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+  }
 }
 /* end product common styles */

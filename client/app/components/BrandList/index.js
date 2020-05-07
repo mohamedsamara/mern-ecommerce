@@ -14,7 +14,7 @@ const BrandList = props => {
 
   return (
     <div className='brand-list'>
-      <h2>Brands</h2>
+      <h2>Shop By Brand</h2>
       <hr />
       <Row>
         {brands.map((brand, index) => (

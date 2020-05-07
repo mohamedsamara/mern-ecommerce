@@ -26,12 +26,14 @@ export const fetchOrders = () => {
       const userId = cookie.load('user');
       const response = await axios.get(`/api/order/list/${userId}`);
 
-      const orders = calculateOrdersTotal(response.data.orders);
+      if (response.data.orders) {
+        const orders = calculateOrdersTotal(response.data.orders);
 
-      dispatch({
-        type: FETCH_ORDERS,
-        payload: orders
-      });
+        dispatch({
+          type: FETCH_ORDERS,
+          payload: orders
+        });
+      }
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);

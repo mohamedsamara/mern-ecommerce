@@ -9,12 +9,18 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../Input';
+import Button from '../../components/Button';
 
 const AccountDetails = props => {
-  const { profile, accountChange, updateProfile } = props;
+  const { user, profile, accountChange, updateProfile } = props;
 
   return (
     <div className='account-details'>
+      <div className='info'>
+        <p>{user.email}</p>
+        {user.role !== 'ROLE_MEMBER' && <span>Admin</span>}
+        {profile.isSubscribed && <span>Subscribed</span>}
+      </div>
       <Row>
         <Col xs='12' md='12'>
           <Input
@@ -41,13 +47,7 @@ const AccountDetails = props => {
       </Row>
       <hr />
       <div className='profile-actions'>
-        <button
-          className='input-btn'
-          type='submit'
-          onClick={() => updateProfile()}
-        >
-          Update Profile
-        </button>
+        <Button text='Save changes' onClick={() => updateProfile()} />
       </div>
     </div>
   );

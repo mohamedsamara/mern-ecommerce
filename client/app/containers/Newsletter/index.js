@@ -8,17 +8,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
+
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 class Newsletter extends React.PureComponent {
   render() {
     const { email, newsletterChange, subscribe } = this.props;
 
-    const subscribeButton = (
-      <button className='input-btn' type='submit' onClick={subscribe}>
-        subscribe
-      </button>
-    );
+    const subscribeButton = <Button text='Subscribe' onClick={subscribe} />;
 
     return (
       <div className='newsletter-form'>

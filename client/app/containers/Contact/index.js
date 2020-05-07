@@ -12,6 +12,7 @@ import { Row, Col } from 'reactstrap';
 import actions from '../../actions';
 
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 class Contact extends React.PureComponent {
   render() {
@@ -61,13 +62,7 @@ class Contact extends React.PureComponent {
         </Row>
         <hr />
         <div className='contact-actions'>
-          <button
-            className='input-btn'
-            type='submit'
-            onClick={() => contactUs()}
-          >
-            Submit
-          </button>
+          <Button text='Submit' onClick={() => contactUs()} />
         </div>
       </div>
     );

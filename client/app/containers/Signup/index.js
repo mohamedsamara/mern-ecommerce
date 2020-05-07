@@ -12,6 +12,7 @@ import { Redirect } from 'react-router-dom';
 
 import actions from '../../actions';
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import SignupProvider from '../../components/SignupProvider';
 import Checkbox from '../../components/Checkbox';
@@ -103,9 +104,7 @@ class Signup extends React.PureComponent {
           toggleCheckboxChange={subscribeChange}
         />
         <div className='login-actions'>
-          <button className='input-btn' type='submit' onClick={() => signUp()}>
-            Sign Up
-          </button>
+          <Button text='Sign Up' onClick={() => signUp()} />
         </div>
       </div>
     );

@@ -6,35 +6,19 @@
 
 import React from 'react';
 
+import Button from '../../components/Button';
+
 const Checkout = props => {
   const { authenticated, handleShopping, handleCheckout, placeOrder } = props;
 
   return (
     <div className='easy-checkout'>
       <div className='checkout-actions'>
-        <button
-          className='input-btn'
-          type='submit'
-          onClick={() => handleShopping()}
-        >
-          Continue shopping
-        </button>
+        <Button text='Continue shopping' onClick={() => handleShopping()} />
         {authenticated ? (
-          <button
-            className='input-btn'
-            type='submit'
-            onClick={() => placeOrder()}
-          >
-            Place Order
-          </button>
+          <Button text='Place Order' onClick={() => placeOrder()} />
         ) : (
-          <button
-            className='input-btn'
-            type='submit'
-            onClick={() => handleCheckout()}
-          >
-            Proceed To Checkout
-          </button>
+          <Button text='Proceed To Checkout' onClick={() => handleCheckout()} />
         )}
       </div>
     </div>

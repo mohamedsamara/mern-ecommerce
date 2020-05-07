@@ -1,0 +1,52 @@
+// start input button styles
+input[type='button'],
+input[type='submit'],
+input[type='reset'],
+button[type='button'],
+button[type='submit'],
+button[type='reset'] {
+  padding: 10px;
+  border: none;
+  color: $font-custom-color !important;
+  font-weight: $font-weight-bold-two;
+  font-size: $font-size-small;
+  text-decoration: none;
+  text-transform: capitalize;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: $disabled-bg;
+    color: $font-custom-color !important;
+    border: none !important;
+    cursor: not-allowed;
+  }
+}
+// end input button styles
+
+.input-btn {
+  min-width: 150px;
+  border: $border-default !important;
+  border-width: 3px !important;
+  border-radius: $border-radius-default;
+  background-color: $btn-bg;
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
+
+  &:hover {
+    color: $white !important;
+    background-color: $btn-bg-hover;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
+}
+
+.input-btn {
+  .btn-text {
+    font-weight: $font-weight-bold-two;
+    font-size: $font-size-small;
+  }
+}

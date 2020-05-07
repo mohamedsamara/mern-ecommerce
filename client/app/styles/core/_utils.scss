@@ -18,6 +18,14 @@
   padding: 0;
 }
 
+.desktop-hidden {
+  display: none;
+
+  @include media-breakpoint-down(sm) {
+    display: block;
+  }
+}
+
 .fa {
   font-size: $font-size-small !important;
 }

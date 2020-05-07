@@ -37,7 +37,7 @@
 }
 
 // icon styles
-@mixin icon($icon, $width, $height) {
+@mixin icon($icon, $width: null, $height: null) {
   background-image: $icon;
   background-position: center;
   background-repeat: no-repeat;

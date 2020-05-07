@@ -12,18 +12,20 @@
     }
 
     .fa-ellipsis-h {
-      padding: 5px 8px;
+      padding: 6px 8px;
     }
 
     .fa-ellipsis-v {
-      padding: 5px 16px;
+      padding: 6px 15px;
     }
 
     .fa {
       cursor: pointer;
-      background-color: $transparent-gray-bg;
       border-radius: 50%;
-      font-size: $font-size-x-huge !important;
+      background-color: $transparent-gray-bg;
+      color: $theme-dark-gray;
+      -webkit-text-stroke: 1px $transparent-gray-bg;
+      font-size: $font-size-huge !important;
       animation: vibrate 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
       animation-iteration-count: 1;
       transform: translate3d(0, 0, 0);
@@ -32,6 +34,7 @@
 
       &:hover {
         opacity: 0.8;
+        // color: $white;
       }
     }
 

@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../Input';
+import Button from '../../components/Button';
 import SelectOption from '../SelectOption';
 
 const AddCategory = props => {
@@ -62,13 +63,7 @@ const AddCategory = props => {
       </Row>
       <hr />
       <div className='add-category-actions'>
-        <button
-          className='input-btn'
-          type='submit'
-          onClick={() => addCategory()}
-        >
-          Add Category
-        </button>
+        <Button text='Add Category' onClick={() => addCategory()} />
       </div>
     </div>
   );

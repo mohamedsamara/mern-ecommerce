@@ -63,7 +63,7 @@ router.post('/register', (req, res, next) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const password = req.body.password;
-  const is_subscribed = req.body.isSubscribed;
+  const isSubscribed = req.body.isSubscribed;
 
   if (!email) {
     return res.status(400).json({ error: 'You must enter an email address.' });
@@ -91,7 +91,7 @@ router.post('/register', (req, res, next) => {
     const user = new User({
       email,
       password,
-      profile: { firstName, lastName, is_subscribed }
+      profile: { firstName, lastName, isSubscribed }
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -101,6 +101,7 @@ router.post('/register', (req, res, next) => {
             error: 'Your request could not be processed. Please try again.'
           });
         }
+
         user.password = hash;
 
         user.save((err, user) => {
@@ -121,7 +122,7 @@ router.post('/register', (req, res, next) => {
                 profile: {
                   firstName: user.profile.firstName,
                   lastName: user.profile.lastName,
-                  is_subscribed: user.profile.is_subscribed
+                  isSubscribed: user.profile.isSubscribed
                 },
                 email: user.email,
                 role: user.role

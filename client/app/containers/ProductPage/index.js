@@ -12,6 +12,8 @@ import actions from '../../actions';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../components/Input';
+import Button from '../../components/Button';
+import { BagIcon } from '../../components/Icon';
 
 class ProductPage extends React.PureComponent {
   componentDidMount() {
@@ -64,36 +66,36 @@ class ProductPage extends React.PureComponent {
                   <p className='item-desc'>{product.description}</p>
                   <p className='price'>${product.price}</p>
                 </div>
-                <Input
-                  type={'number'}
-                  label={'Quantity'}
-                  name={'quantity'}
-                  disabled={!product.quantity > 0}
-                  placeholder={'Product Quantity'}
-                  value={productFormData.quantity}
-                  onInputChange={(name, value) => {
-                    productChange(name, value);
-                  }}
-                />
+                <div className='item-customize'>
+                  <Input
+                    type={'number'}
+                    label={'Quantity'}
+                    name={'quantity'}
+                    disabled={!product.quantity > 0}
+                    placeholder={'Product Quantity'}
+                    value={productFormData.quantity}
+                    onInputChange={(name, value) => {
+                      productChange(name, value);
+                    }}
+                  />
+                </div>
                 <div className='item-actions'>
                   {itemsInCart.includes(product._id) ? (
-                    <button
+                    <Button
                       disabled={!product.quantity > 0}
-                      className='input-btn'
-                      type='submit'
+                      text='Remove From Bag'
+                      className='bag-btn'
+                      icon={<BagIcon />}
                       onClick={() => handleRemoveFromCart(product)}
-                    >
-                      Remove To Cart
-                    </button>
+                    />
                   ) : (
-                    <button
+                    <Button
                       disabled={!product.quantity > 0}
-                      className='input-btn'
-                      type='submit'
+                      text='Add To Bag'
+                      className='bag-btn'
+                      icon={<BagIcon />}
                       onClick={() => handleAddToCart(product)}
-                    >
-                      Add To Cart
-                    </button>
+                    />
                   )}
                 </div>
               </div>

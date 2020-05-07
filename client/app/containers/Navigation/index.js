@@ -83,9 +83,9 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 5, order: 1 }}
-              lg={{ size: 6, order: 3 }}
-              className='col-no-padding'
+              md={{ size: 4, order: 1 }}
+              lg={{ size: 5, order: 3 }}
+              className='desktop-hidden'
             >
               <div className='header-links'>
                 <span className='bars-icon fa fa-bars' onClick={toggleMenu} />
@@ -99,10 +99,15 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 4, order: 1 }}
-              lg={{ size: 3, order: 3 }}
+              md={{ size: 9, order: 1 }}
+              lg={{ size: 9, order: 3 }}
             >
               <Navbar color='light' light expand='md'>
+                <span className='fa fa-cart-plus' onClick={toggleCart}>
+                  {cartItems.length > 0 && (
+                    <span className='cart-badge'>{cartItems.length}</span>
+                  )}
+                </span>
                 <Nav navbar>
                   <NavItem>
                     <NavLink tag={Link} to='/brands'>

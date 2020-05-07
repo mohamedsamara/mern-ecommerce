@@ -11,7 +11,7 @@ const UserSchema = new Schema({
   profile: {
     firstName: { type: String },
     lastName: { type: String },
-    is_subscribed: { type: Boolean }
+    isSubscribed: { type: Boolean }
   },
   password: {
     type: String,
@@ -19,7 +19,7 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['ROLE_MEMBER', 'ROLE_ADMIN'],
+    enum: ['ROLE_MEMBER', 'ROLE_ADMIN', 'ROLE_MERCHANT'],
     default: 'ROLE_MEMBER'
   },
   isMerchant: {

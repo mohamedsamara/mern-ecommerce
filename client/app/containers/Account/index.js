@@ -41,11 +41,6 @@ class Account extends React.PureComponent {
     return (
       <div className='account'>
         <SubPage title={'Account Page'} isMenuOpen={null} />
-        <div className='info'>
-          <p>{user.email}</p>
-          {user.role !== 'ROLE_MEMBER' && <span>Admin</span>}
-          {profile.is_subscribed && <span>Subscribed</span>}
-        </div>
         <AccountDetails
           profile={profile}
           user={user}
@@ -86,7 +81,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Account);
+export default connect(mapStateToProps, actions)(Account);

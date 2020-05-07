@@ -64,11 +64,19 @@
   .navbar {
     padding-left: 0px;
     background-color: $white !important;
+    justify-content: flex-end;
 
     @include media-breakpoint-down(sm) {
       padding-top: 0;
       justify-content: center;
       padding: 0;
+    }
+
+    .fa-cart-plus {
+      margin-right: 20px;
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
     }
   }
 
@@ -134,6 +142,7 @@
 
     .dropdown-item {
       padding: 0px;
+      font-weight: $font-weight-normal;
 
       &:focus {
         outline: none;
@@ -159,7 +168,7 @@
   .brand {
     @include flex();
     flex-wrap: wrap;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
     @include media-breakpoint-down(sm) {
       margin-top: 10px;
@@ -168,6 +177,7 @@
 
     .bars-icon {
       display: block;
+      margin-right: 15px;
       @include media-breakpoint-down(sm) {
         display: none;
       }
@@ -179,24 +189,20 @@
     }
   }
 
+  .cart-badge {
+    @include badge();
+  }
+
   .header-links {
     @include flex();
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: space-between;
 
-    @include media-breakpoint-down(sm) {
-      justify-content: space-between;
-    }
-
-    .bars-icon {
-      display: none;
-      @include media-breakpoint-down(sm) {
-        display: block;
-      }
-    }
-
-    .cart-badge {
-      @include badge();
-    }
+    // .bars-icon {
+    //   display: none;
+    //   @include media-breakpoint-down(sm) {
+    //     display: block;
+    //   }
+    // }
   }
 }

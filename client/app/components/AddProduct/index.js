@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../Input';
+import Button from '../../components/Button';
 import SelectOption from '../SelectOption';
 
 const AddProduct = props => {
@@ -99,13 +100,7 @@ const AddProduct = props => {
       </Row>
       <hr />
       <div className='add-product-actions'>
-        <button
-          className='input-btn'
-          type='submit'
-          onClick={() => addProduct()}
-        >
-          Add Product
-        </button>
+        <Button text='Add Product' onClick={() => addProduct()} />
       </div>
     </div>
   );

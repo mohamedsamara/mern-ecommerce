@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../Input';
+import Button from '../../components/Button';
 
 const AddBrand = props => {
   const { brandFormData, brandChange, addBrand } = props;
@@ -43,9 +44,7 @@ const AddBrand = props => {
       </Row>
       <hr />
       <div className='add-brand-actions'>
-        <button className='input-btn' type='submit' onClick={() => addBrand()}>
-          Add Brand
-        </button>
+        <Button text='Add Brand' onClick={() => addBrand()} />
       </div>
     </div>
   );

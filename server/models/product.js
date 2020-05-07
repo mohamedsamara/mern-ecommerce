@@ -31,6 +31,21 @@ const ProductSchema = new Schema({
   quantity: {
     type: Number
   },
+  weight: {
+    type: String
+  },
+  status: {
+    type: String
+  },
+  published: {
+    type: Boolean
+  },
+  shippable: {
+    type: Boolean
+  },
+  taxable: {
+    type: Boolean
+  },
   price: {
     type: Number
   },

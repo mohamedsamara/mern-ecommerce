@@ -95,6 +95,7 @@
           border-color: $red;
           -webkit-transition: border-color ease-in $layout-transition-speed;
           transition: border-color ease-in $layout-transition-speed;
+          background-color: $white;
         }
       }
     }

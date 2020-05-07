@@ -11,7 +11,9 @@ import { Row, Col } from 'reactstrap';
 import { Redirect, Link } from 'react-router-dom';
 
 import actions from '../../actions';
+
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 class ForgotPassword extends React.PureComponent {
   render() {
@@ -44,14 +46,7 @@ class ForgotPassword extends React.PureComponent {
         </Row>
         <hr />
         <div className='login-actions'>
-          <button
-            className='input-btn'
-            type='submit'
-            onClick={() => forgotPassowrd()}
-          >
-            Send Email
-          </button>
-
+          <Button text='Send Email' onClick={() => forgotPassowrd()} />
           <Link className='redirect-link' to={'/login'}>
             Back to login
           </Link>
@@ -68,7 +63,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(ForgotPassword);
+export default connect(mapStateToProps, actions)(ForgotPassword);
