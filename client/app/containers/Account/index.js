@@ -20,9 +20,9 @@ class Account extends React.PureComponent {
   componentDidMount() {
     const userId = cookie.load('user');
 
-    if (!this.props.user._id) {
-      this.props.fetchProfile(userId);
-    }
+    // if (!this.props.user._id) {
+    this.props.fetchProfile(userId);
+    // }
   }
 
   render() {

@@ -5,6 +5,8 @@ const passport = require('passport');
 // Bring in Models & Helpers
 const Order = require('../../models/order');
 const Cart = require('../../models/cart');
+const mailgun = require('../../config/mailgun');
+const template = require('../../config/template');
 
 router.post(
   '/add',
@@ -25,11 +27,47 @@ router.post(
         });
       }
 
-      res.status(200).json({
-        success: true,
-        message: `Your order has been placed successfully!`,
-        order: order
-      });
+      Order.findById(order._id)
+        .populate('cart user', '-password')
+        .exec((err, doc) => {
+          if (err) {
+            return res.status(400).json({
+              error: 'Your request could not be processed. Please try again.'
+            });
+          }
+
+          Cart.findById(doc.cart._id)
+            .populate({
+              path: 'products.product',
+              populate: {
+                path: 'brand'
+              }
+            })
+            .exec((err, data) => {
+              if (err) {
+                return res.status(400).json({
+                  error:
+                    'Your request could not be processed. Please try again.'
+                });
+              }
+
+              const order = {
+                _id: doc._id,
+                created: doc.created,
+                user: doc.user,
+                products: data.products
+              };
+
+              const message = template.orderConfirmationEmail(req, order);
+              mailgun.sendEmail(order.user.email, message);
+
+              res.status(200).json({
+                success: true,
+                message: `Your order has been placed successfully!`,
+                order: { _id: doc._id }
+              });
+            });
+        });
     });
   }
 );

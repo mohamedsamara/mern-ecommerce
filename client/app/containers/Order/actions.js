@@ -74,8 +74,6 @@ export const addOrder = () => {
 
       dispatch(push(`/order/success/${response.data.order._id}`));
 
-      // dispatch(push(`/order/success/5ead01d7be27e43c20738aa2`));
-
       dispatch(clearCart());
       dispatch(getCartId());
     } catch (error) {

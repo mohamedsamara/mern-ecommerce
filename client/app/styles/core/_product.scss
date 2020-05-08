@@ -141,6 +141,9 @@
   position: relative;
   z-index: 1;
   min-width: 170px;
+  @include media-breakpoint-down(sm) {
+    width: 100% !important;
+  }
 
   &:after {
     content: '';
@@ -173,14 +176,18 @@
 
   .btn-icon {
     .bag-icon {
-      width: 20px;
-      height: 20px;
       margin-left: 10px;
-      stroke-width: 20px;
-      stroke: $black;
-      -webkit-transition: $layout-transition-speed;
-      transition: $layout-transition-speed;
     }
   }
+}
+
+.bag-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  stroke-width: 20px;
+  stroke: $black;
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
 }
 /* end product common styles */

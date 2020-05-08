@@ -21,9 +21,7 @@ exports.subscribeToNewsletter = (email, res) => {
       });
     })
     .catch(err => {
-      console.log('err', err);
-
-      res.status(422).json({
+      res.status(400).json({
         error: 'Mailchimp error! You might be subscribed already.'
       });
     });

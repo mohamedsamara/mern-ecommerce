@@ -22,10 +22,6 @@ const UserSchema = new Schema({
     enum: ['ROLE_MEMBER', 'ROLE_ADMIN', 'ROLE_MERCHANT'],
     default: 'ROLE_MEMBER'
   },
-  isMerchant: {
-    type: Boolean,
-    default: false
-  },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date }
 });

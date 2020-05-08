@@ -27,6 +27,7 @@ import {
 
 import Cart from '../Cart';
 import Menu from '../NavigationMenu';
+import { BagIcon } from '../../components/Icon';
 
 class Navigation extends React.PureComponent {
   render() {
@@ -89,7 +90,8 @@ class Navigation extends React.PureComponent {
             >
               <div className='header-links'>
                 <span className='bars-icon fa fa-bars' onClick={toggleMenu} />
-                <span className='fa fa-cart-plus' onClick={toggleCart}>
+                <span className='cart-icon' onClick={toggleCart}>
+                  <BagIcon />
                   {cartItems.length > 0 && (
                     <span className='cart-badge'>{cartItems.length}</span>
                   )}
@@ -103,7 +105,8 @@ class Navigation extends React.PureComponent {
               lg={{ size: 9, order: 3 }}
             >
               <Navbar color='light' light expand='md'>
-                <span className='fa fa-cart-plus' onClick={toggleCart}>
+                <span className='cart-icon' onClick={toggleCart}>
+                  <BagIcon />
                   {cartItems.length > 0 && (
                     <span className='cart-badge'>{cartItems.length}</span>
                   )}

@@ -14,6 +14,11 @@ exports.sendEmail = (recipient, message) => {
   };
 
   mailgun.messages().send(data, (error, body) => {
-    console.log(body);
+    console.log('error', error);
+    console.log('body', body);
+
+    if (error) {
+      return error;
+    }
   });
 };

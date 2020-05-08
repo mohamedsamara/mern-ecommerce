@@ -57,8 +57,19 @@ exports.contactEmail = () => {
 
 exports.sellApplyEmail = () => {
   const message = {
-    subject: 'Sell With Mo Store',
+    subject: 'Sell on MERN Store',
     text: `We received your request! Our team will contact you soon. \n\n`
+  };
+
+  return message;
+};
+
+exports.orderConfirmationEmail = (req, order) => {
+  const message = {
+    subject: `Order Confirmation ${order._id}`,
+    text:
+      `Hi ${order.user.profile.firstName}! Thank you for your order!. \n\n` +
+      `We've received your order and will contact you as soon as your package is shipped. \n\n`
   };
 
   return message;

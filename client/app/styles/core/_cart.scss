@@ -92,10 +92,17 @@
     @include flex();
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+
+    .bag-icon {
+      width: 50px;
+      height: 50px;
+    }
 
     p {
-      color: $red;
+      // color: $red;
       font-weight: $font-weight-bold-one;
+      margin-top: 12px;
     }
   }
 

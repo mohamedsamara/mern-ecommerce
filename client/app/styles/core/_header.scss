@@ -44,9 +44,13 @@
     }
   }
 
-  .fa-cart-plus {
+  .cart-icon {
     position: relative;
   }
+
+  // .fa-cart-plus {
+  //   position: relative;
+  // }
 
   .fa {
     cursor: pointer;
@@ -72,10 +76,14 @@
       padding: 0;
     }
 
-    .fa-cart-plus {
+    .cart-icon {
       margin-right: 20px;
       @include media-breakpoint-down(sm) {
         display: none;
+      }
+
+      .bag-icon {
+        vertical-align: baseline;
       }
     }
   }
@@ -185,7 +193,8 @@
 
     h1 {
       margin: 0px;
-      color: $red !important;
+      // color: $red !important;
+      color: $font-custom-color;
     }
   }
 
