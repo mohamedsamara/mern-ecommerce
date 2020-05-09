@@ -59,6 +59,13 @@ textarea {
     color: $theme-blue;
     font-size: $font-size-large;
   }
+
+  .select-container {
+    .select-option__multi-value__label {
+      font-weight: $font-weight-bold-one;
+      font-size: $font-size-small;
+    }
+  }
 }
 
 @include placeholder {

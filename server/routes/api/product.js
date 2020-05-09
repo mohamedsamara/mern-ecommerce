@@ -77,8 +77,8 @@ router.post(
 router.get('/item/:slug', (req, res) => {
   const slug = req.params.slug;
 
-  Product.findOne({ slug: slug })
-    .populate('brand', 'name')
+  Product.findOne({ slug })
+    .populate('brand')
     .exec((err, product) => {
       if (err) {
         return res.status(400).json({
@@ -86,7 +86,7 @@ router.get('/item/:slug', (req, res) => {
         });
       }
       res.status(200).json({
-        product: product
+        product
       });
     });
 });

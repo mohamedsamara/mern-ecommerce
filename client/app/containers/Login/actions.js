@@ -12,6 +12,8 @@ import { LOGIN_CHANGE, LOGIN_RESET, SET_LOGIN_LOADING } from './constants';
 import { setAuth, setUnAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
 import handleError from '../../utils/error';
+import { clearCart } from '../Cart/actions';
+import { clearAccount } from '../Account/actions';
 
 export const loginChange = (name, value) => {
   let formData = {};
@@ -69,9 +71,12 @@ export const signOut = () => {
     };
 
     dispatch(success(successfulOptions));
+    dispatch(clearAccount());
 
     cookie.remove('token', { path: '/' });
     cookie.remove('user', { path: '/' });
     cookie.remove('role', { path: '/' });
+
+    // dispatch(clearCart());
   };
 };

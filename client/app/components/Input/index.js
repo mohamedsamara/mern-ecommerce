@@ -10,6 +10,7 @@ const Input = props => {
   const {
     type,
     value,
+    min,
     disabled,
     placeholder,
     label,
@@ -18,9 +19,9 @@ const Input = props => {
     dom
   } = props;
 
-  function onChange(e) {
+  const _onChange = e => {
     onInputChange(e.target.name, e.target.value);
-  }
+  };
 
   if (type == 'textarea') {
     return (
@@ -29,7 +30,7 @@ const Input = props => {
         <textarea
           type={'textarea'}
           onChange={e => {
-            onChange(e);
+            _onChange(e);
           }}
           rows='2'
           name={name}
@@ -37,7 +38,6 @@ const Input = props => {
           placeholder={placeholder}
           className={'textarea-text'}
         />
-        {dom}
       </div>
     );
   } else if (type == 'number') {
@@ -46,9 +46,10 @@ const Input = props => {
         {label && <label>{label}</label>}
         <input
           autoComplete='on'
+          min={min || 0}
           type={type}
           onChange={e => {
-            onChange(e);
+            _onChange(e);
           }}
           disabled={disabled}
           name={name}
@@ -66,7 +67,7 @@ const Input = props => {
           autoComplete='on'
           type={type}
           onChange={e => {
-            onChange(e);
+            _onChange(e);
           }}
           disabled={disabled}
           name={name}
@@ -74,7 +75,6 @@ const Input = props => {
           placeholder={placeholder}
           className={'input-text'}
         />
-        {dom}
       </div>
     );
   }

@@ -5,12 +5,12 @@ const passport = require('passport');
 // Bring in Models & Helpers
 const Cart = require('../../models/cart');
 
-// fetch/create cart Id
-router.get(
-  '/create/:userId',
+// create cart Id
+router.post(
+  '/create',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const user = req.params.userId;
+    const user = req.body.userId;
 
     const cart = new Cart({
       user
@@ -39,6 +39,23 @@ router.post(
     const query = { _id: req.params.cartId };
 
     Cart.updateOne(query, { products }).exec(err => {
+      if (err) {
+        return res.status(400).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+      res.status(200).json({
+        success: true
+      });
+    });
+  }
+);
+
+router.delete(
+  '/delete/:cartId',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Cart.deleteOne({ _id: req.params.cartId }, err => {
       if (err) {
         return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'

@@ -10,7 +10,7 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 
 import { FETCH_ORDERS, FETCH_ORDER, TOGGLE_ADD_ORDER } from './constants';
-import { clearCart, getCartId } from '../Cart/actions';
+import { clearCart, getCartId, addCart } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
 
@@ -62,7 +62,7 @@ export const fetchOrder = id => {
 export const addOrder = () => {
   return async (dispatch, getState) => {
     try {
-      const cartId = getState().cart.cartId;
+      const cartId = cookie.load('cart_id');
       const userId = cookie.load('user');
 
       const response = await axios.post(`/api/order/add`, {
@@ -75,7 +75,7 @@ export const addOrder = () => {
       dispatch(push(`/order/success/${response.data.order._id}`));
 
       dispatch(clearCart());
-      dispatch(getCartId());
+      // dispatch(getCartId());
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);
@@ -85,8 +85,21 @@ export const addOrder = () => {
 
 export const placeOrder = () => {
   return (dispatch, getState) => {
+    const token = cookie.load('token');
+    const cartItems = getState().cart.cartItems;
+
+    if (token && cartItems.length > 0) {
+      Promise.all([dispatch(getCartId())])
+        .then(() => {
+          dispatch(addCart(cartItems));
+          dispatch(toggleCart());
+        })
+        .then(() => {
+          dispatch(addOrder());
+        });
+    }
+
     dispatch(toggleCart());
-    dispatch(addOrder());
   };
 };
 

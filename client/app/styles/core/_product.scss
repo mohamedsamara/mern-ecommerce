@@ -15,11 +15,20 @@
   .product-container {
     background-color: $white;
     box-shadow: $box-shadow;
+    height: 100%;
 
     .item-box {
-      padding: 15px;
+      // padding: 15px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
 
       .item-details {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 15px;
+
         .item-name {
           color: $theme-blue !important;
           // font-weight: $font-weight-bold-two;
@@ -35,14 +44,20 @@
 
         .by {
           margin-bottom: 5px;
-          color: $theme-blue;
-          font-weight: $font-weight-bold-one;
+          color: $font-custom-color !important;
 
           span {
-            color: $font-custom-color !important;
-            margin-right: 8px;
+            color: $theme-blue;
+            font-weight: $font-weight-bold-one;
           }
         }
+
+        .item-body {
+          flex: 1 1 auto;
+        }
+
+        // .item-footer {
+        // }
       }
     }
   }
@@ -84,14 +99,28 @@
       .item-desc {
         color: $font-custom-color !important;
       }
-    }
 
-    .item-customize {
-      .input-number {
-        width: 170px;
-        display: block;
+      .price {
+        font-size: $font-size-x-huge;
+        color: $theme-light-blue;
+      }
+
+      .brand-link {
+        color: $theme-blue !important;
+        font-weight: $font-weight-bold-one;
       }
     }
+
+    // .item-customize {
+    //   .input-number {
+    //     width: 170px;
+    //     display: block;
+
+    //     @include media-breakpoint-down(sm) {
+    //       width: 100% !important;
+    //     }
+    //   }
+    // }
 
     .item-actions {
       margin-top: 20px;
@@ -121,7 +150,11 @@
   .price {
     color: $font-custom-color;
     font-weight: $font-weight-bold-two;
-    font-size: $font-size-large;
+    font-size: $font-size-huge;
+  }
+
+  .by {
+    text-transform: capitalize;
   }
 }
 

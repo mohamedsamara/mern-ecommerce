@@ -79,6 +79,7 @@ const AddProduct = props => {
             type={'number'}
             label={'Price'}
             name={'price'}
+            min={1}
             placeholder={'Product Price'}
             value={productFormData.price}
             onInputChange={(name, value) => {

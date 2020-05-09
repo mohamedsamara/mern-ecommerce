@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import { Row, Col } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -36,9 +37,9 @@ class ProductPage extends React.PureComponent {
   render() {
     const {
       product,
-      productFormData,
+      productShopData,
       itemsInCart,
-      productChange,
+      productShopChange,
       handleAddToCart,
       handleRemoveFromCart
     } = this.props;
@@ -63,6 +64,17 @@ class ProductPage extends React.PureComponent {
                   <h1 className='item-name'>{product.name}</h1>
                   <p className='sku'>{product.sku}</p>
                   <hr />
+                  {product.brand && (
+                    <p className='by'>
+                      see more from{' '}
+                      <Link
+                        to={`/shop/brand/${product.brand.slug}`}
+                        className='brand-link'
+                      >
+                        {product.brand.name}
+                      </Link>
+                    </p>
+                  )}
                   <p className='item-desc'>{product.description}</p>
                   <p className='price'>${product.price}</p>
                 </div>
@@ -71,11 +83,12 @@ class ProductPage extends React.PureComponent {
                     type={'number'}
                     label={'Quantity'}
                     name={'quantity'}
-                    disabled={!product.quantity > 0}
+                    min={1}
                     placeholder={'Product Quantity'}
-                    value={productFormData.quantity}
+                    disabled={!product.quantity > 0}
+                    value={productShopData.quantity}
                     onInputChange={(name, value) => {
-                      productChange(name, value);
+                      productShopChange(name, value);
                     }}
                   />
                 </div>
@@ -110,7 +123,7 @@ class ProductPage extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     product: state.product.product,
-    productFormData: state.product.productFormData,
+    productShopData: state.product.productShopData,
     itemsInCart: state.cart.itemsInCart
   };
 };

@@ -22,7 +22,8 @@ button[type='reset'] {
     background-color: $disabled-bg;
     color: $font-custom-color !important;
     border: none !important;
-    cursor: not-allowed;
+    // cursor: not-allowed;
+    pointer-events: none;
   }
 }
 // end input button styles

@@ -20,7 +20,7 @@ class Sell extends React.PureComponent {
 
     return (
       <div className='sell'>
-        <h1>Would you like to show your products on MERN Store!</h1>
+        <h1>Would you like to sell your products on MERN Store!</h1>
         <hr />
         <Row>
           <Col xs='12' md='6'>

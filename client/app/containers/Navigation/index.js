@@ -125,9 +125,9 @@ class Navigation extends React.PureComponent {
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
-                        {Object.keys(user).length == 0
-                          ? 'Welcome'
-                          : user.profile.firstName}
+                        {user.profile && Object.keys(user.profile).length !== 0
+                          ? user.profile.firstName
+                          : 'Welcome'}
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
                       <DropdownMenu right>

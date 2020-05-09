@@ -8,6 +8,7 @@ import {
   FETCH_PRODUCTS,
   FETCH_PRODUCT,
   PRODUCT_CHANGE,
+  PRODUCT_SHOP_CHANGE,
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
   ADD_PRODUCT,
@@ -27,7 +28,10 @@ const initialState = {
     name: '',
     description: '',
     quantity: 1,
-    price: 0
+    price: 1
+  },
+  productShopData: {
+    quantity: 1
   },
   columns: [
     {
@@ -77,7 +81,10 @@ const productReducer = (state = initialState, action) => {
     case FETCH_PRODUCT:
       return {
         ...state,
-        product: action.payload
+        product: action.payload,
+        productShopData: {
+          quantity: 1
+        }
       };
     case FETCH_PRODUCTS_SELECT:
       return { ...state, productsSelect: action.payload };
@@ -98,6 +105,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         productFormData: { ...state.productFormData, ...action.payload }
+      };
+    case PRODUCT_SHOP_CHANGE:
+      return {
+        ...state,
+        productShopData: { ...state.productShopData, ...action.payload }
       };
     case PRODUCT_SELECT:
       return {

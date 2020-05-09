@@ -11,6 +11,7 @@ import {
   FETCH_PRODUCTS,
   FETCH_PRODUCT,
   PRODUCT_CHANGE,
+  PRODUCT_SHOP_CHANGE,
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
   ADD_PRODUCT,
@@ -30,6 +31,16 @@ export const productChange = (name, value) => {
 
   return {
     type: PRODUCT_CHANGE,
+    payload: formData
+  };
+};
+
+export const productShopChange = (name, value) => {
+  let formData = {};
+  formData[name] = value;
+
+  return {
+    type: PRODUCT_SHOP_CHANGE,
     payload: formData
   };
 };

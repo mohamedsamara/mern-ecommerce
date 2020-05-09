@@ -27,7 +27,7 @@ class Account extends React.PureComponent {
 
   render() {
     const {
-      profile,
+      profileData,
       user,
       isFormOpen,
       accountChange,
@@ -42,7 +42,7 @@ class Account extends React.PureComponent {
       <div className='account'>
         <SubPage title={'Account Page'} isMenuOpen={null} />
         <AccountDetails
-          profile={profile}
+          profileData={profileData}
           user={user}
           accountChange={accountChange}
           updateProfile={updateProfile}
@@ -74,7 +74,7 @@ class Account extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    profile: state.account.profile,
+    profileData: state.account.profileData,
     user: state.account.user,
     isFormOpen: state.account.isFormOpen,
     resetFormData: state.resetPassword.resetFormData

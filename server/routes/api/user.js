@@ -10,6 +10,14 @@ router.get(
   '/users',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    db.foo.update(
+      { 'name.additional': { $exists: true } },
+
+      { $rename: { 'name.additional': 'name.last' } },
+      false,
+      true
+    );
+
     User.find({}, (err, data) => {
       if (err) {
         return res.status(400).json({
@@ -37,7 +45,7 @@ router.get(
       }
 
       res.status(200).json({
-        user: user
+        user
       });
     });
   }
@@ -60,7 +68,7 @@ router.put(
       res.status(200).json({
         success: true,
         message: 'Your profile is successfully updated!',
-        user: user
+        user
       });
     });
   }

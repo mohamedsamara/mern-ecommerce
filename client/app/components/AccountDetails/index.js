@@ -12,14 +12,16 @@ import Input from '../Input';
 import Button from '../../components/Button';
 
 const AccountDetails = props => {
-  const { user, profile, accountChange, updateProfile } = props;
+  const { user, profileData, accountChange, updateProfile } = props;
 
   return (
     <div className='account-details'>
       <div className='info'>
         <p>{user.email}</p>
         {user.role !== 'ROLE_MEMBER' && <span>Admin</span>}
-        {profile.isSubscribed && <span>Subscribed</span>}
+        {user.profile && user.profile.isSubscribed === true && (
+          <span>Subscribed</span>
+        )}
       </div>
       <Row>
         <Col xs='12' md='12'>
@@ -27,7 +29,7 @@ const AccountDetails = props => {
             type={'text'}
             label={'First Name'}
             name={'firstName'}
-            value={profile.firstName}
+            value={profileData.firstName}
             onInputChange={(name, value) => {
               accountChange(name, value);
             }}
@@ -38,7 +40,7 @@ const AccountDetails = props => {
             type={'text'}
             label={'Last Name'}
             name={'lastName'}
-            value={profile.lastName}
+            value={profileData.lastName}
             onInputChange={(name, value) => {
               accountChange(name, value);
             }}

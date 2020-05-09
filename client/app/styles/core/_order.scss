@@ -41,6 +41,25 @@
   .order-message {
     text-align: center;
   }
+
+  .order-success-actions {
+    text-align: center;
+
+    .btn-link {
+      margin-right: 10px;
+
+      @include media-breakpoint-down(xs) {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+
+    .shopping-btn {
+      &:hover {
+        background-color: $theme-light-blue;
+      }
+    }
+  }
 }
 /* end order success styles */
 

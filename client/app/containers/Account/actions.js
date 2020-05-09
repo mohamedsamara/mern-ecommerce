@@ -8,7 +8,12 @@ import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-import { ACCOUNT_CHANGE, FETCH_PROFILE, TOGGLE_RESET_FORM } from './constants';
+import {
+  ACCOUNT_CHANGE,
+  FETCH_PROFILE,
+  TOGGLE_RESET_FORM,
+  CLEAR_ACCOUNT
+} from './constants';
 import handleError from '../../utils/error';
 
 export const accountChange = (name, value) => {
@@ -27,6 +32,12 @@ export const toggleResetForm = () => {
   };
 };
 
+export const clearAccount = () => {
+  return {
+    type: CLEAR_ACCOUNT
+  };
+};
+
 export const fetchProfile = userId => {
   return async (dispatch, getState) => {
     try {
@@ -42,12 +53,12 @@ export const fetchProfile = userId => {
 
 export const updateProfile = () => {
   return async (dispatch, getState) => {
-    const profile = getState().account.profile;
+    const profile = getState().account.profileData;
     const userId = cookie.load('user');
 
     try {
       const response = await axios.put(`/api/user/${userId}`, {
-        profile: profile
+        profile
       });
 
       const successfulOptions = {
@@ -55,6 +66,8 @@ export const updateProfile = () => {
         position: 'tr',
         autoDismiss: 1
       };
+
+      dispatch(fetchProfile(userId));
 
       dispatch(success(successfulOptions));
     } catch (error) {
