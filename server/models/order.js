@@ -11,6 +11,14 @@ const OrderSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
+  total: {
+    type: Number,
+    default: 0
+  },
+  totalTax: {
+    type: Number,
+    default: 0
+  },
   updated: Date,
   created: {
     type: Date,

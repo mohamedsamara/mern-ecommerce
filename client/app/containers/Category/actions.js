@@ -19,7 +19,7 @@ import {
 import { RESET_PRODUCT } from '../Product/constants';
 
 import handleError from '../../utils/error';
-import { unformSelect } from '../../helpers/select';
+import { unformatSelectOptions } from '../../helpers/select';
 
 export const categoryChange = (name, value) => {
   let formData = {};
@@ -91,7 +91,7 @@ export const addCategory = () => {
       const category = getState().category.categoryFormData;
       const products = getState().product.selectedProducts;
 
-      let newProducts = unformSelect(products);
+      let newProducts = unformatSelectOptions(products);
 
       let newCategory = {
         products: newProducts,

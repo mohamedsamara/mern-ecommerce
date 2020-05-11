@@ -19,7 +19,7 @@ import {
 } from './constants';
 
 import handleError from '../../utils/error';
-import { formSelect } from '../../helpers/select';
+import { formatSelectOptions } from '../../helpers/select';
 
 export const brandChange = (name, value) => {
   let formData = {};
@@ -53,7 +53,7 @@ export const fetchBrands = () => {
   };
 };
 
-export const brandSelect = value => {
+export const handleBrandSelect = value => {
   return {
     type: BRAND_SELECT,
     payload: value
@@ -65,11 +65,11 @@ export const fetchBrandsSelect = () => {
     try {
       const response = await axios.get(`/api/brand/list/select`);
 
-      let formulatedBrands = formSelect(response.data.brands);
+      let formattedBrands = formatSelectOptions(response.data.brands);
 
       dispatch({
         type: FETCH_BRANDS_SELECT,
-        payload: formulatedBrands
+        payload: formattedBrands
       });
     } catch (error) {
       const title = `Please try again!`;

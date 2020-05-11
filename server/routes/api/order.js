@@ -7,6 +7,7 @@ const Order = require('../../models/order');
 const Cart = require('../../models/cart');
 const mailgun = require('../../config/mailgun');
 const template = require('../../config/template');
+const taxConfig = require('../../config/tax');
 
 router.post(
   '/add',
@@ -14,10 +15,12 @@ router.post(
   (req, res) => {
     const cart = req.body.cartId;
     const user = req.body.userId;
+    const total = req.body.total;
 
     const order = new Order({
       cart,
-      user
+      user,
+      total
     });
 
     order.save((err, order) => {
@@ -55,6 +58,7 @@ router.post(
                 _id: doc._id,
                 created: doc.created,
                 user: doc.user,
+                total: doc.total,
                 products: data.products
               };
 
@@ -118,6 +122,7 @@ router.get(
 
                 const order = {
                   _id: doc._id,
+                  total: doc.total,
                   created: doc.created,
                   products: data.products
                 };
@@ -132,8 +137,7 @@ router.get(
               });
           });
         } else {
-          res.status(200).json({
-            success: true,
+          res.status(404).json({
             message: `You have no orders yet!`
           });
         }
@@ -158,6 +162,13 @@ router.get(
             error: 'Your request could not be processed. Please try again.'
           });
         }
+
+        if (!doc) {
+          return res.status(404).json({
+            message: `Cannot find order with the id: ${orderId}`
+          });
+        }
+
         Cart.findById(doc.cart._id)
           .populate({
             path: 'products.product',
@@ -172,11 +183,15 @@ router.get(
               });
             }
 
-            const order = {
+            let order = {
               _id: doc._id,
+              total: doc.total,
+              totalTax: doc.totalTax,
               created: doc.created,
               products: data.products
             };
+
+            order = caculateTaxAmount(order);
 
             res.status(200).json({
               order
@@ -185,5 +200,22 @@ router.get(
       });
   }
 );
+
+// calculate order tax amount
+const caculateTaxAmount = order => {
+  const taxRate = taxConfig.stateTaxRate;
+
+  order.totalTax = 0;
+
+  order.products.forEach(item => {
+    const price = Number(item.product.price).toFixed(2);
+    const taxAmount = Math.round(price * taxRate * 100) / 100;
+    item.priceWithTax = parseFloat(price) + parseFloat(taxAmount);
+
+    order.totalTax += taxAmount;
+  });
+
+  return order;
+};
 
 module.exports = router;

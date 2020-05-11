@@ -27,11 +27,11 @@ export const fetchOrders = () => {
       const response = await axios.get(`/api/order/list/${userId}`);
 
       if (response.data.orders) {
-        const orders = calculateOrdersTotal(response.data.orders);
+        // const orders = calculateOrdersTotal(response.data.orders);
 
         dispatch({
           type: FETCH_ORDERS,
-          payload: orders
+          payload: response.data.orders
         });
       }
     } catch (error) {
@@ -46,11 +46,11 @@ export const fetchOrder = id => {
     try {
       // const userId = cookie.load('user');
       const response = await axios.get(`/api/order/${id}`);
-      const order = calculateOrderTotal(response.data.order);
+      // const order = calculateOrderItemsTotal(response.data.order);
 
       dispatch({
         type: FETCH_ORDER,
-        payload: order
+        payload: response.data.order
       });
     } catch (error) {
       const title = `Please try again!`;
@@ -64,10 +64,12 @@ export const addOrder = () => {
     try {
       const cartId = cookie.load('cart_id');
       const userId = cookie.load('user');
+      const total = getState().cart.cartTotal;
 
       const response = await axios.post(`/api/order/add`, {
         cartId,
-        userId
+        userId,
+        total
       });
 
       // dispatch(fetchOrder(response.data.order));
@@ -91,8 +93,8 @@ export const placeOrder = () => {
     if (token && cartItems.length > 0) {
       Promise.all([dispatch(getCartId())])
         .then(() => {
-          dispatch(addCart(cartItems));
-          dispatch(toggleCart());
+          dispatch(addCart());
+          // dispatch(toggleCart());
         })
         .then(() => {
           dispatch(addOrder());
@@ -115,11 +117,20 @@ const calculateOrdersTotal = orders => {
 };
 
 const calculateOrderTotal = order => {
-  order.total = 0;
+  // order.total = 0;
 
   order.products.map(item => {
     item.total = 0;
-    order.total += item.quantity * item.product.price;
+    // order.total += item.quantity * item.product.price;
+    item.total += item.quantity * item.product.price;
+  });
+
+  return order;
+};
+
+const calculateOrderItemsTotal = order => {
+  order.products.map(item => {
+    item.total = 0;
     item.total += item.quantity * item.product.price;
   });
 

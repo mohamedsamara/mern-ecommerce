@@ -25,6 +25,7 @@ export const handleAddToCart = product => {
   return (dispatch, getState) => {
     // const token = cookie.load('token');
     product.quantity = getState().product.productShopData.quantity;
+    product.totalPrice = product.quantity * product.price;
 
     dispatch({
       type: ADD_TO_CART,
@@ -167,10 +168,11 @@ export const handleShopping = () => {
 };
 
 // add the entire cart items api
-export const addCart = cartItems => {
+export const addCart = () => {
   return async (dispatch, getState) => {
     try {
       const cartId = cookie.load('cart_id');
+      const cartItems = getState().cart.cartItems;
       const products = getCartItems(cartItems);
 
       const response = await axios.post(`/api/cart/push/${cartId}`, {
@@ -249,6 +251,7 @@ const getCartItems = cartItems => {
   cartItems.map(item => {
     const newItem = {};
     newItem.quantity = item.quantity;
+    newItem.totalPrice = item.totalPrice;
     newItem.product = item._id;
     newCartItems.push(newItem);
   });

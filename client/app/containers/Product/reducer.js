@@ -28,11 +28,16 @@ const initialState = {
     name: '',
     description: '',
     quantity: 1,
-    price: 1
+    price: 1,
+    taxable: 0
   },
   productShopData: {
     quantity: 1
   },
+  taxableSelect: [
+    { value: 1, label: 'Yes' },
+    { value: 0, label: 'No' }
+  ],
   columns: [
     {
       hidden: true,

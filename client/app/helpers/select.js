@@ -1,34 +1,34 @@
 /**
  *
  * select.js
- * this helper formulate data to select component
+ * this helper formulate data into select options
  */
 
-export const formSelect = data => {
-  let newCategories = [];
+export const formatSelectOptions = data => {
+  let newSelectOptions = [];
 
-  data.map(category => {
-    let newCategory = {};
+  data.map(option => {
+    let newOption = {};
 
-    newCategory.value = category._id;
-    newCategory.label = category.name;
+    newOption.value = option._id;
+    newOption.label = option.name;
 
-    newCategories.push(newCategory);
+    newSelectOptions.push(newOption);
   });
 
-  return newCategories;
+  return newSelectOptions;
 };
 
-export const unformSelect = data => {
-  let newCategories = [];
+export const unformatSelectOptions = data => {
+  let newSelectOptions = [];
 
-  data.map(category => {
-    let newCategory = {};
+  data.map(option => {
+    let newOption = {};
 
-    newCategory._id = category.value;
+    newOption._id = option.value;
 
-    newCategories.push(newCategory._id);
+    newSelectOptions.push(newOption._id);
   });
 
-  return newCategories;
+  return newSelectOptions;
 };

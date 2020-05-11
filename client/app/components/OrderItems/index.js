@@ -17,8 +17,8 @@ const OrderItems = props => {
       <h4>Order Items</h4>
       <Row>
         {order.products.map((item, index) => (
-          <Col xs='12' key={index} className='mb-3'>
-            <Row className='align-items-center'>
+          <Col xs='12' key={index} className='mt-3'>
+            <Row>
               <Col xs='4' md='2'>
                 <div className='item-image'>
                   <img src={'/images/placeholder-image.png'} />
@@ -44,7 +44,7 @@ const OrderItems = props => {
               <Col xs='4' md='3'>
                 <p>
                   Total Price
-                  <span className='order-label'>{` $${item.total}`}</span>
+                  <span className='order-label'>{` $${item.totalPrice}`}</span>
                 </p>
               </Col>
             </Row>

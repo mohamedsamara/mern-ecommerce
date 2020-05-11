@@ -19,7 +19,7 @@ const AddCategory = props => {
     addCategory,
     products,
     selectedProducts,
-    productSelect
+    handleProductSelect
   } = props;
 
   return (
@@ -56,7 +56,7 @@ const AddCategory = props => {
             options={products}
             value={selectedProducts}
             handleSelectChange={value => {
-              productSelect(value);
+              handleProductSelect(value);
             }}
           />
         </Col>

@@ -13,7 +13,7 @@ class Homepage extends React.PureComponent {
   componentDidMount() {}
 
   render() {
-    return <h1>HomePage</h1>;
+    return <h1>Homepage</h1>;
   }
 }
 
@@ -21,7 +21,4 @@ const mapStateToProps = state => {
   return {};
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Homepage);
+export default connect(mapStateToProps, actions)(Homepage);

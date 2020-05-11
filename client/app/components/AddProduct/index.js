@@ -17,9 +17,10 @@ const AddProduct = props => {
     productFormData,
     productChange,
     addProduct,
-    brandSelect,
+    handleBrandSelect,
     selectedBrands,
-    brands
+    brands,
+    taxableSelect
   } = props;
 
   return (
@@ -89,12 +90,23 @@ const AddProduct = props => {
         </Col>
         <Col xs='12' md='12'>
           <SelectOption
+            label={'Taxable'}
+            multi={false}
+            name={'taxable'}
+            options={taxableSelect}
+            handleSelectChange={value => {
+              productChange('taxable', value.value);
+            }}
+          />
+        </Col>
+        <Col xs='12' md='12'>
+          <SelectOption
             label={'Select Brand'}
             multi={false}
             options={brands}
             value={selectedBrands}
             handleSelectChange={value => {
-              brandSelect(value);
+              handleBrandSelect(value);
             }}
           />
         </Col>

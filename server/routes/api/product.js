@@ -16,6 +16,7 @@ router.post(
     const description = req.body.description;
     const quantity = req.body.quantity;
     const price = req.body.price;
+    const taxable = req.body.taxable;
     const brand = req.body.brand;
 
     if (!sku) {
@@ -53,6 +54,7 @@ router.post(
         description,
         quantity,
         price,
+        taxable,
         brand
       });
 

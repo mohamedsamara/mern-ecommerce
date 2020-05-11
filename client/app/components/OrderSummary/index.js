@@ -20,7 +20,7 @@ const OrderSummary = props => {
       <h4>Order Summary</h4>
       <Row className='mb-2 summary-item'>
         <Col xs='9'>
-          <p className='summary-label'>Shippling & Handling</p>
+          <p className='summary-label'>Shipping & Handling</p>
         </Col>
         <Col xs='3' className='text-right'>
           <p className='summary-value'>$0</p>

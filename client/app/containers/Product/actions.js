@@ -23,7 +23,7 @@ import {
 import { RESET_BRAND } from '../Brand/constants';
 
 import handleError from '../../utils/error';
-import { formSelect } from '../../helpers/select';
+import { formatSelectOptions } from '../../helpers/select';
 
 export const productChange = (name, value) => {
   let formData = {};
@@ -91,7 +91,7 @@ export const fetchProduct = slug => {
   };
 };
 
-export const productSelect = value => {
+export const handleProductSelect = value => {
   return {
     type: PRODUCT_SELECT,
     payload: value
@@ -103,11 +103,11 @@ export const fetchProductsSelect = () => {
     try {
       const response = await axios.get(`/api/product/list/select`);
 
-      let formulatedProducts = formSelect(response.data.products);
+      let formattedProducts = formatSelectOptions(response.data.products);
 
       dispatch({
         type: FETCH_PRODUCTS_SELECT,
-        payload: formulatedProducts
+        payload: formattedProducts
       });
     } catch (error) {
       const title = `Please try again!`;

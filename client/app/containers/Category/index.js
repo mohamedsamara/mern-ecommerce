@@ -31,7 +31,7 @@ class Category extends React.PureComponent {
       deleteCategory,
       products,
       selectedProducts,
-      productSelect
+      handleProductSelect
     } = this.props;
 
     return (
@@ -48,7 +48,7 @@ class Category extends React.PureComponent {
               addCategory={addCategory}
               products={products}
               selectedProducts={selectedProducts}
-              productSelect={productSelect}
+              handleProductSelect={handleProductSelect}
             />
           ) : (
             <Table

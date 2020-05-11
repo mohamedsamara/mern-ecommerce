@@ -31,7 +31,7 @@ class Newsletter extends React.PureComponent {
             onInputChange={(name, value) => {
               newsletterChange(name, value);
             }}
-            dom={subscribeButton}
+            inlineElement={subscribeButton}
           />
         </div>
       </div>

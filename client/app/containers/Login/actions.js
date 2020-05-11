@@ -7,6 +7,7 @@
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
+import { push } from 'connected-react-router';
 
 import { LOGIN_CHANGE, LOGIN_RESET, SET_LOGIN_LOADING } from './constants';
 import { setAuth, setUnAuth } from '../Authentication/actions';
@@ -72,6 +73,7 @@ export const signOut = () => {
 
     dispatch(success(successfulOptions));
     dispatch(clearAccount());
+    dispatch(push('/login'));
 
     cookie.remove('token', { path: '/' });
     cookie.remove('user', { path: '/' });

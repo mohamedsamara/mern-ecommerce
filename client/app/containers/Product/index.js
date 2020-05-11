@@ -29,9 +29,10 @@ class Product extends React.PureComponent {
       toggleAddProduct,
       isProductAddOpen,
       deleteProduct,
-      brandSelect,
+      handleBrandSelect,
       selectedBrands,
-      brands
+      brands,
+      taxableSelect
     } = this.props;
 
     return (
@@ -46,9 +47,10 @@ class Product extends React.PureComponent {
               productFormData={productFormData}
               productChange={productChange}
               addProduct={addProduct}
-              brandSelect={brandSelect}
+              handleBrandSelect={handleBrandSelect}
               selectedBrands={selectedBrands}
               brands={brands}
+              taxableSelect={taxableSelect}
             />
           ) : (
             <Table
@@ -75,6 +77,7 @@ const mapStateToProps = state => {
     products: state.product.products,
     columns: state.product.columns,
     isProductAddOpen: state.product.isProductAddOpen,
+    taxableSelect: state.product.taxableSelect,
     selectedBrands: state.brand.selectedBrands,
     brands: state.brand.brandsSelect
   };

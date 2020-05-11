@@ -1,7 +1,7 @@
 /**
  *
  * error.js
- * This is a generic error handler, it receves the error returned from the server and present it on a pop up
+ * This is a generic error handler, it receives the error returned from the server and present it on a pop up
  */
 
 import { error } from 'react-notification-system-redux';
@@ -16,17 +16,17 @@ const handleError = (err, title, dispatch) => {
     autoDismiss: 1
   };
 
-  if (err.hasOwnProperty('response') && err.response.status != 401) {
+  if (err.response.status == 400) {
     unsuccessfulOptions.message = err.response.data.error;
-  } else if (err.hasOwnProperty('response') && err.response.status == 401) {
+  } else if (err.response.status == 404) {
+    unsuccessfulOptions.message = err.response.data.message;
+  } else if (err.response.status == 401) {
     unsuccessfulOptions.message = 'Unauthorized Access! Please login again';
     dispatch(signOut());
-  } else if (err.message) {
-    unsuccessfulOptions.message = err.message;
-  } else if (err.request) {
-    unsuccessfulOptions.message = err.request;
   } else {
-    unsuccessfulOptions.message = err.message;
+    // fallback
+    unsuccessfulOptions.message =
+      'Your request could not be processed. Please try again.';
   }
 
   dispatch(error(unsuccessfulOptions));

@@ -11,6 +11,7 @@ const initialState = {
   order: {
     _id: '',
     products: [],
+    totalTax: 0,
     total: 0
   },
   isOrderAddOpen: false

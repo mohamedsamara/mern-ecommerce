@@ -16,7 +16,7 @@ const Input = props => {
     label,
     name,
     onInputChange,
-    dom
+    inlineElement
   } = props;
 
   const _onChange = e => {
@@ -75,6 +75,7 @@ const Input = props => {
           placeholder={placeholder}
           className={'input-text'}
         />
+        {inlineElement}
       </div>
     );
   }
