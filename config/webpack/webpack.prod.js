@@ -41,7 +41,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               outputPath: 'images',
-              publicPath: 'images',
+              publicPath: '../images',
               name: '[name].[hash].[ext]'
             }
           }
@@ -54,7 +54,7 @@ module.exports = {
             loader: 'file-loader',
             options: {
               outputPath: 'fonts',
-              publicPath: 'fonts',
+              publicPath: '../fonts',
               name: '[name].[hash].[ext]'
             }
           }
