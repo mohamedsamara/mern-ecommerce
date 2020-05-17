@@ -12,7 +12,13 @@ import Input from '../Input';
 import Button from '../../components/Button';
 
 const AccountDetails = props => {
-  const { user, profileData, accountChange, updateProfile } = props;
+  const {
+    user,
+    profileData,
+    accountChange,
+    updateProfile,
+    unsubscribeFromNewsletter
+  } = props;
 
   return (
     <div className='account-details'>
@@ -22,6 +28,10 @@ const AccountDetails = props => {
         {user.profile && user.profile.isSubscribed === true && (
           <span>Subscribed</span>
         )}
+        <Button
+          text='Unsubscribe From Newsletter'
+          onClick={() => unsubscribeFromNewsletter()}
+        />
       </div>
       <Row>
         <Col xs='12' md='12'>

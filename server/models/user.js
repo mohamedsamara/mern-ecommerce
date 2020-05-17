@@ -11,7 +11,8 @@ const UserSchema = new Schema({
   profile: {
     firstName: { type: String },
     lastName: { type: String },
-    isSubscribed: { type: Boolean }
+    isSubscribed: { type: Boolean },
+    subscriberId: { type: String }
   },
   password: {
     type: String,

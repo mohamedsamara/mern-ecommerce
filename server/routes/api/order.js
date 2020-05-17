@@ -5,8 +5,7 @@ const passport = require('passport');
 // Bring in Models & Helpers
 const Order = require('../../models/order');
 const Cart = require('../../models/cart');
-const mailgun = require('../../config/mailgun');
-const template = require('../../config/template');
+const mailgun = require('../../services/mailgun');
 const taxConfig = require('../../config/tax');
 
 router.post(
@@ -25,7 +24,7 @@ router.post(
 
     order.save((err, order) => {
       if (err) {
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -34,7 +33,7 @@ router.post(
         .populate('cart user', '-password')
         .exec((err, doc) => {
           if (err) {
-            return res.status(400).json({
+            res.status(400).json({
               error: 'Your request could not be processed. Please try again.'
             });
           }
@@ -46,9 +45,9 @@ router.post(
                 path: 'brand'
               }
             })
-            .exec((err, data) => {
+            .exec(async (err, data) => {
               if (err) {
-                return res.status(400).json({
+                res.status(400).json({
                   error:
                     'Your request could not be processed. Please try again.'
                 });
@@ -62,8 +61,12 @@ router.post(
                 products: data.products
               };
 
-              const message = template.orderConfirmationEmail(req, order);
-              mailgun.sendEmail(order.user.email, message);
+              await mailgun.sendEmail(
+                order.user.email,
+                'order-confirmation',
+                req,
+                order
+              );
 
               res.status(200).json({
                 success: true,
@@ -97,7 +100,7 @@ router.get(
       })
       .exec((err, docs) => {
         if (err) {
-          return res.status(400).json({
+          res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }
@@ -158,13 +161,13 @@ router.get(
       })
       .exec((err, doc) => {
         if (err) {
-          return res.status(400).json({
+          res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }
 
         if (!doc) {
-          return res.status(404).json({
+          res.status(404).json({
             message: `Cannot find order with the id: ${orderId}`
           });
         }
@@ -178,7 +181,7 @@ router.get(
           })
           .exec((err, data) => {
             if (err) {
-              return res.status(400).json({
+              res.status(400).json({
                 error: 'Your request could not be processed. Please try again.'
               });
             }
@@ -208,12 +211,16 @@ const caculateTaxAmount = order => {
   order.totalTax = 0;
 
   order.products.forEach(item => {
-    const price = Number(item.product.price).toFixed(2);
-    const taxAmount = Math.round(price * taxRate * 100) / 100;
-    item.priceWithTax = parseFloat(price) + parseFloat(taxAmount);
+    if (item.product.taxable) {
+      const price = Number(item.product.price).toFixed(2);
+      const taxAmount = Math.round(price * taxRate * 100) / 100;
+      item.priceWithTax = parseFloat(price) + parseFloat(taxAmount);
 
-    order.totalTax += taxAmount;
+      order.totalTax += taxAmount;
+    }
   });
+
+  order.totalWithTax = order.total + order.totalTax;
 
   return order;
 };

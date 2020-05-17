@@ -6,19 +6,22 @@ const mailgun = require('mailgun-js')({
 const sender = process.env.MAILGUN_EMAIL_SENDER;
 
 exports.sendEmail = (recipient, message) => {
-  const data = {
-    from: `MERN Store! <${sender}>`,
-    to: recipient,
-    subject: message.subject,
-    text: message.text
-  };
+  return new Promise((resolve, reject) => {
+    const data = {
+      from: `MERN Store! <${sender}>`,
+      to: recipient,
+      subject: message.subject,
+      text: message.text
+    };
 
-  mailgun.messages().send(data, (error, body) => {
-    console.log('error', error);
-    console.log('body', body);
+    mailgun.messages().send(data, (error, body) => {
+      if (error) {
+        console.log('error', error);
 
-    if (error) {
-      return error;
-    }
+        reject(error);
+      } else {
+        resolve(body);
+      }
+    });
   });
 };

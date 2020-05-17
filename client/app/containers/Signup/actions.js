@@ -42,7 +42,7 @@ export const signUp = () => {
     const isSubscribed = getState().signup.isSubscribed;
 
     const user = {
-      isSubscribed: isSubscribed,
+      isSubscribed,
       ...newUser
     };
 

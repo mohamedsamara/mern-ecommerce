@@ -14,9 +14,11 @@ import Button from '../../components/Button';
 
 class Newsletter extends React.PureComponent {
   render() {
-    const { email, newsletterChange, subscribe } = this.props;
+    const { email, newsletterChange, subscribeToNewsletter } = this.props;
 
-    const subscribeButton = <Button text='Subscribe' onClick={subscribe} />;
+    const subscribeButton = (
+      <Button text='Subscribe' onClick={subscribeToNewsletter} />
+    );
 
     return (
       <div className='newsletter-form'>

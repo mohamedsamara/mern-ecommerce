@@ -112,6 +112,8 @@ h6,
 
 ::-webkit-scrollbar-thumb {
   background: $white;
+  border-left: $border-default;
+  border-color: $theme-light-white;
 }
 
 ::-webkit-scrollbar-track {

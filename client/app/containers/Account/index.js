@@ -35,7 +35,8 @@ class Account extends React.PureComponent {
       resetFormData,
       resetPasswordChange,
       toggleResetForm,
-      resetAccountPassword
+      resetAccountPassword,
+      unsubscribeFromNewsletter
     } = this.props;
 
     return (
@@ -46,6 +47,7 @@ class Account extends React.PureComponent {
           user={user}
           accountChange={accountChange}
           updateProfile={updateProfile}
+          unsubscribeFromNewsletter={unsubscribeFromNewsletter}
         />
         <Checkbox
           id={'toggle'}

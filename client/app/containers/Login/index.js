@@ -28,6 +28,10 @@ class Login extends React.PureComponent {
 
     if (authenticated) return <Redirect to='/dashboard' />;
 
+    const registerLink = () => {
+      this.props.history.push('/register');
+    };
+
     return (
       <div className='login-form'>
         {isLoading && (
@@ -65,14 +69,22 @@ class Login extends React.PureComponent {
               />
             </Col>
           </Col>
-          <Col xs='12' md='6'>
+          <Col xs='12' md='6' className='d-none d-md-block'>
             <SignupProvider />
           </Col>
         </Row>
         <hr />
-        <div className='login-actions'>
+        <div className='auth-actions'>
           <Button text='Login' onClick={() => login()} />
-          <Link className='redirect-link' to={'/forgot-password'}>
+          <Button
+            text='Create an account'
+            className='register-account-btn'
+            onClick={registerLink}
+          />
+          <Link
+            className='redirect-link forgot-password-link'
+            to={'/forgot-password'}
+          >
             Forgot Password?
           </Link>
         </div>

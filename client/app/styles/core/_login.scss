@@ -1,9 +1,18 @@
 // (Login, SignUp, forgetPassword,resetPassword) => Styles
 
-.login-actions {
+.auth-actions {
   @include flex();
   align-items: center;
   justify-content: space-between;
+
+  .forgot-password-link {
+    flex: 1;
+    text-align: right;
+  }
+
+  .register-account-btn {
+    margin-left: 15px;
+  }
 
   @include media-breakpoint-down(sm) {
     flex-direction: column;
@@ -11,6 +20,10 @@
 
     .input-btn {
       margin-bottom: 10px;
+    }
+
+    .register-account-btn {
+      margin-left: 0px;
     }
   }
 }

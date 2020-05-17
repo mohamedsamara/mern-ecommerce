@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { Row, Col } from 'reactstrap';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 import actions from '../../actions';
 import Input from '../../components/Input';
@@ -92,7 +92,7 @@ class Signup extends React.PureComponent {
               />
             </Col>
           </Col>
-          <Col xs='12' md='6'>
+          <Col xs='12' md='6' className='d-none d-md-block'>
             <SignupProvider />
           </Col>
         </Row>
@@ -103,8 +103,11 @@ class Signup extends React.PureComponent {
           checked={isSubscribed}
           toggleCheckboxChange={subscribeChange}
         />
-        <div className='login-actions'>
+        <div className='auth-actions'>
           <Button text='Sign Up' onClick={() => signUp()} />
+          <Link className='redirect-link' to={'/login'}>
+            Back to login
+          </Link>
         </div>
       </div>
     );

@@ -25,7 +25,7 @@ router.post(
 
     brand.save((err, brand) => {
       if (err) {
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -43,7 +43,7 @@ router.post(
 router.get('/list', (req, res) => {
   Brand.find({}, (err, data) => {
     if (err) {
-      return res.status(400).json({
+      res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
@@ -59,7 +59,7 @@ router.get(
   (req, res) => {
     Brand.find({}, 'name', (err, data) => {
       if (err) {
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -77,7 +77,7 @@ router.delete(
   (req, res) => {
     Brand.deleteOne({ _id: req.params.id }, (err, data) => {
       if (err) {
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

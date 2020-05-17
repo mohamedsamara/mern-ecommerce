@@ -1,28 +1,32 @@
 const mailchimp = require('mailchimp-v3');
 
-const mailgun = require('./mailgun');
-const template = require('./template');
-
 mailchimp.setApiKey(process.env.MAILCHIMP_KEY);
 
-exports.subscribeToNewsletter = (email, res) => {
-  mailchimp
-    .post(`lists/${process.env.MAILCHIMP_LIST_KEY}/members`, {
-      email_address: email,
-      status: 'subscribed'
-    })
-    .then(result => {
-      const message = template.subscribeEmail();
-      mailgun.sendEmail(email, message);
+exports.subscribeToNewsletter = email => {
+  return new Promise((resolve, reject) => {
+    mailchimp
+      .post(`lists/${process.env.MAILCHIMP_LIST_KEY}/members`, {
+        email_address: email,
+        status: 'subscribed'
+      })
+      .then(result => {
+        resolve(result);
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+};
 
-      res.status(200).json({
-        success: true,
-        message: 'You have successfully subscribed to the newsletter'
+exports.unsubscribeToNewsletter = subscriberId => {
+  return new Promise((resolve, reject) => {
+    mailchimp
+      .delete(`lists/${process.env.MAILCHIMP_LIST_KEY}/members/${subscriberId}`)
+      .then(result => {
+        resolve(result);
+      })
+      .catch(error => {
+        reject(error);
       });
-    })
-    .catch(err => {
-      res.status(400).json({
-        error: 'Mailchimp error! You might be subscribed already.'
-      });
-    });
+  });
 };

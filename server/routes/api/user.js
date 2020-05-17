@@ -10,17 +10,9 @@ router.get(
   '/users',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    db.foo.update(
-      { 'name.additional': { $exists: true } },
-
-      { $rename: { 'name.additional': 'name.last' } },
-      false,
-      true
-    );
-
     User.find({}, (err, data) => {
       if (err) {
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -39,7 +31,7 @@ router.get(
 
     User.findById(userId, { password: 0 }, (err, user) => {
       if (err) {
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -60,7 +52,7 @@ router.put(
 
     User.updateOne(query, { profile: profile }, (err, user) => {
       if (err) {
-        return res.status(400).json({
+        res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

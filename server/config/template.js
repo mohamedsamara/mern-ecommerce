@@ -27,15 +27,13 @@ exports.confirmResetPasswordEmail = () => {
 exports.signupEmail = name => {
   const message = {
     subject: 'Account Registration',
-    text:
-      `Hi ${name.firstName} ${name.lastName}! Thank you for creating an account with us!. \n\n` +
-      `If you did not request this change, please contact us immediately.`
+    text: `Hi ${name.firstName} ${name.lastName}! Thank you for creating an account with us!.`
   };
 
   return message;
 };
 
-exports.subscribeEmail = () => {
+exports.newsletterSubscriptionEmail = () => {
   const message = {
     subject: 'Newsletter Subscription',
     text:
@@ -55,7 +53,7 @@ exports.contactEmail = () => {
   return message;
 };
 
-exports.sellApplyEmail = () => {
+exports.merchantApplicationEmail = () => {
   const message = {
     subject: 'Sell on MERN Store',
     text: `We received your request! Our team will contact you soon. \n\n`

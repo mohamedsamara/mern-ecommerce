@@ -45,7 +45,7 @@ class ForgotPassword extends React.PureComponent {
           </Col>
         </Row>
         <hr />
-        <div className='login-actions'>
+        <div className='auth-actions'>
           <Button text='Send Email' onClick={() => forgotPassowrd()} />
           <Link className='redirect-link' to={'/login'}>
             Back to login

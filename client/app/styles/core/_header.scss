@@ -37,6 +37,7 @@
 
 .top-header {
   align-items: center;
+  padding: 10px 0px;
 
   span {
     &:hover {
@@ -46,6 +47,7 @@
 
   .cart-icon {
     position: relative;
+    line-height: 100%;
   }
 
   // .fa-cart-plus {
@@ -66,14 +68,14 @@
   }
 
   .navbar {
-    padding-left: 0px;
     background-color: $white !important;
     justify-content: flex-end;
+    padding: 0;
 
     @include media-breakpoint-down(sm) {
       padding-top: 0;
+      padding-bottom: 0.5rem;
       justify-content: center;
-      padding: 0;
     }
 
     .cart-icon {
@@ -101,6 +103,11 @@
   .navbar-nav {
     flex-direction: row;
 
+    .nav-link {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+
     // a,
     // span {
     //   &:hover {
@@ -117,6 +124,10 @@
 
     .dropdown-toggle.nav-link {
       text-transform: capitalize;
+    }
+
+    .dropdown-divider {
+      display: none;
     }
 
     .dropdown {
@@ -186,6 +197,8 @@
     .bars-icon {
       display: block;
       margin-right: 15px;
+      height: 100%;
+
       @include media-breakpoint-down(sm) {
         display: none;
       }

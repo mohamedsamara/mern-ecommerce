@@ -3,8 +3,7 @@ const router = express.Router();
 
 // Bring in Models & Helpers
 const Merchant = require('../../models/merchant');
-const mailgun = require('../../config/mailgun');
-const template = require('../../config/template');
+const mailgun = require('../../services/mailgun');
 
 router.post('/add', (req, res) => {
   const name = req.body.name;
@@ -36,16 +35,14 @@ router.post('/add', (req, res) => {
     brand
   });
 
-  merchant.save((err, data) => {
+  merchant.save(async (err, data) => {
     if (err) {
-      return res.status(400).json({
+      res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
 
-    const message = template.sellApplyEmail();
-
-    mailgun.sendEmail(email, message);
+    await mailgun.sendEmail(email, 'merchant-application');
 
     res.status(200).json({
       success: true,
@@ -59,7 +56,7 @@ router.post('/add', (req, res) => {
 router.get('/list', (req, res) => {
   Merchant.find({}, (err, data) => {
     if (err) {
-      return res.status(400).json({
+      res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
