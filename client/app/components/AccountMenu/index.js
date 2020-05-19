@@ -21,7 +21,7 @@ const AccountMenu = props => {
         Show Menu Panel
       </h3>
       <h3 className='panel-title'>Account</h3>
-      <Navbar color='light' light expand='md'>
+      <Navbar color='light' light expand='lg'>
         <Collapse isOpen={isMenuOpen} navbar>
           <ul className='panel-links'>
             {accountLinks.map((link, index) => (

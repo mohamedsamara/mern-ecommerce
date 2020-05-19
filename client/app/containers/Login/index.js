@@ -78,7 +78,7 @@ class Login extends React.PureComponent {
           <Button text='Login' onClick={() => login()} />
           <Button
             text='Create an account'
-            className='register-account-btn'
+            className='btn-no-shape'
             onClick={registerLink}
           />
           <Link

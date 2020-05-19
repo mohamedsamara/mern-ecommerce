@@ -17,21 +17,36 @@ const AccountDetails = props => {
     profileData,
     accountChange,
     updateProfile,
-    unsubscribeFromNewsletter
+    unsubscribeFromNewsletter,
+    subscribeToNewsletter
   } = props;
 
   return (
     <div className='account-details'>
       <div className='info'>
-        <p>{user.email}</p>
-        {user.role !== 'ROLE_MEMBER' && <span>Admin</span>}
-        {user.profile && user.profile.isSubscribed === true && (
-          <span>Subscribed</span>
-        )}
-        <Button
-          text='Unsubscribe From Newsletter'
-          onClick={() => unsubscribeFromNewsletter()}
-        />
+        <div className='desc'>
+          <p>{user.email}</p>
+          {user.role !== 'ROLE_MEMBER' && <span className='admin'>Admin</span>}
+        </div>
+        <div className='actions'>
+          {user.profile &&
+          user.profile.hasOwnProperty('subscriberId') &&
+          user.profile.subscriberId.length > 0 ? (
+            <Button
+              text='Unsubscribe From Newsletter'
+              className='btn-no-shape'
+              onClick={() =>
+                unsubscribeFromNewsletter(user.profile.subscriberId)
+              }
+            />
+          ) : (
+            <Button
+              text='Subscribe To Newsletter'
+              className='btn-no-shape'
+              onClick={() => subscribeToNewsletter(user.email)}
+            />
+          )}
+        </div>
       </div>
       <Row>
         <Col xs='12' md='12'>
@@ -39,6 +54,7 @@ const AccountDetails = props => {
             type={'text'}
             label={'First Name'}
             name={'firstName'}
+            placeholder={'Please Enter Your First Name'}
             value={profileData.firstName}
             onInputChange={(name, value) => {
               accountChange(name, value);
@@ -50,6 +66,7 @@ const AccountDetails = props => {
             type={'text'}
             label={'Last Name'}
             name={'lastName'}
+            placeholder={'Please Enter Your Last Name'}
             value={profileData.lastName}
             onInputChange={(name, value) => {
               accountChange(name, value);

@@ -67,8 +67,53 @@ export const updateProfile = () => {
         autoDismiss: 1
       };
 
-      dispatch(fetchProfile(userId));
+      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
 
+      // dispatch(fetchProfile(userId));
+
+      dispatch(success(successfulOptions));
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+export const unsubscribeFromNewsletter = subscriberId => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.post(
+        `/api/user/unsubscribe/${subscriberId}`
+      );
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
+
+      dispatch(success(successfulOptions));
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    }
+  };
+};
+
+export const reSubscribeToNewsletter = () => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.post(`/api/user/subscribe`);
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      dispatch({ type: FETCH_PROFILE, payload: response.data.user });
       dispatch(success(successfulOptions));
     } catch (error) {
       const title = `Please try again!`;

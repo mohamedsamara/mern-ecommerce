@@ -6,6 +6,7 @@ input[type='password'] {
   padding: 8px 10px;
   border: $border-default;
   font-size: $font-size-large;
+  color: $font-custom-color;
   cursor: text;
 
   &:focus {
@@ -17,7 +18,6 @@ input[type='password'] {
 
   &:disabled {
     background-color: $disabled-bg;
-    color: $font-custom-color !important;
     border: none !important;
     cursor: not-allowed;
   }

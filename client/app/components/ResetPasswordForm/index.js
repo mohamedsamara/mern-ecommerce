@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../Input';
+import Button from '../../components/Button';
 
 const ResetPasswordForm = props => {
   const { resetFormData, resetPasswordChange, resetPassowrd } = props;
@@ -43,13 +44,7 @@ const ResetPasswordForm = props => {
       </Row>
       <hr />
       <div className='reset-actions'>
-        <button
-          className='input-btn'
-          type='submit'
-          onClick={() => resetPassowrd()}
-        >
-          Reset Password
-        </button>
+        <Button text='Reset Password' onClick={() => resetPassowrd()} />
       </div>
     </div>
   );

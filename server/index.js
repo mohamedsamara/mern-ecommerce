@@ -22,11 +22,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
 // Connect to MongoDB
+mongoose.set('useCreateIndex', true);
 mongoose
-  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  })
   .then(() =>
     console.log(`${chalk.green('✓')} ${chalk.blue('MongoDB Connected!')}`)
   )

@@ -40,27 +40,3 @@ export const subscribeToNewsletter = () => {
     }
   };
 };
-
-export const unsubscribeFromNewsletter = () => {
-  return async (dispatch, getState) => {
-    const user = {};
-    user.email = getState().newsletter.email;
-
-    try {
-      const response = await axios.post('/api/newsletter/unsubscribe', user);
-
-      const successfulOptions = {
-        title: `${response.data.message}`,
-        position: 'tr',
-        autoDismiss: 1
-      };
-
-      dispatch(success(successfulOptions));
-    } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
-    } finally {
-      dispatch({ type: NEWSLETTER_RESET });
-    }
-  };
-};

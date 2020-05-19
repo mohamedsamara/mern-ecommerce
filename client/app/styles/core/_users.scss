@@ -1,9 +1,10 @@
 .users-dashboard {
-  // .table-section {
-  //   margin: 20px 0px;
-  // }
+  //   .table-section {
+  //     margin: 20px 0px;
+  //   }
 
   .email-column {
-    @include text-ellipsis(2);
+    white-space: normal !important;
+    @include text-ellipsis(2, 2);
   }
 }

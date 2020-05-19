@@ -11,28 +11,6 @@ hr {
   border-color: $light-border-color;
 }
 
-.btn {
-  min-width: 150px;
-  border: $border-default !important;
-  border-width: 3px !important;
-  font-weight: $font-weight-bold-two;
-  color: $font-custom-color !important;
-  background-color: $btn-bg;
-  -webkit-transition: $layout-transition-speed;
-  transition: $layout-transition-speed;
-
-  &:hover {
-    color: $white !important;
-    background-color: $btn-bg-hover;
-    -webkit-transition: $layout-transition-speed;
-    transition: $layout-transition-speed;
-  }
-
-  &:focus {
-    box-shadow: none;
-  }
-}
-
 .lead {
   font-size: $font-size-medium;
 }

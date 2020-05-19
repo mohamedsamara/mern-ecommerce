@@ -7,15 +7,6 @@
     }
   }
 
-  .csv {
-    .react-bs-table-csv-btn {
-      &:hover {
-        background-color: $theme-light-blue;
-        color: $white;
-      }
-    }
-  }
-
   .react-bootstrap-table {
     .table {
       overflow-x: scroll;

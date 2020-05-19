@@ -5,8 +5,8 @@ input[type='reset'],
 button[type='button'],
 button[type='submit'],
 button[type='reset'] {
-  padding: 10px;
   border: none;
+  background: transparent;
   color: $font-custom-color !important;
   font-weight: $font-weight-bold-two;
   font-size: $font-size-small;
@@ -18,9 +18,12 @@ button[type='reset'] {
     outline: none;
   }
 
+  :active {
+    outline: none;
+  }
+
   &:disabled {
     background-color: $disabled-bg;
-    color: $font-custom-color !important;
     border: none !important;
     // cursor: not-allowed;
     pointer-events: none;
@@ -29,10 +32,74 @@ button[type='reset'] {
 // end input button styles
 
 .input-btn {
-  min-width: 150px;
-  border: $border-default !important;
-  border-width: 3px !important;
+  padding: 0;
+
+  .btn-text {
+    font-weight: $font-weight-bold-two;
+    font-size: $font-size-small;
+  }
+}
+
+// custom button
+.input-btn {
+  &.custom-btn {
+    padding: 10px;
+    position: relative;
+    z-index: 1;
+    min-width: 150px;
+    border: $border-default;
+    border-radius: $border-radius-default;
+    // border-width: 2px !important;
+    background-color: $btn-bg;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+
+    &:hover {
+      color: $white !important;
+      background-color: $btn-bg-hover;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      width: 0%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: $theme-light-white;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+
+    &:hover {
+      background-color: transparent;
+      color: $font-custom-color !important;
+
+      &:after {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.redirect-link {
+  color: $red !important;
+  font-weight: $font-weight-bold-one;
+  text-transform: capitalize;
+}
+
+// button link
+.btn-link {
+  font-weight: $font-weight-bold-one;
+  padding: 10px;
+  border: $border-default;
   border-radius: $border-radius-default;
+  display: inline-block;
+  min-width: 150px;
+  color: $font-custom-color !important;
   background-color: $btn-bg;
   -webkit-transition: $layout-transition-speed;
   transition: $layout-transition-speed;
@@ -45,9 +112,75 @@ button[type='reset'] {
   }
 }
 
-.input-btn {
-  .btn-text {
-    font-weight: $font-weight-bold-two;
-    font-size: $font-size-small;
+.btn-no-shape {
+  &:hover {
+    color: $font-focus-color !important;
+    opacity: 0.6;
   }
+
+  .btn-text {
+    font-weight: $font-weight-normal;
+    font-size: $font-size-medium;
+  }
+}
+
+// bag button
+.input-btn {
+  &.bag-btn {
+    box-shadow: $custom-box-shadow;
+    border: $border-default;
+    border-radius: $border-radius-default;
+    padding: 10px;
+    // position: relative;
+    // z-index: 1;
+    min-width: 170px;
+    @include media-breakpoint-down(sm) {
+      width: 100% !important;
+    }
+
+    // &:after {
+    //   content: '';
+    //   position: absolute;
+    //   z-index: -1;
+    //   width: 0%;
+    //   height: 100%;
+    //   top: 0;
+    //   left: 0;
+    //   background-color: $theme-light-white;
+    //   -webkit-transition: $layout-transition-speed;
+    //   transition: $layout-transition-speed;
+    // }
+
+    &:hover {
+      background-color: transparent;
+      color: $font-custom-color !important;
+
+      .bag-icon {
+        // fill: $red;
+        stroke: $red !important;
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
+      }
+
+      // &:after {
+      //   width: 100%;
+      // }
+    }
+
+    .btn-icon {
+      .bag-icon {
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.bag-icon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  stroke-width: 20px;
+  stroke: $black;
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
 }

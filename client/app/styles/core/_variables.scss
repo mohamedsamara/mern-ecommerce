@@ -60,8 +60,8 @@ $btn-bg-hover: $red;
 $font-color: #999999;
 $font-light-color: #00000026;
 $font-custom-color: $theme-black;
-$font-hover-color: #262626;
-$font-focus-color: #262626;
+$font-hover-color: $black;
+$font-focus-color: $black;
 $font-heading-color: #262626;
 $border-color: #d8e0e4;
 $dark-border-color: #e6e5ea;
@@ -75,6 +75,7 @@ $badge: $red;
 $disabled-bg: #d9dbdea1;
 
 $box-shadow: 0 0 10px 0 #e6e5ea;
+$custom-box-shadow: 0 3px #e6e5ea;
 $border-radius-default: 3px;
 $line-height: 1.5;
 $letter-spacing: 0.5px;

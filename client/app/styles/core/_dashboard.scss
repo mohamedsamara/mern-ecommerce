@@ -1,6 +1,6 @@
 .panel-body {
   padding: 10px;
-  @include media-breakpoint-down(sm) {
+  @include media-breakpoint-down(md) {
     margin-top: 20px;
   }
 }
@@ -28,7 +28,7 @@
   }
 
   .panel-title {
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       display: none;
     }
   }
@@ -41,7 +41,7 @@
   .menu-panel {
     display: none;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       display: block;
       cursor: pointer;
     }

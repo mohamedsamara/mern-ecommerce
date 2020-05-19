@@ -63,13 +63,16 @@
 }
 
 // text ellipsis ...
-@mixin text-ellipsis($line) {
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: $line;
-  -o-text-overflow: ellipsis;
+@mixin text-ellipsis($numLines: 1, $lineHeight: 1.412) {
   overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  display: block;
+  /* autoprefixer: off */
+  display: -webkit-box;
+  -webkit-line-clamp: $numLines;
+  -webkit-box-orient: vertical;
+  max-height: $numLines * $lineHeight + unquote('em');
 }
 
 // dark overflow

@@ -18,7 +18,7 @@ exports.subscribeToNewsletter = email => {
   });
 };
 
-exports.unsubscribeToNewsletter = subscriberId => {
+exports.unsubscribeFromNewsletter = subscriberId => {
   return new Promise((resolve, reject) => {
     mailchimp
       .delete(`lists/${process.env.MAILCHIMP_LIST_KEY}/members/${subscriberId}`)

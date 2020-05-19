@@ -25,7 +25,7 @@ router.post('/login', (req, res) => {
 
   User.findOne({ email }).then(user => {
     if (!user) {
-      res.status(400).send({ error: 'no user found for this email address.' });
+      res.status(400).send({ error: 'No user found for this email address.' });
     }
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
@@ -47,7 +47,7 @@ router.post('/login', (req, res) => {
           });
         });
       } else {
-        res.status(404).json({
+        res.status(400).json({
           success: false,
           error: 'Password Incorrect'
         });
@@ -84,14 +84,13 @@ router.post('/register', (req, res) => {
       res.status(400).json({ error: 'That email address is already in use.' });
     }
 
-    let result;
     let subscriberId = '';
     if (isSubscribed) {
-      result = await mailchimp.subscribeToNewsletter(email);
-    }
+      const result = await mailchimp.subscribeToNewsletter(email);
 
-    if (result.status === 'subscribed') {
-      subscriberId = result.id;
+      if (result.status === 'subscribed') {
+        subscriberId = result.id;
+      }
     }
 
     const user = new User({

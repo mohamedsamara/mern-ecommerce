@@ -30,14 +30,14 @@ class Admin extends React.PureComponent {
     return (
       <div className='admin'>
         <Row>
-          <Col xs='12' md='4'>
+          <Col xs='12' lg='4'>
             <AccountMenu
               isMenuOpen={isMenuOpen}
               accountLinks={adminLinks}
               toggleMenu={toggleAdminMenu}
             />
           </Col>
-          <Col xs='12' md='8'>
+          <Col xs='12' lg='8'>
             <div className='panel-body'>
               <Switch>
                 <Route exact path='/dashboard' component={Account} />

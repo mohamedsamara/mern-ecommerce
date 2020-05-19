@@ -50,7 +50,12 @@ const Table = props => {
         <div className='table-section'>
           {csv && (
             <div className='csv'>
-              <ExportCSVButton {...props.csvProps}>Export CSV</ExportCSVButton>
+              <ExportCSVButton
+                className='input-btn custom-btn'
+                {...props.csvProps}
+              >
+                Export CSV
+              </ExportCSVButton>
             </div>
           )}
           {search && (

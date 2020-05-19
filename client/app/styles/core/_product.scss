@@ -1,11 +1,12 @@
 /* start product dashboard styles */
 .product-dashboard {
-  // .table-section {
-  //   margin: 20px 0px;
-  // }
+  .table-section {
+    margin: 20px 0px;
+  }
 
   .desc-column {
-    @include text-ellipsis(2);
+    white-space: normal !important;
+    @include text-ellipsis(2, 2);
   }
 }
 /* end product dashboard styles */
@@ -32,14 +33,12 @@
         .item-name {
           color: $theme-blue !important;
           // font-weight: $font-weight-bold-two;
-          max-height: 30px;
-          overflow: hidden;
           margin-bottom: 8px;
+          @include text-ellipsis(1);
         }
 
         .item-desc {
-          max-height: 40px;
-          overflow: hidden;
+          @include text-ellipsis(2);
         }
 
         .by {
@@ -170,57 +169,4 @@
   color: $theme-bright-red;
 }
 
-.bag-btn {
-  position: relative;
-  z-index: 1;
-  min-width: 170px;
-  @include media-breakpoint-down(sm) {
-    width: 100% !important;
-  }
-
-  &:after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    width: 0%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: $theme-light-white;
-    -webkit-transition: $layout-transition-speed;
-    transition: $layout-transition-speed;
-  }
-
-  &:hover {
-    background-color: transparent;
-    color: $font-custom-color !important;
-
-    .bag-icon {
-      // fill: $red;
-      stroke: $red !important;
-      -webkit-transition: $layout-transition-speed;
-      transition: $layout-transition-speed;
-    }
-
-    &:after {
-      width: 100%;
-    }
-  }
-
-  .btn-icon {
-    .bag-icon {
-      margin-left: 10px;
-    }
-  }
-}
-
-.bag-icon {
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  stroke-width: 20px;
-  stroke: $black;
-  -webkit-transition: $layout-transition-speed;
-  transition: $layout-transition-speed;
-}
 /* end product common styles */

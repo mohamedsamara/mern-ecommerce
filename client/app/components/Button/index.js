@@ -18,14 +18,8 @@ const Button = props => {
       type={type}
       onClick={onClick}
     >
-      {icon ? (
-        <>
-          <span className='btn-text'>{text}</span>
-          <span className='btn-icon'>{icon}</span>
-        </>
-      ) : (
-        <>{text}</>
-      )}
+      <span className='btn-text'>{text}</span>
+      {icon && <span className='btn-icon'>{icon}</span>}
     </button>
   );
 };
@@ -34,5 +28,5 @@ export default Button;
 
 Button.defaultProps = {
   type: 'button',
-  className: ''
+  className: 'custom-btn'
 };

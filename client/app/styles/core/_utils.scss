@@ -44,29 +44,3 @@
     margin: 10px;
   }
 }
-
-.redirect-link {
-  color: $red !important;
-  font-weight: $font-weight-bold-one;
-  text-transform: capitalize;
-}
-
-.btn-link {
-  color: $red !important;
-  font-weight: $font-weight-bold-one;
-  padding: 10px;
-  border: $border-default;
-  display: inline-block;
-  min-width: 150px;
-  color: $black !important;
-  background-color: $btn-bg;
-  -webkit-transition: $layout-transition-speed;
-  transition: $layout-transition-speed;
-
-  &:hover {
-    color: $white !important;
-    background-color: $btn-bg-hover;
-    -webkit-transition: $layout-transition-speed;
-    transition: $layout-transition-speed;
-  }
-}

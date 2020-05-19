@@ -44,7 +44,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(ResetPassword);
+export default connect(mapStateToProps, actions)(ResetPassword);

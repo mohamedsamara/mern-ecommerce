@@ -11,27 +11,17 @@ router.post('/subscribe', async (req, res) => {
     return res.status(400).json({ error: 'You must enter an email address.' });
   }
 
+  const result = await mailchimp.subscribeToNewsletter(email);
+
+  if (result.status === 400) {
+    return res.status(400).json({ error: result.title });
+  }
+
   await mailgun.sendEmail(email, 'newsletter-subscription');
-  await mailchimp.subscribeToNewsletter(email);
 
   res.status(200).json({
     success: true,
     message: 'You have successfully subscribed to the newsletter'
-  });
-});
-
-router.post('/unsubscribe', async (req, res) => {
-  const email = req.body.email;
-
-  if (!email) {
-    return res.status(400).json({ error: 'You must enter an email address.' });
-  }
-
-  await mailchimp.unsubscribeToNewsletter(email);
-
-  res.status(200).json({
-    success: true,
-    message: 'You have successfully unsubscribed from the newsletter'
   });
 });
 

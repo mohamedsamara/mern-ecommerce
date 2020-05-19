@@ -19,6 +19,7 @@ import SignupPage from '../Signup';
 import HomePage from '../Homepage';
 import Dashboard from '../Dashboard';
 import Navigation from '../Navigation';
+import Footer from '../Footer';
 import Authentication from '../Authentication';
 import Notification from '../Notification';
 import ForgotPassword from '../ForgotPassword';
@@ -32,7 +33,6 @@ import OrderSuccess from '../OrderSuccess';
 import OrderPage from '../OrderPage';
 
 import Page404 from '../../components/Page404';
-import Footer from '../../components/Footer';
 
 class Application extends React.PureComponent {
   componentDidMount() {

@@ -1,5 +1,10 @@
-// .category-dashboard {
-//   .table-section {
-//     margin: 20px 0px;
-//   }
-// }
+.category-dashboard {
+  //   .table-section {
+  //     margin: 20px 0px;
+  //   }
+
+  .desc-column {
+    white-space: normal !important;
+    @include text-ellipsis(2, 2);
+  }
+}
