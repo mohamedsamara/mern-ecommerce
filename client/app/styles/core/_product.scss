@@ -130,6 +130,10 @@
 
 /* start product common styles */
 .item-box {
+  .item-link {
+    display: block;
+  }
+
   .item-name {
     color: $red !important;
     margin: 0px;

@@ -145,6 +145,10 @@ router.post('/register', (req, res) => {
 router.post('/forgot', (req, res) => {
   const email = req.body.email;
 
+  if (!email) {
+    return res.status(400).json({ error: 'You must enter an email address.' });
+  }
+
   User.findOne({ email }, (err, existingUser) => {
     if (err || existingUser == null) {
       res.status(400).json({

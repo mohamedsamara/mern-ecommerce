@@ -45,7 +45,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.9.0",
     "jsonwebtoken": "^8.5.1",
-    "mailchimp-v3": "^1.0.5",
+    "mailchimp-api-v3": "^1.14.0",
     "mailgun-js": "^0.22.0",
     "mongoose": "^5.5.11",
     "mongoose-slug-generator": "^1.0.4",

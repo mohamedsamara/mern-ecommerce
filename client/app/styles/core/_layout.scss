@@ -120,3 +120,8 @@ h6,
   background: $theme-dark-gray;
 }
 /* scrollbar styles */
+
+body.user-is-tabbing *:focus {
+  outline: 2px solid $outline-color !important;
+  outline: 2px auto -webkit-focus-ring-color !important;
+}

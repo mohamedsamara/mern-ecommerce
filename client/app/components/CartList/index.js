@@ -20,7 +20,7 @@ const CartList = props => {
             <Container>
               <Row className='mb-2 align-items-center'>
                 <Col xs='9'>
-                  <Link to={`/product/${item.slug}`}>
+                  <Link to={`/product/${item.slug}`} className='item-link'>
                     <h1 className='item-name'>{item.name}</h1>
                   </Link>
                 </Col>

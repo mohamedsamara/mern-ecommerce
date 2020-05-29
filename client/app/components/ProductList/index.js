@@ -21,7 +21,7 @@ const ProductList = props => {
               <div className='item-box'>
                 <div className='item-details'>
                   <div className='item-body'>
-                    <Link to={`/product/${product.slug}`}>
+                    <Link to={`/product/${product.slug}`} className='item-link'>
                       <h1 className='item-name'>{product.name}</h1>
                       {product.brand.name && (
                         <p className='by'>

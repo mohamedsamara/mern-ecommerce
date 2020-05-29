@@ -27,7 +27,10 @@ const OrderItems = props => {
               <Col xs='8' md='4'>
                 <div className='item-box'>
                   <div className='item-details'>
-                    <Link to={`/product/${item.product.slug}`}>
+                    <Link
+                      to={`/product/${item.product.slug}`}
+                      className='item-link'
+                    >
                       <h1 className='item-name'>{item.product.name}</h1>
                     </Link>
                     <p className='sku'>{item.product.sku}</p>

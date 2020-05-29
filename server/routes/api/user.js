@@ -121,6 +121,8 @@ router.post(
     const email = req.user.email;
     const query = { _id: req.user._id };
 
+    console.log('req.user', req.user);
+
     let subscriberId = '';
     const result = await mailchimp.subscribeToNewsletter(email);
 
@@ -149,7 +151,7 @@ router.post(
 
         res.status(200).json({
           success: true,
-          message: 'You have successfully subscribed from the newsletter',
+          message: 'You have successfully subscribed to the newsletter',
           user
         });
       }

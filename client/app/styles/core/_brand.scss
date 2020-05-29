@@ -15,6 +15,10 @@
     border: $border-default;
     height: 100%;
 
+    .brand-link {
+      display: block;
+    }
+
     &:hover {
       border-color: $theme-black;
       -moz-transition: border-color $layout-transition-speed ease-in-out;

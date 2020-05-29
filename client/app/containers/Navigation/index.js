@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import {
   Container,
@@ -32,6 +32,7 @@ import { BagIcon } from '../../components/Icon';
 class Navigation extends React.PureComponent {
   render() {
     const {
+      history,
       authenticated,
       user,
       cartItems,
@@ -125,21 +126,19 @@ class Navigation extends React.PureComponent {
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
-                        {user.profile && Object.keys(user.profile).length != 0
+                        {user.profile && Object.keys(user.profile).length !== 0
                           ? user.profile.firstName
                           : 'Welcome'}
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
                       <DropdownMenu right>
-                        <DropdownItem>
-                          <Link to={'/dashboard'}>Dashboard</Link>
+                        <DropdownItem
+                          onClick={() => history.push('/dashboard')}
+                        >
+                          Dashboard
                         </DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem>
-                          <a className='log-out' onClick={signOut}>
-                            Log Out
-                          </a>
-                        </DropdownItem>
+                        <DropdownItem onClick={signOut}>Sign Out</DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
                   ) : (
@@ -149,11 +148,11 @@ class Navigation extends React.PureComponent {
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>
                       <DropdownMenu right>
-                        <DropdownItem>
-                          <Link to={'/login'}>Login</Link>
+                        <DropdownItem onClick={() => history.push('/login')}>
+                          Login
                         </DropdownItem>
-                        <DropdownItem>
-                          <Link to={'/register'}>Sign Up</Link>
+                        <DropdownItem onClick={() => history.push('/register')}>
+                          Sign Up
                         </DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>
@@ -200,4 +199,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, actions)(Navigation);
+export default connect(mapStateToProps, actions)(withRouter(Navigation));

@@ -1,6 +1,6 @@
-const mailchimp = require('mailchimp-v3');
+const Mailchimp = require('mailchimp-api-v3');
 
-mailchimp.setApiKey(process.env.MAILCHIMP_KEY);
+const mailchimp = new Mailchimp(process.env.MAILCHIMP_KEY);
 
 exports.subscribeToNewsletter = email => {
   return new Promise((resolve, reject) => {

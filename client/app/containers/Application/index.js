@@ -43,12 +43,25 @@ class Application extends React.PureComponent {
     }
 
     this.props.handleCart();
+
+    document.addEventListener('keydown', this.handleTabbing);
+    document.addEventListener('mousedown', this.handleMouseDown);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.authenticated !== prevProps.authenticated) {
       this.props.handleCartStatus();
     }
+  }
+
+  handleTabbing(e) {
+    if (e.keyCode === 9) {
+      document.body.classList.add('user-is-tabbing');
+    }
+  }
+
+  handleMouseDown() {
+    document.body.classList.remove('user-is-tabbing');
   }
 
   render() {
