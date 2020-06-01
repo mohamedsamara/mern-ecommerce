@@ -1,6 +1,6 @@
 /**
  *
- * BrandsShop
+ * CategoryShop
  *
  */
 
@@ -13,17 +13,17 @@ import ProductList from '../../components/ProductList';
 import NotFound from '../../components/NotFound';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
-class BrandsShop extends React.PureComponent {
+class CategoryShop extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchBrandProducts(slug);
+    this.props.fetchCategoryProducts(slug);
   }
 
   render() {
     const { products, isLoading } = this.props;
 
     return (
-      <div className='brands-shop'>
+      <div className='category-shop'>
         {isLoading && <LoadingIndicator />}
         {products.length > 0 ? (
           <ProductList products={products} />
@@ -42,4 +42,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, actions)(BrandsShop);
+export default connect(mapStateToProps, actions)(CategoryShop);

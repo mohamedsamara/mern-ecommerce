@@ -25,9 +25,9 @@ router.post(
       products
     });
 
-    category.save((err, category) => {
+    category.save((err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -35,7 +35,7 @@ router.post(
       res.status(200).json({
         success: true,
         message: `Category has been added successfully!`,
-        category: category
+        category: data
       });
     });
   }
@@ -45,7 +45,7 @@ router.post(
 router.get('/list', (req, res) => {
   Category.find({}, (err, data) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
@@ -61,7 +61,7 @@ router.delete(
   (req, res) => {
     Category.deleteOne({ _id: req.params.id }, (err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

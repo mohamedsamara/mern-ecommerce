@@ -32,7 +32,7 @@ router.post('/add', (req, res) => {
 
   contact.save(async (err, data) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }

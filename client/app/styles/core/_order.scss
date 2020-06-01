@@ -1,14 +1,6 @@
 .order-dashboard {
   .order-list {
     // margin: 20px 0px 10px 0px;
-
-    .empty-orders {
-      text-align: center;
-      text-transform: capitalize;
-      font-weight: $font-weight-bold-two;
-      color: $font-custom-color;
-    }
-
     .order-details {
       padding: 20px;
       @include flex();

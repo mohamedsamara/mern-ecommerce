@@ -23,9 +23,9 @@ router.post(
       description
     });
 
-    brand.save((err, brand) => {
+    brand.save((err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -33,7 +33,7 @@ router.post(
       res.status(200).json({
         success: true,
         message: `Brand has been added successfully!`,
-        brand: brand
+        brand: data
       });
     });
   }
@@ -43,7 +43,7 @@ router.post(
 router.get('/list', (req, res) => {
   Brand.find({}, (err, data) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
@@ -59,7 +59,7 @@ router.get(
   (req, res) => {
     Brand.find({}, 'name', (err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -77,7 +77,7 @@ router.delete(
   (req, res) => {
     Brand.deleteOne({ _id: req.params.id }, (err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

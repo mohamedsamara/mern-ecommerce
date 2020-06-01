@@ -14,7 +14,7 @@ router.get(
   (req, res) => {
     User.find({}, (err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -33,7 +33,7 @@ router.get(
 
     User.findById(userId, { password: 0 }, (err, user) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -63,7 +63,7 @@ router.put(
       },
       (err, user) => {
         if (err) {
-          res.status(400).json({
+          return res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }

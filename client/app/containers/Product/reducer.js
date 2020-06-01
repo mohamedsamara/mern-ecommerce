@@ -14,7 +14,8 @@ import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   PRODUCT_SELECT,
-  FETCH_PRODUCTS_SELECT
+  FETCH_PRODUCTS_SELECT,
+  SET_PRODUCTS_LOADING
 } from './constants';
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
     price: 1,
     taxable: 0
   },
+  isLoading: false,
   productShopData: {
     quantity: 1
   },
@@ -90,6 +92,11 @@ const productReducer = (state = initialState, action) => {
         productShopData: {
           quantity: 1
         }
+      };
+    case SET_PRODUCTS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
     case FETCH_PRODUCTS_SELECT:
       return { ...state, productsSelect: action.payload };

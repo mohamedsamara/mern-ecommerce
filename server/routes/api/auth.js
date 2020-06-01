@@ -25,7 +25,9 @@ router.post('/login', (req, res) => {
 
   User.findOne({ email }).then(user => {
     if (!user) {
-      res.status(400).send({ error: 'No user found for this email address.' });
+      return res
+        .status(400)
+        .send({ error: 'No user found for this email address.' });
     }
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
@@ -81,7 +83,9 @@ router.post('/register', (req, res) => {
     }
 
     if (existingUser) {
-      res.status(400).json({ error: 'That email address is already in use.' });
+      return res
+        .status(400)
+        .json({ error: 'That email address is already in use.' });
     }
 
     let subscriberId = '';
@@ -102,7 +106,7 @@ router.post('/register', (req, res) => {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
         if (err) {
-          res.status(400).json({
+          return res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }
@@ -111,7 +115,7 @@ router.post('/register', (req, res) => {
 
         user.save(async (err, user) => {
           if (err) {
-            res.status(400).json({
+            return res.status(400).json({
               error: 'Your request could not be processed. Please try again.'
             });
           }
@@ -150,8 +154,8 @@ router.post('/forgot', (req, res) => {
   }
 
   User.findOne({ email }, (err, existingUser) => {
-    if (err || existingUser == null) {
-      res.status(400).json({
+    if (err || existingUser === null) {
+      return res.status(400).json({
         error:
           'Your request could not be processed as entered. Please try again.'
       });
@@ -160,7 +164,7 @@ router.post('/forgot', (req, res) => {
     crypto.randomBytes(48, (err, buffer) => {
       const resetToken = buffer.toString('hex');
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -170,7 +174,7 @@ router.post('/forgot', (req, res) => {
 
       existingUser.save(async err => {
         if (err) {
-          res.status(400).json({
+          return res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }
@@ -191,7 +195,7 @@ router.post('/reset/:token', (req, res) => {
   const password = req.body.password;
 
   if (!password) {
-    res.status(400).json({ error: 'You must enter a password.' });
+    return res.status(400).json({ error: 'You must enter a password.' });
   }
 
   User.findOne(
@@ -201,7 +205,7 @@ router.post('/reset/:token', (req, res) => {
     },
     (err, resetUser) => {
       if (!resetUser) {
-        res.status(400).json({
+        return res.status(400).json({
           error:
             'Your token has expired. Please attempt to reset your password again.'
         });
@@ -222,7 +226,7 @@ router.post('/reset/:token', (req, res) => {
 
           resetUser.save(async err => {
             if (err) {
-              res.status(400).json({
+              return res.status(400).json({
                 error:
                   'Your request could not be processed as entered. Please try again.'
               });
@@ -247,12 +251,12 @@ router.post('/reset', (req, res) => {
   const password = req.body.password;
 
   if (!password) {
-    res.status(400).json({ error: 'You must enter a password.' });
+    return res.status(400).json({ error: 'You must enter a password.' });
   }
 
   User.findOne({ email }, (err, existingUser) => {
-    if (err || existingUser == null) {
-      res.status(400).json({
+    if (err || existingUser === null) {
+      return res.status(400).json({
         error:
           'Your request could not be processed as entered. Please try again.'
       });
@@ -261,7 +265,7 @@ router.post('/reset', (req, res) => {
     bcrypt.genSalt(10, (err, salt) => {
       bcrypt.hash(req.body.password, salt, (err, hash) => {
         if (err) {
-          res.status(400).json({
+          return res.status(400).json({
             error:
               'Your request could not be processed as entered. Please try again.'
           });
@@ -272,7 +276,7 @@ router.post('/reset', (req, res) => {
 
         existingUser.save(async err => {
           if (err) {
-            res.status(400).json({
+            return res.status(400).json({
               error:
                 'Your request could not be processed as entered. Please try again.'
             });

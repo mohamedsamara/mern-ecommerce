@@ -1,10 +1,13 @@
 // utils styles
 
-.no-data {
+/* start not found styles */
+.not-found {
   text-align: center;
-  margin: 20px 0px;
-  color: $red;
+  text-transform: capitalize;
+  font-weight: $font-weight-bold-two;
+  color: $font-custom-color;
 }
+/* end not found styles */
 
 .message-box {
   p {

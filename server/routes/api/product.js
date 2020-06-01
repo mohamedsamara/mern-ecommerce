@@ -39,7 +39,7 @@ router.post(
 
     Product.findOne({ sku }, (err, existingProduct) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -58,9 +58,9 @@ router.post(
         brand
       });
 
-      product.save((err, product) => {
+      product.save((err, data) => {
         if (err) {
-          res.status(400).json({
+          return res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }
@@ -68,7 +68,7 @@ router.post(
         res.status(200).json({
           success: true,
           message: `Product has been added successfully!`,
-          product: product
+          product: data
         });
       });
     });
@@ -81,14 +81,21 @@ router.get('/item/:slug', (req, res) => {
 
   Product.findOne({ slug })
     .populate('brand')
-    .exec((err, product) => {
+    .exec((err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
+
+      if (!data) {
+        return res.status(404).json({
+          message: 'No product found.'
+        });
+      }
+
       res.status(200).json({
-        product
+        product: data
       });
     });
 });
@@ -99,7 +106,7 @@ router.get('/list', (req, res) => {
     .populate('brand', 'name')
     .exec((err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -117,13 +124,19 @@ router.get('/list/category/:slug', (req, res) => {
     .populate('products')
     .exec((err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
 
+      if (!data) {
+        return res.status(404).json({
+          message: 'No products found.'
+        });
+      }
+
       res.status(200).json({
-        products: data.products
+        products: data ? data.products : data
       });
     });
 });
@@ -132,10 +145,16 @@ router.get('/list/category/:slug', (req, res) => {
 router.get('/list/brand/:slug', (req, res) => {
   const slug = req.params.slug;
 
-  Brand.find({ slug: slug }, (err, brand) => {
+  Brand.find({ slug }, (err, brand) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
+      });
+    }
+
+    if (brand.length <= 0) {
+      return res.status(404).json({
+        message: `Cannot find brand with the slug: ${slug}.`
       });
     }
 
@@ -143,7 +162,7 @@ router.get('/list/brand/:slug', (req, res) => {
       .populate('brand', 'name')
       .exec((err, data) => {
         if (err) {
-          res.status(400).json({
+          return res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }
@@ -160,7 +179,7 @@ router.get(
   (req, res) => {
     Product.find({}, 'name', (err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -178,7 +197,7 @@ router.delete(
   (req, res) => {
     Product.deleteOne({ _id: req.params.id }, (err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }

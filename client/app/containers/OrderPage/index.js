@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import OrderDetails from '../../components/OrderDetails';
+import NotFound from '../../components/NotFound';
 
 class OrderPage extends React.PureComponent {
   componentDidMount() {
@@ -29,7 +30,11 @@ class OrderPage extends React.PureComponent {
 
     return (
       <div className='order-page'>
-        <OrderDetails order={order} />
+        {order._id ? (
+          <OrderDetails order={order} />
+        ) : (
+          <NotFound message='no order exist!' />
+        )}
       </div>
     );
   }

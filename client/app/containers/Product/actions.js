@@ -17,7 +17,8 @@ import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   PRODUCT_SELECT,
-  FETCH_PRODUCTS_SELECT
+  FETCH_PRODUCTS_SELECT,
+  SET_PRODUCTS_LOADING
 } from './constants';
 
 import { RESET_BRAND } from '../Brand/constants';
@@ -53,16 +54,10 @@ export const toggleAddProduct = () => {
 
 export const fetchProducts = (filter, slug) => {
   return async (dispatch, getState) => {
+    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+
     try {
-      let api = '';
-
-      if (!slug) {
-        api = filterProductApi('all', slug);
-      } else {
-        api = filterProductApi(filter, slug);
-      }
-
-      const response = await axios.get(`/api/product/list${api}`);
+      const response = await axios.get(`/api/product/list`);
 
       dispatch({
         type: FETCH_PRODUCTS,
@@ -71,12 +66,56 @@ export const fetchProducts = (filter, slug) => {
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+    }
+  };
+};
+
+export const fetchBrandProducts = slug => {
+  return async (dispatch, getState) => {
+    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+
+    try {
+      const response = await axios.get(`/api/product/list/brand/${slug}`);
+
+      dispatch({
+        type: FETCH_PRODUCTS,
+        payload: response.data.products
+      });
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+    }
+  };
+};
+
+export const fetchCategoryProducts = slug => {
+  return async (dispatch, getState) => {
+    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+
+    try {
+      const response = await axios.get(`/api/product/list/category/${slug}`);
+
+      dispatch({
+        type: FETCH_PRODUCTS,
+        payload: response.data.products
+      });
+    } catch (error) {
+      const title = `Please try again!`;
+      handleError(error, title, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
   };
 };
 
 export const fetchProduct = slug => {
   return async (dispatch, getState) => {
+    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+
     try {
       const response = await axios.get(`/api/product/item/${slug}`);
 
@@ -87,6 +126,8 @@ export const fetchProduct = slug => {
     } catch (error) {
       const title = `Please try again!`;
       handleError(error, title, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
   };
 };
@@ -175,21 +216,4 @@ export const addProduct = () => {
       handleError(error, title, dispatch);
     }
   };
-};
-
-const filterProductApi = (filter, slug) => {
-  let api = '';
-  switch (filter) {
-    case 'all':
-      api = ``;
-      break;
-    case 'category':
-      api = `/${filter}/${slug}`;
-      break;
-    case 'brand':
-      api = `/${filter}/${slug}`;
-      break;
-    default:
-  }
-  return api;
 };

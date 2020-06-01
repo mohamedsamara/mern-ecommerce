@@ -39,12 +39,7 @@ class Login extends React.PureComponent {
 
     return (
       <div className='login-form'>
-        {isLoading && (
-          <div>
-            <LoadingIndicator />
-            <div className='popup-background' />
-          </div>
-        )}
+        {isLoading && <LoadingIndicator />}
         <h1>Login</h1>
         <hr />
         <form onSubmit={handleSubmit}>

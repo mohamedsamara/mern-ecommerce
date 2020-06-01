@@ -10,6 +10,7 @@ import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 import { formatDate } from '../../helpers/date';
+import NotFound from '../NotFound';
 
 const OrderList = props => {
   const { orders } = props;
@@ -58,7 +59,7 @@ const OrderList = props => {
           ))
         ) : (
           <Col xs='12'>
-            <p className='empty-orders'>you have no orders yet!</p>
+            <NotFound message='you have no orders yet!' />
           </Col>
         )}
       </Row>

@@ -92,6 +92,7 @@ class Application extends React.PureComponent {
                   path='/dashboard'
                   component={Authentication(Dashboard)}
                 />
+                <Route path='/404' component={Page404} />
                 <Route path='*' component={Page404} />
               </Switch>
             </div>

@@ -24,7 +24,7 @@ router.post(
 
     order.save((err, order) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -33,7 +33,7 @@ router.post(
         .populate('cart user', '-password')
         .exec((err, doc) => {
           if (err) {
-            res.status(400).json({
+            return res.status(400).json({
               error: 'Your request could not be processed. Please try again.'
             });
           }
@@ -47,7 +47,7 @@ router.post(
             })
             .exec(async (err, data) => {
               if (err) {
-                res.status(400).json({
+                return res.status(400).json({
                   error:
                     'Your request could not be processed. Please try again.'
                 });
@@ -100,7 +100,7 @@ router.get(
       })
       .exec((err, docs) => {
         if (err) {
-          res.status(400).json({
+          return res.status(400).json({
             error: 'Your request could not be processed. Please try again.'
           });
         }
@@ -160,17 +160,17 @@ router.get(
         path: 'cart'
       })
       .exec((err, doc) => {
-        if (err) {
-          res.status(400).json({
-            error: 'Your request could not be processed. Please try again.'
+        if (err || !doc) {
+          return res.status(404).json({
+            message: `Cannot find order with the id: ${orderId}.`
           });
         }
 
-        if (!doc) {
-          res.status(404).json({
-            message: `Cannot find order with the id: ${orderId}`
-          });
-        }
+        // if (!doc) {
+        //   return res.status(404).json({
+        //     message: `Cannot find order with the id: ${orderId}.`
+        //   });
+        // }
 
         Cart.findById(doc.cart._id)
           .populate({
@@ -181,7 +181,7 @@ router.get(
           })
           .exec((err, data) => {
             if (err) {
-              res.status(400).json({
+              return res.status(400).json({
                 error: 'Your request could not be processed. Please try again.'
               });
             }

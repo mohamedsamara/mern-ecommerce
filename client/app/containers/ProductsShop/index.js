@@ -10,26 +10,26 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import ProductList from '../../components/ProductList';
+import NotFound from '../../components/NotFound';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 class ProductsShop extends React.PureComponent {
   componentWillMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchProducts('category', slug);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params.slug !== prevProps.match.params.slug) {
-      const slug = this.props.match.params.slug;
-      this.props.fetchProducts('category', slug);
-    }
+    this.props.fetchProducts(slug);
   }
 
   render() {
-    const { products } = this.props;
+    const { products, isLoading } = this.props;
 
     return (
       <div className='products-shop'>
-        <ProductList products={products} />
+        {isLoading && <LoadingIndicator />}
+        {products.length > 0 ? (
+          <ProductList products={products} />
+        ) : (
+          <NotFound message='no products found.' />
+        )}
       </div>
     );
   }
@@ -37,7 +37,8 @@ class ProductsShop extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products
+    products: state.product.products,
+    isLoading: state.product.isLoading
   };
 };
 

@@ -37,7 +37,7 @@ router.post('/add', (req, res) => {
 
   merchant.save(async (err, data) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
@@ -56,7 +56,7 @@ router.post('/add', (req, res) => {
 router.get('/list', (req, res) => {
   Merchant.find({}, (err, data) => {
     if (err) {
-      res.status(400).json({
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }

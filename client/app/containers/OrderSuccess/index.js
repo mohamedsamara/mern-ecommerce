@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import OrderDetails from '../../components/OrderDetails';
+import NotFound from '../../components/NotFound';
 
 class OrderSuccess extends React.PureComponent {
   componentDidMount() {
@@ -31,21 +31,26 @@ class OrderSuccess extends React.PureComponent {
 
     return (
       <div className='order-success'>
-        <div className='order-message'>
-          <h2>Thank you for your order.</h2>
-          <p>
-            Order #<span className='order-label'>{order._id}</span> is complete.
-          </p>
-          <p>A confirmation email will be sent to you shortly.</p>
-          <div className='order-success-actions'>
-            <Link to='/dashboard/orders' className='btn-link'>
-              Manage Orders
-            </Link>
-            <Link to='/shop' className='btn-link shopping-btn'>
-              Continue Shopping
-            </Link>
+        {order._id ? (
+          <div className='order-message'>
+            <h2>Thank you for your order.</h2>
+            <p>
+              Order #<span className='order-label'>{order._id}</span> is
+              complete.
+            </p>
+            <p>A confirmation email will be sent to you shortly.</p>
+            <div className='order-success-actions'>
+              <Link to='/dashboard/orders' className='btn-link'>
+                Manage Orders
+              </Link>
+              <Link to='/shop' className='btn-link shopping-btn'>
+                Continue Shopping
+              </Link>
+            </div>
           </div>
-        </div>
+        ) : (
+          <NotFound message='No order exist!' />
+        )}
       </div>
     );
   }

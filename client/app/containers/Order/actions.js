@@ -105,34 +105,34 @@ export const placeOrder = () => {
   };
 };
 
-const calculateOrdersTotal = orders => {
-  orders.map(order => {
-    order.total = 0;
-    order.products.map(item => {
-      order.total += item.quantity * item.product.price;
-    });
-  });
+// const calculateOrdersTotal = orders => {
+//   orders.map(order => {
+//     order.total = 0;
+//     order.products.map(item => {
+//       order.total += item.quantity * item.product.price;
+//     });
+//   });
 
-  return orders;
-};
+//   return orders;
+// };
 
-const calculateOrderTotal = order => {
-  // order.total = 0;
+// const calculateOrderTotal = order => {
+//   // order.total = 0;
 
-  order.products.map(item => {
-    item.total = 0;
-    // order.total += item.quantity * item.product.price;
-    item.total += item.quantity * item.product.price;
-  });
+//   order.products.map(item => {
+//     item.total = 0;
+//     // order.total += item.quantity * item.product.price;
+//     item.total += item.quantity * item.product.price;
+//   });
 
-  return order;
-};
+//   return order;
+// };
 
-const calculateOrderItemsTotal = order => {
-  order.products.map(item => {
-    item.total = 0;
-    item.total += item.quantity * item.product.price;
-  });
+// const calculateOrderItemsTotal = order => {
+//   order.products.map(item => {
+//     item.total = 0;
+//     item.total += item.quantity * item.product.price;
+//   });
 
-  return order;
-};
+//   return order;
+// };

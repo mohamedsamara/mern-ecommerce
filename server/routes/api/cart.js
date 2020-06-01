@@ -18,7 +18,7 @@ router.post(
 
     cart.save((err, data) => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -40,7 +40,7 @@ router.post(
 
     Cart.updateOne(query, { products }).exec(err => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -57,7 +57,7 @@ router.delete(
   (req, res) => {
     Cart.deleteOne({ _id: req.params.cartId }, err => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -77,7 +77,7 @@ router.post(
 
     Cart.updateOne(query, { $push: { products: product } }).exec(err => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
@@ -97,7 +97,7 @@ router.delete(
 
     Cart.updateOne(query, { $pull: { products: product } }).exec(err => {
       if (err) {
-        res.status(400).json({
+        return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
