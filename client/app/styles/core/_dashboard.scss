@@ -18,12 +18,14 @@
     border-color: $dark-border-color;
   }
 
-  .menu-panel.collapse {
-    border-bottom: $border-default;
-    border-color: $dark-border-color;
+  .menu-panel {
+    &.collapse {
+      border-bottom: $border-default;
+      border-color: $dark-border-color;
 
-    &:hover {
-      background-color: $theme-gray;
+      &:hover {
+        background-color: $theme-gray;
+      }
     }
   }
 
@@ -40,10 +42,18 @@
 
   .menu-panel {
     display: none;
-
+    width: 100%;
     @include media-breakpoint-down(md) {
       display: block;
       cursor: pointer;
+    }
+
+    &:hover {
+      background-color: transparent;
+    }
+
+    .btn-text {
+      font-size: $font-size-heading-medium !important;
     }
   }
 

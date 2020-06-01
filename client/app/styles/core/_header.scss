@@ -4,12 +4,6 @@
   padding: 10px 0px;
   background-color: $black;
 
-  @include media-breakpoint-down(sm) {
-    .info-col {
-      padding: 0;
-    }
-  }
-
   .fa,
   span {
     color: $white;
@@ -79,13 +73,16 @@
     }
 
     .cart-icon {
-      margin-right: 20px;
       @include media-breakpoint-down(sm) {
         display: none;
       }
 
+      // .cart-badge {
+      //   top: -12px;
+      // }
+
       .bag-icon {
-        vertical-align: baseline;
+        vertical-align: text-bottom;
       }
     }
   }
@@ -102,6 +99,9 @@
 
   .navbar-nav {
     flex-direction: row;
+    @include media-breakpoint-up(md) {
+      margin-left: 20px;
+    }
 
     .nav-link {
       padding-top: 0;
@@ -195,9 +195,8 @@
     }
 
     .bars-icon {
-      display: block;
-      margin-right: 15px;
-      height: 100%;
+      // display: block;
+      // height: 100%;
 
       @include media-breakpoint-down(sm) {
         display: none;
@@ -207,7 +206,10 @@
     h1 {
       margin: 0px;
       // color: $red !important;
-      color: $font-custom-color;
+      color: $font-custom-color !important;
+      @include media-breakpoint-up(md) {
+        margin-left: 15px;
+      }
     }
   }
 

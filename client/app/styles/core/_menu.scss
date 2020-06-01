@@ -1,5 +1,6 @@
 // mini menu
 .mini-menu {
+  visibility: hidden;
   position: fixed;
   top: 0;
   left: -100%;
@@ -20,6 +21,7 @@
 // show hidden menu popup
 .mini-menu-open {
   .mini-menu {
+    visibility: visible;
     left: 0;
     @include transition($layout-transition-higher-speed);
   }
@@ -47,17 +49,6 @@
 
     h1 {
       margin: 0;
-    }
-
-    .close-icon {
-      cursor: pointer;
-      position: relative;
-      background-size: 16px;
-      @include icon($close, 25px, 25px);
-
-      &:hover {
-        opacity: 0.5;
-      }
     }
   }
 

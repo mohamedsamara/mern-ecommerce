@@ -9,17 +9,22 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Collapse, Navbar } from 'reactstrap';
 
+import Button from '../Button';
+
 const AccountMenu = props => {
   const { isMenuOpen, accountLinks, toggleMenu } = props;
 
   return (
     <div className='panel-sidebar'>
-      <h3
-        className={isMenuOpen ? 'menu-panel' : 'menu-panel collapse'}
+      <Button
+        text='Show Menu Panel'
+        className={`btn-no-styles ${
+          isMenuOpen ? 'menu-panel' : 'menu-panel collapse'
+        }`}
+        ariaExpanded={isMenuOpen ? 'true' : 'false'}
+        // ariaLabel={isMenuOpen ? 'menu panel expanded' : 'menu panel collapse'}
         onClick={toggleMenu}
-      >
-        Show Menu Panel
-      </h3>
+      />
       <h3 className='panel-title'>Account</h3>
       <Navbar color='light' light expand='lg'>
         <Collapse isOpen={isMenuOpen} navbar>

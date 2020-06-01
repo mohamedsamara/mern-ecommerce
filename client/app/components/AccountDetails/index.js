@@ -21,6 +21,11 @@ const AccountDetails = props => {
     subscribeToNewsletter
   } = props;
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    updateProfile();
+  };
+
   return (
     <div className='account-details'>
       <div className='info'>
@@ -48,36 +53,38 @@ const AccountDetails = props => {
           )}
         </div>
       </div>
-      <Row>
-        <Col xs='12' md='12'>
-          <Input
-            type={'text'}
-            label={'First Name'}
-            name={'firstName'}
-            placeholder={'Please Enter Your First Name'}
-            value={profileData.firstName}
-            onInputChange={(name, value) => {
-              accountChange(name, value);
-            }}
-          />
-        </Col>
-        <Col xs='12' md='12'>
-          <Input
-            type={'text'}
-            label={'Last Name'}
-            name={'lastName'}
-            placeholder={'Please Enter Your Last Name'}
-            value={profileData.lastName}
-            onInputChange={(name, value) => {
-              accountChange(name, value);
-            }}
-          />
-        </Col>
-      </Row>
-      <hr />
-      <div className='profile-actions'>
-        <Button text='Save changes' onClick={() => updateProfile()} />
-      </div>
+      <form onSubmit={handleSubmit}>
+        <Row>
+          <Col xs='12' md='12'>
+            <Input
+              type={'text'}
+              label={'First Name'}
+              name={'firstName'}
+              placeholder={'Please Enter Your First Name'}
+              value={profileData.firstName}
+              onInputChange={(name, value) => {
+                accountChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12'>
+            <Input
+              type={'text'}
+              label={'Last Name'}
+              name={'lastName'}
+              placeholder={'Please Enter Your Last Name'}
+              value={profileData.lastName}
+              onInputChange={(name, value) => {
+                accountChange(name, value);
+              }}
+            />
+          </Col>
+        </Row>
+        <hr />
+        <div className='profile-actions'>
+          <Button type='submit' text='Save changes' />
+        </div>
+      </form>
     </div>
   );
 };

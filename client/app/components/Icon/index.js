@@ -9,6 +9,7 @@ import React from 'react';
 const BagIcon = () => {
   return (
     <svg
+      aria-hidden='true'
       className='bag-icon'
       version='1.1'
       xmlns='http://www.w3.org/2000/svg'
@@ -22,4 +23,12 @@ const BagIcon = () => {
   );
 };
 
-export { BagIcon };
+const BarsIcon = () => {
+  return <span className='bars-icon fa fa-bars' aria-hidden='true' />;
+};
+
+const CloseIcon = () => {
+  return <span className='close-icon' aria-hidden='true' />;
+};
+
+export { BagIcon, BarsIcon, CloseIcon };

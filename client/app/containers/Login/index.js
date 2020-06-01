@@ -32,6 +32,11 @@ class Login extends React.PureComponent {
       this.props.history.push('/register');
     };
 
+    const handleSubmit = event => {
+      event.preventDefault();
+      login();
+    };
+
     return (
       <div className='login-form'>
         {isLoading && (
@@ -42,52 +47,54 @@ class Login extends React.PureComponent {
         )}
         <h1>Login</h1>
         <hr />
-        <Row>
-          <Col xs='12' md='6' className='col-no-padding'>
-            <Col xs='12' md='12'>
-              <Input
-                type={'text'}
-                label={'Email Address'}
-                name={'email'}
-                placeholder={'Please Enter Your Email'}
-                value={loginFormData.email}
-                onInputChange={(name, value) => {
-                  loginChange(name, value);
-                }}
-              />
+        <form onSubmit={handleSubmit}>
+          <Row>
+            <Col xs='12' md='6' className='col-no-padding'>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'text'}
+                  label={'Email Address'}
+                  name={'email'}
+                  placeholder={'Please Enter Your Email'}
+                  value={loginFormData.email}
+                  onInputChange={(name, value) => {
+                    loginChange(name, value);
+                  }}
+                />
+              </Col>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'password'}
+                  label={'Password'}
+                  name={'password'}
+                  placeholder={'Please Enter Your Password'}
+                  value={loginFormData.password}
+                  onInputChange={(name, value) => {
+                    loginChange(name, value);
+                  }}
+                />
+              </Col>
             </Col>
-            <Col xs='12' md='12'>
-              <Input
-                type={'password'}
-                label={'Password'}
-                name={'password'}
-                placeholder={'Please Enter Your Password'}
-                value={loginFormData.password}
-                onInputChange={(name, value) => {
-                  loginChange(name, value);
-                }}
-              />
+            <Col xs='12' md='6' className='d-none d-md-block'>
+              <SignupProvider />
             </Col>
-          </Col>
-          <Col xs='12' md='6' className='d-none d-md-block'>
-            <SignupProvider />
-          </Col>
-        </Row>
-        <hr />
-        <div className='auth-actions'>
-          <Button text='Login' onClick={() => login()} />
-          <Button
-            text='Create an account'
-            className='btn-no-shape'
-            onClick={registerLink}
-          />
-          <Link
-            className='redirect-link forgot-password-link'
-            to={'/forgot-password'}
-          >
-            Forgot Password?
-          </Link>
-        </div>
+          </Row>
+          <hr />
+          <div className='auth-actions'>
+            <Button type='submit' text='Login' />
+            <Button
+              text='Create an account'
+              className='btn-no-shape'
+              onClick={registerLink}
+            />
+            <Link
+              className='redirect-link forgot-password-link'
+              to={'/forgot-password'}
+            >
+              Forgot Password?
+            </Link>
+          </div>
+        </form>
       </div>
     );
   }

@@ -9,6 +9,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
 
+import Button from '../Button';
+
 const CartList = props => {
   const { cartItems, handleRemoveFromCart } = props;
 
@@ -25,8 +27,10 @@ const CartList = props => {
                   </Link>
                 </Col>
                 <Col xs='3' className='text-right'>
-                  <i
-                    className='icon-trash'
+                  <Button
+                    className='btn-no-styles'
+                    ariaLabel={`remove ${item.name} from cart`}
+                    icon={<i className='icon-trash' aria-hidden='true' />}
                     onClick={() => handleRemoveFromCart(item)}
                   />
                 </Col>

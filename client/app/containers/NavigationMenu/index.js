@@ -10,7 +10,10 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import { NavLink } from 'react-router-dom';
-import { Container, Row, Col } from 'reactstrap';
+import { Container } from 'reactstrap';
+
+import Button from '../../components/Button';
+import { CloseIcon } from '../../components/Icon';
 
 class NavigationMenu extends React.PureComponent {
   componentDidMount() {
@@ -25,22 +28,31 @@ class NavigationMenu extends React.PureComponent {
         <Container>
           <div className='menu-header'>
             <h1>MERN Store</h1>
-            {isMenuOpen && <span className='close-icon' onClick={toggleMenu} />}
+            {isMenuOpen && (
+              <Button
+                className='btn-no-styles'
+                ariaLabel='close the menu'
+                icon={<CloseIcon />}
+                onClick={toggleMenu}
+              />
+            )}
           </div>
           <div className='menu-body'>
-            <ul className='menu-list'>
-              {categories.map((link, index) => (
-                <li key={index} className='menu-item'>
-                  <NavLink
-                    to={'/shop/category/' + link.slug}
-                    activeClassName='active-link'
-                    exact
-                  >
-                    {link.name}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
+            <nav role='navigation'>
+              <ul className='menu-list'>
+                {categories.map((link, index) => (
+                  <li key={index} className='menu-item'>
+                    <NavLink
+                      to={'/shop/category/' + link.slug}
+                      activeClassName='active-link'
+                      exact
+                    >
+                      {link.name}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </Container>
       </div>

@@ -14,38 +14,45 @@ import Button from '../../components/Button';
 const ResetPasswordForm = props => {
   const { resetFormData, resetPasswordChange, resetPassowrd } = props;
 
+  const handleSubmit = event => {
+    event.preventDefault();
+    resetPassowrd();
+  };
+
   return (
     <div className='reset-password-form'>
-      <Row>
-        <Col xs='12' md='6'>
-          <Input
-            type={'password'}
-            label={'Password'}
-            name={'password'}
-            placeholder={'Password'}
-            value={resetFormData.password}
-            onInputChange={(name, value) => {
-              resetPasswordChange(name, value);
-            }}
-          />
-        </Col>
-        <Col xs='12' md='6'>
-          <Input
-            type={'password'}
-            label={'Confirm Password'}
-            name={'confirmPassword'}
-            placeholder={'Confirm Password'}
-            value={resetFormData.confirmPassword}
-            onInputChange={(name, value) => {
-              resetPasswordChange(name, value);
-            }}
-          />
-        </Col>
-      </Row>
-      <hr />
-      <div className='reset-actions'>
-        <Button text='Reset Password' onClick={() => resetPassowrd()} />
-      </div>
+      <form onSubmit={handleSubmit}>
+        <Row>
+          <Col xs='12' md='6'>
+            <Input
+              type={'password'}
+              label={'Password'}
+              name={'password'}
+              placeholder={'Password'}
+              value={resetFormData.password}
+              onInputChange={(name, value) => {
+                resetPasswordChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='6'>
+            <Input
+              type={'password'}
+              label={'Confirm Password'}
+              name={'confirmPassword'}
+              placeholder={'Confirm Password'}
+              value={resetFormData.confirmPassword}
+              onInputChange={(name, value) => {
+                resetPasswordChange(name, value);
+              }}
+            />
+          </Col>
+        </Row>
+        <hr />
+        <div className='reset-actions'>
+          <Button type='submit' text='Reset Password' />
+        </div>
+      </form>
     </div>
   );
 };

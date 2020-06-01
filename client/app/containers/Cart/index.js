@@ -12,7 +12,8 @@ import actions from '../../actions';
 import CartList from '../../components/CartList';
 import CartSummary from '../../components/CartSummary';
 import Checkout from '../../components/Checkout';
-import { BagIcon } from '../../components/Icon';
+import { BagIcon, CloseIcon } from '../../components/Icon';
+import Button from '../../components/Button';
 
 class Cart extends React.PureComponent {
   render() {
@@ -31,7 +32,14 @@ class Cart extends React.PureComponent {
     return (
       <div className='cart'>
         <div className='cart-header'>
-          {isCartOpen && <span className='close-icon' onClick={toggleCart} />}
+          {isCartOpen && (
+            <Button
+              className='btn-no-styles'
+              ariaLabel='close the cart'
+              icon={<CloseIcon />}
+              onClick={toggleCart}
+            />
+          )}
         </div>
         {cartItems.length > 0 ? (
           <div className='cart-body'>

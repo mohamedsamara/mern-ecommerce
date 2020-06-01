@@ -31,6 +31,11 @@ class Signup extends React.PureComponent {
 
     if (authenticated) return <Redirect to='/dashboard' />;
 
+    const handleSubmit = event => {
+      event.preventDefault();
+      signUp();
+    };
+
     return (
       <div className='signup-form'>
         {isLoading && (
@@ -41,74 +46,76 @@ class Signup extends React.PureComponent {
         )}
         <h1>Sign Up</h1>
         <hr />
-        <Row>
-          <Col xs='12' md='6' className='col-no-padding'>
-            <Col xs='12' md='12'>
-              <Input
-                type={'text'}
-                label={'Email Address'}
-                name={'email'}
-                placeholder={'Please Enter Your Email'}
-                value={signupFormData.email}
-                onInputChange={(name, value) => {
-                  signupChange(name, value);
-                }}
-              />
+        <form onSubmit={handleSubmit}>
+          <Row>
+            <Col xs='12' md='6' className='col-no-padding'>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'text'}
+                  label={'Email Address'}
+                  name={'email'}
+                  placeholder={'Please Enter Your Email'}
+                  value={signupFormData.email}
+                  onInputChange={(name, value) => {
+                    signupChange(name, value);
+                  }}
+                />
+              </Col>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'text'}
+                  label={'First Name'}
+                  name={'firstName'}
+                  placeholder={'Please Enter Your First Name'}
+                  value={signupFormData.firstName}
+                  onInputChange={(name, value) => {
+                    signupChange(name, value);
+                  }}
+                />
+              </Col>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'text'}
+                  label={'Last Name'}
+                  name={'lastName'}
+                  placeholder={'Please Enter Your Last Name'}
+                  value={signupFormData.lastName}
+                  onInputChange={(name, value) => {
+                    signupChange(name, value);
+                  }}
+                />
+              </Col>
+              <Col xs='12' md='12'>
+                <Input
+                  type={'password'}
+                  label={'Password'}
+                  name={'password'}
+                  placeholder={'Please Enter Your Password'}
+                  value={signupFormData.password}
+                  onInputChange={(name, value) => {
+                    signupChange(name, value);
+                  }}
+                />
+              </Col>
             </Col>
-            <Col xs='12' md='12'>
-              <Input
-                type={'text'}
-                label={'First Name'}
-                name={'firstName'}
-                placeholder={'Please Enter Your First Name'}
-                value={signupFormData.firstName}
-                onInputChange={(name, value) => {
-                  signupChange(name, value);
-                }}
-              />
+            <Col xs='12' md='6' className='d-none d-md-block'>
+              <SignupProvider />
             </Col>
-            <Col xs='12' md='12'>
-              <Input
-                type={'text'}
-                label={'Last Name'}
-                name={'lastName'}
-                placeholder={'Please Enter Your Last Name'}
-                value={signupFormData.lastName}
-                onInputChange={(name, value) => {
-                  signupChange(name, value);
-                }}
-              />
-            </Col>
-            <Col xs='12' md='12'>
-              <Input
-                type={'password'}
-                label={'Password'}
-                name={'password'}
-                placeholder={'Please Enter Your Password'}
-                value={signupFormData.password}
-                onInputChange={(name, value) => {
-                  signupChange(name, value);
-                }}
-              />
-            </Col>
-          </Col>
-          <Col xs='12' md='6' className='d-none d-md-block'>
-            <SignupProvider />
-          </Col>
-        </Row>
-        <hr />
-        <Checkbox
-          id={'subscribe'}
-          label={'Subscribe to newsletter'}
-          checked={isSubscribed}
-          toggleCheckboxChange={subscribeChange}
-        />
-        <div className='auth-actions'>
-          <Button text='Sign Up' onClick={() => signUp()} />
-          <Link className='redirect-link' to={'/login'}>
-            Back to login
-          </Link>
-        </div>
+          </Row>
+          <hr />
+          <Checkbox
+            id={'subscribe'}
+            label={'Subscribe to newsletter'}
+            checked={isSubscribed}
+            toggleCheckboxChange={subscribeChange}
+          />
+          <div className='auth-actions'>
+            <Button type='submit' text='Sign Up' />
+            <Link className='redirect-link' to={'/login'}>
+              Back to login
+            </Link>
+          </div>
+        </form>
       </div>
     );
   }

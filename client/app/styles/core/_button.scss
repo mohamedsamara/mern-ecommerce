@@ -39,6 +39,12 @@ button[type='reset'] {
     font-weight: $font-weight-bold-two;
     font-size: $font-size-small;
   }
+
+  .btn-icon {
+    display: inline-flex;
+    vertical-align: bottom;
+    line-height: 100%;
+  }
 }
 
 // custom button
@@ -46,7 +52,6 @@ button[type='reset'] {
   &.custom-btn {
     padding: 10px;
     position: relative;
-    z-index: 1;
     min-width: 150px;
     border: $border-default;
     border-radius: $border-radius-default;
@@ -125,6 +130,9 @@ button[type='reset'] {
   }
 }
 
+// .btn-no-styles {
+// }
+
 // bag button
 .input-btn {
   &.bag-btn {
@@ -132,25 +140,10 @@ button[type='reset'] {
     border: $border-default;
     border-radius: $border-radius-default;
     padding: 10px;
-    // position: relative;
-    // z-index: 1;
     min-width: 170px;
     @include media-breakpoint-down(sm) {
       width: 100% !important;
     }
-
-    // &:after {
-    //   content: '';
-    //   position: absolute;
-    //   z-index: -1;
-    //   width: 0%;
-    //   height: 100%;
-    //   top: 0;
-    //   left: 0;
-    //   background-color: $theme-light-white;
-    //   -webkit-transition: $layout-transition-speed;
-    //   transition: $layout-transition-speed;
-    // }
 
     &:hover {
       background-color: transparent;
@@ -162,10 +155,6 @@ button[type='reset'] {
         -webkit-transition: $layout-transition-speed;
         transition: $layout-transition-speed;
       }
-
-      // &:after {
-      //   width: 100%;
-      // }
     }
 
     .btn-icon {
@@ -184,4 +173,15 @@ button[type='reset'] {
   stroke: $black;
   -webkit-transition: $layout-transition-speed;
   transition: $layout-transition-speed;
+}
+
+.close-icon {
+  cursor: pointer;
+  position: relative;
+  background-size: 16px;
+  @include icon($close, 25px, 25px);
+
+  &:hover {
+    opacity: 0.5;
+  }
 }

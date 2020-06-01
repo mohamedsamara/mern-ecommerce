@@ -7,8 +7,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import actions from '../../actions';
-
 import { Link, withRouter } from 'react-router-dom';
 
 import {
@@ -25,9 +23,13 @@ import {
   DropdownItem
 } from 'reactstrap';
 
-import Cart from '../Cart';
+import actions from '../../actions';
+
+import Button from '../../components/Button';
+import CartIcon from '../../components/CartIcon';
+import { BarsIcon } from '../../components/Icon';
 import Menu from '../NavigationMenu';
-import { BagIcon } from '../../components/Icon';
+import Cart from '../Cart';
 
 class Navigation extends React.PureComponent {
   render() {
@@ -48,15 +50,15 @@ class Navigation extends React.PureComponent {
         <div className='header-info'>
           <Container>
             <Row>
-              <Col md='4' className='text-center info-col d-none d-md-block'>
+              <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-truck' />
                 <span>Free Shipping</span>
               </Col>
-              <Col md='4' className='text-center info-col d-none d-md-block'>
+              <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-credit-card' />
                 <span>Payment Methods</span>
               </Col>
-              <Col md='4' className='text-center info-col d-none d-md-block'>
+              <Col md='4' className='text-center d-none d-md-block'>
                 <i className='fa fa-phone' />
                 <span>Call us 951-999-9999</span>
               </Col>
@@ -76,7 +78,12 @@ class Navigation extends React.PureComponent {
               lg={{ size: 3, order: 1 }}
             >
               <div className='brand'>
-                <span className='bars-icon fa fa-bars' onClick={toggleMenu} />
+                <Button
+                  ariaLabel='open the menu'
+                  icon={<BarsIcon />}
+                  className='btn-no-styles'
+                  onClick={toggleMenu}
+                />
                 <Link to='/'>
                   <h1>MERN Store</h1>
                 </Link>
@@ -90,13 +97,13 @@ class Navigation extends React.PureComponent {
               className='desktop-hidden'
             >
               <div className='header-links'>
-                <span className='bars-icon fa fa-bars' onClick={toggleMenu} />
-                <span className='cart-icon' onClick={toggleCart}>
-                  <BagIcon />
-                  {cartItems.length > 0 && (
-                    <span className='cart-badge'>{cartItems.length}</span>
-                  )}
-                </span>
+                <Button
+                  ariaLabel='open the menu'
+                  icon={<BarsIcon />}
+                  className='btn-no-styles'
+                  onClick={toggleMenu}
+                />
+                <CartIcon cartItems={cartItems} onClick={toggleCart} />
               </div>
             </Col>
             <Col
@@ -106,12 +113,7 @@ class Navigation extends React.PureComponent {
               lg={{ size: 9, order: 3 }}
             >
               <Navbar color='light' light expand='md'>
-                <span className='cart-icon' onClick={toggleCart}>
-                  <BagIcon />
-                  {cartItems.length > 0 && (
-                    <span className='cart-badge'>{cartItems.length}</span>
-                  )}
-                </span>
+                <CartIcon cartItems={cartItems} onClick={toggleCart} />
                 <Nav navbar>
                   <NavItem>
                     <NavLink tag={Link} to='/brands'>
@@ -164,7 +166,10 @@ class Navigation extends React.PureComponent {
         </Container>
 
         {/* hidden cart drawer */}
-        <div className={isCartOpen ? 'mini-cart-open' : 'hidden-mini-cart'}>
+        <div
+          className={isCartOpen ? 'mini-cart-open' : 'hidden-mini-cart'}
+          aria-hidden={`${isCartOpen ? false : true}`}
+        >
           <div className='mini-cart'>
             <Cart />
           </div>
@@ -175,7 +180,10 @@ class Navigation extends React.PureComponent {
         </div>
 
         {/* hidden menu drawer */}
-        <div className={isMenuOpen ? 'mini-menu-open' : 'hidden-mini-menu'}>
+        <div
+          className={isMenuOpen ? 'mini-menu-open' : 'hidden-mini-menu'}
+          aria-hidden={`${isMenuOpen ? false : true}`}
+        >
           <div className='mini-menu'>
             <Menu />
           </div>

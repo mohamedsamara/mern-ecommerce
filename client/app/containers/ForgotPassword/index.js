@@ -26,31 +26,38 @@ class ForgotPassword extends React.PureComponent {
 
     if (authenticated) return <Redirect to='/dashboard' />;
 
+    const handleSubmit = event => {
+      event.preventDefault();
+      forgotPassowrd();
+    };
+
     return (
       <div className='forgot-password-form'>
         <h1>Forgot Password</h1>
         <hr />
-        <Row>
-          <Col xs='12' md='6'>
-            <Input
-              type={'text'}
-              label={'Email Address'}
-              name={'email'}
-              placeholder={'Please Enter Your Email'}
-              value={forgotFormData.email}
-              onInputChange={(name, value) => {
-                forgotPasswordChange(name, value);
-              }}
-            />
-          </Col>
-        </Row>
-        <hr />
-        <div className='auth-actions'>
-          <Button text='Send Email' onClick={() => forgotPassowrd()} />
-          <Link className='redirect-link' to={'/login'}>
-            Back to login
-          </Link>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <Row>
+            <Col xs='12' md='6'>
+              <Input
+                type={'text'}
+                label={'Email Address'}
+                name={'email'}
+                placeholder={'Please Enter Your Email'}
+                value={forgotFormData.email}
+                onInputChange={(name, value) => {
+                  forgotPasswordChange(name, value);
+                }}
+              />
+            </Col>
+          </Row>
+          <hr />
+          <div className='auth-actions'>
+            <Button type='submit' text='Send Email' />
+            <Link className='redirect-link' to={'/login'}>
+              Back to login
+            </Link>
+          </div>
+        </form>
       </div>
     );
   }

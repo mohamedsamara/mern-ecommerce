@@ -1,5 +1,6 @@
 // mini cart
 .mini-cart {
+  visibility: hidden;
   position: fixed;
   top: 0;
   right: -100%;
@@ -20,6 +21,7 @@
 // show hidden cart popup
 .mini-cart-open {
   .mini-cart {
+    visibility: visible;
     right: 0;
     @include transition($layout-transition-higher-speed);
   }
@@ -75,20 +77,11 @@
   .cart-header {
     border-bottom: $border-default;
     text-align: right;
-    height: 40px;
-
-    .close-icon {
-      cursor: pointer;
-      position: relative;
-      display: inline-block;
-      padding: 20px;
-      background-size: 16px;
-      @include icon($close, 25px, 25px);
-
-      &:hover {
-        opacity: 0.5;
-      }
-    }
+    padding-right: 5px;
+    @include flex();
+    align-items: center;
+    justify-content: flex-end;
+    height: 50px;
   }
 
   .empty-cart {
