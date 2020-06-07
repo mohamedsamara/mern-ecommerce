@@ -68,7 +68,7 @@ class Sell extends React.PureComponent {
             <Col xs='12' md='6'>
               <Input
                 type={'text'}
-                label={'brand'}
+                label={'Brand'}
                 name={'brand'}
                 placeholder={'Your Business Brand'}
                 value={sellFormData.brand}

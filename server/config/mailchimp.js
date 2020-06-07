@@ -17,16 +17,3 @@ exports.subscribeToNewsletter = email => {
       });
   });
 };
-
-exports.unsubscribeFromNewsletter = subscriberId => {
-  return new Promise((resolve, reject) => {
-    mailchimp
-      .delete(`lists/${process.env.MAILCHIMP_LIST_KEY}/members/${subscriberId}`)
-      .then(result => {
-        resolve(result);
-      })
-      .catch(error => {
-        reject(error);
-      });
-  });
-};

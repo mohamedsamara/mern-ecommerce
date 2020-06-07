@@ -5,18 +5,15 @@
 }
 
 .subscribe {
-  position: relative;
-
-  .input-btn {
-    position: absolute;
-    right: 0;
-    height: 100%;
-    border-width: 1px !important;
-
+  .inline-btn-box {
     @include media-breakpoint-between(md, lg) {
-      position: relative;
-      width: 100%;
-      margin-top: 10px;
+      flex-direction: column;
+
+      .custom-btn {
+        margin-top: 10px;
+        border-left: $border-default;
+        border-radius: $border-radius-default;
+      }
     }
   }
 }

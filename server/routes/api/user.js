@@ -2,14 +2,12 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-const mailchimp = require('../../services/mailchimp');
-
 // Bring in Models & Helpers
 const User = require('../../models/user');
 
 // fetch all users api
 router.get(
-  '/users',
+  '/list',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     User.find({}, (err, data) => {
@@ -71,87 +69,6 @@ router.put(
         res.status(200).json({
           success: true,
           message: 'Your profile is successfully updated!',
-          user
-        });
-      }
-    );
-  }
-);
-
-router.post(
-  '/unsubscribe/:subscriberId',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
-    const subscriberId = req.params.subscriberId;
-    const query = { _id: req.user._id };
-
-    await mailchimp.unsubscribeFromNewsletter(subscriberId);
-
-    const update = {
-      $set: { 'profile.subscriberId': '' }
-    };
-
-    User.findOneAndUpdate(
-      query,
-      update,
-      {
-        new: true
-      },
-      (err, user) => {
-        if (err) {
-          return res.status(400).json({
-            error: 'Your request could not be processed. Please try again.'
-          });
-        }
-
-        res.status(200).json({
-          success: true,
-          message: 'You have successfully unsubscribed from the newsletter',
-          user
-        });
-      }
-    );
-  }
-);
-
-router.post(
-  '/subscribe',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
-    const email = req.user.email;
-    const query = { _id: req.user._id };
-
-    console.log('req.user', req.user);
-
-    let subscriberId = '';
-    const result = await mailchimp.subscribeToNewsletter(email);
-
-    if (result.status === 'subscribed') {
-      subscriberId = result.id;
-    } else {
-      return res.status(400).json({ error: result.title });
-    }
-
-    const update = {
-      $set: { 'profile.subscriberId': subscriberId }
-    };
-
-    User.findOneAndUpdate(
-      query,
-      update,
-      {
-        new: true
-      },
-      (err, user) => {
-        if (err) {
-          return res.status(400).json({
-            error: 'Your request could not be processed. Please try again.'
-          });
-        }
-
-        res.status(200).json({
-          success: true,
-          message: 'You have successfully subscribed to the newsletter',
           user
         });
       }

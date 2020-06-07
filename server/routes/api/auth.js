@@ -88,19 +88,19 @@ router.post('/register', (req, res) => {
         .json({ error: 'That email address is already in use.' });
     }
 
-    let subscriberId = '';
+    let subscribed = false;
     if (isSubscribed) {
       const result = await mailchimp.subscribeToNewsletter(email);
 
       if (result.status === 'subscribed') {
-        subscriberId = result.id;
+        subscribed = true;
       }
     }
 
     const user = new User({
       email,
       password,
-      profile: { firstName, lastName, isSubscribed, subscriberId }
+      profile: { firstName, lastName }
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -127,13 +127,13 @@ router.post('/register', (req, res) => {
           jwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
             res.status(200).json({
               success: true,
+              subscribed,
               token: `Bearer ${token}`,
               user: {
                 id: user.id,
                 profile: {
                   firstName: user.profile.firstName,
-                  lastName: user.profile.lastName,
-                  isSubscribed: user.profile.isSubscribed
+                  lastName: user.profile.lastName
                 },
                 email: user.email,
                 role: user.role

@@ -1,6 +1,6 @@
 // start input text styles
-input,
 input[type='text'],
+input[type='number'],
 input[type='password'] {
   width: 100%;
   padding: 8px 10px;
@@ -22,7 +22,6 @@ input[type='password'] {
     cursor: not-allowed;
   }
 }
-
 // end input text styles
 
 .input-box,
@@ -33,6 +32,18 @@ input[type='password'] {
     margin-bottom: 5px;
     color: $theme-blue;
     font-size: $font-size-large;
+  }
+}
+
+.inline-btn-box {
+  @include flex();
+  flex-direction: row;
+
+  .input-btn {
+    &.custom-btn {
+      border-radius: 0;
+      border-left: none;
+    }
   }
 }
 

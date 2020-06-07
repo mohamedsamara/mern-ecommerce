@@ -33,25 +33,6 @@ const AccountDetails = props => {
           <p>{user.email}</p>
           {user.role !== 'ROLE_MEMBER' && <span className='admin'>Admin</span>}
         </div>
-        <div className='actions'>
-          {user.profile &&
-          user.profile.hasOwnProperty('subscriberId') &&
-          user.profile.subscriberId.length > 0 ? (
-            <Button
-              text='Unsubscribe From Newsletter'
-              className='btn-no-shape'
-              onClick={() =>
-                unsubscribeFromNewsletter(user.profile.subscriberId)
-              }
-            />
-          ) : (
-            <Button
-              text='Subscribe To Newsletter'
-              className='btn-no-shape'
-              onClick={() => subscribeToNewsletter(user.email)}
-            />
-          )}
-        </div>
       </div>
       <form onSubmit={handleSubmit}>
         <Row>

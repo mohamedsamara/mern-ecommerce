@@ -19,7 +19,6 @@ import SignupPage from '../Signup';
 import HomePage from '../Homepage';
 import Dashboard from '../Dashboard';
 import Navigation from '../Navigation';
-import Footer from '../Footer';
 import Authentication from '../Authentication';
 import Notification from '../Notification';
 import ForgotPassword from '../ForgotPassword';
@@ -32,13 +31,14 @@ import Contact from '../Contact';
 import OrderSuccess from '../OrderSuccess';
 import OrderPage from '../OrderPage';
 
+import Footer from '../../components/Footer';
 import Page404 from '../../components/Page404';
 
 class Application extends React.PureComponent {
   componentDidMount() {
     const user = cookie.load('user');
 
-    if (user != undefined) {
+    if (user !== undefined) {
       this.props.fetchProfile(user);
     }
 

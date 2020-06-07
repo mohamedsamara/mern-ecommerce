@@ -166,12 +166,6 @@ router.get(
           });
         }
 
-        // if (!doc) {
-        //   return res.status(404).json({
-        //     message: `Cannot find order with the id: ${orderId}.`
-        //   });
-        // }
-
         Cart.findById(doc.cart._id)
           .populate({
             path: 'products.product',

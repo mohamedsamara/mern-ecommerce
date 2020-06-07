@@ -13,7 +13,7 @@ import handleError from '../../utils/error';
 export const fetchUsers = () => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`/api/user/users`);
+      const response = await axios.get(`/api/user/list`);
 
       dispatch({ type: FETCH_USERS, payload: response.data.users });
     } catch (error) {

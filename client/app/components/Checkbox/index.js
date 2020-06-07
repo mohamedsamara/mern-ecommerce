@@ -12,6 +12,7 @@ const Checkbox = props => {
   return (
     <div className='checkbox'>
       <input
+        className={'input-checkbox'}
         type={'checkbox'}
         id={id}
         value={label}

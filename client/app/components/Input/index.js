@@ -60,10 +60,13 @@ const Input = props => {
       </div>
     );
   } else {
+    const styles = `input-box${inlineElement ? ` inline-btn-box` : ''}`;
+
     return (
-      <div className='input-box'>
+      <div className={styles}>
         {label && <label>{label}</label>}
         <input
+          className={'input-text'}
           autoComplete='on'
           type={type}
           onChange={e => {
@@ -73,12 +76,15 @@ const Input = props => {
           name={name}
           value={value}
           placeholder={placeholder}
-          className={'input-text'}
         />
         {inlineElement}
       </div>
     );
   }
+};
+
+Input.defaultProps = {
+  inlineElement: null
 };
 
 export default Input;

@@ -16,8 +16,6 @@ const handleError = (err, title, dispatch) => {
     autoDismiss: 1
   };
 
-  console.log('err', err.response.status === 400);
-
   if (err.response.status === 400) {
     unsuccessfulOptions.message = err.response.data.error;
   } else if (err.response.status === 404) {

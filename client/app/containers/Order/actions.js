@@ -27,8 +27,6 @@ export const fetchOrders = () => {
       const response = await axios.get(`/api/order/list/${userId}`);
 
       if (response.data.orders) {
-        // const orders = calculateOrdersTotal(response.data.orders);
-
         dispatch({
           type: FETCH_ORDERS,
           payload: response.data.orders
