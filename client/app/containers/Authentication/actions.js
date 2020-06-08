@@ -4,7 +4,7 @@
  *
  */
 
-import { SET_AUTH, SET_UN_AUTH } from './constants';
+import { SET_AUTH, CLEAR_AUTH } from './constants';
 
 export const setAuth = () => {
   return {
@@ -12,8 +12,8 @@ export const setAuth = () => {
   };
 };
 
-export const setUnAuth = () => {
+export const clearAuth = () => {
   return {
-    type: SET_UN_AUTH
+    type: CLEAR_AUTH
   };
 };

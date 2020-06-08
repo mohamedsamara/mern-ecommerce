@@ -10,7 +10,7 @@ import axios from 'axios';
 import {
   FETCH_MERCHANTS,
   SELL_FORM_CHANGE,
-  SELL_FORM_CHANGE_RESET
+  SELL_FORM_RESET
 } from './constants';
 
 import handleError from '../../utils/error';
@@ -40,10 +40,9 @@ export const sellWithUs = () => {
 
       dispatch(success(successfulOptions));
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     } finally {
-      dispatch({ type: SELL_FORM_CHANGE_RESET });
+      dispatch({ type: SELL_FORM_RESET });
     }
   };
 };
@@ -58,8 +57,7 @@ export const fetchMerchants = () => {
         payload: response.data.merchants
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };

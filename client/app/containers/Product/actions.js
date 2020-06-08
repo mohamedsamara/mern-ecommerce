@@ -64,8 +64,7 @@ export const fetchProducts = (filter, slug) => {
         payload: response.data.products
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
@@ -84,8 +83,7 @@ export const fetchBrandProducts = slug => {
         payload: response.data.products
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
@@ -104,8 +102,7 @@ export const fetchCategoryProducts = slug => {
         payload: response.data.products
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
@@ -124,8 +121,7 @@ export const fetchProduct = slug => {
         payload: response.data.product
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
@@ -151,8 +147,7 @@ export const fetchProductsSelect = () => {
         payload: formattedProducts
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -176,8 +171,7 @@ export const deleteProduct = (id, index) => {
         });
       }
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -212,8 +206,7 @@ export const addProduct = () => {
         dispatch(toggleAddProduct());
       }
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };

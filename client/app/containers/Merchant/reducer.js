@@ -7,7 +7,7 @@
 import {
   FETCH_MERCHANTS,
   SELL_FORM_CHANGE,
-  SELL_FORM_CHANGE_RESET
+  SELL_FORM_RESET
 } from './constants';
 
 const initialState = {
@@ -60,7 +60,7 @@ const merchantReducer = (state = initialState, action) => {
         ...state,
         sellFormData: { ...state.sellFormData, ...action.payload }
       };
-    case SELL_FORM_CHANGE_RESET:
+    case SELL_FORM_RESET:
       return {
         ...state,
         sellFormData: {

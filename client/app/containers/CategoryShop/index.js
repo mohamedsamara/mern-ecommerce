@@ -24,8 +24,9 @@ class CategoryShop extends React.PureComponent {
 
     return (
       <div className='category-shop'>
-        {isLoading && <LoadingIndicator />}
-        {products.length > 0 ? (
+        {isLoading ? (
+          <LoadingIndicator />
+        ) : products.length > 0 ? (
           <ProductList products={products} />
         ) : (
           <NotFound message='no products found.' />

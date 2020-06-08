@@ -85,8 +85,7 @@ export const calculateCartTotal = () => {
 //         });
 //       }
 //     } catch (error) {
-//       const title = `Please try again!`;
-//       handleError(error, title, dispatch);
+//       handleError(error, dispatch);
 //     }
 //   };
 // };
@@ -105,8 +104,8 @@ export const calculateCartTotal = () => {
 //         );
 //       }
 //     } catch (error) {
-//       const title = `Please try again!`;
-//       handleError(error, title, dispatch);
+
+//       handleError(error, dispatch );
 //     }
 //   };
 // };
@@ -130,20 +129,20 @@ export const handleCart = () => {
   };
 };
 
-export const handleCartStatus = () => {
-  return (dispatch, getState) => {
-    // const token = cookie.load('token');
-    // const cartItems = getState().cart.cartItems;
-    // if (token) {
-    //   Promise.all([dispatch(getCartId())]).then(() => {
-    //     if (cartItems.length > 0) {
-    //       dispatch(addCart(cartItems));
-    //       dispatch(toggleCart());
-    //     }
-    //   });
-    // }
-  };
-};
+// export const handleCartStatus = () => {
+//   return (dispatch, getState) => {
+//     const token = cookie.load('token');
+//     const cartItems = getState().cart.cartItems;
+//     if (token) {
+//       Promise.all([dispatch(getCartId())]).then(() => {
+//         if (cartItems.length > 0) {
+//           dispatch(addCart(cartItems));
+//           dispatch(toggleCart());
+//         }
+//       });
+//     }
+//   };
+// };
 
 export const handleCheckout = () => {
   return (dispatch, getState) => {
@@ -179,8 +178,7 @@ export const addCart = () => {
         products
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -191,8 +189,7 @@ export const addCart = () => {
 //     try {
 //       const response = await axios.delete(`/api/cart/delete/${cartId}`);
 //     } catch (error) {
-//       const title = `Please try again!`;
-//       handleError(error, title, dispatch);
+//       handleError(error, dispatch);
 //     }
 //   };
 // };
@@ -211,8 +208,7 @@ export const getCartId = () => {
         dispatch(setCartId(response.data.cartId));
       }
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };

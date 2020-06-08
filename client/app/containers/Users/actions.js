@@ -17,8 +17,7 @@ export const fetchUsers = () => {
 
       dispatch({ type: FETCH_USERS, payload: response.data.users });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };

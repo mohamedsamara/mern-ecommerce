@@ -48,12 +48,6 @@ class Application extends React.PureComponent {
     document.addEventListener('mousedown', this.handleMouseDown);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.authenticated !== prevProps.authenticated) {
-      this.props.handleCartStatus();
-    }
-  }
-
   handleTabbing(e) {
     if (e.keyCode === 9) {
       document.body.classList.add('user-is-tabbing');

@@ -73,7 +73,7 @@ export const fetchBrandsSelect = () => {
       });
     } catch (error) {
       const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -97,8 +97,7 @@ export const deleteBrand = (id, index) => {
         });
       }
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -126,8 +125,7 @@ export const addBrand = () => {
         dispatch(toggleAddBrand());
       }
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };

@@ -81,10 +81,11 @@ router.post(
 
 // fetch all orders api
 router.get(
-  '/list/:userId',
+  '/list',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const user = req.params.userId;
+    const user = req.user._id;
+
     Order.find({ user })
       .populate({
         path: 'cart'
@@ -154,13 +155,20 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const orderId = req.params.orderId;
+    const user = req.user._id;
 
-    Order.findById(orderId)
+    Order.find({ orderId, user })
       .populate({
         path: 'cart'
       })
       .exec((err, doc) => {
-        if (err || !doc) {
+        if (err) {
+          return res.status(400).json({
+            error: 'Your request could not be processed. Please try again.'
+          });
+        }
+
+        if (!doc || !doc.length > 0) {
           return res.status(404).json({
             message: `Cannot find order with the id: ${orderId}.`
           });

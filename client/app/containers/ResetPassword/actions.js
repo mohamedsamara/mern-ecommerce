@@ -33,7 +33,7 @@ export const resetPassowrd = token => {
       let error = {};
       error.message = `Passwords don't match`;
 
-      return handleError(error, title, dispatch);
+      return handleError(error, dispatch, title);
     }
 
     try {
@@ -52,7 +52,7 @@ export const resetPassowrd = token => {
       dispatch({ type: RESET_PASSWORD_RESET });
     } catch (error) {
       const title = `Please try to reset again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch, title);
     }
   };
 };
@@ -72,7 +72,7 @@ export const resetAccountPassword = () => {
       let error = {};
       error.message = `Passwords don't match`;
 
-      return handleError(error, title, dispatch);
+      return handleError(error, dispatch, title);
     }
 
     try {
@@ -92,7 +92,7 @@ export const resetAccountPassword = () => {
       dispatch({ type: RESET_PASSWORD_RESET });
     } catch (error) {
       const title = `Please try to reset again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch, title);
     }
   };
 };

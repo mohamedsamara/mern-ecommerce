@@ -4,7 +4,7 @@
  *
  */
 
-import { CONTACT_FORM_CHANGE, CONTACT_RESET } from './constants';
+import { CONTACT_FORM_CHANGE, CONTACT_FORM_RESET } from './constants';
 
 const initialState = {
   contactFormData: {
@@ -21,7 +21,7 @@ const contactReducer = (state = initialState, action) => {
         ...state,
         contactFormData: { ...state.contactFormData, ...action.payload }
       };
-    case CONTACT_RESET:
+    case CONTACT_FORM_RESET:
       return {
         ...state,
         contactFormData: {

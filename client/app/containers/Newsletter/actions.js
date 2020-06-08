@@ -33,8 +33,7 @@ export const subscribeToNewsletter = () => {
 
       dispatch(success(successfulOptions));
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     } finally {
       dispatch({ type: NEWSLETTER_RESET });
     }

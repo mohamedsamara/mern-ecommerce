@@ -5,11 +5,16 @@
  */
 
 import { push } from 'connected-react-router';
-import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
-import { FETCH_ORDERS, FETCH_ORDER, TOGGLE_ADD_ORDER } from './constants';
+import {
+  FETCH_ORDERS,
+  FETCH_ORDER,
+  TOGGLE_ADD_ORDER,
+  SET_ORDERS_LOADING,
+  CLEAR_ORDERS
+} from './constants';
 import { clearCart, getCartId, addCart } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
@@ -23,8 +28,11 @@ export const toggleAddOrder = () => {
 export const fetchOrders = () => {
   return async (dispatch, getState) => {
     try {
-      const userId = cookie.load('user');
-      const response = await axios.get(`/api/order/list/${userId}`);
+      dispatch({ type: SET_ORDERS_LOADING, payload: true });
+
+      const response = await axios.get(`/api/order/list`);
+
+      console.log('response', response);
 
       if (response.data.orders) {
         dispatch({
@@ -33,8 +41,10 @@ export const fetchOrders = () => {
         });
       }
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      dispatch(clearOrders());
+      handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_ORDERS_LOADING, payload: false });
     }
   };
 };
@@ -42,17 +52,14 @@ export const fetchOrders = () => {
 export const fetchOrder = id => {
   return async (dispatch, getState) => {
     try {
-      // const userId = cookie.load('user');
       const response = await axios.get(`/api/order/${id}`);
-      // const order = calculateOrderItemsTotal(response.data.order);
 
       dispatch({
         type: FETCH_ORDER,
         payload: response.data.order
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -70,15 +77,10 @@ export const addOrder = () => {
         total
       });
 
-      // dispatch(fetchOrder(response.data.order));
-
       dispatch(push(`/order/success/${response.data.order._id}`));
-
       dispatch(clearCart());
-      // dispatch(getCartId());
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -92,7 +94,6 @@ export const placeOrder = () => {
       Promise.all([dispatch(getCartId())])
         .then(() => {
           dispatch(addCart());
-          // dispatch(toggleCart());
         })
         .then(() => {
           dispatch(addOrder());
@@ -100,6 +101,12 @@ export const placeOrder = () => {
     }
 
     dispatch(toggleCart());
+  };
+};
+
+export const clearOrders = () => {
+  return {
+    type: CLEAR_ORDERS
   };
 };
 

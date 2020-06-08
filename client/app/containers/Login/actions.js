@@ -10,7 +10,7 @@ import cookie from 'react-cookies';
 import { push } from 'connected-react-router';
 
 import { LOGIN_CHANGE, LOGIN_RESET, SET_LOGIN_LOADING } from './constants';
-import { setAuth, setUnAuth } from '../Authentication/actions';
+import { setAuth, clearAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
 import handleError from '../../utils/error';
 import { clearCart } from '../Cart/actions';
@@ -35,8 +35,10 @@ export const login = () => {
     try {
       const response = await axios.post('/api/auth/login', user);
 
+      const firstName = response.data.user.profile.firstName;
+
       const successfulOptions = {
-        title: `Hey ${response.data.user.profile.firstName}, Welcome Back!`,
+        title: `Hey${firstName ? ` ${firstName}` : ''}, Welcome Back!`,
         position: 'tr',
         autoDismiss: 1
       };
@@ -53,8 +55,7 @@ export const login = () => {
       dispatch({ type: LOGIN_RESET });
     } catch (error) {
       const title = `Please try to login again!`;
-
-      handleError(error, title, dispatch);
+      handleError(error, dispatch, title);
     } finally {
       dispatch({ type: SET_LOGIN_LOADING, payload: false });
     }
@@ -63,15 +64,13 @@ export const login = () => {
 
 export const signOut = () => {
   return (dispatch, getState) => {
-    dispatch(setUnAuth());
-
     const successfulOptions = {
       title: `You have signed out!`,
       position: 'tr',
       autoDismiss: 1
     };
 
-    dispatch(success(successfulOptions));
+    dispatch(clearAuth());
     dispatch(clearAccount());
     dispatch(push('/login'));
 
@@ -79,6 +78,7 @@ export const signOut = () => {
     cookie.remove('user', { path: '/' });
     cookie.remove('role', { path: '/' });
 
+    dispatch(success(successfulOptions));
     // dispatch(clearCart());
   };
 };

@@ -66,8 +66,7 @@ export const signUp = () => {
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
       const title = `Please try to signup again!`;
-
-      handleError(error, title, dispatch);
+      handleError(error, dispatch, title);
     } finally {
       dispatch({ type: SET_SIGNUP_LOADING, payload: false });
     }

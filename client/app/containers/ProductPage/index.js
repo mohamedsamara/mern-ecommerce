@@ -49,9 +49,9 @@ class ProductPage extends React.PureComponent {
 
     return (
       <div className='product-shop'>
-        {isLoading && <LoadingIndicator />}
-
-        {Object.keys(product).length > 0 ? (
+        {isLoading ? (
+          <LoadingIndicator />
+        ) : Object.keys(product).length > 0 ? (
           <Row>
             <Col xs='12' md='5' lg='5' className='mb-3'>
               <div className='item-image'>

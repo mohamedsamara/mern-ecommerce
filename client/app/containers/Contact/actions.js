@@ -7,7 +7,7 @@
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 
-import { CONTACT_FORM_CHANGE, CONTACT_RESET } from './constants';
+import { CONTACT_FORM_CHANGE, CONTACT_FORM_RESET } from './constants';
 import handleError from '../../utils/error';
 
 export const contactFormChange = (name, value) => {
@@ -35,10 +35,9 @@ export const contactUs = () => {
 
       dispatch(success(successfulOptions));
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     } finally {
-      dispatch({ type: CONTACT_RESET });
+      dispatch({ type: CONTACT_FORM_RESET });
     }
   };
 };

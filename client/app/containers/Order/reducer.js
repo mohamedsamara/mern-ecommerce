@@ -4,7 +4,13 @@
  *
  */
 
-import { FETCH_ORDERS, FETCH_ORDER, TOGGLE_ADD_ORDER } from './constants';
+import {
+  FETCH_ORDERS,
+  FETCH_ORDER,
+  TOGGLE_ADD_ORDER,
+  SET_ORDERS_LOADING,
+  CLEAR_ORDERS
+} from './constants';
 
 const initialState = {
   orders: [],
@@ -14,6 +20,7 @@ const initialState = {
     totalTax: 0,
     total: 0
   },
+  isLoading: false,
   isOrderAddOpen: false
 };
 
@@ -29,11 +36,22 @@ const orderReducer = (state = initialState, action) => {
         ...state,
         order: action.payload
       };
+    case SET_ORDERS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
+      };
     case TOGGLE_ADD_ORDER:
       return {
         ...state,
         isOrderAddOpen: !state.isOrderAddOpen
       };
+    case CLEAR_ORDERS:
+      return {
+        ...state,
+        orders: []
+      };
+
     default:
       return state;
   }

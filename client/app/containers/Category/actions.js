@@ -54,8 +54,7 @@ export const fetchCategories = () => {
         payload: response.data.categories
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -79,8 +78,7 @@ export const deleteCategory = (id, index) => {
         });
       }
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -117,8 +115,7 @@ export const addCategory = () => {
         dispatch(toggleAddCategory());
       }
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
