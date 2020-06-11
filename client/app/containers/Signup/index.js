@@ -22,7 +22,9 @@ class Signup extends React.PureComponent {
     const {
       authenticated,
       signupFormData,
+      formErrors,
       isLoading,
+      isSubmitting,
       isSubscribed,
       signupChange,
       signUp,
@@ -41,12 +43,13 @@ class Signup extends React.PureComponent {
         {isLoading && <LoadingIndicator />}
         <h1>Sign Up</h1>
         <hr />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <Row>
             <Col xs='12' md='6' className='col-no-padding'>
               <Col xs='12' md='12'>
                 <Input
                   type={'text'}
+                  error={formErrors['email']}
                   label={'Email Address'}
                   name={'email'}
                   placeholder={'Please Enter Your Email'}
@@ -59,6 +62,7 @@ class Signup extends React.PureComponent {
               <Col xs='12' md='12'>
                 <Input
                   type={'text'}
+                  error={formErrors['firstName']}
                   label={'First Name'}
                   name={'firstName'}
                   placeholder={'Please Enter Your First Name'}
@@ -71,6 +75,7 @@ class Signup extends React.PureComponent {
               <Col xs='12' md='12'>
                 <Input
                   type={'text'}
+                  error={formErrors['lastName']}
                   label={'Last Name'}
                   name={'lastName'}
                   placeholder={'Please Enter Your Last Name'}
@@ -84,6 +89,7 @@ class Signup extends React.PureComponent {
                 <Input
                   type={'password'}
                   label={'Password'}
+                  error={formErrors['password']}
                   name={'password'}
                   placeholder={'Please Enter Your Password'}
                   value={signupFormData.password}
@@ -105,7 +111,7 @@ class Signup extends React.PureComponent {
             toggleCheckboxChange={subscribeChange}
           />
           <div className='auth-actions'>
-            <Button type='submit' text='Sign Up' />
+            <Button type='submit' text='Sign Up' disabled={isSubmitting} />
             <Link className='redirect-link' to={'/login'}>
               Back to login
             </Link>
@@ -120,7 +126,9 @@ const mapStateToProps = state => {
   return {
     authenticated: state.authentication.authenticated,
     signupFormData: state.signup.signupFormData,
+    formErrors: state.signup.formErrors,
     isLoading: state.signup.isLoading,
+    isSubmitting: state.signup.isSubmitting,
     isSubscribed: state.signup.isSubscribed
   };
 };

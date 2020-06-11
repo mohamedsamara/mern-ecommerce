@@ -28,7 +28,7 @@ const OrderList = props => {
     <div className='order-list'>
       <Row>
         {orders.map((order, index) => (
-          <Col xs='12' md='12' md='12' lg='6' key={index} className='mb-3'>
+          <Col xs='12' md='12' md='6' lg='6' key={index} className='mb-3'>
             <div className='order-box'>
               <div className='order-first-item'>
                 {renderFirstItem(order.products)}

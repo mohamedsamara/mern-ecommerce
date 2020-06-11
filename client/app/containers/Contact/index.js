@@ -16,7 +16,12 @@ import Button from '../../components/Button';
 
 class Contact extends React.PureComponent {
   render() {
-    const { contactFormData, contactFormChange, contactUs } = this.props;
+    const {
+      contactFormData,
+      contactFormChange,
+      contactUs,
+      formErrors
+    } = this.props;
 
     const handleSubmit = event => {
       event.preventDefault();
@@ -32,6 +37,7 @@ class Contact extends React.PureComponent {
             <Col xs='12' md='6'>
               <Input
                 type={'text'}
+                error={formErrors['name']}
                 label={'Name'}
                 name={'name'}
                 placeholder={'You Full Name'}
@@ -44,6 +50,7 @@ class Contact extends React.PureComponent {
             <Col xs='12' md='6'>
               <Input
                 type={'text'}
+                error={formErrors['email']}
                 label={'Email'}
                 name={'email'}
                 placeholder={'Your Email Address'}
@@ -56,6 +63,7 @@ class Contact extends React.PureComponent {
             <Col xs='12' md='12'>
               <Input
                 type={'textarea'}
+                error={formErrors['message']}
                 label={'Message'}
                 name={'message'}
                 placeholder={'Please Describe Your Message'}
@@ -78,7 +86,8 @@ class Contact extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    contactFormData: state.contact.contactFormData
+    contactFormData: state.contact.contactFormData,
+    formErrors: state.contact.formErrors
   };
 };
 

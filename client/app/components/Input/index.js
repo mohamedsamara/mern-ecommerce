@@ -10,6 +10,7 @@ const Input = props => {
   const {
     type,
     value,
+    error,
     min,
     disabled,
     placeholder,
@@ -23,9 +24,11 @@ const Input = props => {
     onInputChange(e.target.name, e.target.value);
   };
 
-  if (type == 'textarea') {
+  if (type === 'textarea') {
+    const styles = `input-box${error ? ' invalid' : ''}`;
+
     return (
-      <div className='textarea-box'>
+      <div className={styles}>
         {label && <label>{label}</label>}
         <textarea
           type={'textarea'}
@@ -38,11 +41,13 @@ const Input = props => {
           placeholder={placeholder}
           className={'textarea-text'}
         />
+        <span className='invalid-message'>{error && error[0]}</span>
       </div>
     );
-  } else if (type == 'number') {
+  } else if (type === 'number') {
+    const styles = `input-box${error ? ' invalid' : ''}`;
     return (
-      <div className='input-box'>
+      <div className={styles}>
         {label && <label>{label}</label>}
         <input
           autoComplete='on'
@@ -57,27 +62,34 @@ const Input = props => {
           placeholder={placeholder}
           className={'input-number'}
         />
+        <span className='invalid-message'>{error && error[0]}</span>
       </div>
     );
   } else {
-    const styles = `input-box${inlineElement ? ` inline-btn-box` : ''}`;
+    const styles = `input-box${inlineElement ? ` inline-btn-box` : ''} ${
+      error ? 'invalid' : ''
+    }`;
 
     return (
       <div className={styles}>
         {label && <label>{label}</label>}
-        <input
-          className={'input-text'}
-          autoComplete='on'
-          type={type}
-          onChange={e => {
-            _onChange(e);
-          }}
-          disabled={disabled}
-          name={name}
-          value={value}
-          placeholder={placeholder}
-        />
-        {inlineElement}
+        <div className='input-text-block'>
+          <input
+            className={'input-text'}
+            autoComplete='on'
+            type={type}
+            onChange={e => {
+              _onChange(e);
+            }}
+            disabled={disabled}
+            name={name}
+            value={value}
+            placeholder={placeholder}
+          />
+          {inlineElement}
+        </div>
+
+        <span className='invalid-message'>{error && error[0]}</span>
       </div>
     );
   }

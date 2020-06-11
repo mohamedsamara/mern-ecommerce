@@ -25,6 +25,7 @@ class Category extends React.PureComponent {
       categoryChange,
       addCategory,
       categories,
+      formErrors,
       columns,
       isCategoryAddOpen,
       toggleAddCategory,
@@ -44,6 +45,7 @@ class Category extends React.PureComponent {
           {isCategoryAddOpen ? (
             <AddCategory
               categoryFormData={categoryFormData}
+              formErrors={formErrors}
               categoryChange={categoryChange}
               addCategory={addCategory}
               products={products}
@@ -74,6 +76,7 @@ const mapStateToProps = state => {
     categoryFormData: state.category.categoryFormData,
     isCategoryAddOpen: state.category.isCategoryAddOpen,
     categories: state.category.categories,
+    formErrors: state.category.formErrors,
     columns: state.category.columns,
     products: state.product.productsSelect,
     selectedProducts: state.product.selectedProducts

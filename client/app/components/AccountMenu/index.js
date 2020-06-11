@@ -26,7 +26,7 @@ const AccountMenu = props => {
         onClick={toggleMenu}
       />
       <h3 className='panel-title'>Account</h3>
-      <Navbar color='light' light expand='lg'>
+      <Navbar color='light' light expand='xl'>
         <Collapse isOpen={isMenuOpen} navbar>
           <ul className='panel-links'>
             {accountLinks.map((link, index) => (

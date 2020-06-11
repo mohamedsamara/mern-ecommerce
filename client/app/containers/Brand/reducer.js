@@ -7,6 +7,7 @@
 import {
   FETCH_BRANDS,
   BRAND_CHANGE,
+  SET_BRAND_FORM_ERRORS,
   RESET_BRAND,
   TOGGLE_ADD_BRAND,
   ADD_BRAND,
@@ -24,6 +25,7 @@ const initialState = {
     name: '',
     description: ''
   },
+  formErrors: {},
   columns: [
     {
       hidden: true,
@@ -81,6 +83,11 @@ const brandReducer = (state = initialState, action) => {
           ...action.payload
         }
       };
+    case SET_BRAND_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload
+      };
     case RESET_BRAND:
       return {
         ...state,
@@ -88,7 +95,8 @@ const brandReducer = (state = initialState, action) => {
           name: '',
           description: ''
         },
-        selectedBrands: []
+        selectedBrands: [],
+        formErrors: {}
       };
     case TOGGLE_ADD_BRAND:
       return {

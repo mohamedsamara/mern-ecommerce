@@ -10,7 +10,7 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 const SelectOption = props => {
-  const { label, multi, options, value, handleSelectChange } = props;
+  const { error, label, multi, options, value, handleSelectChange } = props;
 
   const _handleSelectChange = value => {
     handleSelectChange(value);
@@ -18,8 +18,10 @@ const SelectOption = props => {
 
   const animatedComponents = makeAnimated();
 
+  const styles = `select-box${error ? ' invalid' : ''}`;
+
   return (
-    <div className='select-box'>
+    <div className={styles}>
       {label && <label>{label}</label>}
       <Select
         className='select-container'
@@ -30,6 +32,7 @@ const SelectOption = props => {
         value={value}
         onChange={_handleSelectChange}
       />
+      <span className='invalid-message'>{error && error[0]}</span>
     </div>
   );
 };

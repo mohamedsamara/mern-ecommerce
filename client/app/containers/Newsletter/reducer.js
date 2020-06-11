@@ -4,10 +4,15 @@
  *
  */
 
-import { NEWSLETTER_CHANGE, NEWSLETTER_RESET } from './constants';
+import {
+  NEWSLETTER_CHANGE,
+  SET_NEWSLETTER_FORM_ERRORS,
+  NEWSLETTER_RESET
+} from './constants';
 
 const initialState = {
-  email: ''
+  email: '',
+  formErrors: {}
 };
 
 const newsletterReducer = (state = initialState, action) => {
@@ -17,10 +22,16 @@ const newsletterReducer = (state = initialState, action) => {
         ...state,
         email: action.payload
       };
+    case SET_NEWSLETTER_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload
+      };
     case NEWSLETTER_RESET:
       return {
         ...state,
-        email: ''
+        email: '',
+        formErrors: {}
       };
     default:
       return state;

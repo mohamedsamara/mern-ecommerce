@@ -8,11 +8,16 @@ import { push } from 'connected-react-router';
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 
-import { RESET_PASSWORD_CHANGE, RESET_PASSWORD_RESET } from './constants';
+import {
+  RESET_PASSWORD_CHANGE,
+  RESET_PASSWORD_RESET,
+  SET_RESET_PASSWORD_FORM_ERRORS
+} from './constants';
 
 import { signOut } from '../Login/actions';
 import { toggleResetForm } from '../Account/actions';
 import handleError from '../../utils/error';
+import { allFieldsValidation } from '../../utils/validation';
 
 export const resetPasswordChange = (name, value) => {
   let formData = {};
@@ -26,17 +31,22 @@ export const resetPasswordChange = (name, value) => {
 
 export const resetPassowrd = token => {
   return async (dispatch, getState) => {
-    const user = getState().resetPassword.resetFormData;
-
-    if (user.password !== user.confirmPassword) {
-      const title = `Please retype your new password!`;
-      let error = {};
-      error.message = `Passwords don't match`;
-
-      return handleError(error, dispatch, title);
-    }
-
     try {
+      const rules = {
+        password: 'required|min:6',
+        confirmPassword: 'required|min:6|same:password'
+      };
+      const user = getState().resetPassword.resetFormData;
+
+      const { isValid, errors } = allFieldsValidation(user, rules);
+
+      if (!isValid) {
+        return dispatch({
+          type: SET_RESET_PASSWORD_FORM_ERRORS,
+          payload: errors
+        });
+      }
+
       const response = await axios.post(`/api/auth/reset/${token}`, user);
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -59,23 +69,23 @@ export const resetPassowrd = token => {
 
 export const resetAccountPassword = () => {
   return async (dispatch, getState) => {
-    const newUser = getState().resetPassword.resetFormData;
-    const profile = getState().account.user;
-
-    const user = {
-      email: profile.email,
-      ...newUser
-    };
-
-    if (newUser.password !== newUser.confirmPassword) {
-      const title = `Please retype your new password!`;
-      let error = {};
-      error.message = `Passwords don't match`;
-
-      return handleError(error, dispatch, title);
-    }
-
     try {
+      const rules = {
+        password: 'required|min:6',
+        confirmPassword: 'required|min:6|same:password'
+      };
+
+      const user = getState().resetPassword.resetFormData;
+
+      const { isValid, errors } = allFieldsValidation(user, rules);
+
+      if (!isValid) {
+        return dispatch({
+          type: SET_RESET_PASSWORD_FORM_ERRORS,
+          payload: errors
+        });
+      }
+
       const response = await axios.post(`/api/auth/reset`, user);
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -83,7 +93,7 @@ export const resetAccountPassword = () => {
         autoDismiss: 1
       };
 
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         dispatch(signOut());
         dispatch(toggleResetForm());
       }

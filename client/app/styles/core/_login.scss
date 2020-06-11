@@ -5,9 +5,16 @@
   align-items: center;
   justify-content: space-between;
 
+  .custom-btn {
+    &:hover {
+      background-color: $theme-black;
+    }
+  }
+
   .forgot-password-link {
-    flex: 1;
+    // flex: 1;
     text-align: right;
+    margin-left: auto;
   }
 
   .btn-no-shape {

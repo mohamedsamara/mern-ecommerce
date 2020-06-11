@@ -9,6 +9,7 @@ import {
   FETCH_PRODUCT,
   PRODUCT_CHANGE,
   PRODUCT_SHOP_CHANGE,
+  SET_PRODUCT_FORM_ERRORS,
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
   ADD_PRODUCT,
@@ -40,6 +41,7 @@ const initialState = {
     { value: 1, label: 'Yes' },
     { value: 0, label: 'No' }
   ],
+  formErrors: {},
   columns: [
     {
       hidden: true,
@@ -127,6 +129,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedProducts: action.payload
+      };
+    case SET_PRODUCT_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload
       };
     case RESET_PRODUCT:
       return {

@@ -45,7 +45,7 @@ router.post(
       }
 
       if (existingProduct) {
-        res.status(400).json({ error: 'This sku is already in use.' });
+        return res.status(400).json({ error: 'This sku is already in use.' });
       }
 
       const product = new Product({

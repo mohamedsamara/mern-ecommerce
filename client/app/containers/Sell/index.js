@@ -16,7 +16,7 @@ import Button from '../../components/Button';
 
 class Sell extends React.PureComponent {
   render() {
-    const { sellFormData, sellFormChange, sellWithUs } = this.props;
+    const { sellFormData, formErrors, sellFormChange, sellWithUs } = this.props;
 
     const handleSubmit = event => {
       event.preventDefault();
@@ -32,6 +32,7 @@ class Sell extends React.PureComponent {
             <Col xs='12' md='6'>
               <Input
                 type={'text'}
+                error={formErrors['name']}
                 label={'Name'}
                 name={'name'}
                 placeholder={'You Full Name'}
@@ -44,6 +45,7 @@ class Sell extends React.PureComponent {
             <Col xs='12' md='6'>
               <Input
                 type={'text'}
+                error={formErrors['email']}
                 label={'Email Address'}
                 name={'email'}
                 placeholder={'Your Email Address'}
@@ -56,6 +58,7 @@ class Sell extends React.PureComponent {
             <Col xs='12' md='6'>
               <Input
                 type={'text'}
+                error={formErrors['phoneNumber']}
                 label={'Phone Number'}
                 name={'phoneNumber'}
                 placeholder={'Your Phone Number'}
@@ -68,6 +71,7 @@ class Sell extends React.PureComponent {
             <Col xs='12' md='6'>
               <Input
                 type={'text'}
+                error={formErrors['brand']}
                 label={'Brand'}
                 name={'brand'}
                 placeholder={'Your Business Brand'}
@@ -80,6 +84,7 @@ class Sell extends React.PureComponent {
             <Col xs='12' md='12'>
               <Input
                 type={'textarea'}
+                error={formErrors['business']}
                 label={'Business'}
                 name={'business'}
                 placeholder={'Please Describe Your Business'}
@@ -102,7 +107,8 @@ class Sell extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    sellFormData: state.merchant.sellFormData
+    sellFormData: state.merchant.sellFormData,
+    formErrors: state.merchant.formErrors
   };
 };
 

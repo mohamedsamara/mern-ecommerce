@@ -22,6 +22,7 @@ class Brand extends React.PureComponent {
     const {
       brandFormData,
       brandChange,
+      formErrors,
       addBrand,
       isBrandAddOpen,
       brands,
@@ -40,6 +41,7 @@ class Brand extends React.PureComponent {
           {isBrandAddOpen ? (
             <AddBrand
               brandFormData={brandFormData}
+              formErrors={formErrors}
               brandChange={brandChange}
               addBrand={addBrand}
             />
@@ -67,6 +69,7 @@ const mapStateToProps = state => {
     brandFormData: state.brand.brandFormData,
     isBrandAddOpen: state.brand.isBrandAddOpen,
     brands: state.brand.brands,
+    formErrors: state.brand.formErrors,
     columns: state.brand.columns
   };
 };

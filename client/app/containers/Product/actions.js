@@ -12,6 +12,7 @@ import {
   FETCH_PRODUCT,
   PRODUCT_CHANGE,
   PRODUCT_SHOP_CHANGE,
+  SET_PRODUCT_FORM_ERRORS,
   RESET_PRODUCT,
   TOGGLE_ADD_PRODUCT,
   ADD_PRODUCT,
@@ -25,6 +26,7 @@ import { RESET_BRAND } from '../Brand/constants';
 
 import handleError from '../../utils/error';
 import { formatSelectOptions } from '../../helpers/select';
+import { allFieldsValidation } from '../../utils/validation';
 
 export const productChange = (name, value) => {
   let formData = {};
@@ -140,7 +142,7 @@ export const fetchProductsSelect = () => {
     try {
       const response = await axios.get(`/api/product/list/select`);
 
-      let formattedProducts = formatSelectOptions(response.data.products);
+      let formattedProducts = formatSelectOptions(response.data.products, true);
 
       dispatch({
         type: FETCH_PRODUCTS_SELECT,
@@ -163,7 +165,7 @@ export const deleteProduct = (id, index) => {
         autoDismiss: 1
       };
 
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: REMOVE_PRODUCT,
@@ -179,6 +181,16 @@ export const deleteProduct = (id, index) => {
 export const addProduct = () => {
   return async (dispatch, getState) => {
     try {
+      const rules = {
+        sku: 'required|min:6',
+        name: 'required|min:6',
+        description: 'required|min:10|max:100',
+        quantity: 'required|numeric',
+        price: 'required|numeric',
+        taxable: 'required',
+        brand: 'required'
+      };
+
       const product = getState().product.productFormData;
       const brand = getState().brand.selectedBrands.value;
 
@@ -186,6 +198,12 @@ export const addProduct = () => {
         ...product,
         brand: brand
       };
+
+      const { isValid, errors } = allFieldsValidation(newProduct, rules);
+
+      if (!isValid) {
+        return dispatch({ type: SET_PRODUCT_FORM_ERRORS, payload: errors });
+      }
 
       const response = await axios.post(`/api/product/add`, newProduct);
 
@@ -195,7 +213,7 @@ export const addProduct = () => {
         autoDismiss: 1
       };
 
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: ADD_PRODUCT,

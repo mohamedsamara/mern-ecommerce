@@ -12,7 +12,7 @@ import Input from '../Input';
 import Button from '../../components/Button';
 
 const AddBrand = props => {
-  const { brandFormData, brandChange, addBrand } = props;
+  const { brandFormData, formErrors, brandChange, addBrand } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -21,11 +21,12 @@ const AddBrand = props => {
 
   return (
     <div className='add-brand'>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12' md='6'>
             <Input
               type={'text'}
+              error={formErrors['name']}
               label={'Name'}
               name={'name'}
               placeholder={'Brand Name'}
@@ -38,6 +39,7 @@ const AddBrand = props => {
           <Col xs='12' md='12'>
             <Input
               type={'textarea'}
+              error={formErrors['description']}
               label={'Description'}
               name={'description'}
               placeholder={'Brand Description'}

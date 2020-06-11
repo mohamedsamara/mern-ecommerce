@@ -15,6 +15,7 @@ import SelectOption from '../SelectOption';
 const AddProduct = props => {
   const {
     productFormData,
+    formErrors,
     productChange,
     addProduct,
     handleBrandSelect,
@@ -31,11 +32,12 @@ const AddProduct = props => {
   return (
     <div className='add-product'>
       <h1 />
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12' md='6'>
             <Input
               type={'text'}
+              error={formErrors['sku']}
               label={'Sku'}
               name={'sku'}
               placeholder={'Product Sku'}
@@ -48,6 +50,7 @@ const AddProduct = props => {
           <Col xs='12' md='6'>
             <Input
               type={'text'}
+              error={formErrors['name']}
               label={'Name'}
               name={'name'}
               placeholder={'Product Name'}
@@ -60,6 +63,7 @@ const AddProduct = props => {
           <Col xs='12' md='12'>
             <Input
               type={'textarea'}
+              error={formErrors['description']}
               label={'Description'}
               name={'description'}
               placeholder={'Product Description'}
@@ -72,6 +76,7 @@ const AddProduct = props => {
           <Col xs='12' md='6'>
             <Input
               type={'number'}
+              error={formErrors['quantity']}
               label={'Quantity'}
               name={'quantity'}
               placeholder={'Product Quantity'}
@@ -84,6 +89,7 @@ const AddProduct = props => {
           <Col xs='12' md='6'>
             <Input
               type={'number'}
+              error={formErrors['price']}
               label={'Price'}
               name={'price'}
               min={1}
@@ -96,6 +102,7 @@ const AddProduct = props => {
           </Col>
           <Col xs='12' md='12'>
             <SelectOption
+              error={formErrors['taxable']}
               label={'Taxable'}
               multi={false}
               name={'taxable'}
@@ -107,6 +114,7 @@ const AddProduct = props => {
           </Col>
           <Col xs='12' md='12'>
             <SelectOption
+              error={formErrors['brand']}
               label={'Select Brand'}
               multi={false}
               options={brands}

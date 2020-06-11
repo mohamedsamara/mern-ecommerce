@@ -10,6 +10,7 @@ import axios from 'axios';
 import {
   FETCH_CATEGORIES,
   CATEGORY_CHANGE,
+  SET_CATEGORY_FORM_ERRORS,
   RESET_CATEGORY,
   TOGGLE_ADD_CATEGORY,
   ADD_CATEGORY,
@@ -20,6 +21,7 @@ import { RESET_PRODUCT } from '../Product/constants';
 
 import handleError from '../../utils/error';
 import { unformatSelectOptions } from '../../helpers/select';
+import { allFieldsValidation } from '../../utils/validation';
 
 export const categoryChange = (name, value) => {
   let formData = {};
@@ -86,6 +88,12 @@ export const deleteCategory = (id, index) => {
 export const addCategory = () => {
   return async (dispatch, getState) => {
     try {
+      const rules = {
+        name: 'required|min:6',
+        description: 'required|min:10|max:100',
+        products: 'required'
+      };
+
       const category = getState().category.categoryFormData;
       const products = getState().product.selectedProducts;
 
@@ -96,6 +104,12 @@ export const addCategory = () => {
         ...category
       };
 
+      const { isValid, errors } = allFieldsValidation(newCategory, rules);
+
+      if (!isValid) {
+        return dispatch({ type: SET_CATEGORY_FORM_ERRORS, payload: errors });
+      }
+
       const response = await axios.post(`/api/category/add`, newCategory);
 
       const successfulOptions = {
@@ -104,7 +118,7 @@ export const addCategory = () => {
         autoDismiss: 1
       };
 
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: ADD_CATEGORY,

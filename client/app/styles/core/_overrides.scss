@@ -8,6 +8,9 @@
 }
 
 .btn {
+  &:hover {
+    color: $white !important;
+  }
   &:focus {
     box-shadow: none;
   }

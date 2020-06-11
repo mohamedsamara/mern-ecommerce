@@ -10,6 +10,7 @@ import axios from 'axios';
 import {
   FETCH_BRANDS,
   BRAND_CHANGE,
+  SET_BRAND_FORM_ERRORS,
   RESET_BRAND,
   TOGGLE_ADD_BRAND,
   ADD_BRAND,
@@ -20,6 +21,7 @@ import {
 
 import handleError from '../../utils/error';
 import { formatSelectOptions } from '../../helpers/select';
+import { allFieldsValidation } from '../../utils/validation';
 
 export const brandChange = (name, value) => {
   let formData = {};
@@ -89,7 +91,7 @@ export const deleteBrand = (id, index) => {
         autoDismiss: 1
       };
 
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: REMOVE_BRAND,
@@ -105,7 +107,18 @@ export const deleteBrand = (id, index) => {
 export const addBrand = () => {
   return async (dispatch, getState) => {
     try {
+      const rules = {
+        name: 'required|min:6',
+        description: 'required|min:10|max:100'
+      };
+
       const brand = getState().brand.brandFormData;
+
+      const { isValid, errors } = allFieldsValidation(brand, rules);
+
+      if (!isValid) {
+        return dispatch({ type: SET_BRAND_FORM_ERRORS, payload: errors });
+      }
 
       const response = await axios.post(`/api/brand/add`, brand);
 
@@ -115,7 +128,7 @@ export const addBrand = () => {
         autoDismiss: 1
       };
 
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         dispatch(success(successfulOptions));
         dispatch({
           type: ADD_BRAND,

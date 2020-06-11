@@ -6,13 +6,15 @@
 
 .subscribe {
   .inline-btn-box {
-    @include media-breakpoint-between(md, lg) {
-      flex-direction: column;
+    .input-text-block {
+      @include media-breakpoint-between(md, lg) {
+        flex-direction: column;
 
-      .custom-btn {
-        margin-top: 10px;
-        border-left: $border-default;
-        border-radius: $border-radius-default;
+        .custom-btn {
+          margin-top: 10px;
+          border-left: $border-default;
+          border-radius: $border-radius-default;
+        }
       }
     }
   }

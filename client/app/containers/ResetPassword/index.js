@@ -19,7 +19,12 @@ class ResetPassword extends React.PureComponent {
   }
 
   render() {
-    const { authenticated, resetFormData, resetPasswordChange } = this.props;
+    const {
+      authenticated,
+      resetFormData,
+      formErrors,
+      resetPasswordChange
+    } = this.props;
 
     if (authenticated) return <Redirect to='/dashboard' />;
 
@@ -29,6 +34,7 @@ class ResetPassword extends React.PureComponent {
         <hr />
         <ResetPasswordForm
           resetFormData={resetFormData}
+          formErrors={formErrors}
           resetPasswordChange={resetPasswordChange}
           resetPassowrd={() => this.handleResetPassowrd()}
         />
@@ -40,7 +46,8 @@ class ResetPassword extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     authenticated: state.authentication.authenticated,
-    resetFormData: state.resetPassword.resetFormData
+    resetFormData: state.resetPassword.resetFormData,
+    formErrors: state.resetPassword.formErrors
   };
 };
 

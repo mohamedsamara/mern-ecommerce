@@ -12,7 +12,12 @@ import Input from '../Input';
 import Button from '../../components/Button';
 
 const ResetPasswordForm = props => {
-  const { resetFormData, resetPasswordChange, resetPassowrd } = props;
+  const {
+    resetFormData,
+    formErrors,
+    resetPasswordChange,
+    resetPassowrd
+  } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -21,11 +26,12 @@ const ResetPasswordForm = props => {
 
   return (
     <div className='reset-password-form'>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12' md='6'>
             <Input
               type={'password'}
+              error={formErrors['password']}
               label={'Password'}
               name={'password'}
               placeholder={'Password'}
@@ -38,6 +44,7 @@ const ResetPasswordForm = props => {
           <Col xs='12' md='6'>
             <Input
               type={'password'}
+              error={formErrors['confirmPassword']}
               label={'Confirm Password'}
               name={'confirmPassword'}
               placeholder={'Confirm Password'}

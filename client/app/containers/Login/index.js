@@ -23,7 +23,9 @@ class Login extends React.PureComponent {
       loginFormData,
       loginChange,
       login,
-      isLoading
+      formErrors,
+      isLoading,
+      isSubmitting
     } = this.props;
 
     if (authenticated) return <Redirect to='/dashboard' />;
@@ -42,12 +44,13 @@ class Login extends React.PureComponent {
         {isLoading && <LoadingIndicator />}
         <h1>Login</h1>
         <hr />
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <Row>
             <Col xs='12' md='6' className='col-no-padding'>
               <Col xs='12' md='12'>
                 <Input
                   type={'text'}
+                  error={formErrors['email']}
                   label={'Email Address'}
                   name={'email'}
                   placeholder={'Please Enter Your Email'}
@@ -60,6 +63,7 @@ class Login extends React.PureComponent {
               <Col xs='12' md='12'>
                 <Input
                   type={'password'}
+                  error={formErrors['password']}
                   label={'Password'}
                   name={'password'}
                   placeholder={'Please Enter Your Password'}
@@ -76,7 +80,7 @@ class Login extends React.PureComponent {
           </Row>
           <hr />
           <div className='auth-actions'>
-            <Button type='submit' text='Login' />
+            <Button type='submit' text='Login' disabled={isSubmitting} />
             <Button
               text='Create an account'
               className='btn-no-shape'
@@ -99,7 +103,9 @@ const mapStateToProps = state => {
   return {
     authenticated: state.authentication.authenticated,
     loginFormData: state.login.loginFormData,
-    isLoading: state.login.isLoading
+    formErrors: state.login.formErrors,
+    isLoading: state.login.isLoading,
+    isSubmitting: state.login.isSubmitting
   };
 };
 

@@ -25,7 +25,7 @@ button[type='reset'] {
 
   &:disabled {
     background-color: $disabled-bg;
-    border: none !important;
+    border-color: transparent !important;
     // cursor: not-allowed;
     pointer-events: none;
   }
@@ -55,37 +55,23 @@ button[type='reset'] {
     min-width: 150px;
     border: $border-default;
     border-radius: $border-radius-default;
-    // border-width: 2px !important;
     background-color: $btn-bg;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
 
+    .btn-text {
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+
     &:hover {
-      color: $white !important;
+      // border-color: $white;
       background-color: $btn-bg-hover;
-      -webkit-transition: $layout-transition-speed;
-      transition: $layout-transition-speed;
-    }
 
-    &:after {
-      content: '';
-      position: absolute;
-      z-index: -1;
-      width: 0%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      background-color: $theme-light-white;
-      -webkit-transition: $layout-transition-speed;
-      transition: $layout-transition-speed;
-    }
-
-    &:hover {
-      background-color: transparent;
-      color: $font-custom-color !important;
-
-      &:after {
-        width: 100%;
+      .btn-text {
+        color: $white !important;
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
       }
     }
   }
@@ -130,9 +116,6 @@ button[type='reset'] {
   }
 }
 
-// .btn-no-styles {
-// }
-
 // bag button
 .input-btn {
   &.bag-btn {
@@ -146,9 +129,6 @@ button[type='reset'] {
     }
 
     &:hover {
-      background-color: transparent;
-      color: $font-custom-color !important;
-
       .bag-icon {
         // fill: $red;
         stroke: $red !important;

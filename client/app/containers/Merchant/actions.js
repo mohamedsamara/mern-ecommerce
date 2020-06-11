@@ -10,10 +10,12 @@ import axios from 'axios';
 import {
   FETCH_MERCHANTS,
   SELL_FORM_CHANGE,
+  SET_SELL_FORM_ERRORS,
   SELL_FORM_RESET
 } from './constants';
 
 import handleError from '../../utils/error';
+import { allFieldsValidation } from '../../utils/validation';
 
 export const sellFormChange = (name, value) => {
   let formData = {};
@@ -27,9 +29,25 @@ export const sellFormChange = (name, value) => {
 
 export const sellWithUs = () => {
   return async (dispatch, getState) => {
-    const merchant = getState().merchant.sellFormData;
-
     try {
+      const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
+      const rules = {
+        name: 'required',
+        email: 'required|email',
+        phoneNumber: ['required', 'numeric', `regex:${phoneno}`],
+        brand: 'required',
+        business: 'required|min:10'
+      };
+
+      const merchant = getState().merchant.sellFormData;
+
+      const { isValid, errors } = allFieldsValidation(merchant, rules);
+
+      if (!isValid) {
+        return dispatch({ type: SET_SELL_FORM_ERRORS, payload: errors });
+      }
+
       const response = await axios.post('/api/merchant/add', merchant);
 
       const successfulOptions = {
@@ -38,11 +56,10 @@ export const sellWithUs = () => {
         autoDismiss: 1
       };
 
+      dispatch({ type: SELL_FORM_RESET });
       dispatch(success(successfulOptions));
     } catch (error) {
       handleError(error, dispatch);
-    } finally {
-      dispatch({ type: SELL_FORM_RESET });
     }
   };
 };

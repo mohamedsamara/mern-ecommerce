@@ -33,6 +33,7 @@ class Account extends React.PureComponent {
       accountChange,
       updateProfile,
       resetFormData,
+      formErrors,
       resetPasswordChange,
       toggleResetForm,
       resetAccountPassword
@@ -58,6 +59,7 @@ class Account extends React.PureComponent {
               <h1>Reset Password</h1>
               <ResetPasswordForm
                 resetFormData={resetFormData}
+                formErrors={formErrors}
                 resetPasswordChange={resetPasswordChange}
                 resetPassowrd={resetAccountPassword}
               />
@@ -78,7 +80,8 @@ const mapStateToProps = state => {
     profileData: state.account.profileData,
     user: state.account.user,
     isFormOpen: state.account.isFormOpen,
-    resetFormData: state.resetPassword.resetFormData
+    resetFormData: state.resetPassword.resetFormData,
+    formErrors: state.resetPassword.formErrors
   };
 };
 

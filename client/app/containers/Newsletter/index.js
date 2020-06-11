@@ -14,7 +14,12 @@ import Button from '../../components/Button';
 
 class Newsletter extends React.PureComponent {
   render() {
-    const { email, newsletterChange, subscribeToNewsletter } = this.props;
+    const {
+      email,
+      newsletterChange,
+      subscribeToNewsletter,
+      formErrors
+    } = this.props;
 
     const SubscribeButton = <Button type='submit' text='Subscribe' />;
 
@@ -30,6 +35,7 @@ class Newsletter extends React.PureComponent {
           <div className='subscribe'>
             <Input
               type={'text'}
+              error={formErrors['email']}
               name={'email'}
               placeholder={'Please Enter Your Email'}
               value={email}
@@ -47,7 +53,8 @@ class Newsletter extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    email: state.newsletter.email
+    email: state.newsletter.email,
+    formErrors: state.newsletter.formErrors
   };
 };
 

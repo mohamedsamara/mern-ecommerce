@@ -7,6 +7,7 @@
 import {
   FETCH_CATEGORIES,
   CATEGORY_CHANGE,
+  SET_CATEGORY_FORM_ERRORS,
   RESET_CATEGORY,
   TOGGLE_ADD_CATEGORY,
   ADD_CATEGORY,
@@ -20,6 +21,7 @@ const initialState = {
     name: '',
     description: ''
   },
+  formErrors: {},
   columns: [
     {
       hidden: true,
@@ -64,13 +66,19 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         categoryFormData: { ...state.categoryFormData, ...action.payload }
       };
+    case SET_CATEGORY_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload
+      };
     case RESET_CATEGORY:
       return {
         ...state,
         categoryFormData: {
           name: '',
           description: ''
-        }
+        },
+        formErrors: {}
       };
     case TOGGLE_ADD_CATEGORY:
       return { ...state, isCategoryAddOpen: !state.isCategoryAddOpen };

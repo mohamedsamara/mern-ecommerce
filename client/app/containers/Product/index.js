@@ -22,6 +22,7 @@ class Product extends React.PureComponent {
   render() {
     const {
       productFormData,
+      formErrors,
       productChange,
       addProduct,
       products,
@@ -45,6 +46,7 @@ class Product extends React.PureComponent {
           {isProductAddOpen ? (
             <AddProduct
               productFormData={productFormData}
+              formErrors={formErrors}
               productChange={productChange}
               addProduct={addProduct}
               handleBrandSelect={handleBrandSelect}
@@ -75,6 +77,7 @@ const mapStateToProps = state => {
   return {
     productFormData: state.product.productFormData,
     products: state.product.products,
+    formErrors: state.product.formErrors,
     columns: state.product.columns,
     isProductAddOpen: state.product.isProductAddOpen,
     taxableSelect: state.product.taxableSelect,

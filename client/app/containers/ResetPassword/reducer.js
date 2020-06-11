@@ -4,13 +4,18 @@
  *
  */
 
-import { RESET_PASSWORD_CHANGE, RESET_PASSWORD_RESET } from './constants';
+import {
+  RESET_PASSWORD_CHANGE,
+  RESET_PASSWORD_RESET,
+  SET_RESET_PASSWORD_FORM_ERRORS
+} from './constants';
 
 const initialState = {
   resetFormData: {
     password: '',
     confirmPassword: ''
-  }
+  },
+  formErrors: {}
 };
 
 const resetPasswordReducer = (state = initialState, action) => {
@@ -20,13 +25,19 @@ const resetPasswordReducer = (state = initialState, action) => {
         ...state,
         resetFormData: { ...state.resetFormData, ...action.payload }
       };
+    case SET_RESET_PASSWORD_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload
+      };
     case RESET_PASSWORD_RESET:
       return {
         ...state,
         resetFormData: {
           password: '',
           confirmPassword: ''
-        }
+        },
+        formErrors: {}
       };
     default:
       return state;

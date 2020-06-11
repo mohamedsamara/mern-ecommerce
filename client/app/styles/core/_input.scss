@@ -12,8 +12,8 @@ input[type='password'] {
   &:focus {
     outline: none;
     color: $font-focus-color;
-    border-color: $dark-border-color !important;
-    box-shadow: $box-shadow;
+    border-color: $theme-light-blue !important;
+    // box-shadow: $box-shadow;
   }
 
   &:disabled {
@@ -25,7 +25,47 @@ input[type='password'] {
 // end input text styles
 
 .input-box,
-.textarea-box {
+.select-box {
+  .invalid-message {
+    visibility: hidden;
+    opacity: 0;
+    color: $validation-color;
+    height: 0;
+    @include flex();
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
+
+  .input-text,
+  textarea {
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
+
+  &.invalid {
+    .input-text,
+    textarea {
+      border-color: $validation-color;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+
+      &:focus {
+        border-color: $validation-color !important;
+      }
+    }
+
+    .invalid-message {
+      visibility: visible;
+      opacity: 1;
+      height: 100%;
+      margin-top: 5px;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+  }
+}
+
+.input-box {
   margin: 10px 0px;
 
   label {
@@ -36,8 +76,10 @@ input[type='password'] {
 }
 
 .inline-btn-box {
-  @include flex();
-  flex-direction: row;
+  .input-text-block {
+    @include flex();
+    flex-direction: row;
+  }
 
   .input-btn {
     &.custom-btn {
@@ -57,8 +99,8 @@ textarea {
   &:focus {
     outline: none;
     color: $font-focus-color;
-    border-color: $dark-border-color !important;
-    box-shadow: $box-shadow;
+    border-color: $theme-light-blue !important;
+    // box-shadow: $box-shadow;
   }
 }
 

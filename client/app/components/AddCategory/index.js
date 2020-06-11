@@ -15,6 +15,7 @@ import SelectOption from '../SelectOption';
 const AddCategory = props => {
   const {
     categoryFormData,
+    formErrors,
     categoryChange,
     addCategory,
     products,
@@ -29,11 +30,12 @@ const AddCategory = props => {
 
   return (
     <div className='add-category'>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12' md='6'>
             <Input
               type={'text'}
+              error={formErrors['name']}
               label={'Name'}
               name={'name'}
               placeholder={'Category Name'}
@@ -46,6 +48,7 @@ const AddCategory = props => {
           <Col xs='12' md='12'>
             <Input
               type={'textarea'}
+              error={formErrors['description']}
               label={'Description'}
               name={'description'}
               placeholder={'Category Description'}
@@ -57,6 +60,7 @@ const AddCategory = props => {
           </Col>
           <Col xs='12' md='12'>
             <SelectOption
+              error={formErrors['products']}
               label={'Select Products'}
               multi={true}
               options={products}

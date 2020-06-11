@@ -20,6 +20,7 @@ class ForgotPassword extends React.PureComponent {
     const {
       authenticated,
       forgotFormData,
+      formErrors,
       forgotPasswordChange,
       forgotPassowrd
     } = this.props;
@@ -40,6 +41,7 @@ class ForgotPassword extends React.PureComponent {
             <Col xs='12' md='6'>
               <Input
                 type={'text'}
+                error={formErrors['email']}
                 label={'Email Address'}
                 name={'email'}
                 placeholder={'Please Enter Your Email'}
@@ -66,7 +68,8 @@ class ForgotPassword extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     authenticated: state.authentication.authenticated,
-    forgotFormData: state.forgotPassword.forgotFormData
+    forgotFormData: state.forgotPassword.forgotFormData,
+    formErrors: state.forgotPassword.formErrors
   };
 };
 

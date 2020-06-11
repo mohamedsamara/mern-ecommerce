@@ -7,6 +7,7 @@
 import {
   FETCH_MERCHANTS,
   SELL_FORM_CHANGE,
+  SET_SELL_FORM_ERRORS,
   SELL_FORM_RESET
 } from './constants';
 
@@ -19,6 +20,7 @@ const initialState = {
     brand: '',
     business: ''
   },
+  formErrors: {},
   columns: [
     {
       hidden: true,
@@ -60,6 +62,11 @@ const merchantReducer = (state = initialState, action) => {
         ...state,
         sellFormData: { ...state.sellFormData, ...action.payload }
       };
+    case SET_SELL_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload
+      };
     case SELL_FORM_RESET:
       return {
         ...state,
@@ -69,7 +76,8 @@ const merchantReducer = (state = initialState, action) => {
           phoneNumber: '',
           brand: '',
           business: ''
-        }
+        },
+        formErrors: {}
       };
     default:
       return state;

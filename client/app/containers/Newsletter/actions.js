@@ -7,8 +7,13 @@
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 
-import { NEWSLETTER_CHANGE, NEWSLETTER_RESET } from './constants';
+import {
+  NEWSLETTER_CHANGE,
+  SET_NEWSLETTER_FORM_ERRORS,
+  NEWSLETTER_RESET
+} from './constants';
 import handleError from '../../utils/error';
+import { allFieldsValidation } from '../../utils/validation';
 
 export const newsletterChange = (name, value) => {
   return {
@@ -19,10 +24,20 @@ export const newsletterChange = (name, value) => {
 
 export const subscribeToNewsletter = () => {
   return async (dispatch, getState) => {
-    const user = {};
-    user.email = getState().newsletter.email;
-
     try {
+      const rules = {
+        email: 'required|email'
+      };
+
+      const user = {};
+      user.email = getState().newsletter.email;
+
+      const { isValid, errors } = allFieldsValidation(user, rules);
+
+      if (!isValid) {
+        return dispatch({ type: SET_NEWSLETTER_FORM_ERRORS, payload: errors });
+      }
+
       const response = await axios.post('/api/newsletter/subscribe', user);
 
       const successfulOptions = {
@@ -31,11 +46,10 @@ export const subscribeToNewsletter = () => {
         autoDismiss: 1
       };
 
+      dispatch({ type: NEWSLETTER_RESET });
       dispatch(success(successfulOptions));
     } catch (error) {
       handleError(error, dispatch);
-    } finally {
-      dispatch({ type: NEWSLETTER_RESET });
     }
   };
 };

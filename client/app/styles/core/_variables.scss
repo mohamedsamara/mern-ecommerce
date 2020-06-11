@@ -56,7 +56,7 @@ $font-weight-bold-three: 700;
 
 // layout variables
 $btn-bg: $white;
-$btn-bg-hover: $red;
+$btn-bg-hover: $theme-light-blue;
 $font-color: #999999;
 $font-light-color: #00000026;
 $font-custom-color: $theme-black;
@@ -75,6 +75,7 @@ $badge: $red;
 $disabled-bg: #d9dbdea1;
 
 $outline-color: #7aacfe;
+$validation-color: #dc3545;
 $box-shadow: 0 0 10px 0 #e6e5ea;
 $custom-box-shadow: 0 3px #e6e5ea;
 $border-radius-default: 3px;
