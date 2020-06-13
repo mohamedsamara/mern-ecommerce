@@ -11,12 +11,12 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const path = require('path');
 
+const keys = require('./config/keys');
 const webpackConfig = require('../webpack.config');
 const routes = require('./routes');
 
+const { database, port } = keys;
 const app = express();
-const PORT = process.env.PORT || 5000;
-const mongoURI = process.env.MONGO_URI;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -26,7 +26,7 @@ app.use(passport.initialize());
 // Connect to MongoDB
 mongoose.set('useCreateIndex', true);
 mongoose
-  .connect(mongoURI, {
+  .connect(database.url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -74,10 +74,10 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(
     `${chalk.green('✓')} ${chalk.blue(
-      `Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`
+      `Listening on port ${port}. Visit http://localhost:${port}/ in your browser.`
     )}`
   );
 });

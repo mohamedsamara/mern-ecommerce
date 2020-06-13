@@ -24,12 +24,12 @@ router.get(
 );
 
 router.get(
-  '/:userId',
+  '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const userId = req.params.userId;
+    const user = req.user._id;
 
-    User.findById(userId, { password: 0 }, (err, user) => {
+    User.findById(user, { password: 0 }, (err, user) => {
       if (err) {
         return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
@@ -44,11 +44,12 @@ router.get(
 );
 
 router.put(
-  '/:userId',
+  '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const profile = req.body.profile;
-    const query = { _id: req.params.userId };
+    const user = req.user._id;
+    const query = { _id: user };
     const update = {
       profile
     };

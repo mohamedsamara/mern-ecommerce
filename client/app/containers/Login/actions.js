@@ -63,8 +63,6 @@ export const login = () => {
       };
 
       cookie.save('token', response.data.token, { path: '/' });
-      cookie.save('user', response.data.user.id, { path: '/' });
-      cookie.save('role', response.data.user.role, { path: '/' });
 
       setToken(response.data.token);
 
@@ -95,8 +93,6 @@ export const signOut = () => {
     dispatch(push('/login'));
 
     cookie.remove('token', { path: '/' });
-    cookie.remove('user', { path: '/' });
-    cookie.remove('role', { path: '/' });
 
     dispatch(success(successfulOptions));
     // dispatch(clearCart());

@@ -36,10 +36,10 @@ import Page404 from '../../components/Page404';
 
 class Application extends React.PureComponent {
   componentDidMount() {
-    const user = cookie.load('user');
+    const token = cookie.load('token');
 
-    if (user !== undefined) {
-      this.props.fetchProfile(user);
+    if (token) {
+      this.props.fetchProfile();
     }
 
     this.props.handleCart();

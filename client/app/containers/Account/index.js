@@ -18,11 +18,7 @@ import SubPage from '../../components/SubPage';
 
 class Account extends React.PureComponent {
   componentDidMount() {
-    const userId = cookie.load('user');
-
-    // if (!this.props.user._id) {
-    this.props.fetchProfile(userId);
-    // }
+    // this.props.fetchProfile();
   }
 
   render() {

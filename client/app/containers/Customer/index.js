@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
@@ -25,14 +25,14 @@ class Customer extends React.PureComponent {
     return (
       <div className='admin'>
         <Row>
-          <Col xs='12' xl='4'>
+          <Col xs='12' md='5' xl='4'>
             <AccountMenu
               isMenuOpen={isMenuOpen}
               accountLinks={customerLinks}
               toggleMenu={toggleCustomerMenu}
             />
           </Col>
-          <Col xs='12' xl='8'>
+          <Col xs='12' md='7' xl='8'>
             <div className='panel-body'>
               <Switch>
                 <Route exact path='/dashboard' component={Account} />

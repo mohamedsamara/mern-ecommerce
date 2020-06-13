@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import actions from '../../actions';
 
 import NotFound from '../../components/NotFound';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 class OrderSuccess extends React.PureComponent {
   componentDidMount() {
@@ -27,11 +28,13 @@ class OrderSuccess extends React.PureComponent {
   }
 
   render() {
-    const { order } = this.props;
+    const { order, isLoading } = this.props;
 
     return (
       <div className='order-success'>
-        {order._id ? (
+        {isLoading ? (
+          <LoadingIndicator />
+        ) : order._id ? (
           <div className='order-message'>
             <h2>Thank you for your order.</h2>
             <p>
@@ -58,7 +61,8 @@ class OrderSuccess extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    order: state.order.order
+    order: state.order.order,
+    isLoading: state.order.isLoading
   };
 };
 

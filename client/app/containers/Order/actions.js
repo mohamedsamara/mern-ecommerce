@@ -32,8 +32,6 @@ export const fetchOrders = () => {
 
       const response = await axios.get(`/api/order/list`);
 
-      console.log('response', response);
-
       if (response.data.orders) {
         dispatch({
           type: FETCH_ORDERS,
@@ -52,6 +50,8 @@ export const fetchOrders = () => {
 export const fetchOrder = id => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: SET_ORDERS_LOADING, payload: true });
+
       const response = await axios.get(`/api/order/${id}`);
 
       dispatch({
@@ -60,6 +60,8 @@ export const fetchOrder = id => {
       });
     } catch (error) {
       handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_ORDERS_LOADING, payload: false });
     }
   };
 };
@@ -68,12 +70,10 @@ export const addOrder = () => {
   return async (dispatch, getState) => {
     try {
       const cartId = cookie.load('cart_id');
-      const userId = cookie.load('user');
       const total = getState().cart.cartTotal;
 
       const response = await axios.post(`/api/order/add`, {
         cartId,
-        userId,
         total
       });
 

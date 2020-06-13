@@ -38,15 +38,14 @@ export const clearAccount = () => {
   };
 };
 
-export const fetchProfile = userId => {
+export const fetchProfile = () => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`/api/user/${userId}`);
+      const response = await axios.get(`/api/user`);
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -54,10 +53,9 @@ export const fetchProfile = userId => {
 export const updateProfile = () => {
   return async (dispatch, getState) => {
     const profile = getState().account.profileData;
-    const userId = cookie.load('user');
 
     try {
-      const response = await axios.put(`/api/user/${userId}`, {
+      const response = await axios.put(`/api/user`, {
         profile
       });
 
@@ -69,12 +67,11 @@ export const updateProfile = () => {
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
 
-      // dispatch(fetchProfile(userId));
+      // dispatch(fetchProfile());
 
       dispatch(success(successfulOptions));
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };

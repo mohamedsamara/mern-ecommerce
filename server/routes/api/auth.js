@@ -9,8 +9,9 @@ const passport = require('passport');
 const User = require('../../models/user');
 const mailchimp = require('../../services/mailchimp');
 const mailgun = require('../../services/mailgun');
+const keys = require('../../config/keys');
 
-const key = process.env.SECRET_OR_KEY;
+const { secret, tokenLife } = keys.jwt;
 
 router.post('/login', (req, res) => {
   const email = req.body.email;
@@ -32,8 +33,11 @@ router.post('/login', (req, res) => {
     }
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        const payload = { id: user.id };
-        jwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
+        const payload = {
+          id: user.id
+        };
+
+        jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
           res.status(200).json({
             success: true,
             token: `Bearer ${token}`,
@@ -50,6 +54,8 @@ router.post('/login', (req, res) => {
           });
         });
       } else {
+        console.log('is ever here at not');
+
         res.status(400).json({
           success: false,
           error: 'Password Incorrect'
@@ -121,11 +127,13 @@ router.post('/register', (req, res) => {
             });
           }
 
-          const payload = { id: user.id };
+          const payload = {
+            id: user.id
+          };
 
           await mailgun.sendEmail(user.email, 'signup', null, user.profile);
 
-          jwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
+          jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
             res.status(200).json({
               success: true,
               subscribed,

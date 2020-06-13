@@ -17,16 +17,16 @@ const AccountMenu = props => {
   return (
     <div className='panel-sidebar'>
       <Button
-        text='Show Menu Panel'
+        text='Expand Dashboard Menu'
         className={`btn-no-styles ${
           isMenuOpen ? 'menu-panel' : 'menu-panel collapse'
         }`}
         ariaExpanded={isMenuOpen ? 'true' : 'false'}
-        // ariaLabel={isMenuOpen ? 'menu panel expanded' : 'menu panel collapse'}
+        // ariaLabel={isMenuOpen ? 'dashboard menu expanded' : 'dashboard menu collapse'}
         onClick={toggleMenu}
       />
       <h3 className='panel-title'>Account</h3>
-      <Navbar color='light' light expand='xl'>
+      <Navbar color='light' light expand='md'>
         <Collapse isOpen={isMenuOpen} navbar>
           <ul className='panel-links'>
             {accountLinks.map((link, index) => (

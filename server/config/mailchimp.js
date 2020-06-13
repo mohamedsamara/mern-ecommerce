@@ -1,11 +1,14 @@
 const Mailchimp = require('mailchimp-api-v3');
 
-const mailchimp = new Mailchimp(process.env.MAILCHIMP_KEY);
+const keys = require('./keys');
+
+const { key, listKey } = keys.mailchimp;
+const mailchimp = new Mailchimp(key);
 
 exports.subscribeToNewsletter = email => {
   return new Promise((resolve, reject) => {
     mailchimp
-      .post(`lists/${process.env.MAILCHIMP_LIST_KEY}/members`, {
+      .post(`lists/${listKey}/members`, {
         email_address: email,
         status: 'subscribed'
       })

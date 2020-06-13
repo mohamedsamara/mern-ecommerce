@@ -11,6 +11,7 @@ import actions from '../../actions';
 
 import OrderDetails from '../../components/OrderDetails';
 import NotFound from '../../components/NotFound';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 class OrderPage extends React.PureComponent {
   componentDidMount() {
@@ -26,11 +27,13 @@ class OrderPage extends React.PureComponent {
   }
 
   render() {
-    const { order } = this.props;
+    const { order, isLoading } = this.props;
 
     return (
       <div className='order-page'>
-        {order._id ? (
+        {isLoading ? (
+          <LoadingIndicator />
+        ) : order._id ? (
           <OrderDetails order={order} />
         ) : (
           <NotFound message='no order exist!' />
@@ -42,7 +45,8 @@ class OrderPage extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    order: state.order.order
+    order: state.order.order,
+    isLoading: state.order.isLoading
   };
 };
 

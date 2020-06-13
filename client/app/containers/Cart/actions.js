@@ -198,12 +198,11 @@ export const addCart = () => {
 export const getCartId = () => {
   return async (dispatch, getState) => {
     try {
-      const userId = cookie.load('user');
       const cartId = cookie.load('cart_id');
 
       // create cart id if there is no one
       if (!cartId) {
-        const response = await axios.post(`/api/cart/create`, { userId });
+        const response = await axios.post(`/api/cart/create`);
 
         dispatch(setCartId(response.data.cartId));
       }

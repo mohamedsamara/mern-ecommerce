@@ -10,7 +10,7 @@ router.post(
   '/create',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const user = req.body.userId;
+    const user = req.user._id;
 
     const cart = new Cart({
       user

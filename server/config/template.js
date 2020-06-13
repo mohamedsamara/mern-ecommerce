@@ -47,7 +47,7 @@ exports.newsletterSubscriptionEmail = () => {
 exports.contactEmail = () => {
   const message = {
     subject: 'Contact Us',
-    text: `We received your message! one of our customer service will call you soon. \n\n`
+    text: `We received your message! Our team will contact you soon. \n\n`
   };
 
   return message;

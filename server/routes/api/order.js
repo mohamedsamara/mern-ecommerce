@@ -13,8 +13,8 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const cart = req.body.cartId;
-    const user = req.body.userId;
     const total = req.body.total;
+    const user = req.user._id;
 
     const order = new Order({
       cart,
@@ -157,7 +157,7 @@ router.get(
     const orderId = req.params.orderId;
     const user = req.user._id;
 
-    Order.find({ orderId, user })
+    Order.findOne({ _id: orderId, user })
       .populate({
         path: 'cart'
       })
@@ -168,7 +168,7 @@ router.get(
           });
         }
 
-        if (!doc || !doc.length > 0) {
+        if (!doc) {
           return res.status(404).json({
             message: `Cannot find order with the id: ${orderId}.`
           });

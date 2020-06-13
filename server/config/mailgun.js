@@ -1,9 +1,13 @@
-const mailgun = require('mailgun-js')({
-  apiKey: process.env.MAILGUN_KEY,
-  domain: process.env.MAILGUN_DOMAIN
-});
+const mailgun = require('mailgun-js');
 
-const sender = process.env.MAILGUN_EMAIL_SENDER;
+const keys = require('./keys');
+
+const key = keys.mailgun.key;
+const { domain, sender } = keys.mailgun;
+mailgun({
+  apiKey: key,
+  domain: domain
+});
 
 exports.sendEmail = (recipient, message) => {
   return new Promise((resolve, reject) => {

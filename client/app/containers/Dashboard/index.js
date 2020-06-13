@@ -6,16 +6,22 @@
 
 import React from 'react';
 
-import cookie from 'react-cookies';
+import { connect } from 'react-redux';
+
+import actions from '../../actions';
 
 import Admin from '../Admin';
 import Customer from '../Customer';
 
 class Dashboard extends React.PureComponent {
-  render() {
-    const role = cookie.load('role');
+  componentDidMount() {
+    this.props.fetchProfile();
+  }
 
-    if (role == 'ROLE_MEMBER') {
+  render() {
+    const { user } = this.props;
+
+    if (user.role === 'ROLE_MEMBER') {
       return <Customer />;
     } else {
       return <Admin />;
@@ -23,4 +29,10 @@ class Dashboard extends React.PureComponent {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+    user: state.account.user
+  };
+};
+
+export default connect(mapStateToProps, actions)(Dashboard);

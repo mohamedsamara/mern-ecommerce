@@ -22,7 +22,12 @@ const UserSchema = new Schema({
     default: 'ROLE_MEMBER'
   },
   resetPasswordToken: { type: String },
-  resetPasswordExpires: { type: Date }
+  resetPasswordExpires: { type: Date },
+  updated: Date,
+  created: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = Mongoose.model('User', UserSchema);

@@ -30,7 +30,7 @@
   }
 
   .panel-title {
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(sm) {
       display: none;
     }
   }
@@ -43,7 +43,7 @@
   .menu-panel {
     display: none;
     width: 100%;
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(sm) {
       display: block;
       cursor: pointer;
     }
