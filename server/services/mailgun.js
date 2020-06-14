@@ -1,12 +1,12 @@
 const mailgun = require('../config/mailgun');
 const template = require('../config/template');
 
-exports.sendEmail = async (email, type, req, data) => {
+exports.sendEmail = async (email, type, host, data) => {
   let result;
   let response;
 
   try {
-    const message = prepareTemplate(type, req, data);
+    const message = prepareTemplate(type, host, data);
 
     response = await mailgun.sendEmail(email, message);
   } catch (error) {}
@@ -18,12 +18,12 @@ exports.sendEmail = async (email, type, req, data) => {
   return result;
 };
 
-const prepareTemplate = (type, req, data) => {
+const prepareTemplate = (type, host, data) => {
   let message;
 
   switch (type) {
     case 'reset':
-      message = template.resetEmail(req, data);
+      message = template.resetEmail(host, data);
       break;
 
     case 'reset-confirmation':
@@ -48,7 +48,7 @@ const prepareTemplate = (type, req, data) => {
       break;
 
     case 'order-confirmation':
-      message = template.orderConfirmationEmail(req, data);
+      message = template.orderConfirmationEmail(data);
       break;
 
     default:

@@ -15,7 +15,7 @@ import {
   SET_ORDERS_LOADING,
   CLEAR_ORDERS
 } from './constants';
-import { clearCart, getCartId, addCart } from '../Cart/actions';
+import { clearCart, getCartId } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
 
@@ -91,13 +91,9 @@ export const placeOrder = () => {
     const cartItems = getState().cart.cartItems;
 
     if (token && cartItems.length > 0) {
-      Promise.all([dispatch(getCartId())])
-        .then(() => {
-          dispatch(addCart());
-        })
-        .then(() => {
-          dispatch(addOrder());
-        });
+      Promise.all([dispatch(getCartId())]).then(() => {
+        dispatch(addOrder());
+      });
     }
 
     dispatch(toggleCart());

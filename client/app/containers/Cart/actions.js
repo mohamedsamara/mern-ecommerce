@@ -129,21 +129,6 @@ export const handleCart = () => {
   };
 };
 
-// export const handleCartStatus = () => {
-//   return (dispatch, getState) => {
-//     const token = cookie.load('token');
-//     const cartItems = getState().cart.cartItems;
-//     if (token) {
-//       Promise.all([dispatch(getCartId())]).then(() => {
-//         if (cartItems.length > 0) {
-//           dispatch(addCart(cartItems));
-//           dispatch(toggleCart());
-//         }
-//       });
-//     }
-//   };
-// };
-
 export const handleCheckout = () => {
   return (dispatch, getState) => {
     const successfulOptions = {
@@ -167,21 +152,21 @@ export const handleShopping = () => {
 };
 
 // add the entire cart items api
-export const addCart = () => {
-  return async (dispatch, getState) => {
-    try {
-      const cartId = cookie.load('cart_id');
-      const cartItems = getState().cart.cartItems;
-      const products = getCartItems(cartItems);
+// export const addCart = () => {
+//   return async (dispatch, getState) => {
+//     try {
+//       const cartId = cookie.load('cart_id');
+//       const cartItems = getState().cart.cartItems;
+//       const products = getCartItems(cartItems);
 
-      const response = await axios.post(`/api/cart/push/${cartId}`, {
-        products
-      });
-    } catch (error) {
-      handleError(error, dispatch);
-    }
-  };
-};
+//       const response = await axios.post(`/api/cart/push/${cartId}`, {
+//         products
+//       });
+//     } catch (error) {
+//       handleError(error, dispatch);
+//     }
+//   };
+// };
 
 // remove the entire cart
 // export const removeCart = cartId => {
@@ -199,10 +184,12 @@ export const getCartId = () => {
   return async (dispatch, getState) => {
     try {
       const cartId = cookie.load('cart_id');
+      const cartItems = getState().cart.cartItems;
+      const products = getCartItems(cartItems);
 
       // create cart id if there is no one
       if (!cartId) {
-        const response = await axios.post(`/api/cart/create`);
+        const response = await axios.post(`/api/cart/add`, { products });
 
         dispatch(setCartId(response.data.cartId));
       }

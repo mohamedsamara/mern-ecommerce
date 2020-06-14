@@ -188,7 +188,12 @@ router.post('/forgot', (req, res) => {
           });
         }
 
-        await mailgun.sendEmail(existingUser.email, 'reset', req, resetToken);
+        await mailgun.sendEmail(
+          existingUser.email,
+          'reset',
+          req.headers.host,
+          resetToken
+        );
 
         res.status(200).json({
           success: true,

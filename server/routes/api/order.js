@@ -64,7 +64,6 @@ router.post(
               await mailgun.sendEmail(
                 order.user.email,
                 'order-confirmation',
-                req,
                 order
               );
 

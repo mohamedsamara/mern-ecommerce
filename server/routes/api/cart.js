@@ -6,14 +6,61 @@ const passport = require('passport');
 const Cart = require('../../models/cart');
 
 // create cart Id
+// router.post(
+//   '/create',
+//   passport.authenticate('jwt', { session: false }),
+//   (req, res) => {
+//     const user = req.user._id;
+
+//     const cart = new Cart({
+//       user
+//     });
+
+//     cart.save((err, data) => {
+//       if (err) {
+//         return res.status(400).json({
+//           error: 'Your request could not be processed. Please try again.'
+//         });
+//       }
+
+//       res.status(200).json({
+//         success: true,
+//         cartId: data.id
+//       });
+//     });
+//   }
+// );
+
+// router.post(
+//   '/push/:cartId',
+//   passport.authenticate('jwt', { session: false }),
+//   (req, res) => {
+//     const products = req.body.products;
+//     const query = { _id: req.params.cartId };
+
+//     Cart.updateOne(query, { products }).exec(err => {
+//       if (err) {
+//         return res.status(400).json({
+//           error: 'Your request could not be processed. Please try again.'
+//         });
+//       }
+//       res.status(200).json({
+//         success: true
+//       });
+//     });
+//   }
+// );
+
 router.post(
-  '/create',
+  '/add',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
     const user = req.user._id;
+    const products = req.body.products;
 
     const cart = new Cart({
-      user
+      user,
+      products
     });
 
     cart.save((err, data) => {
@@ -26,26 +73,6 @@ router.post(
       res.status(200).json({
         success: true,
         cartId: data.id
-      });
-    });
-  }
-);
-
-router.post(
-  '/push/:cartId',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const products = req.body.products;
-    const query = { _id: req.params.cartId };
-
-    Cart.updateOne(query, { products }).exec(err => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
-      res.status(200).json({
-        success: true
       });
     });
   }

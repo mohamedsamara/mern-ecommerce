@@ -1,10 +1,7 @@
-const mailgun = require('mailgun-js');
-
 const keys = require('./keys');
+const { key, domain, sender } = keys.mailgun;
 
-const key = keys.mailgun.key;
-const { domain, sender } = keys.mailgun;
-mailgun({
+const mailgun = require('mailgun-js')({
   apiKey: key,
   domain: domain
 });
@@ -20,8 +17,6 @@ exports.sendEmail = (recipient, message) => {
 
     mailgun.messages().send(data, (error, body) => {
       if (error) {
-        console.log('error', error);
-
         reject(error);
       } else {
         resolve(body);
