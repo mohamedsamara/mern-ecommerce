@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
-const passport = require('passport');
+const auth = require('../../middleware/auth');
 
 // Bring in Models & Helpers
 const User = require('../../models/user');
@@ -260,57 +260,53 @@ router.post('/reset/:token', (req, res) => {
   );
 });
 
-router.post(
-  '/reset',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const email = req.user.email;
-    const password = req.body.password;
+router.post('/reset', auth, (req, res) => {
+  const email = req.user.email;
+  const password = req.body.password;
 
-    if (!password) {
-      return res.status(400).json({ error: 'You must enter a password.' });
+  if (!password) {
+    return res.status(400).json({ error: 'You must enter a password.' });
+  }
+
+  User.findOne({ email }, (err, existingUser) => {
+    if (err || existingUser === null) {
+      return res.status(400).json({
+        error:
+          'Your request could not be processed as entered. Please try again.'
+      });
     }
 
-    User.findOne({ email }, (err, existingUser) => {
-      if (err || existingUser === null) {
-        return res.status(400).json({
-          error:
-            'Your request could not be processed as entered. Please try again.'
-        });
-      }
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(req.body.password, salt, (err, hash) => {
+        if (err) {
+          return res.status(400).json({
+            error:
+              'Your request could not be processed as entered. Please try again.'
+          });
+        }
+        req.body.password = hash;
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password, salt, (err, hash) => {
+        existingUser.password = req.body.password;
+
+        existingUser.save(async err => {
           if (err) {
             return res.status(400).json({
               error:
                 'Your request could not be processed as entered. Please try again.'
             });
           }
-          req.body.password = hash;
 
-          existingUser.password = req.body.password;
+          await mailgun.sendEmail(existingUser.email, 'reset-confirmation');
 
-          existingUser.save(async err => {
-            if (err) {
-              return res.status(400).json({
-                error:
-                  'Your request could not be processed as entered. Please try again.'
-              });
-            }
-
-            await mailgun.sendEmail(existingUser.email, 'reset-confirmation');
-
-            res.status(200).json({
-              success: true,
-              message:
-                'Password changed successfully. Please login with your new password.'
-            });
+          res.status(200).json({
+            success: true,
+            message:
+              'Password changed successfully. Please login with your new password.'
           });
         });
       });
     });
-  }
-);
+  });
+});
 
 module.exports = router;

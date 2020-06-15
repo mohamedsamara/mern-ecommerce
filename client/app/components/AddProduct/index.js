@@ -34,7 +34,7 @@ const AddProduct = props => {
       <h1 />
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12' md='6'>
+          <Col xs='12' lg='6'>
             <Input
               type={'text'}
               error={formErrors['sku']}
@@ -47,7 +47,7 @@ const AddProduct = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='6'>
+          <Col xs='12' lg='6'>
             <Input
               type={'text'}
               error={formErrors['name']}
@@ -73,7 +73,7 @@ const AddProduct = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='6'>
+          <Col xs='12' lg='6'>
             <Input
               type={'number'}
               error={formErrors['quantity']}
@@ -86,7 +86,7 @@ const AddProduct = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='6'>
+          <Col xs='12' lg='6'>
             <Input
               type={'number'}
               error={formErrors['price']}

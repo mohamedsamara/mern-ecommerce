@@ -3,6 +3,8 @@ const router = express.Router();
 
 // Bring in Models & Helpers
 const Merchant = require('../../models/merchant');
+const auth = require('../../middleware/auth');
+const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
 
 router.post('/add', (req, res) => {
@@ -53,7 +55,7 @@ router.post('/add', (req, res) => {
 });
 
 // fetch all merchants api
-router.get('/list', (req, res) => {
+router.get('/list', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
   Merchant.find({}, (err, data) => {
     if (err) {
       return res.status(400).json({

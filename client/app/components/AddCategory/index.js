@@ -32,7 +32,7 @@ const AddCategory = props => {
     <div className='add-category'>
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12' md='6'>
+          <Col xs='12'>
             <Input
               type={'text'}
               error={formErrors['name']}

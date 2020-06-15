@@ -188,7 +188,7 @@
     @include flex();
     flex-wrap: wrap;
     // justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     @include media-breakpoint-down(sm) {
       margin-top: 10px;
       justify-content: center;

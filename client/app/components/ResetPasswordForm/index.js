@@ -28,7 +28,7 @@ const ResetPasswordForm = props => {
     <div className='reset-password-form'>
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12' md='6'>
+          <Col xs='12' lg='6'>
             <Input
               type={'password'}
               error={formErrors['password']}
@@ -41,7 +41,7 @@ const ResetPasswordForm = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='6'>
+          <Col xs='12' lg='6'>
             <Input
               type={'password'}
               error={formErrors['confirmPassword']}

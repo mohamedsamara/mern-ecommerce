@@ -30,6 +30,10 @@ const handleError = (err, dispatch, title = '') => {
       unsuccessfulOptions.message = 'Unauthorized Access! Please login again';
       dispatch(signOut());
       dispatch(error(unsuccessfulOptions));
+    } else if (err.response.status === 403) {
+      unsuccessfulOptions.message =
+        'Forbidden! You are not allowed to access this resource.';
+      dispatch(error(unsuccessfulOptions));
     }
   } else if (err.message) {
     unsuccessfulOptions.message = err.message;
