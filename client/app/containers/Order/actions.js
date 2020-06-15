@@ -72,13 +72,15 @@ export const addOrder = () => {
       const cartId = cookie.load('cart_id');
       const total = getState().cart.cartTotal;
 
-      const response = await axios.post(`/api/order/add`, {
-        cartId,
-        total
-      });
+      if (cartId) {
+        const response = await axios.post(`/api/order/add`, {
+          cartId,
+          total
+        });
 
-      dispatch(push(`/order/success/${response.data.order._id}`));
-      dispatch(clearCart());
+        dispatch(push(`/order/success/${response.data.order._id}`));
+        dispatch(clearCart());
+      }
     } catch (error) {
       handleError(error, dispatch);
     }

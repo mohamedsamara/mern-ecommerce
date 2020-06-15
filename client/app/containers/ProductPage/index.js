@@ -91,7 +91,7 @@ class ProductPage extends React.PureComponent {
                       name={'quantity'}
                       min={1}
                       placeholder={'Product Quantity'}
-                      disabled={!product.quantity > 0}
+                      disabled={product.quantity <= 0}
                       value={productShopData.quantity}
                       onInputChange={(name, value) => {
                         productShopChange(name, value);
@@ -101,7 +101,7 @@ class ProductPage extends React.PureComponent {
                   <div className='item-actions'>
                     {itemsInCart.includes(product._id) ? (
                       <Button
-                        disabled={!product.quantity > 0}
+                        disabled={product.quantity <= 0}
                         text='Remove From Bag'
                         className='bag-btn'
                         icon={<BagIcon />}
@@ -109,7 +109,7 @@ class ProductPage extends React.PureComponent {
                       />
                     ) : (
                       <Button
-                        disabled={!product.quantity > 0}
+                        disabled={product.quantity <= 0}
                         text='Add To Bag'
                         className='bag-btn'
                         icon={<BagIcon />}

@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Bring in Models & Helpers
 const Cart = require('../../models/cart');
+const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 
 // create cart Id
@@ -59,9 +60,38 @@ router.post('/add', auth, (req, res) => {
       });
     }
 
-    res.status(200).json({
-      success: true,
-      cartId: data.id
+    products.map(item => {
+      Product.findById(item.product, (err, product) => {
+        if (err) {
+          return res.status(400).json({
+            error: 'Your request could not be processed. Please try again.'
+          });
+        }
+
+        if (item.quantity > product.quantity) {
+          return res.status(400).json({
+            error: `There is only ${product.quantity} ${product.name} in stock.`
+          });
+        }
+
+        Product.updateOne(
+          { _id: item.product },
+          {
+            $inc: { quantity: -item.quantity }
+          }
+        ).exec(err => {
+          if (err) {
+            return res.status(400).json({
+              error: 'Your request could not be processed. Please try again.'
+            });
+          }
+
+          res.status(200).json({
+            success: true,
+            cartId: data.id
+          });
+        });
+      });
     });
   });
 });

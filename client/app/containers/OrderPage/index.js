@@ -36,7 +36,7 @@ class OrderPage extends React.PureComponent {
         ) : order._id ? (
           <OrderDetails order={order} />
         ) : (
-          <NotFound message='no order exist!' />
+          <NotFound message='no order found.' />
         )}
       </div>
     );

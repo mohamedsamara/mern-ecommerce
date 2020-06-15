@@ -52,7 +52,7 @@ class OrderSuccess extends React.PureComponent {
             </div>
           </div>
         ) : (
-          <NotFound message='No order exist!' />
+          <NotFound message='No order found.' />
         )}
       </div>
     );

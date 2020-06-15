@@ -99,7 +99,7 @@ router.get('/list', auth, (req, res) => {
 
       if (docs.length > 0) {
         const newDataSet = [];
-        docs.forEach(doc => {
+        docs.map(doc => {
           Cart.findById(doc.cart._id)
             .populate({
               path: 'products.product',
@@ -198,7 +198,11 @@ const caculateTaxAmount = order => {
 
   order.totalTax = 0;
 
-  order.products.forEach(item => {
+  console.log(order);
+
+  order.products.map(item => {
+    console.log(item.product);
+
     if (item.product.taxable) {
       const price = Number(item.product.price).toFixed(2);
       const taxAmount = Math.round(price * taxRate * 100) / 100;

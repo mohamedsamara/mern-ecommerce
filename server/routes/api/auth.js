@@ -54,8 +54,6 @@ router.post('/login', (req, res) => {
           });
         });
       } else {
-        console.log('is ever here at not');
-
         res.status(400).json({
           success: false,
           error: 'Password Incorrect'
