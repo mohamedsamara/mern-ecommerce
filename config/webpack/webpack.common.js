@@ -1,8 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const dotenv = require('dotenv');
 
-const NODE_ENV = process.env.NODE_ENV;
+const env = dotenv.config().parsed;
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
+
 const CURRENT_WORKING_DIR = process.cwd();
 
 module.exports = {
@@ -26,11 +33,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(NODE_ENV)
-      }
-    }),
+    new webpack.DefinePlugin(envKeys),
     new CopyWebpackPlugin([
       {
         from: 'client/public'
