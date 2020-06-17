@@ -6,15 +6,26 @@
 
 import React from 'react';
 
-import ComingSoon from '../ComingSoon';
+import { GoogleIcon, FacebookIcon } from '../Icon';
 
 const SignupProvider = props => {
   return (
     <div className='signup-provider'>
-      <ComingSoon>
-        <span>Signup with Google</span>
-        <span>Signup with Facebook</span>
-      </ComingSoon>
+      <a
+        href={`${process.env.BASE_API_URL}/auth/google`}
+        className='google-btn'
+      >
+        <GoogleIcon />
+        <span className='btn-text'>Login with Google</span>
+      </a>
+
+      <a
+        href={`${process.env.BASE_API_URL}/auth/facebook`}
+        className='facebook-btn'
+      >
+        <FacebookIcon />
+        <span className='btn-text'>Login with Facebook</span>
+      </a>
     </div>
   );
 };

@@ -32,18 +32,3 @@
 .fa {
   font-size: $font-size-small !important;
 }
-
-.signup-provider {
-  @include flex();
-  -ms-flex-wrap: wrap;
-  -webkit-flex-wrap: wrap;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  cursor: pointer;
-
-  span {
-    margin: 10px;
-  }
-}

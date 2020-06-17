@@ -198,11 +198,7 @@ const caculateTaxAmount = order => {
 
   order.totalTax = 0;
 
-  console.log(order);
-
   order.products.map(item => {
-    console.log(item.product);
-
     if (item.product.taxable) {
       const price = Number(item.product.price).toFixed(2);
       const taxAmount = Math.round(price * taxRate * 100) / 100;

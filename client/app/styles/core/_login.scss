@@ -40,3 +40,43 @@
     margin-bottom: 20px;
   }
 }
+
+.signup-provider {
+  @include flex();
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+
+.google-btn,
+.facebook-btn {
+  @include flex();
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  margin-top: 15px;
+  width: 300px;
+  max-width: 350px;
+  border: $border-default;
+  border-color: $light-border-color;
+  border-radius: $border-radius-default;
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+    max-width: unset;
+  }
+
+  .btn-text {
+    margin-left: 5px;
+  }
+
+  .google-icon,
+  .facebook-icon {
+    width: 30px;
+    height: 30px;
+  }
+}

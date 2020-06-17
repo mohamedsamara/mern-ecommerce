@@ -6,44 +6,6 @@ const Cart = require('../../models/cart');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 
-// create cart Id
-// router.post('/create', auth, (req, res) => {
-//   const user = req.user._id;
-
-//   const cart = new Cart({
-//     user
-//   });
-
-//   cart.save((err, data) => {
-//     if (err) {
-//       return res.status(400).json({
-//         error: 'Your request could not be processed. Please try again.'
-//       });
-//     }
-
-//     res.status(200).json({
-//       success: true,
-//       cartId: data.id
-//     });
-//   });
-// });
-
-// router.post('/push/:cartId', auth, (req, res) => {
-//   const products = req.body.products;
-//   const query = { _id: req.params.cartId };
-
-//   Cart.updateOne(query, { products }).exec(err => {
-//     if (err) {
-//       return res.status(400).json({
-//         error: 'Your request could not be processed. Please try again.'
-//       });
-//     }
-//     res.status(200).json({
-//       success: true
-//     });
-//   });
-// });
-
 router.post('/add', auth, (req, res) => {
   const user = req.user._id;
   const products = req.body.products;
@@ -60,38 +22,11 @@ router.post('/add', auth, (req, res) => {
       });
     }
 
-    products.map(item => {
-      Product.findById(item.product, (err, product) => {
-        if (err) {
-          return res.status(400).json({
-            error: 'Your request could not be processed. Please try again.'
-          });
-        }
+    decreaseQuantity(products);
 
-        if (item.quantity > product.quantity) {
-          return res.status(400).json({
-            error: `There is only ${product.quantity} ${product.name} in stock.`
-          });
-        }
-
-        Product.updateOne(
-          { _id: item.product },
-          {
-            $inc: { quantity: -item.quantity }
-          }
-        ).exec(err => {
-          if (err) {
-            return res.status(400).json({
-              error: 'Your request could not be processed. Please try again.'
-            });
-          }
-
-          res.status(200).json({
-            success: true,
-            cartId: data.id
-          });
-        });
-      });
+    res.status(200).json({
+      success: true,
+      cartId: data.id
     });
   });
 });
@@ -140,5 +75,18 @@ router.delete('/delete/:cartId/:productId', auth, (req, res) => {
     });
   });
 });
+
+const decreaseQuantity = products => {
+  let bulkOptions = products.map(item => {
+    return {
+      updateOne: {
+        filter: { _id: item.product },
+        update: { $inc: { quantity: -item.quantity } }
+      }
+    };
+  });
+
+  Product.bulkWrite(bulkOptions, {});
+};
 
 module.exports = router;

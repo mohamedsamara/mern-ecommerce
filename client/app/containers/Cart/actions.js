@@ -23,7 +23,6 @@ import { toggleCart } from '../Navigation/actions';
 // Handle Add To Cart
 export const handleAddToCart = product => {
   return (dispatch, getState) => {
-    // const token = cookie.load('token');
     product.quantity = getState().product.productShopData.quantity;
     product.totalPrice = product.quantity * product.price;
 
@@ -32,7 +31,6 @@ export const handleAddToCart = product => {
       payload: product
     });
     dispatch(calculateCartTotal());
-    // dispatch(addToCart(product));
     dispatch(toggleCart());
   };
 };
@@ -45,7 +43,6 @@ export const handleRemoveFromCart = product => {
       payload: product
     });
     dispatch(calculateCartTotal());
-    // dispatch(removeFromCart(product));
     // dispatch(toggleCart());
   };
 };
@@ -66,49 +63,6 @@ export const calculateCartTotal = () => {
     });
   };
 };
-
-// Add to cart API
-// export const addToCart = item => {
-//   return async (dispatch, getState) => {
-//     try {
-//       const token = cookie.load('token');
-//       const cartId = cookie.load('cart_id');
-
-//       const product = {
-//         product: item._id,
-//         quantity: item.quantity
-//       };
-
-//       if (token) {
-//         const response = await axios.post(`/api/cart/add/${cartId}`, {
-//           product
-//         });
-//       }
-//     } catch (error) {
-//       handleError(error, dispatch);
-//     }
-//   };
-// };
-
-// Remove from cart API
-// export const removeFromCart = item => {
-//   return async (dispatch, getState) => {
-//     try {
-//       const token = cookie.load('token');
-//       const cartId = cookie.load('cart_id');
-//       const productId = item._id;
-
-//       if (token) {
-//         const response = await axios.delete(
-//           `/api/cart/delete/${cartId}/${productId}`
-//         );
-//       }
-//     } catch (error) {
-
-//       handleError(error, dispatch );
-//     }
-//   };
-// };
 
 // set cart store from cookie
 export const handleCart = () => {
@@ -151,34 +105,6 @@ export const handleShopping = () => {
   };
 };
 
-// add the entire cart items api
-// export const addCart = () => {
-//   return async (dispatch, getState) => {
-//     try {
-//       const cartId = cookie.load('cart_id');
-//       const cartItems = getState().cart.cartItems;
-//       const products = getCartItems(cartItems);
-
-//       const response = await axios.post(`/api/cart/push/${cartId}`, {
-//         products
-//       });
-//     } catch (error) {
-//       handleError(error, dispatch);
-//     }
-//   };
-// };
-
-// remove the entire cart
-// export const removeCart = cartId => {
-//   return async (dispatch, getState) => {
-//     try {
-//       const response = await axios.delete(`/api/cart/delete/${cartId}`);
-//     } catch (error) {
-//       handleError(error, dispatch);
-//     }
-//   };
-// };
-
 // create cart id api
 export const getCartId = () => {
   return async (dispatch, getState) => {
@@ -210,13 +136,6 @@ export const setCartId = cartId => {
 
 export const clearCart = () => {
   return (dispatch, getState) => {
-    // const token = cookie.load('token');
-    // const cartId = cookie.load('cart_id');
-
-    // if (!token && cartId) {
-    //   dispatch(removeCart(cartId));
-    // }
-
     cookie.remove('cart_items', { path: '/' });
     cookie.remove('items_in_cart', { path: '/' });
     cookie.remove('cart_total', { path: '/' });
