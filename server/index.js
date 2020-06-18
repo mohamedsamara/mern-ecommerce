@@ -36,7 +36,7 @@ mongoose
   )
   .catch(err => console.log(err));
 
-require('./config/passport')(passport);
+require('./config/passport');
 app.use(routes);
 
 // if development

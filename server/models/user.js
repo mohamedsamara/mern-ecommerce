@@ -8,13 +8,26 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  profile: {
-    firstName: { type: String },
-    lastName: { type: String }
+  firstName: {
+    type: String
+  },
+  lastName: {
+    type: String
   },
   password: {
+    type: String
+  },
+  provider: {
     type: String,
-    required: true
+    required: true,
+    default: 'email'
+  },
+  googleId: {
+    type: String,
+    unique: true
+  },
+  avatar: {
+    type: String
   },
   role: {
     type: String,

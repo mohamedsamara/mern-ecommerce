@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const passport = require('passport');
+
 const auth = require('../../middleware/auth');
 
 // Bring in Models & Helpers
@@ -12,6 +14,7 @@ const mailgun = require('../../services/mailgun');
 const keys = require('../../config/keys');
 
 const { secret, tokenLife } = keys.jwt;
+const { clientURL } = keys.app;
 
 router.post('/login', (req, res) => {
   const email = req.body.email;
@@ -31,6 +34,13 @@ router.post('/login', (req, res) => {
         .status(400)
         .send({ error: 'No user found for this email address.' });
     }
+
+    if (!user) {
+      return res
+        .status(400)
+        .send({ error: 'No user found for this email address.' });
+    }
+
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
         const payload = {
@@ -43,11 +53,8 @@ router.post('/login', (req, res) => {
             token: `Bearer ${token}`,
             user: {
               id: user.id,
-              profile: {
-                firstName: user.profile.firstName,
-                lastName: user.profile.lastName,
-                is_subscribed: user.profile.is_subscribed
-              },
+              firstName: user.firstName,
+              lastName: user.lastName,
               email: user.email,
               role: user.role
             }
@@ -105,7 +112,8 @@ router.post('/register', (req, res) => {
     const user = new User({
       email,
       password,
-      profile: { firstName, lastName }
+      firstName,
+      lastName
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -138,10 +146,8 @@ router.post('/register', (req, res) => {
               token: `Bearer ${token}`,
               user: {
                 id: user.id,
-                profile: {
-                  firstName: user.profile.firstName,
-                  lastName: user.profile.lastName
-                },
+                firstName: user.firstName,
+                lastName: user.lastName,
                 email: user.email,
                 role: user.role
               }
@@ -306,5 +312,39 @@ router.post('/reset', auth, (req, res) => {
     });
   });
 });
+
+router.get(
+  '/google',
+  passport.authenticate('google', {
+    session: false,
+    scope: ['profile', 'email'],
+    accessType: 'offline',
+    approvalPrompt: 'force'
+  })
+);
+
+router.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    failureRedirect: '/login',
+    session: false
+  }),
+  (req, res) => {
+    console.log('clientURL', clientURL);
+
+    // res.json({ success: true });
+
+    res.redirect('/');
+
+    // res.redirect(`${clientURL}`);
+
+    // return res
+    //   .status(200)
+    //   .cookie('jwt', signToken(req.user), {
+    //     httpOnly: true
+    //   })
+    //   .redirect('/');
+  }
+);
 
 module.exports = router;

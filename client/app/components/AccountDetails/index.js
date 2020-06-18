@@ -12,14 +12,7 @@ import Input from '../Input';
 import Button from '../../components/Button';
 
 const AccountDetails = props => {
-  const {
-    user,
-    profileData,
-    accountChange,
-    updateProfile,
-    unsubscribeFromNewsletter,
-    subscribeToNewsletter
-  } = props;
+  const { user, profileData, accountChange, updateProfile } = props;
 
   const handleSubmit = event => {
     event.preventDefault();

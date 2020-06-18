@@ -86,7 +86,7 @@ const decreaseQuantity = products => {
     };
   });
 
-  Product.bulkWrite(bulkOptions, {});
+  Product.bulkWrite(bulkOptions);
 };
 
 module.exports = router;

@@ -1,9 +1,5 @@
-export const GOOGLE_CALLBACK_URL =
-  process.env.NODE_ENV === 'production'
-    ? process.env.GOOGLE_CALLBACK_URL_PROD
-    : process.env.GOOGLE_CALLBACK_URL_DEV;
+export const BASE_API_URL = process.env.BASE_API_URL;
+export const GOOGLE_CALLBACK_URL = process.env.GOOGLE_CALLBACK_URL;
+export const FACEBOOK_CALLBACK_URL = process.env.FACEBOOK_CALLBACK_URL;
 
-export const FACEBOOK_CALLBACK_URL =
-  process.env.NODE_ENV === 'production'
-    ? process.env.FACEBOOK_CALLBACK_URL_PROD
-    : process.env.FACEBOOK_CALLBACK_URL_DEV;
+// export const GOOGLE_AUTH_LINK=
