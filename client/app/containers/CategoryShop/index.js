@@ -19,6 +19,13 @@ class CategoryShop extends React.PureComponent {
     this.props.fetchCategoryProducts(slug);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.slug !== prevProps.match.params.slug) {
+      const slug = this.props.match.params.slug;
+      this.props.fetchCategoryProducts(slug);
+    }
+  }
+
   render() {
     const { products, isLoading } = this.props;
 

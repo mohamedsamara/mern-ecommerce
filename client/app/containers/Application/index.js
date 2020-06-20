@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 
 import { Switch, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import cookie from 'react-cookies';
 
 import actions from '../../actions';
 
@@ -30,13 +29,14 @@ import Sell from '../Sell';
 import Contact from '../Contact';
 import OrderSuccess from '../OrderSuccess';
 import OrderPage from '../OrderPage';
+import AuthSuccess from '../AuthSuccess';
 
 import Footer from '../../components/Footer';
 import Page404 from '../../components/Page404';
 
 class Application extends React.PureComponent {
   componentDidMount() {
-    const token = cookie.load('token');
+    const token = localStorage.getItem('token');
 
     if (token) {
       this.props.fetchProfile();
@@ -82,6 +82,7 @@ class Application extends React.PureComponent {
                   path='/reset-password/:token'
                   component={ResetPassword}
                 />
+                <Route path='/auth/success' component={AuthSuccess} />
                 <Route
                   path='/dashboard'
                   component={Authentication(Dashboard)}

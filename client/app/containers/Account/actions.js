@@ -6,7 +6,6 @@
 
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
-import cookie from 'react-cookies';
 
 import {
   ACCOUNT_CHANGE,
@@ -52,7 +51,7 @@ export const fetchProfile = () => {
 
 export const updateProfile = () => {
   return async (dispatch, getState) => {
-    const profile = getState().account.profileData;
+    const profile = getState().account.user;
 
     try {
       const response = await axios.put(`/api/user`, {
@@ -66,8 +65,6 @@ export const updateProfile = () => {
       };
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
-
-      // dispatch(fetchProfile());
 
       dispatch(success(successfulOptions));
     } catch (error) {

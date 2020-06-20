@@ -12,7 +12,7 @@ import Input from '../Input';
 import Button from '../../components/Button';
 
 const AccountDetails = props => {
-  const { user, profileData, accountChange, updateProfile } = props;
+  const { user, accountChange, updateProfile } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -35,7 +35,7 @@ const AccountDetails = props => {
               label={'First Name'}
               name={'firstName'}
               placeholder={'Please Enter Your First Name'}
-              value={profileData.firstName}
+              value={user.firstName ? user.firstName : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
               }}
@@ -47,7 +47,7 @@ const AccountDetails = props => {
               label={'Last Name'}
               name={'lastName'}
               placeholder={'Please Enter Your Last Name'}
-              value={profileData.lastName}
+              value={user.lastName ? user.lastName : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
               }}

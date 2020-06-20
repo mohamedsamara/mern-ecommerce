@@ -12,11 +12,10 @@ import {
 } from './constants';
 
 const initialState = {
-  profileData: {
+  user: {
     firstName: '',
     lastName: ''
   },
-  user: {},
   isFormOpen: false
 };
 
@@ -25,24 +24,31 @@ const accountReducer = (state = initialState, action) => {
     case ACCOUNT_CHANGE:
       return {
         ...state,
-        profileData: { ...state.profileData, ...action.payload }
+        user: {
+          ...state.user,
+          ...action.payload
+        }
       };
     case FETCH_PROFILE:
       return {
         ...state,
-        profileData: { ...state.profileData, ...action.payload.profile },
-        user: { ...state.user, ...action.payload }
+        user: {
+          ...state.user,
+          ...action.payload
+        }
       };
     case TOGGLE_RESET_FORM:
-      return { ...state, isFormOpen: !state.isFormOpen };
+      return {
+        ...state,
+        isFormOpen: !state.isFormOpen
+      };
     case CLEAR_ACCOUNT:
       return {
         ...state,
-        profileData: {
+        user: {
           firstName: '',
           lastName: ''
-        },
-        user: {}
+        }
       };
     default:
       return state;

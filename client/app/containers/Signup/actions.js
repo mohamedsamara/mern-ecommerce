@@ -6,7 +6,6 @@
 
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
-import cookie from 'react-cookies';
 
 import {
   SIGNUP_CHANGE,
@@ -73,7 +72,7 @@ export const signUp = () => {
         autoDismiss: 1
       };
 
-      cookie.save('token', response.data.token, { path: '/' });
+      localStorage.setItem('token', response.data.token);
 
       setToken(response.data.token);
 

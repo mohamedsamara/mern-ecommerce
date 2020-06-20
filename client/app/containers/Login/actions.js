@@ -6,7 +6,6 @@
 
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
-import cookie from 'react-cookies';
 import { push } from 'connected-react-router';
 
 import {
@@ -54,7 +53,7 @@ export const login = () => {
     try {
       const response = await axios.post('/api/auth/login', user);
 
-      const firstName = response.data.user.profile.firstName;
+      const firstName = response.data.user.firstName;
 
       const successfulOptions = {
         title: `Hey${firstName ? ` ${firstName}` : ''}, Welcome Back!`,
@@ -62,7 +61,7 @@ export const login = () => {
         autoDismiss: 1
       };
 
-      cookie.save('token', response.data.token, { path: '/' });
+      localStorage.setItem('token', response.data.token);
 
       setToken(response.data.token);
 
@@ -92,7 +91,7 @@ export const signOut = () => {
     dispatch(clearAccount());
     dispatch(push('/login'));
 
-    cookie.remove('token', { path: '/' });
+    localStorage.removeItem('token');
 
     dispatch(success(successfulOptions));
     // dispatch(clearCart());

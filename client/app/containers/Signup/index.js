@@ -45,7 +45,11 @@ class Signup extends React.PureComponent {
         <hr />
         <form onSubmit={handleSubmit} noValidate>
           <Row>
-            <Col xs='12' md='6' className='col-no-padding'>
+            <Col
+              xs={{ size: 12, order: 2 }}
+              md={{ size: '6', order: 1 }}
+              className='col-no-padding'
+            >
               <Col xs='12' md='12'>
                 <Input
                   type={'text'}
@@ -99,7 +103,7 @@ class Signup extends React.PureComponent {
                 />
               </Col>
             </Col>
-            <Col xs='12' md='6' className='d-none d-md-block'>
+            <Col xs={{ size: 12, order: 1 }} md={{ size: '6', order: 2 }}>
               <SignupProvider />
             </Col>
           </Row>

@@ -14,7 +14,6 @@ const mailgun = require('../../services/mailgun');
 const keys = require('../../config/keys');
 
 const { secret, tokenLife } = keys.jwt;
-const { clientURL } = keys.app;
 
 router.post('/login', (req, res) => {
   const email = req.body.email;
@@ -330,20 +329,26 @@ router.get(
     session: false
   }),
   (req, res) => {
-    console.log('clientURL', clientURL);
+    const payload = {
+      id: req.user.id
+    };
 
-    // res.json({ success: true });
+    jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
+      const jwt = `Bearer ${token}`;
 
-    res.redirect('/');
+      const htmlWithEmbeddedJWT = `
+    <html>
+      <script>
+        // Save JWT to localStorage
+        window.localStorage.setItem('token', '${jwt}');
+        // Redirect browser to root of application
+        window.location.href = '/auth/success';
+      </script>
+    </html>       
+    `;
 
-    // res.redirect(`${clientURL}`);
-
-    // return res
-    //   .status(200)
-    //   .cookie('jwt', signToken(req.user), {
-    //     httpOnly: true
-    //   })
-    //   .redirect('/');
+      res.send(htmlWithEmbeddedJWT);
+    });
   }
 );
 

@@ -24,6 +24,7 @@ passport.use(
         if (user) {
           return done(null, user);
         }
+
         return done(null, false);
       })
       .catch(err => {
@@ -48,16 +49,17 @@ passport.use(
 
           const name = profile.displayName.split(' ');
 
-          const createdUser = new User({
+          const newUser = new User({
             provider: 'google',
             googleId: profile.id,
             email: profile.email,
             firstName: name[0],
             lastName: name[1],
-            avatar: profile.picture
+            avatar: profile.picture,
+            password: null
           });
 
-          createdUser.save((err, user) => {
+          newUser.save((err, user) => {
             if (err) {
               return done(err, false);
             }

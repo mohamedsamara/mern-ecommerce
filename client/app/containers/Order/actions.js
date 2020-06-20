@@ -89,7 +89,8 @@ export const addOrder = () => {
 
 export const placeOrder = () => {
   return (dispatch, getState) => {
-    const token = cookie.load('token');
+    const token = localStorage.getItem('token');
+
     const cartItems = getState().cart.cartItems;
 
     if (token && cartItems.length > 0) {

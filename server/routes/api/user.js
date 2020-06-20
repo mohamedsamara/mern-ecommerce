@@ -23,7 +23,7 @@ router.get('/list', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
 router.get('/', auth, (req, res) => {
   const user = req.user._id;
 
-  User.findById(user, { password: 0 }, (err, user) => {
+  User.findById(user, { password: 0, _id: 0 }, (err, user) => {
     if (err) {
       return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
@@ -37,12 +37,9 @@ router.get('/', auth, (req, res) => {
 });
 
 router.put('/', auth, (req, res) => {
-  const profile = req.body.profile;
   const user = req.user._id;
+  const update = req.body.profile;
   const query = { _id: user };
-  const update = {
-    profile
-  };
 
   User.findOneAndUpdate(
     query,
