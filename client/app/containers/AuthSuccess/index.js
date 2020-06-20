@@ -29,8 +29,7 @@ class AuthSuccess extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    authenticated: state.authentication.authenticated,
-    isLoading: state.authentication.isLoading
+    authenticated: state.authentication.authenticated
   };
 };
 

@@ -4,7 +4,7 @@
  *
  */
 
-import { SET_AUTH, CLEAR_AUTH, FETCH_TOKEN_LOADING } from './constants';
+import { SET_AUTH, CLEAR_AUTH } from './constants';
 
 const initialState = {
   authenticated: false,
@@ -22,11 +22,6 @@ const authenticationReducer = (state = initialState, action) => {
       return {
         ...state,
         authenticated: false
-      };
-    case FETCH_TOKEN_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload
       };
     default:
       return state;

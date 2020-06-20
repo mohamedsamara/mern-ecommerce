@@ -14,7 +14,7 @@ import NotFound from '../../components/NotFound';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
 class ProductsShop extends React.PureComponent {
-  componentWillMount() {
+  componentDidMount() {
     const slug = this.props.match.params.slug;
     this.props.fetchProducts(slug);
   }

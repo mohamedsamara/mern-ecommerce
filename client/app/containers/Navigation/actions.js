@@ -4,7 +4,7 @@
  *
  */
 
-import { TOGGLE_MENU, TOGGLE_CART } from './constants';
+import { TOGGLE_MENU, TOGGLE_CART, TOGGLE_BRAND } from './constants';
 
 export const toggleMenu = () => {
   return {
@@ -15,5 +15,12 @@ export const toggleMenu = () => {
 export const toggleCart = () => {
   return {
     type: TOGGLE_CART
+  };
+};
+
+export const toggleBrand = value => {
+  return {
+    type: TOGGLE_BRAND,
+    payload: value
   };
 };

@@ -13,8 +13,6 @@ import actions from '../../actions';
 
 export default function (ComposedComponent) {
   class Authentication extends React.PureComponent {
-    componentWillMount() {}
-
     render() {
       const { authenticated } = this.props;
 

@@ -19,6 +19,13 @@ class BrandsShop extends React.PureComponent {
     this.props.fetchBrandProducts(slug);
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.slug !== prevProps.match.params.slug) {
+      const slug = this.props.match.params.slug;
+      this.props.fetchBrandProducts(slug);
+    }
+  }
+
   render() {
     const { products, isLoading } = this.props;
 

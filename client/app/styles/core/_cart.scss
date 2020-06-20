@@ -4,7 +4,7 @@
   position: fixed;
   top: 0;
   right: -100%;
-  background: $white;
+  background-color: $white;
   height: 100%;
   width: 470px;
   z-index: 1000;
@@ -119,7 +119,6 @@
 }
 
 /* start cart common styles */
-
 .summary-item {
   .summary-label {
     color: $font-custom-color;
@@ -132,5 +131,4 @@
     font-weight: $font-weight-bold-two;
   }
 }
-
 /* end cart common styles */
