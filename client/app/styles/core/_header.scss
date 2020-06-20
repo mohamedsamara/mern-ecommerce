@@ -240,6 +240,10 @@
   position: relative;
   z-index: 1002;
   color: $font-hover-color !important;
+
+  @include media-breakpoint-down(sm) {
+    z-index: 900;
+  }
 }
 
 // mini brand
@@ -252,8 +256,7 @@
   left: auto;
   background-color: $white;
   width: 500px;
-  z-index: 1000;
-  @include transition($layout-transition-higher-speed);
+  z-index: 1023;
 
   .extended-margin {
     display: none;
@@ -295,8 +298,6 @@
   .mini-brand-block {
     @include flex();
     flex-wrap: wrap;
-    // justify-content: space-between;
-    align-items: flex-start;
     margin-top: 12px;
 
     .brand-item {

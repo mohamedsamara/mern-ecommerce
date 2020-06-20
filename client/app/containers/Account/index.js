@@ -40,27 +40,33 @@ class Account extends React.PureComponent {
             accountChange={accountChange}
             updateProfile={updateProfile}
           />
-          <Checkbox
-            id={'toggle'}
-            label={'Reset Password'}
-            checked={isFormOpen}
-            toggleCheckboxChange={toggleResetForm}
-          />
-          <div className={isFormOpen ? 'reset-form-open' : 'reset-form-hidden'}>
-            <div className='reset-form'>
-              <h1>Reset Password</h1>
-              <ResetPasswordForm
-                resetFormData={resetFormData}
-                formErrors={formErrors}
-                resetPasswordChange={resetPasswordChange}
-                resetPassowrd={resetAccountPassword}
+          {user.provider === 'email' && (
+            <div>
+              <Checkbox
+                id={'toggle'}
+                label={'Reset Password'}
+                checked={isFormOpen}
+                toggleCheckboxChange={toggleResetForm}
               />
+              <div
+                className={isFormOpen ? 'reset-form-open' : 'reset-form-hidden'}
+              >
+                <div className='reset-form'>
+                  <h1>Reset Password</h1>
+                  <ResetPasswordForm
+                    resetFormData={resetFormData}
+                    formErrors={formErrors}
+                    resetPasswordChange={resetPasswordChange}
+                    resetPassowrd={resetAccountPassword}
+                  />
+                </div>
+                <div
+                  className={isFormOpen ? 'dark-overflow' : ''}
+                  onClick={toggleResetForm}
+                />
+              </div>
             </div>
-            <div
-              className={isFormOpen ? 'dark-overflow' : ''}
-              onClick={toggleResetForm}
-            />
-          </div>
+          )}
         </SubPage>
       </div>
     );

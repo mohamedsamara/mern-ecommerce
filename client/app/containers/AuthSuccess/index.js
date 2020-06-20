@@ -11,6 +11,7 @@ import { Redirect } from 'react-router-dom';
 import setToken from '../../utils/token';
 
 import actions from '../../actions';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 class AuthSuccess extends React.PureComponent {
   componentDidMount() {
@@ -23,7 +24,7 @@ class AuthSuccess extends React.PureComponent {
 
     if (authenticated) return <Redirect to='/dashboard' />;
 
-    return <h1>AuthSuccess</h1>;
+    return <LoadingIndicator />;
   }
 }
 

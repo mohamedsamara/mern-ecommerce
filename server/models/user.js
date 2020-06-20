@@ -6,7 +6,9 @@ const { Schema } = Mongoose;
 const UserSchema = new Schema({
   email: {
     type: String,
-    required: true
+    required: () => {
+      return this.provider !== 'email' ? false : true;
+    }
   },
   firstName: {
     type: String
@@ -23,6 +25,10 @@ const UserSchema = new Schema({
     default: 'email'
   },
   googleId: {
+    type: String,
+    unique: true
+  },
+  facebookId: {
     type: String,
     unique: true
   },
