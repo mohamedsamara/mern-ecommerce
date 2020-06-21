@@ -1,14 +1,6 @@
 const path = require('path');
-const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const dotenv = require('dotenv');
-
-const env = dotenv.config().parsed;
-
-const envKeys = Object.keys(env).reduce((prev, next) => {
-  prev[`process.env.${next}`] = JSON.stringify(env[next]);
-  return prev;
-}, {});
+const Dotenv = require('dotenv-webpack');
 
 const CURRENT_WORKING_DIR = process.cwd();
 
@@ -33,7 +25,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin(envKeys),
+    new Dotenv(),
     new CopyWebpackPlugin([
       {
         from: 'client/public'

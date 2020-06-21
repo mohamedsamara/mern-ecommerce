@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -6,6 +7,8 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const CURRENT_WORKING_DIR = process.cwd();
+const NODE_ENV = process.env.NODE_ENV;
+const BASE_API_URL = process.env.BASE_API_URL;
 
 module.exports = {
   mode: 'production',
@@ -106,6 +109,12 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(NODE_ENV),
+        BASE_API_URL: JSON.stringify(BASE_API_URL)
+      }
+    }),
     new HtmlWebpackPlugin({
       template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
       inject: true,

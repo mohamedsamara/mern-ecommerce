@@ -7,11 +7,7 @@
 import React from 'react';
 
 import { GoogleIcon, FacebookIcon } from '../Icon';
-import {
-  GOOGLE_CALLBACK_URL,
-  FACEBOOK_CALLBACK_URL,
-  BASE_API_URL
-} from '../../constants';
+import { BASE_API_URL } from '../../constants';
 
 const SignupProvider = props => {
   return (
@@ -28,9 +24,5 @@ const SignupProvider = props => {
     </div>
   );
 };
-
-// ${GOOGLE_CALLBACK_URL}
-
-// ${process.env.BASE_API_URL}/auth/google
 
 export default SignupProvider;
