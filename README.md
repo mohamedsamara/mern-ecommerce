@@ -10,7 +10,7 @@
 
 ## Demo
 
-This application is deployed on Heroku. Please check it out :smile: [here](https://pacific-reaches-80202.herokuapp.com/).
+This application is deployed on Heroku. Please check it out :smile: [here](https://mern-store-80202.herokuapp.com/).
 
 ## Install
 
@@ -27,10 +27,12 @@ $ npm install
 
 ```
 > Create .env file that include:
-  * PORT & MONGO_URI
-  * SECRET_OR_KEY => secret key for JWT
+  * MONGO_URI & JWT_SECRET
+  * PORT & BASE_SERVER_URL & BASE_API_URL & BASE_CLIENT_URL
   * MAILCHIMP_KEY & MAILCHIMP_LIST_KEY => Mailchimp configuration
   * MAILGUN_KEY & MAILGUN_DOMAIN & MAILGUN_EMAIL_SENDER => Mailgun configuration
+  * GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET & GOOGLE_CALLBACK_URL => Google Auth configuration
+  * FACEBOOK_CLIENT_ID & FACEBOOK_CLIENT_SECRET & FACEBOOK_CALLBACK_URL => Facebook Auth configuration
 
 ```
 
