@@ -58,7 +58,6 @@
     "react-bootstrap-table2-toolkit": "^2.0.1",
     "react-cookies": "^0.1.1",
     "react-dom": "^16.8.6",
-    "react-notification-system": "^0.2.17",
     "react-notification-system-redux": "^2.0.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
