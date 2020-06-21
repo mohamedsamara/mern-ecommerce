@@ -41,6 +41,7 @@ class ProductPage extends React.PureComponent {
       isLoading,
       product,
       productShopData,
+      shopFormErrors,
       itemsInCart,
       productShopChange,
       handleAddToCart,
@@ -87,11 +88,14 @@ class ProductPage extends React.PureComponent {
                   <div className='item-customize'>
                     <Input
                       type={'number'}
+                      error={shopFormErrors['quantity']}
                       label={'Quantity'}
                       name={'quantity'}
                       min={1}
                       placeholder={'Product Quantity'}
-                      disabled={product.quantity <= 0}
+                      disabled={
+                        product.quantity <= 0 && !shopFormErrors['quantity']
+                      }
                       value={productShopData.quantity}
                       onInputChange={(name, value) => {
                         productShopChange(name, value);
@@ -101,7 +105,9 @@ class ProductPage extends React.PureComponent {
                   <div className='item-actions'>
                     {itemsInCart.includes(product._id) ? (
                       <Button
-                        disabled={product.quantity <= 0}
+                        disabled={
+                          product.quantity <= 0 && !shopFormErrors['quantity']
+                        }
                         text='Remove From Bag'
                         className='bag-btn'
                         icon={<BagIcon />}
@@ -109,7 +115,9 @@ class ProductPage extends React.PureComponent {
                       />
                     ) : (
                       <Button
-                        disabled={product.quantity <= 0}
+                        disabled={
+                          product.quantity <= 0 && !shopFormErrors['quantity']
+                        }
                         text='Add To Bag'
                         className='bag-btn'
                         icon={<BagIcon />}
@@ -133,6 +141,7 @@ const mapStateToProps = state => {
   return {
     product: state.product.product,
     productShopData: state.product.productShopData,
+    shopFormErrors: state.product.shopFormErrors,
     itemsInCart: state.cart.itemsInCart,
     isLoading: state.product.isLoading
   };

@@ -17,14 +17,35 @@ import {
   SET_CART_ID,
   CLEAR_CART
 } from './constants';
+
+import {
+  SET_PRODUCT_SHOP_FORM_ERRORS,
+  RESET_PRODUCT_SHOP
+} from '../Product/constants';
+
 import handleError from '../../utils/error';
 import { toggleCart } from '../Navigation/actions';
+import { allFieldsValidation } from '../../utils/validation';
 
 // Handle Add To Cart
 export const handleAddToCart = product => {
   return (dispatch, getState) => {
-    product.quantity = getState().product.productShopData.quantity;
+    product.quantity = Number(getState().product.productShopData.quantity);
     product.totalPrice = product.quantity * product.price;
+
+    const rules = {
+      quantity: 'min:1'
+    };
+
+    const { isValid, errors } = allFieldsValidation(product, rules);
+
+    if (!isValid) {
+      return dispatch({ type: SET_PRODUCT_SHOP_FORM_ERRORS, payload: errors });
+    }
+
+    dispatch({
+      type: RESET_PRODUCT_SHOP
+    });
 
     dispatch({
       type: ADD_TO_CART,

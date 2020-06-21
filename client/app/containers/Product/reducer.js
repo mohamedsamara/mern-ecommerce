@@ -10,7 +10,9 @@ import {
   PRODUCT_CHANGE,
   PRODUCT_SHOP_CHANGE,
   SET_PRODUCT_FORM_ERRORS,
+  SET_PRODUCT_SHOP_FORM_ERRORS,
   RESET_PRODUCT,
+  RESET_PRODUCT_SHOP,
   TOGGLE_ADD_PRODUCT,
   ADD_PRODUCT,
   REMOVE_PRODUCT,
@@ -42,6 +44,7 @@ const initialState = {
     { value: 0, label: 'No' }
   ],
   formErrors: {},
+  shopFormErrors: {},
   columns: [
     {
       hidden: true,
@@ -118,12 +121,18 @@ const productReducer = (state = initialState, action) => {
     case PRODUCT_CHANGE:
       return {
         ...state,
-        productFormData: { ...state.productFormData, ...action.payload }
+        productFormData: {
+          ...state.productFormData,
+          ...action.payload
+        }
       };
     case PRODUCT_SHOP_CHANGE:
       return {
         ...state,
-        productShopData: { ...state.productShopData, ...action.payload }
+        productShopData: {
+          ...state.productShopData,
+          ...action.payload
+        }
       };
     case PRODUCT_SELECT:
       return {
@@ -135,6 +144,11 @@ const productReducer = (state = initialState, action) => {
         ...state,
         formErrors: action.payload
       };
+    case SET_PRODUCT_SHOP_FORM_ERRORS:
+      return {
+        ...state,
+        shopFormErrors: action.payload
+      };
     case RESET_PRODUCT:
       return {
         ...state,
@@ -145,7 +159,16 @@ const productReducer = (state = initialState, action) => {
           quantity: 1,
           price: 0
         },
+        formErrors: {},
         selectedProducts: []
+      };
+    case RESET_PRODUCT_SHOP:
+      return {
+        ...state,
+        productShopData: {
+          quantity: 1
+        },
+        shopFormErrors: {}
       };
     case TOGGLE_ADD_PRODUCT:
       return { ...state, isProductAddOpen: !state.isProductAddOpen };

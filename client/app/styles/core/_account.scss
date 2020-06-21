@@ -27,6 +27,10 @@
         font-weight: $font-weight-bold-one;
         margin-left: 10px;
       }
+
+      .provider-email {
+        text-transform: capitalize;
+      }
     }
 
     p,

@@ -23,7 +23,15 @@ const AccountDetails = props => {
     <div className='account-details'>
       <div className='info'>
         <div className='desc'>
-          <p>{user.email}</p>
+          <p>
+            {user.provider === 'email' ? (
+              user.email
+            ) : (
+              <span className='provider-email'>
+                `Logged in With {user.provider}
+              </span>
+            )}
+          </p>
           {user.role !== 'ROLE_MEMBER' && <span className='admin'>Admin</span>}
         </div>
       </div>
