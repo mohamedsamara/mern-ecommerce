@@ -57,10 +57,10 @@ class ProductPage extends React.PureComponent {
             <Col xs='12' md='5' lg='5' className='mb-3'>
               <div className='item-image'>
                 <img src={'/images/placeholder-image.png'} />
-                {product.quantity > 0 ? (
-                  <p className='stock in-stock'>In stock</p>
-                ) : (
+                {product.quantity < 0 && !shopFormErrors['quantity'] ? (
                   <p className='stock out-of-stock'>Out of stock</p>
+                ) : (
+                  <p className='stock in-stock'>In stock</p>
                 )}
               </div>
             </Col>
