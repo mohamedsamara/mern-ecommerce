@@ -24,11 +24,11 @@ const initialState = {
       text: 'User Role'
     },
     {
-      dataField: 'profile.firstName',
+      dataField: 'firstName',
       text: 'First Name'
     },
     {
-      dataField: 'profile.lastName',
+      dataField: 'lastName',
       text: 'Last Name'
     }
   ]
