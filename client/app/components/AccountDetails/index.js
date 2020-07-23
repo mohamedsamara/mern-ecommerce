@@ -28,7 +28,7 @@ const AccountDetails = props => {
               user.email
             ) : (
               <span className='provider-email'>
-                `Logged in With {user.provider}
+                Logged in With {user.provider}
               </span>
             )}
           </p>
