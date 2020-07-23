@@ -42,7 +42,6 @@ Some basic Git commands are:
 $ git clone https://github.com/mohamedsamara/mern-ecommerce.git
 $ cd project
 $ npm install
-
 ```
 
 ## Setup
@@ -56,14 +55,12 @@ $ npm install
   * MAILGUN_KEY & MAILGUN_DOMAIN & MAILGUN_EMAIL_SENDER => Mailgun configuration
   * GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET & GOOGLE_CALLBACK_URL => Google Auth configuration
   * FACEBOOK_CLIENT_ID & FACEBOOK_CLIENT_SECRET & FACEBOOK_CALLBACK_URL => Facebook Auth configuration
-
 ```
 
 ## Heroku Deployment
 
 ```
 > Create a Procfile in the root directory of your application with the following command **web: npm run start:production**
-
 ```
 
 
@@ -71,21 +68,18 @@ $ npm install
 
 ```
 $ npm run production
-
 ```
 
 ## Run the application for development
 
 ```
 $ npm start
-
 ```
 
 ## Run the application for production
 
 ```
 $ npm run start:production
-
 ```
 
 
