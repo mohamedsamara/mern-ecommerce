@@ -12,6 +12,7 @@ import actions from '../../actions';
 
 import Admin from '../Admin';
 import Customer from '../Customer';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 class Dashboard extends React.PureComponent {
   componentDidMount() {
@@ -21,10 +22,14 @@ class Dashboard extends React.PureComponent {
   render() {
     const { user } = this.props;
 
-    if (user.role === 'ROLE_MEMBER') {
-      return <Customer />;
+    if (!user.role) {
+      return <LoadingIndicator inline />;
     } else {
-      return <Admin />;
+      if (user.role === 'ROLE_MEMBER') {
+        return <Customer />;
+      } else {
+        return <Admin />;
+      }
     }
   }
 }

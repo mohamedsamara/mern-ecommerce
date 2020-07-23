@@ -26,7 +26,7 @@ class Order extends React.PureComponent {
       <div className='order-dashboard'>
         <SubPage title={'Your Orders'} isMenuOpen={null}>
           {isLoading ? (
-            <LoadingIndicator />
+            <LoadingIndicator inline />
           ) : orders.length > 0 ? (
             <OrderList orders={orders} />
           ) : (

@@ -7,7 +7,13 @@
 import React from 'react';
 
 const LoadingIndicator = props => {
-  return <div className='spinner' />;
+  const { inline } = props;
+
+  return (
+    <div
+      className={`spinner ${inline ? 'position-relative' : 'position-fixed'}`}
+    />
+  );
 };
 
 export default LoadingIndicator;
