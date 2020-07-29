@@ -96,7 +96,8 @@ const productReducer = (state = initialState, action) => {
         product: action.payload,
         productShopData: {
           quantity: 1
-        }
+        },
+        shopFormErrors: {}
       };
     case SET_PRODUCTS_LOADING:
       return {

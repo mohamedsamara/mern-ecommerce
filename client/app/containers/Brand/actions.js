@@ -49,8 +49,7 @@ export const fetchBrands = () => {
         payload: response.data.brands
       });
     } catch (error) {
-      const title = `Please try again!`;
-      handleError(error, title, dispatch);
+      handleError(error, dispatch);
     }
   };
 };
@@ -74,7 +73,6 @@ export const fetchBrandsSelect = () => {
         payload: formattedBrands
       });
     } catch (error) {
-      const title = `Please try again!`;
       handleError(error, dispatch);
     }
   };

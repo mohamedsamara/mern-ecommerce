@@ -5,7 +5,7 @@
  */
 
 import { push } from 'connected-react-router';
-import { success } from 'react-notification-system-redux';
+import { success, info } from 'react-notification-system-redux';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
@@ -32,9 +32,12 @@ export const handleAddToCart = product => {
   return (dispatch, getState) => {
     product.quantity = Number(getState().product.productShopData.quantity);
     product.totalPrice = product.quantity * product.price;
+    const inventory = getState().product.product.inventory;
+
+    const result = calculatePurchaseQuantity(inventory);
 
     const rules = {
-      quantity: 'min:1'
+      quantity: `min:1|max:${result}`
     };
 
     const { isValid, errors } = allFieldsValidation(product, rules);
@@ -179,4 +182,16 @@ const getCartItems = cartItems => {
   });
 
   return newCartItems;
+};
+
+const calculatePurchaseQuantity = inventory => {
+  if (inventory <= 25) {
+    return 1;
+  } else if (inventory > 25 && inventory <= 100) {
+    return 5;
+  } else if (inventory > 100 && inventory < 500) {
+    return 25;
+  } else {
+    return 50;
+  }
 };

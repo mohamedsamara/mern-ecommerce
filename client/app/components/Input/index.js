@@ -12,6 +12,7 @@ const Input = props => {
     value,
     error,
     min,
+    max,
     disabled,
     placeholder,
     label,
@@ -52,6 +53,7 @@ const Input = props => {
         <input
           autoComplete='on'
           min={min || 0}
+          max={max || null}
           type={type}
           onChange={e => {
             _onChange(e);

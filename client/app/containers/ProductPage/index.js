@@ -57,7 +57,7 @@ class ProductPage extends React.PureComponent {
             <Col xs='12' md='5' lg='5' className='mb-3'>
               <div className='item-image'>
                 <img src={'/images/placeholder-image.png'} />
-                {product.quantity < 0 && !shopFormErrors['quantity'] ? (
+                {product.inventory <= 0 && !shopFormErrors['quantity'] ? (
                   <p className='stock out-of-stock'>Out of stock</p>
                 ) : (
                   <p className='stock in-stock'>In stock</p>
@@ -92,9 +92,10 @@ class ProductPage extends React.PureComponent {
                       label={'Quantity'}
                       name={'quantity'}
                       min={1}
+                      max={product.inventory}
                       placeholder={'Product Quantity'}
                       disabled={
-                        product.quantity <= 0 && !shopFormErrors['quantity']
+                        product.inventory <= 0 && !shopFormErrors['quantity']
                       }
                       value={productShopData.quantity}
                       onInputChange={(name, value) => {
@@ -106,7 +107,7 @@ class ProductPage extends React.PureComponent {
                     {itemsInCart.includes(product._id) ? (
                       <Button
                         disabled={
-                          product.quantity <= 0 && !shopFormErrors['quantity']
+                          product.inventory <= 0 && !shopFormErrors['quantity']
                         }
                         text='Remove From Bag'
                         className='bag-btn'
