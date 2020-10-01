@@ -117,7 +117,7 @@ router.get('/list', auth, (req, res) => {
 
               const order = {
                 _id: doc._id,
-                total: doc.total,
+                total: parseFloat(Number(doc.total.toFixed(2))),
                 created: doc.created,
                 products: data.products
               };
@@ -178,7 +178,7 @@ router.get('/:orderId', auth, (req, res) => {
           let order = {
             _id: doc._id,
             total: doc.total,
-            totalTax: doc.totalTax,
+            totalTax: 0,
             created: doc.created,
             products: data.products
           };
@@ -203,13 +203,19 @@ const caculateTaxAmount = order => {
       const price = Number(item.product.price).toFixed(2);
       const taxAmount = Math.round(price * taxRate * 100) / 100;
       item.priceWithTax = parseFloat(price) + parseFloat(taxAmount);
-
       order.totalTax += taxAmount;
     }
+
+    item.totalPrice = parseFloat(item.totalPrice.toFixed(2));
   });
 
   order.totalWithTax = order.total + order.totalTax;
 
+  order.total = parseFloat(Number(order.total.toFixed(2)));
+  order.totalTax = parseFloat(
+    Number(order.totalTax && order.totalTax.toFixed(2))
+  );
+  order.totalWithTax = parseFloat(Number(order.totalWithTax.toFixed(2)));
   return order;
 };
 
