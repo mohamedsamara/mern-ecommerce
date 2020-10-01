@@ -4,8 +4,6 @@
  *
  */
 
-import cookie from 'react-cookies';
-
 import {
   HANDLE_CART,
   ADD_TO_CART,
@@ -32,8 +30,12 @@ const cartReducer = (state = initialState, action) => {
         cartItems: [...state.cartItems, action.payload],
         itemsInCart: [...state.itemsInCart, action.payload._id]
       };
-      cookie.save('cart_items', newState.cartItems, { path: '/' });
-      cookie.save('items_in_cart', newState.itemsInCart, { path: '/' });
+
+      localStorage.setItem('cart_items', JSON.stringify(newState.cartItems));
+      localStorage.setItem(
+        'items_in_cart',
+        JSON.stringify(newState.itemsInCart)
+      );
       return newState;
     case REMOVE_FROM_CART:
       let itemIndex = state.cartItems.findIndex(
@@ -50,15 +52,20 @@ const cartReducer = (state = initialState, action) => {
           ...state.itemsInCart.slice(itemIndex + 1)
         ]
       };
-      cookie.save('cart_items', newState.cartItems, { path: '/' });
-      cookie.save('items_in_cart', newState.itemsInCart, { path: '/' });
+
+      localStorage.setItem('cart_items', JSON.stringify(newState.cartItems));
+      localStorage.setItem(
+        'items_in_cart',
+        JSON.stringify(newState.itemsInCart)
+      );
       return newState;
     case HANDLE_CART_TOTAL:
       newState = {
         ...state,
         cartTotal: action.payload
       };
-      cookie.save('cart_total', newState.cartTotal, { path: '/' });
+
+      localStorage.setItem('cart_total', newState.cartTotal);
       return newState;
     case HANDLE_CART:
       newState = {
@@ -74,7 +81,7 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         cartId: action.payload
       };
-      cookie.save('cart_id', newState.cartId, { path: '/' });
+      localStorage.setItem('cart_id', newState.cartId);
       return newState;
     case CLEAR_CART:
       newState = {

@@ -53,13 +53,15 @@
   color: $white;
   font-size: 0.6rem;
   font-weight: 600;
-  height: 15px;
-  line-height: 14px;
+  height: 16px;
   position: absolute;
   right: -10px;
   text-align: center;
   top: -7px;
   width: 16px;
+  @include flex();
+  justify-content: center;
+  align-items: center;
 }
 
 // text ellipsis ...

@@ -6,7 +6,6 @@
 
 import { push } from 'connected-react-router';
 import axios from 'axios';
-import cookie from 'react-cookies';
 
 import {
   FETCH_ORDERS,
@@ -69,7 +68,7 @@ export const fetchOrder = id => {
 export const addOrder = () => {
   return async (dispatch, getState) => {
     try {
-      const cartId = cookie.load('cart_id');
+      const cartId = localStorage.getItem('cart_id');
       const total = getState().cart.cartTotal;
 
       if (cartId) {
