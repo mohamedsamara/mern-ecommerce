@@ -7,7 +7,6 @@
 import { push } from 'connected-react-router';
 import { success, info } from 'react-notification-system-redux';
 import axios from 'axios';
-import cookie from 'react-cookies';
 
 import {
   HANDLE_CART,
@@ -94,10 +93,10 @@ export const calculateCartTotal = () => {
 // set cart store from cookie
 export const handleCart = () => {
   const cart = {
-    cartItems: cookie.load('cart_items'),
-    itemsInCart: cookie.load('items_in_cart'),
-    cartTotal: cookie.load('cart_total'),
-    cartId: cookie.load('cart_id')
+    cartItems: JSON.parse(localStorage.getItem('cart_items')),
+    itemsInCart: JSON.parse(localStorage.getItem('items_in_cart')),
+    cartTotal: localStorage.getItem('cart_total'),
+    cartId: localStorage.getItem('cart_id')
   };
 
   return (dispatch, getState) => {
@@ -136,7 +135,7 @@ export const handleShopping = () => {
 export const getCartId = () => {
   return async (dispatch, getState) => {
     try {
-      const cartId = cookie.load('cart_id');
+      const cartId = localStorage.getItem('cart_id');
       const cartItems = getState().cart.cartItems;
       const products = getCartItems(cartItems);
 
@@ -163,10 +162,10 @@ export const setCartId = cartId => {
 
 export const clearCart = () => {
   return (dispatch, getState) => {
-    cookie.remove('cart_items', { path: '/' });
-    cookie.remove('items_in_cart', { path: '/' });
-    cookie.remove('cart_total', { path: '/' });
-    cookie.remove('cart_id', { path: '/' });
+    localStorage.removeItem('cart_items');
+    localStorage.removeItem('items_in_cart');
+    localStorage.removeItem('cart_total');
+    localStorage.removeItem('cart_id');
 
     dispatch({
       type: CLEAR_CART
