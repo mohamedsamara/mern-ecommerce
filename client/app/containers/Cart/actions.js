@@ -32,6 +32,7 @@ export const handleAddToCart = product => {
   return (dispatch, getState) => {
     product.quantity = Number(getState().product.productShopData.quantity);
     product.totalPrice = product.quantity * product.price;
+    product.totalPrice = parseFloat(product.totalPrice.toFixed(2));
     const inventory = getState().product.product.inventory;
 
     const result = calculatePurchaseQuantity(inventory);
@@ -80,6 +81,8 @@ export const calculateCartTotal = () => {
     cartItems.map(item => {
       total += item.price * item.quantity;
     });
+
+    total = parseFloat(total.toFixed(2));
 
     dispatch({
       type: HANDLE_CART_TOTAL,
