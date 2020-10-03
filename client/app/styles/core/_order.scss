@@ -1,8 +1,6 @@
 .order-dashboard {
   .order-list {
-    // margin: 20px 0px 10px 0px;
     .order-details {
-      padding: 20px;
       @include flex();
       flex-direction: column;
       height: 100%;
@@ -10,19 +8,24 @@
 
     .order-box {
       border-radius: $border-radius-default;
-      box-shadow: $primary-box-shadow;
+      box-shadow: $secondary-box-shadow;
 
       .order-first-item {
-        .item-image {
-          img {
-            border-top-right-radius: $border-radius-default;
-            border-top-left-radius: $border-radius-default;
+        img {
+          border-top-right-radius: $border-radius-default;
+          border-bottom-right-radius: $border-radius-default;
+          border-top-left-radius: $border-radius-default;
+          border-bottom-left-radius: $border-radius-default;
+
+          @include media-breakpoint-up(lg) {
+            height: 128px;
+          }
+
+          @include media-breakpoint-up(xl) {
+            width: 120px;
+            height: 116px;
           }
         }
-      }
-
-      p {
-        text-transform: capitalize;
       }
     }
   }
@@ -51,6 +54,12 @@
 
 /* start order meta styles */
 .order-meta {
+  .title {
+    border-bottom: $border-primary;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+
   p {
     text-transform: capitalize;
     margin-bottom: 5px;
@@ -58,18 +67,40 @@
 }
 /* end order meta styles */
 
-/* start order details styles */
-.order-details {
+/* start order items styles */
+.order-items {
   h4 {
     border-bottom: $border-primary;
     padding-bottom: 8px;
     margin-bottom: 16px;
   }
-}
-/* end order details styles */
 
-/* start order items styles */
-.order-items {
+  .item {
+    &:last-child {
+      .order-item-box {
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .order-item-box {
+    border-bottom: $border-primary;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+
+    @include media-breakpoint-up(md) {
+      .box {
+        width: 50%;
+      }
+    }
+
+    .item-image {
+      width: 90px;
+    }
+  }
+
   p {
     margin-bottom: 0;
   }
@@ -82,8 +113,13 @@
 
 /* start order summary styles */
 .order-summary {
-  padding-top: 15px;
   border: $border-primary;
+
+  h4 {
+    border-bottom: $border-primary;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
 }
 /* end order summary styles */
 

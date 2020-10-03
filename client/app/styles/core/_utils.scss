@@ -21,6 +21,18 @@
   padding: 0;
 }
 
+.flex-1 {
+  flex: 1;
+}
+
+.one-line-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .desktop-hidden {
   display: none;
 

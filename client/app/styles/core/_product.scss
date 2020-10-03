@@ -137,6 +137,12 @@
 .item-box {
   .item-link {
     display: block;
+
+    .item-name {
+      &:hover {
+        color: $font-custom-hover-color !important;
+      }
+    }
   }
 
   .item-name {

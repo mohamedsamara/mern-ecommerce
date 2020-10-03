@@ -6,6 +6,7 @@
 
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
 import { formatDate } from '../../helpers/date';
@@ -15,7 +16,13 @@ const OrderMeta = props => {
 
   return (
     <div className='order-meta'>
-      <h4>Order Details</h4>
+      <div className='d-flex align-items-center justify-content-between mb-3 title'>
+        <h4>Order Details</h4>
+        <Link className='redirect-link' to={'/dashboard/orders'}>
+          Back to orders
+        </Link>
+      </div>
+
       <Row>
         <Col xs='12' md='8'>
           <Row>
