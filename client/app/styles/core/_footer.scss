@@ -1,9 +1,7 @@
 // footer styles
-
 .footer {
   flex-shrink: 0;
   border-top: $border-default;
-  border-color: $light-border-color;
 }
 
 .footer-content {
@@ -18,16 +16,14 @@
 .footer-block {
   width: 100%;
   margin: 0px 15px;
-  border-right: $border-default;
-  border-color: $light-border-color;
+  border-right: $border-primary;
   padding: 20px 0px 40px;
 
   @include media-breakpoint-down(sm) {
     text-align: center;
     margin: 10px 0px;
     border-right: none;
-    border-bottom: $border-default;
-    border-color: $light-border-color;
+    border-bottom: $border-primary;
     padding: 20px 0px;
   }
 
@@ -39,20 +35,19 @@
   .block-title {
     padding-bottom: 10px;
 
-    h2 {
-      color: $red !important;
-    }
+    // h2 {
+    //   color: $secondary-color !important;
+    // }
   }
 
   .footer-link {
     padding-bottom: 4px;
 
-    // a {
-    //   &:hover {
-    //     color: $red !important;
-    //     color: $font-hover-color !important;
-    //   }
-    // }
+    a {
+      &:hover {
+        text-decoration: underline !important;
+      }
+    }
   }
 }
 

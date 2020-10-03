@@ -11,17 +11,13 @@
     margin: 0;
     padding: 10px 0px;
     text-align: center;
-    color: $red !important;
-    border-top: $border-default;
-    border-right: $border-default;
-    border-left: $border-default;
-    border-color: $dark-border-color;
+    border: $border-primary;
+    border-bottom: none;
   }
 
   .menu-panel {
     &.collapse {
-      border-bottom: $border-default;
-      border-color: $dark-border-color;
+      border-bottom: $border-primary;
 
       &:hover {
         background-color: $theme-gray;
@@ -37,7 +33,6 @@
 
   .navbar {
     padding: 0px;
-    background-color: $white;
   }
 
   .menu-panel {
@@ -53,7 +48,7 @@
     }
 
     .btn-text {
-      font-size: $font-size-heading-medium !important;
+      font-size: $font-size-heading-xsmall !important;
       font-weight: $font-weight-bold-one;
     }
   }
@@ -64,23 +59,18 @@
     margin-bottom: 0;
 
     li {
-      border-top: $border-default;
-      border-right: $border-default;
-      border-left: $border-default;
-      border-color: $light-border-color;
-      // border-color: $dark-border-color;
+      border-top: $border-primary;
+      border-right: $border-primary;
+      border-left: $border-primary;
 
       &:hover {
-        background-color: $white;
-
         a {
           color: $font-custom-color !important;
         }
       }
 
       &:last-child {
-        border-bottom: $border-default;
-        border-color: $dark-border-color;
+        border-bottom: $border-primary;
       }
 
       a {
@@ -92,8 +82,8 @@
       }
 
       a.active-link {
-        color: $red !important;
         font-weight: $font-weight-bold-two;
+        background-color: $white;
 
         // &:hover {
         //   color: $font-hover-color !important;

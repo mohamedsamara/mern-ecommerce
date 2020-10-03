@@ -15,8 +15,7 @@
 
 .header {
   background-color: $white;
-  border-bottom: $border-default;
-  border-color: $light-border-color;
+  border-bottom: $border-primary;
 }
 
 .fixed-mobile-header {
@@ -50,7 +49,7 @@
 
   .fa {
     cursor: pointer;
-    color: $red;
+    color: $theme-dark-gray;
     font-size: $font-size-x-huge !important;
   }
 
@@ -112,13 +111,6 @@
       }
     }
 
-    // a,
-    // span {
-    //   &:hover {
-    //     color: $red !important;
-    //   }
-    // }
-
     a,
     span {
       &:hover {
@@ -138,7 +130,7 @@
       .nav-link {
         .dropdown-caret {
           font-size: $font-size-x-small !important;
-          color: $font-light-color;
+          color: $theme-dark-gray;
           margin-left: 5px;
           -webkit-transition: $layout-transition-speed;
           transition: $layout-transition-speed;
@@ -200,9 +192,6 @@
     }
 
     .bars-icon {
-      // display: block;
-      // height: 100%;
-
       @include media-breakpoint-down(sm) {
         display: none;
       }
@@ -210,7 +199,6 @@
 
     h1 {
       margin: 0px;
-      // color: $red !important;
       color: $font-custom-color !important;
       @include media-breakpoint-up(md) {
         margin-left: 15px;

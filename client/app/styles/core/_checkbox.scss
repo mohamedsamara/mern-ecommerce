@@ -23,6 +23,7 @@ input[type='checkbox'] + label {
   display: block;
   position: relative;
   padding: 5px 5px 5px 30px;
+  color: $font-custom-color;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -39,7 +40,7 @@ input[type='checkbox'] + label:before {
   width: 18px;
   height: 16px;
   border: $border-default;
-  border-color: $theme-blue;
+  border-color: $primary-color;
   position: absolute;
   left: 4px;
   top: 7px;
@@ -59,7 +60,3 @@ input[type='checkbox']:checked + label:before {
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-
-// input[type='checkbox']:checked + label {
-//   color: $red;
-// }

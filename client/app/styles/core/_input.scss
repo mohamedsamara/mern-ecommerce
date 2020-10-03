@@ -12,8 +12,8 @@ input[type='password'] {
   &:focus {
     outline: none;
     color: $font-focus-color;
-    border-color: $theme-light-blue !important;
-    // box-shadow: $box-shadow;
+    border-color: $border-focus-color !important;
+    box-shadow: none;
   }
 
   &:disabled {
@@ -70,7 +70,7 @@ input[type='password'] {
 
   label {
     margin-bottom: 5px;
-    color: $theme-blue;
+    color: $font-custom-color;
     font-size: $font-size-large;
   }
 }
@@ -99,7 +99,7 @@ textarea {
   &:focus {
     outline: none;
     color: $font-focus-color;
-    border-color: $theme-light-blue !important;
+    border-color: $border-focus-color !important;
     // box-shadow: $box-shadow;
   }
 }

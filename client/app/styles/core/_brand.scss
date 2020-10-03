@@ -20,7 +20,7 @@
     }
 
     &:hover {
-      border-color: $theme-black;
+      border-color: $border-hover-color;
       -moz-transition: border-color $layout-transition-speed ease-in-out;
       -webkit-transition: border-color $layout-transition-speed ease-in-out;
       -ms-transition: border-color $layout-transition-speed ease-in-out;
@@ -29,13 +29,6 @@
 
     .brand-desc {
       @include text-ellipsis(2);
-    }
-
-    h1 {
-      a {
-        font-size: $font-size-heading-small !important;
-        color: $red !important;
-      }
     }
   }
 }

@@ -2,9 +2,7 @@
   .subpage-header {
     @include flex();
     justify-content: space-between;
-    color: $red !important;
-    border-bottom: $border-default;
-    border-color: $dark-border-color;
+    border-bottom: $border-primary;
     padding-bottom: 10px;
 
     h1 {

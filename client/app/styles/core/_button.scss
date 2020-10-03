@@ -78,7 +78,7 @@ button[type='reset'] {
 }
 
 .redirect-link {
-  color: $red !important;
+  color: $primary-color !important;
   font-weight: $font-weight-bold-one;
   text-transform: capitalize;
 }
@@ -128,10 +128,20 @@ button[type='reset'] {
       width: 100% !important;
     }
 
+    .btn-text {
+      margin-left: 5px;
+    }
+
     &:hover {
+      color: $white !important;
+      background-color: $btn-bg-hover !important;
+      border-color: transparent;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+
       .bag-icon {
-        // fill: $red;
-        stroke: $red !important;
+        fill: $white;
+        stroke: $white !important;
         -webkit-transition: $layout-transition-speed;
         transition: $layout-transition-speed;
       }

@@ -67,7 +67,7 @@
           transition: $layout-transition-speed;
 
           a {
-            color: $red !important;
+            color: $primary-color !important;
           }
         }
 
@@ -82,8 +82,8 @@
 
         a.active-link {
           font-weight: $font-weight-bold-two;
-          color: $red !important;
-          border-color: $red;
+          color: $primary-color !important;
+          border-color: $primary-color;
           -webkit-transition: border-color ease-in $layout-transition-speed;
           transition: border-color ease-in $layout-transition-speed;
           background-color: $white;

@@ -15,7 +15,7 @@
 .product-list {
   .product-container {
     background-color: $white;
-    box-shadow: $box-shadow;
+    box-shadow: $primary-box-shadow;
     height: 100%;
 
     .item-box {
@@ -31,8 +31,6 @@
         padding: 25px 15px;
 
         .item-name {
-          color: $theme-blue !important;
-          // font-weight: $font-weight-bold-two;
           margin-bottom: 8px;
           @include text-ellipsis(1);
         }
@@ -46,7 +44,6 @@
           color: $font-custom-color !important;
 
           span {
-            color: $theme-blue;
             font-weight: $font-weight-bold-one;
           }
         }
@@ -87,6 +84,7 @@
   .product-container {
     background-color: $white;
     padding: 20px;
+    box-shadow: $primary-box-shadow;
     border-radius: $border-radius-default;
     @include flex();
     flex-direction: column;
@@ -94,6 +92,10 @@
   }
 
   .item-box {
+    .item-name {
+      font-size: $font-size-huge !important;
+    }
+
     .item-details {
       .item-desc {
         color: $font-custom-color !important;
@@ -101,12 +103,15 @@
 
       .price {
         font-size: $font-size-x-huge;
-        color: $theme-light-blue;
       }
 
       .brand-link {
-        color: $theme-blue !important;
+        color: $font-custom-color !important;
         font-weight: $font-weight-bold-one;
+
+        &:hover {
+          text-decoration: underline !important;
+        }
       }
     }
 
@@ -135,7 +140,8 @@
   }
 
   .item-name {
-    color: $red !important;
+    color: $primary-color !important;
+    font-size: $font-size-heading-small !important;
     margin: 0px;
   }
 
@@ -152,7 +158,7 @@
 
   .price {
     color: $font-custom-color;
-    font-weight: $font-weight-bold-two;
+    font-weight: $font-weight-bold-one;
     font-size: $font-size-huge;
   }
 

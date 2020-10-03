@@ -62,8 +62,7 @@
   margin-top: 15px;
   width: 300px;
   max-width: 350px;
-  border: $border-default;
-  border-color: $light-border-color;
+  border: $border-primary;
   border-radius: $border-radius-default;
   @include media-breakpoint-down(sm) {
     width: 100%;

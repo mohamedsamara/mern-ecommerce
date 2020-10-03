@@ -45,7 +45,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 100%;
-    background-color: $theme-white;
+    background-color: $white;
   }
 
   .item-box {
@@ -63,7 +63,7 @@
 
     .item-details {
       .icon-trash {
-        color: $theme-bright-red;
+        color: $font-custom-color;
         font-size: $font-size-xx-large;
         cursor: pointer;
       }
@@ -97,7 +97,6 @@
     }
 
     p {
-      // color: $red;
       font-weight: $font-weight-bold-one;
       margin-top: 12px;
     }
@@ -109,7 +108,7 @@
 
     .cart-summary {
       padding: 10px;
-      background-color: $theme-light-blue-white;
+      background-color: $theme-white;
 
       p {
         margin-bottom: 0;

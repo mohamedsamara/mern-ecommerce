@@ -10,7 +10,7 @@
 
     .order-box {
       border-radius: $border-radius-default;
-      box-shadow: $box-shadow;
+      box-shadow: $primary-box-shadow;
 
       .order-first-item {
         .item-image {
@@ -45,12 +45,6 @@
         margin-bottom: 10px;
       }
     }
-
-    .shopping-btn {
-      &:hover {
-        background-color: $theme-light-blue;
-      }
-    }
   }
 }
 /* end order success styles */
@@ -67,7 +61,7 @@
 /* start order details styles */
 .order-details {
   h4 {
-    border-bottom: $border-default;
+    border-bottom: $border-primary;
     padding-bottom: 8px;
     margin-bottom: 16px;
   }
@@ -89,7 +83,7 @@
 /* start order summary styles */
 .order-summary {
   padding-top: 15px;
-  border: $border-default;
+  border: $border-primary;
 }
 /* end order summary styles */
 
