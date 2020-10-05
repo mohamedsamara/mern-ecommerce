@@ -23,15 +23,12 @@ hr {
 .lead {
   font-size: $font-size-medium;
 }
-
 // end bootstrap overrides
 
 // start react-notification-system-redux overrides
-
 .notification {
   .notification-title {
     font-weight: $font-weight-normal !important;
   }
 }
-
 // end react-notification-system-redux overrides

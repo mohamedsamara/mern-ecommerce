@@ -15,9 +15,13 @@
 
 .footer-block {
   width: 100%;
-  margin: 0px 15px;
+  margin-right: 16px;
   border-right: $border-primary;
-  padding: 20px 0px 40px;
+  padding-top: 20px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 
   @include media-breakpoint-down(sm) {
     text-align: center;
@@ -92,6 +96,7 @@
   .instagram-icon {
     @include icon($instagram, 40px, 40px);
     background-size: 100%;
+    border-radius: 50%;
   }
 
   .pinterest-icon {
@@ -111,14 +116,5 @@
 
 .footer-copyright {
   text-align: center;
-  padding: 15px 0px;
-}
-
-/*
- * Contact us block
- */
-
-.contact-us-block {
-  text-align: center;
-  padding: 15px 0px;
+  padding: 16px 0px;
 }

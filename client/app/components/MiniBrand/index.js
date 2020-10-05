@@ -6,18 +6,37 @@
 
 import React from 'react';
 
-import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 const MiniBrand = props => {
-  const { brands } = props;
+  const { brands, toggleBrand } = props;
+
+  const handleMenuItemClick = () => {
+    toggleBrand();
+  };
+
   return (
     <div className='mini-brand-list'>
-      <h2>Shop By Brand</h2>
+      <div className='d-flex align-items-center justify-content-between min-brand-title'>
+        <h4>Shop By Brand</h4>
+        <Link
+          to={'/brands'}
+          className='redirect-link'
+          role='menuitem'
+          onClick={handleMenuItemClick}
+        >
+          See all
+        </Link>
+      </div>
       <div className='mini-brand-block'>
         {brands.map((brand, index) => (
           <div key={index} className='brand-item'>
-            <Link to={`/shop/brand/${brand.slug}`} className='brand-link'>
+            <Link
+              to={`/shop/brand/${brand.slug}`}
+              className='brand-link'
+              role='menuitem'
+              onClick={handleMenuItemClick}
+            >
               {brand.name}
             </Link>
           </div>

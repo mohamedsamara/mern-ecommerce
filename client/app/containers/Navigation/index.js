@@ -18,6 +18,7 @@ import {
   NavItem,
   NavLink,
   UncontrolledDropdown,
+  Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
@@ -45,21 +46,13 @@ class Navigation extends React.PureComponent {
       cartItems,
       brands,
       signOut,
-      isCartOpen,
       isMenuOpen,
+      isCartOpen,
       isBrandOpen,
       toggleCart,
       toggleMenu,
       toggleBrand
     } = this.props;
-
-    const handleMouseEnter = () => {
-      toggleBrand(true);
-    };
-
-    const handleMouseLeave = () => {
-      toggleBrand(false);
-    };
 
     return (
       <header className='header fixed-mobile-header'>
@@ -131,33 +124,22 @@ class Navigation extends React.PureComponent {
               <Navbar color='light' light expand='md'>
                 <CartIcon cartItems={cartItems} onClick={toggleCart} />
                 <Nav navbar>
-                  <NavItem>
-                    <NavLink
-                      tag={ActiveLink}
-                      to='/brands'
-                      className={isBrandOpen ? 'brand-link-mouseover' : ''}
-                      activeClassName='active'
-                      onMouseEnter={handleMouseEnter}
-                    >
+                  <Dropdown
+                    nav
+                    inNavbar
+                    toggle={toggleBrand}
+                    isOpen={isBrandOpen}
+                  >
+                    <DropdownToggle nav>
                       Brands
-                    </NavLink>
-                    <div
-                      className={
-                        isBrandOpen ? 'mini-brand-open' : 'hidden-mini-brand'
-                      }
-                    >
+                      <span className='fa fa-chevron-down dropdown-caret'></span>
+                    </DropdownToggle>
+                    <DropdownMenu right className='nav-brand-dropdown'>
                       <div className='mini-brand'>
-                        <div className='extended-margin'></div>
-                        <div className='mini-brand-container'>
-                          <MiniBrand brands={brands} />
-                        </div>
+                        <MiniBrand brands={brands} toggleBrand={toggleBrand} />
                       </div>
-                      <div
-                        className={isBrandOpen ? 'dark-overflow' : ''}
-                        onMouseEnter={handleMouseLeave}
-                      />
-                    </div>
-                  </NavItem>
+                    </DropdownMenu>
+                  </Dropdown>
                   <NavItem>
                     <NavLink
                       tag={ActiveLink}
@@ -179,7 +161,6 @@ class Navigation extends React.PureComponent {
                         >
                           Dashboard
                         </DropdownItem>
-                        <DropdownItem divider />
                         <DropdownItem onClick={signOut}>Sign Out</DropdownItem>
                       </DropdownMenu>
                     </UncontrolledDropdown>

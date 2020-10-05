@@ -14,6 +14,10 @@ import Button from '../Button';
 const CartList = props => {
   const { cartItems, handleRemoveFromCart } = props;
 
+  const handleProductClick = () => {
+    props.toggleCart();
+  };
+
   return (
     <div className='cart-list'>
       {cartItems.map((item, index) => (
@@ -22,7 +26,11 @@ const CartList = props => {
             <Container>
               <Row className='mb-2 align-items-center'>
                 <Col xs='9'>
-                  <Link to={`/product/${item.slug}`} className='item-link'>
+                  <Link
+                    to={`/product/${item.slug}`}
+                    className='item-link'
+                    onClick={handleProductClick}
+                  >
                     <h1 className='item-name'>{item.name}</h1>
                   </Link>
                 </Col>

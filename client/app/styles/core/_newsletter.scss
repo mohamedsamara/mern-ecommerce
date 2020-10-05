@@ -7,8 +7,22 @@
 .subscribe {
   .inline-btn-box {
     .input-text-block {
+      .input-text {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      .custom-btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
       @include media-breakpoint-between(md, lg) {
         flex-direction: column;
+
+        .input-text {
+          border-radius: $border-radius-default;
+        }
 
         .custom-btn {
           margin-top: 10px;

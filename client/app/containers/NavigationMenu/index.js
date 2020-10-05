@@ -23,6 +23,10 @@ class NavigationMenu extends React.PureComponent {
   render() {
     const { isMenuOpen, categories, toggleMenu } = this.props;
 
+    const handleCategoryClick = () => {
+      this.props.toggleMenu();
+    };
+
     return (
       <div className='navigation-menu'>
         <Container>
@@ -43,6 +47,7 @@ class NavigationMenu extends React.PureComponent {
                 {categories.map((link, index) => (
                   <li key={index} className='menu-item'>
                     <NavLink
+                      onClick={handleCategoryClick}
                       to={'/shop/category/' + link.slug}
                       activeClassName='active-link'
                       exact

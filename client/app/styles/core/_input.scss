@@ -7,6 +7,7 @@ input[type='password'] {
   border: $border-default;
   font-size: $font-size-large;
   color: $font-custom-color;
+  border-radius: $border-radius-default;
   cursor: text;
 
   &:focus {
@@ -83,7 +84,6 @@ input[type='password'] {
 
   .input-btn {
     &.custom-btn {
-      border-radius: 0;
       border-left: none;
     }
   }
@@ -100,7 +100,6 @@ textarea {
     outline: none;
     color: $font-focus-color;
     border-color: $border-focus-color !important;
-    // box-shadow: $box-shadow;
   }
 }
 
@@ -109,7 +108,7 @@ textarea {
 
   label {
     margin-bottom: 5px;
-    color: $theme-blue;
+    color: $font-custom-color;
     font-size: $font-size-large;
   }
 

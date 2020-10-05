@@ -29,7 +29,7 @@ const navigationReducer = (state = initialState, action) => {
     case TOGGLE_BRAND:
       return {
         ...state,
-        isBrandOpen: action.payload
+        isBrandOpen: !state.isBrandOpen
       };
     default:
       return state;

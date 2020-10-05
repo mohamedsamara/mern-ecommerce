@@ -153,10 +153,17 @@
       z-index: 1001;
       border: none;
       box-shadow: $box-shadow;
+
+      &.nav-brand-dropdown {
+        padding: 0;
+        @include media-breakpoint-down(sm) {
+          left: 0;
+          min-width: 270px;
+        }
+      }
     }
 
     .dropdown-item {
-      // padding: 0px;
       font-weight: $font-weight-normal;
 
       &:focus {
@@ -214,13 +221,6 @@
     @include flex();
     flex-wrap: wrap;
     justify-content: space-between;
-
-    // .bars-icon {
-    //   display: none;
-    //   @include media-breakpoint-down(sm) {
-    //     display: block;
-    //   }
-    // }
   }
 }
 
@@ -236,52 +236,23 @@
 
 // mini brand
 .mini-brand {
-  visibility: hidden;
-  position: absolute;
-  opacity: 0;
-  top: 21px;
-  right: 0;
-  left: auto;
-  background-color: $white;
-  width: 500px;
-  z-index: 1023;
-
-  .extended-margin {
-    display: none;
-    background-color: $dark-overflow-bg;
-    width: 100%;
-    height: 13px;
-  }
-}
-
-// show hidden brand popup
-.mini-brand-open {
-  @include media-breakpoint-down(sm) {
-    display: none;
+  min-width: 270px;
+  @include media-breakpoint-up(md) {
+    min-width: 500px;
   }
 
-  .extended-margin {
-    display: block;
-  }
-
-  .mini-brand {
-    visibility: visible;
-    opacity: 1;
-    @include transition($layout-transition-higher-speed);
-  }
-
-  .dark-overflow {
-    @include dark-overflow();
-    top: 0;
-    @include media-breakpoint-down(xs) {
-      width: 100%;
-      top: 0;
-    }
+  .min-brand-title {
+    border-bottom: $border-primary;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
   }
 }
 
 .mini-brand-list {
-  padding: 20px 40px;
+  padding: 16px 20px;
+  @include media-breakpoint-up(md) {
+    padding: 20px 40px;
+  }
 
   .mini-brand-block {
     @include flex();
@@ -289,11 +260,11 @@
     margin-top: 12px;
 
     .brand-item {
-      flex: 50%;
+      flex: 100%;
       margin-bottom: 10px;
 
-      @include media-breakpoint-down(xs) {
-        flex: 100%;
+      @include media-breakpoint-up(md) {
+        flex: 50%;
       }
 
       .brand-link {
@@ -317,7 +288,7 @@
           left: 0;
           width: 100%;
           height: 2px;
-          background-color: $red;
+          background-color: $primary-bg;
           content: '';
           opacity: 0;
           -webkit-transition: opacity $layout-transition-speed,

@@ -18,9 +18,8 @@ export const toggleCart = () => {
   };
 };
 
-export const toggleBrand = value => {
+export const toggleBrand = () => {
   return {
-    type: TOGGLE_BRAND,
-    payload: value
+    type: TOGGLE_BRAND
   };
 };
