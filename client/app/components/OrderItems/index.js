@@ -35,7 +35,11 @@ const OrderItems = props => {
                     <p className='price'>${item.product.price}</p>
                   </div>
 
-                  <div className='d-flex justify-content-between d-md-none mt-1'>
+                  <div className='d-flex justify-content-between flex-wrap d-md-none mt-1'>
+                    <p className='mb-1'>
+                      Status
+                      <span className='order-label order-status'>{` ${item.status}`}</span>
+                    </p>
                     <p className='mb-1'>
                       Quantity
                       <span className='order-label'>{` ${item.quantity}`}</span>
@@ -49,14 +53,21 @@ const OrderItems = props => {
               </div>
 
               <div className='d-none d-md-flex justify-content-around align-items-center box'>
-                <p>
-                  Quantity
-                  <span className='order-label'>{` ${item.quantity}`}</span>
-                </p>
-                <p>
-                  Total Price
-                  <span className='order-label'>{` $${item.totalPrice}`}</span>
-                </p>
+                <div className='text-center'>
+                  <p className='order-label order-status'>{` ${item.status}`}</p>
+                  <p>Status</p>
+                </div>
+
+                <div className='text-center'>
+                  <p className='order-label'>{` ${item.quantity}`}</p>
+                  <p>Quantity</p>
+                </div>
+
+                <div className='text-center'>
+                  <p className='order-label'>{` $${item.totalPrice}`}</p>
+
+                  <p>Total Price</p>
+                </div>
               </div>
             </div>
           </Col>
