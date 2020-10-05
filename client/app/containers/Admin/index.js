@@ -16,6 +16,7 @@ import AccountMenu from '../../components/AccountMenu';
 import Page404 from '../../components/Page404';
 
 import Account from '../Account';
+import AccountSecurity from '../AccountSecurity';
 import Users from '../Users';
 import Category from '../Category';
 import Product from '../Product';
@@ -41,6 +42,11 @@ class Admin extends React.PureComponent {
             <div className='panel-body'>
               <Switch>
                 <Route exact path='/dashboard' component={Account} />
+                <Route
+                  exact
+                  path='/dashboard/security'
+                  component={AccountSecurity}
+                />
                 <Route path='/dashboard/products' component={Product} />
                 <Route path='/dashboard/categories' component={Category} />
                 <Route path='/dashboard/brands' component={Brand} />

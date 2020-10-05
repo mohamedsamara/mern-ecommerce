@@ -29,7 +29,7 @@ class ResetPassword extends React.PureComponent {
     if (authenticated) return <Redirect to='/dashboard' />;
 
     return (
-      <div className='forgot-password-form'>
+      <div className='reset-password-form'>
         <h1>Reset Password</h1>
         <hr />
         <ResetPasswordForm

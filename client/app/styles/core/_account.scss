@@ -39,37 +39,6 @@
       display: inline;
     }
   }
-
-  .checkbox {
-    margin-top: 20px;
-  }
 }
 
-// start reset password form styles
-.reset-form {
-  position: relative;
-  margin: 10px 0px;
-  padding: 15px;
-  background: $white;
-  height: 0;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 1000;
-  -webkit-box-shadow: $box-shadow;
-  box-shadow: $box-shadow;
-  @include transition($layout-transition-higher-speed);
-}
-
-.reset-form-open {
-  .reset-form {
-    opacity: 1;
-    height: 100%;
-    visibility: visible;
-    @include transition($layout-transition-higher-speed);
-  }
-
-  .dark-overflow {
-    @include dark-overflow();
-  }
-}
 // end reset password form styles

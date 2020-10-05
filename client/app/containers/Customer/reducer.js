@@ -9,8 +9,9 @@ import { TOGGLE_CUSTOMER_MENU } from './constants';
 const initialState = {
   isMenuOpen: false,
   customerLinks: [
-    { to: '', name: 'account details' },
-    { to: '/orders', name: 'manage orders' }
+    { to: '', name: 'Account Details' },
+    { to: '/security', name: 'Account Security' },
+    { to: '/orders', name: 'Manage Orders' }
   ]
 };
 
