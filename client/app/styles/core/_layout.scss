@@ -105,6 +105,36 @@ h6,
   text-transform: capitalize;
 }
 
+h1,
+.h1 {
+  font-size: 2em !important;
+}
+
+h2,
+.h2 {
+  font-size: 1.4em !important;
+}
+
+h3,
+.h3 {
+  font-size: 1.27em !important;
+}
+
+h4,
+.h4 {
+  font-size: 1.12em !important;
+}
+
+h5,
+.h5 {
+  font-size: 0.83em !important;
+}
+
+h6,
+.h6 {
+  font-size: 0.75em !important;
+}
+
 /* scrollbar styles */
 ::-webkit-scrollbar {
   width: 10px;

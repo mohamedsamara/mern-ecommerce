@@ -41,7 +41,7 @@ class Signup extends React.PureComponent {
     return (
       <div className='signup-form'>
         {isLoading && <LoadingIndicator />}
-        <h1>Sign Up</h1>
+        <h2>Sign Up</h2>
         <hr />
         <form onSubmit={handleSubmit} noValidate>
           <Row>

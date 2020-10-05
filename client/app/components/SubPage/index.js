@@ -14,7 +14,7 @@ const SubPage = props => {
   return (
     <div className='sub-page'>
       <div className='subpage-header'>
-        <h1>{title}</h1>
+        <h2>{title}</h2>
         {isMenuOpen !== null && (
           <div className='action'>
             {isMenuOpen ? (

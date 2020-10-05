@@ -14,7 +14,7 @@ const OrderItems = props => {
 
   return (
     <div className='order-items pt-3'>
-      <h4>Order Items</h4>
+      <h2>Order Items</h2>
       <Row>
         {order.products.map((item, index) => (
           <Col xs='12' key={index} className='item'>
@@ -29,7 +29,7 @@ const OrderItems = props => {
                       to={`/product/${item.product.slug}`}
                       className='item-link'
                     >
-                      <h1 className='item-name'>{item.product.name}</h1>
+                      <h4 className='item-name'>{item.product.name}</h4>
                     </Link>
                     <p className='sku'>{item.product.sku}</p>
                     <p className='price'>${item.product.price}</p>

@@ -31,7 +31,7 @@ class NavigationMenu extends React.PureComponent {
       <div className='navigation-menu'>
         <Container>
           <div className='menu-header'>
-            <h1>MERN Store</h1>
+            <h1 className='logo'>MERN Store</h1>
             {isMenuOpen && (
               <Button
                 className='btn-no-styles'

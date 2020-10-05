@@ -42,7 +42,7 @@ class Login extends React.PureComponent {
     return (
       <div className='login-form'>
         {isLoading && <LoadingIndicator />}
-        <h1>Login</h1>
+        <h2>Login</h2>
         <hr />
         <form onSubmit={handleSubmit} noValidate>
           <Row>

@@ -21,7 +21,7 @@ const BrandList = props => {
           <Col xs='6' md='4' lg='3' key={index} className='mb-3'>
             <div className='brand-box'>
               <Link to={`/shop/brand/${brand.slug}`} className='brand-link'>
-                <h1>{brand.name}</h1>
+                <h4>{brand.name}</h4>
                 <p className='brand-desc'>{brand.description}</p>
               </Link>
             </div>

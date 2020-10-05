@@ -94,7 +94,7 @@ class Navigation extends React.PureComponent {
                   onClick={toggleMenu}
                 />
                 <Link to='/'>
-                  <h1>MERN Store</h1>
+                  <h1 className='logo'>MERN Store</h1>
                 </Link>
               </div>
             </Col>

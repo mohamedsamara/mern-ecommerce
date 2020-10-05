@@ -2,6 +2,8 @@
 
 // start bootstrap overrides
 .form-control {
+  height: auto;
+
   &:focus {
     box-shadow: $box-shadow;
   }

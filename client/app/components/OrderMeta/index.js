@@ -17,7 +17,7 @@ const OrderMeta = props => {
   return (
     <div className='order-meta'>
       <div className='d-flex align-items-center justify-content-between mb-3 title'>
-        <h4>Order Details</h4>
+        <h2 className='mb-0'>Order Details</h2>
         <Link className='redirect-link' to={'/dashboard/orders'}>
           Back to orders
         </Link>

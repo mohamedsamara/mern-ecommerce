@@ -1,5 +1,4 @@
 // header styles
-
 .header-info {
   padding: 10px 0px;
   background-color: $black;
@@ -16,6 +15,10 @@
 .header {
   background-color: $white;
   border-bottom: $border-primary;
+
+  .logo {
+    font-size: $font-size-heading-medium !important;
+  }
 }
 
 .fixed-mobile-header {

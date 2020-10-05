@@ -5,7 +5,7 @@ input[type='password'] {
   width: 100%;
   padding: 8px 10px;
   border: $border-default;
-  font-size: $font-size-large;
+  font-size: $font-size-medium;
   color: $font-custom-color;
   border-radius: $border-radius-default;
   cursor: text;
@@ -72,7 +72,7 @@ input[type='password'] {
   label {
     margin-bottom: 5px;
     color: $font-custom-color;
-    font-size: $font-size-large;
+    font-size: $font-size-medium;
   }
 }
 
@@ -109,7 +109,7 @@ textarea {
   label {
     margin-bottom: 5px;
     color: $font-custom-color;
-    font-size: $font-size-large;
+    font-size: $font-size-medium;
   }
 
   .select-container {

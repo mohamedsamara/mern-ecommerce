@@ -13,7 +13,7 @@ class Homepage extends React.PureComponent {
   componentDidMount() {}
 
   render() {
-    return <h1>Homepage</h1>;
+    return <h3>Homepage</h3>;
   }
 }
 

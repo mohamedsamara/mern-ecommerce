@@ -25,7 +25,7 @@ class Sell extends React.PureComponent {
 
     return (
       <div className='sell'>
-        <h1>Would you like to sell your products on MERN Store!</h1>
+        <h2>Would you like to sell your products on MERN Store!</h2>
         <hr />
         <form onSubmit={handleSubmit}>
           <Row>

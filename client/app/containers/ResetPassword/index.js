@@ -30,7 +30,7 @@ class ResetPassword extends React.PureComponent {
 
     return (
       <div className='reset-password-form'>
-        <h1>Reset Password</h1>
+        <h2>Reset Password</h2>
         <hr />
         <ResetPasswordForm
           resetFormData={resetFormData}

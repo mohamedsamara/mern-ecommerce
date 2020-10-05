@@ -13,7 +13,7 @@ const OrderSummary = props => {
 
   return (
     <Col className='order-summary pt-3'>
-      <h4>Order Summary</h4>
+      <h2>Order Summary</h2>
       <div className='d-flex align-items-center summary-item'>
         <p className='summary-label'>Subtotal</p>
         <p className='summary-value ml-auto'>${order.total}</p>
