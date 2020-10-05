@@ -42,7 +42,10 @@ export const sellWithUs = () => {
 
       const merchant = getState().merchant.sellFormData;
 
-      const { isValid, errors } = allFieldsValidation(merchant, rules);
+      const { isValid, errors } = allFieldsValidation(merchant, rules, {
+        'required.phoneNumber': 'The phone number field is required.',
+        'regex.phoneNumber': 'The phone number format is invalid.'
+      });
 
       if (!isValid) {
         return dispatch({ type: SET_SELL_FORM_ERRORS, payload: errors });
