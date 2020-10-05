@@ -8,15 +8,14 @@ button[type='reset'] {
   border: none;
   background: transparent;
   color: $font-custom-color !important;
-  font-weight: $font-weight-bold-two;
   font-size: $font-size-small;
+  font-weight: $font-weight-bold-two;
   text-decoration: none;
   text-transform: capitalize;
   cursor: pointer;
 
   &:focus {
     outline: none;
-    // box-shadow: none;
   }
 
   :active {
@@ -32,6 +31,7 @@ button[type='reset'] {
 }
 // end input button styles
 
+// basic styles
 .input-btn {
   padding: 0;
 
@@ -39,20 +39,30 @@ button[type='reset'] {
     font-weight: $font-weight-bold-two;
     font-size: $font-size-small;
   }
+}
 
-  .btn-icon {
-    display: inline-flex;
-    vertical-align: bottom;
-    line-height: 100%;
+.input-btn {
+  &.text-only,
+  &.with-icon {
+    &.sm {
+      padding: 6px 10px;
+      min-width: 120px;
+
+      .btn-text {
+        font-size: $font-size-x-small;
+      }
+    }
+
+    &.md {
+      padding: 10px 16px;
+    }
   }
 }
 
-// custom button
+// primary button
 .input-btn {
-  &.custom-btn {
-    padding: 10px;
+  &.custom-btn-primary {
     position: relative;
-    min-width: 150px;
     border: $border-default;
     border-radius: $border-radius-default;
     background-color: $btn-bg;
@@ -65,7 +75,6 @@ button[type='reset'] {
     }
 
     &:hover {
-      // border-color: $white;
       background-color: $btn-bg-hover;
 
       .btn-text {
@@ -77,10 +86,53 @@ button[type='reset'] {
   }
 }
 
-.redirect-link {
-  color: $primary-color !important;
-  font-weight: $font-weight-bold-one;
-  text-transform: capitalize;
+// secondary button
+.input-btn {
+  &.custom-btn-default {
+    position: relative;
+    border: $border-default;
+    border-radius: $border-radius-default;
+    background-color: $btn-bg;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+
+    .btn-text {
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+
+    &:hover {
+      background-color: $theme-gray;
+
+      .btn-text {
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
+      }
+    }
+  }
+}
+
+// link button
+.input-btn {
+  &.custom-btn-link {
+    position: relative;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+
+    .btn-text {
+      font-weight: $font-weight-normal;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+
+    &:hover {
+      .btn-text {
+        opacity: 0.9;
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
+      }
+    }
+  }
 }
 
 // button link
@@ -104,15 +156,45 @@ button[type='reset'] {
   }
 }
 
-.btn-no-shape {
-  &:hover {
-    color: $font-focus-color !important;
-    opacity: 0.6;
+// button icon styles
+.input-btn {
+  .btn-icon {
+    display: inline-flex;
+    vertical-align: bottom;
+    line-height: 100%;
   }
 
-  .btn-text {
-    font-weight: $font-weight-normal;
-    font-size: $font-size-medium;
+  // text only styles
+  &.text-only {
+    min-width: 135px;
+
+    .btn-text {
+      letter-spacing: 0.9px;
+    }
+  }
+
+  // with icon styles
+  &.with-icon {
+    .btn-text {
+      margin-left: 5px;
+    }
+
+    .btn-icon {
+      margin-left: 10px;
+    }
+
+    &:hover {
+      border-color: transparent;
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+
+      svg {
+        fill: $white;
+        stroke: $white !important;
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
+      }
+    }
   }
 }
 
@@ -120,37 +202,9 @@ button[type='reset'] {
 .input-btn {
   &.bag-btn {
     box-shadow: $custom-box-shadow;
-    border: $border-default;
-    border-radius: $border-radius-default;
-    padding: 10px;
     min-width: 170px;
     @include media-breakpoint-down(sm) {
       width: 100% !important;
-    }
-
-    .btn-text {
-      margin-left: 5px;
-    }
-
-    &:hover {
-      color: $white !important;
-      background-color: $btn-bg-hover !important;
-      border-color: transparent;
-      -webkit-transition: $layout-transition-speed;
-      transition: $layout-transition-speed;
-
-      .bag-icon {
-        fill: $white;
-        stroke: $white !important;
-        -webkit-transition: $layout-transition-speed;
-        transition: $layout-transition-speed;
-      }
-    }
-
-    .btn-icon {
-      .bag-icon {
-        margin-left: 10px;
-      }
     }
   }
 }

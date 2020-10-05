@@ -51,7 +51,7 @@ const Table = props => {
           {csv && (
             <div className='csv'>
               <ExportCSVButton
-                className='input-btn custom-btn'
+                className='input-btn custom-btn-primary'
                 {...props.csvProps}
               >
                 Export CSV

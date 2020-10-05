@@ -90,7 +90,6 @@ class Navigation extends React.PureComponent {
                 <Button
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
-                  className='btn-no-styles'
                   onClick={toggleMenu}
                 />
                 <Link to='/'>
@@ -109,7 +108,6 @@ class Navigation extends React.PureComponent {
                 <Button
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
-                  className='btn-no-styles'
                   onClick={toggleMenu}
                 />
                 <CartIcon cartItems={cartItems} onClick={toggleCart} />
