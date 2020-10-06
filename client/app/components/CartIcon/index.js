@@ -29,7 +29,6 @@ const CartIcon = props => {
         items > 0 ? `your cart have ${items} items` : 'your cart is empty'
       }
       icon={Icon}
-      className='btn-no-styles'
       onClick={onClick}
     />
   );

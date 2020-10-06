@@ -79,6 +79,7 @@ const AddProduct = props => {
               error={formErrors['quantity']}
               label={'Quantity'}
               name={'quantity'}
+              decimals={false}
               placeholder={'Product Quantity'}
               value={productFormData.quantity}
               onInputChange={(name, value) => {

@@ -18,9 +18,8 @@ const AccountMenu = props => {
     <div className='panel-sidebar'>
       <Button
         text='Expand Dashboard Menu'
-        className={`btn-no-styles ${
-          isMenuOpen ? 'menu-panel' : 'menu-panel collapse'
-        }`}
+        variant='default'
+        className={`${isMenuOpen ? 'menu-panel' : 'menu-panel collapse'}`}
         ariaExpanded={isMenuOpen ? 'true' : 'false'}
         // ariaLabel={isMenuOpen ? 'dashboard menu expanded' : 'dashboard menu collapse'}
         onClick={toggleMenu}

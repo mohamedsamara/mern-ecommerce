@@ -43,8 +43,14 @@ export const sellWithUs = () => {
       const merchant = getState().merchant.sellFormData;
 
       const { isValid, errors } = allFieldsValidation(merchant, rules, {
-        'required.phoneNumber': 'The phone number field is required.',
-        'regex.phoneNumber': 'The phone number format is invalid.'
+        'required.name': 'Name is required.',
+        'required.email': 'Email is required.',
+        'email.email': 'Email format is invalid.',
+        'required.phoneNumber': 'Phone number is required.',
+        'regex.phoneNumber': 'Phone number format is invalid.',
+        'required.brand': 'Brand is required.',
+        'required.business': 'Business is required.',
+        'min.business': 'Business must be at least 10 characters.'
       });
 
       if (!isValid) {

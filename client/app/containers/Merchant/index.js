@@ -22,7 +22,7 @@ class Merchant extends React.PureComponent {
 
     return (
       <div className='merchant-dashboard'>
-        <SubPage title={'Merchant List'} isMenuOpen={null} />
+        <SubPage title={'Merchants'} isMenuOpen={null} />
         <Table
           data={merchants}
           columns={columns}

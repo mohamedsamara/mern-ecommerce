@@ -11,10 +11,13 @@ const Input = props => {
     type,
     value,
     error,
+    step,
+    decimals,
     min,
     max,
     disabled,
     placeholder,
+    rows,
     label,
     name,
     onInputChange,
@@ -36,7 +39,7 @@ const Input = props => {
           onChange={e => {
             _onChange(e);
           }}
-          rows='2'
+          rows={rows}
           name={name}
           value={value}
           placeholder={placeholder}
@@ -47,13 +50,22 @@ const Input = props => {
     );
   } else if (type === 'number') {
     const styles = `input-box${error ? ' invalid' : ''}`;
+
+    const handleOnInput = e => {
+      if (!decimals) {
+        event.target.value = event.target.value.replace(/[^0-9]*/g, '');
+      }
+    };
     return (
       <div className={styles}>
         {label && <label>{label}</label>}
         <input
           autoComplete='on'
+          step='step'
           min={min || 0}
           max={max || null}
+          pattern='[0-9]'
+          onInput={handleOnInput}
           type={type}
           onChange={e => {
             _onChange(e);
@@ -98,6 +110,9 @@ const Input = props => {
 };
 
 Input.defaultProps = {
+  step: 1,
+  decimals: true,
+  rows: '4',
   inlineElement: null
 };
 

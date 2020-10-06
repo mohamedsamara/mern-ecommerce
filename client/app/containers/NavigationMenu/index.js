@@ -34,7 +34,6 @@ class NavigationMenu extends React.PureComponent {
             <h1 className='logo'>MERN Store</h1>
             {isMenuOpen && (
               <Button
-                className='btn-no-styles'
                 ariaLabel='close the menu'
                 icon={<CloseIcon />}
                 onClick={toggleMenu}

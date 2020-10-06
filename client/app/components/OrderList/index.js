@@ -24,11 +24,15 @@ const OrderList = props => {
           key={index}
           className='d-flex flex-column flex-lg-row mb-3 order-box'
         >
-          <div className='order-first-item box-left'>
+          <div className='order-first-item p-lg-3'>
             {renderFirstItem(order.products)}
           </div>
-          <div className='d-flex flex-column flex-xl-row justify-content-between flex-1 mx-lg-4 p-3'>
+          <div className='d-flex flex-column flex-xl-row justify-content-between flex-1 ml-lg-2 mr-xl-4 p-3'>
             <div className='order-details'>
+              <div className='mb-1'>
+                <span>Status</span>
+                <span className='order-label order-status'>{` ${order.products[0].status}`}</span>
+              </div>
               <div className='mb-1'>
                 <span>Order #</span>
                 <span className='order-label'>{` ${order._id}`}</span>

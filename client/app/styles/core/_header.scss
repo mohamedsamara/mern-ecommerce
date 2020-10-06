@@ -194,7 +194,6 @@
   .brand {
     @include flex();
     flex-wrap: wrap;
-    // justify-content: space-between;
     align-items: flex-start;
     @include media-breakpoint-down(sm) {
       margin-top: 10px;
@@ -224,16 +223,6 @@
     @include flex();
     flex-wrap: wrap;
     justify-content: space-between;
-  }
-}
-
-.brand-link-mouseover {
-  position: relative;
-  z-index: 1002;
-  color: $font-hover-color !important;
-
-  @include media-breakpoint-down(sm) {
-    z-index: 900;
   }
 }
 

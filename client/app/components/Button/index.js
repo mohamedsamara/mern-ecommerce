@@ -6,8 +6,16 @@
 
 import React from 'react';
 
+const variants = {
+  primary: 'custom-btn-primary',
+  secondary: 'custom-btn-secondary',
+  link: 'custom-btn-link'
+};
+
 const Button = props => {
   const {
+    size,
+    variant,
     tabIndex,
     ariaLabel,
     ariaExpanded,
@@ -19,7 +27,16 @@ const Button = props => {
     onClick
   } = props;
 
-  const styles = `input-btn${className && ` ${className}`}`;
+  const v = variant ? variants[variant] : '';
+
+  const btnVariant = icon && text ? v : icon && !text ? '' : v;
+
+  const btn =
+    icon && text ? 'with-icon' : icon && !text ? 'icon-only' : 'text-only';
+
+  const classNames = `input-btn${`${className && ` ${className}`}`}${
+    btnVariant && ` ${btnVariant}`
+  }${` ${size}`} ${btn}`;
 
   return (
     <button
@@ -27,7 +44,7 @@ const Button = props => {
       aria-label={ariaLabel}
       aria-expanded={ariaExpanded}
       disabled={disabled}
-      className={styles}
+      className={classNames}
       type={type}
       onClick={onClick}
     >
@@ -41,5 +58,7 @@ export default Button;
 
 Button.defaultProps = {
   type: 'button',
-  className: 'custom-btn'
+  variant: 'secondary',
+  size: 'md',
+  className: ''
 };

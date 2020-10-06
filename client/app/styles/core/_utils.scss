@@ -16,7 +16,6 @@
   }
 }
 
-// set bootstrap column's padding to 0
 .col-no-padding {
   padding: 0;
 }
@@ -31,6 +30,13 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+// redirect-link
+.redirect-link {
+  color: $primary-color !important;
+  font-weight: $font-weight-bold-one;
+  text-transform: capitalize;
 }
 
 .desktop-hidden {

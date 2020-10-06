@@ -39,6 +39,7 @@ input[type='password'] {
 
   .input-text,
   textarea {
+    border-radius: $border-radius-default;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
   }
@@ -83,7 +84,7 @@ input[type='password'] {
   }
 
   .input-btn {
-    &.custom-btn {
+    &.custom-btn-primary {
       border-left: none;
     }
   }

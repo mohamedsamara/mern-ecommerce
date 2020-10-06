@@ -90,7 +90,6 @@ class Navigation extends React.PureComponent {
                 <Button
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
-                  className='btn-no-styles'
                   onClick={toggleMenu}
                 />
                 <Link to='/'>
@@ -109,7 +108,6 @@ class Navigation extends React.PureComponent {
                 <Button
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
-                  className='btn-no-styles'
                   onClick={toggleMenu}
                 />
                 <CartIcon cartItems={cartItems} onClick={toggleCart} />
@@ -151,7 +149,7 @@ class Navigation extends React.PureComponent {
                   </NavItem>
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
-                      <DropdownToggle nav>
+                      <DropdownToggle nav className='one-line-ellipsis'>
                         {user.firstName ? user.firstName : 'Welcome'}
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>

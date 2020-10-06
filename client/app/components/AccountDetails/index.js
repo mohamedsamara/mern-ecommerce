@@ -64,7 +64,7 @@ const AccountDetails = props => {
         </Row>
         <hr />
         <div className='profile-actions'>
-          <Button type='submit' text='Save changes' />
+          <Button type='submit' variant='secondary' text='Save changes' />
         </div>
       </form>
     </div>
