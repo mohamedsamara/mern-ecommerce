@@ -84,7 +84,12 @@ class Login extends React.PureComponent {
           </Row>
           <hr />
           <div className='auth-actions'>
-            <Button type='submit' text='Login' disabled={isSubmitting} />
+            <Button
+              type='submit'
+              variant='primary'
+              text='Login'
+              disabled={isSubmitting}
+            />
             <Button
               text='Create an account'
               variant='link'

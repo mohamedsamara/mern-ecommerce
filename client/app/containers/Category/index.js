@@ -38,7 +38,7 @@ class Category extends React.PureComponent {
     return (
       <div className='category-dashboard'>
         <SubPage
-          title={isCategoryAddOpen ? 'Add Category' : 'Category List'}
+          title={isCategoryAddOpen ? 'Add Category' : 'Categories'}
           isMenuOpen={isCategoryAddOpen}
           toggleMenu={toggleAddCategory}
         >

@@ -50,7 +50,12 @@ export const signUp = () => {
       const newUser = getState().signup.signupFormData;
       const isSubscribed = getState().signup.isSubscribed;
 
-      const { isValid, errors } = allFieldsValidation(newUser, rules);
+      const { isValid, errors } = allFieldsValidation(newUser, rules, {
+        'required.email': 'Email is required.',
+        'required.password': 'Password is required.',
+        'required.firstName': 'First Name is required.',
+        'required.lastName': 'Last Name is required.'
+      });
 
       if (!isValid) {
         return dispatch({ type: SET_SIGNUP_FORM_ERRORS, payload: errors });

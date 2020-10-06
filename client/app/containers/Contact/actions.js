@@ -36,7 +36,13 @@ export const contactUs = () => {
 
       const contact = getState().contact.contactFormData;
 
-      const { isValid, errors } = allFieldsValidation(contact, rules);
+      const { isValid, errors } = allFieldsValidation(contact, rules, {
+        'required.name': 'Name is required.',
+        'required.email': 'Email is required.',
+        'email.email': 'Email format is invalid.',
+        'required.message': 'Message is required.',
+        'min.message': 'Message must be at least 10 characters.'
+      });
 
       if (!isValid) {
         return dispatch({ type: SET_CONTACT_FORM_ERRORS, payload: errors });

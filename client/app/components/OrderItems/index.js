@@ -79,7 +79,6 @@ const OrderItems = props => {
                 <Button
                   type='submit'
                   size='sm'
-                  variant='default'
                   text='Cancel Item'
                   className='cancel-order-btn'
                 />

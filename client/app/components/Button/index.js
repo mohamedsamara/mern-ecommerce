@@ -9,7 +9,6 @@ import React from 'react';
 const variants = {
   primary: 'custom-btn-primary',
   secondary: 'custom-btn-secondary',
-  default: 'custom-btn-default',
   link: 'custom-btn-link'
 };
 
@@ -59,7 +58,7 @@ export default Button;
 
 Button.defaultProps = {
   type: 'button',
-  variant: 'primary',
+  variant: 'secondary',
   size: 'md',
   className: ''
 };

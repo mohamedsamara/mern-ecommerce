@@ -149,7 +149,7 @@ class Navigation extends React.PureComponent {
                   </NavItem>
                   {authenticated ? (
                     <UncontrolledDropdown nav inNavbar>
-                      <DropdownToggle nav>
+                      <DropdownToggle nav className='one-line-ellipsis'>
                         {user.firstName ? user.firstName : 'Welcome'}
                         <span className='fa fa-chevron-down dropdown-caret'></span>
                       </DropdownToggle>

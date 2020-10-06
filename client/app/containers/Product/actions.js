@@ -202,7 +202,20 @@ export const addProduct = () => {
         brand: brand
       };
 
-      const { isValid, errors } = allFieldsValidation(newProduct, rules);
+      const { isValid, errors } = allFieldsValidation(newProduct, rules, {
+        'required.sku': 'Sku is required.',
+        'min.sku': 'Sku must be at least 6 characters.',
+        'required.name': 'Name is required.',
+        'min.name': 'Name must be at least 6 characters.',
+        'required.description': 'Description is required.',
+        'min.description': 'Description must be at least 10 characters.',
+        'max.description':
+          'Description may not be greater than 100 characters.',
+        'required.quantity': 'Quantity is required.',
+        'required.price': 'Price is required.',
+        'required.taxable': 'Taxable is required.',
+        'required.brand': 'Brand is required.'
+      });
 
       if (!isValid) {
         return dispatch({ type: SET_PRODUCT_FORM_ERRORS, payload: errors });

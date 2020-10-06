@@ -40,7 +40,10 @@ export const handleAddToCart = product => {
       quantity: `min:1|max:${result}`
     };
 
-    const { isValid, errors } = allFieldsValidation(product, rules);
+    const { isValid, errors } = allFieldsValidation(product, rules, {
+      'min.quantity': 'Quantity must be at least 1.',
+      'max.quantity': `Quantity may not be greater than ${result}.`
+    });
 
     if (!isValid) {
       return dispatch({ type: SET_PRODUCT_SHOP_FORM_ERRORS, payload: errors });

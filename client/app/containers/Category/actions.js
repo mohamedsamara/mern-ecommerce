@@ -104,7 +104,15 @@ export const addCategory = () => {
         ...category
       };
 
-      const { isValid, errors } = allFieldsValidation(newCategory, rules);
+      const { isValid, errors } = allFieldsValidation(newCategory, rules, {
+        'required.name': 'Name is required.',
+        'min.name': 'Name must be at least 6 characters.',
+        'required.description': 'Description is required.',
+        'min.description': 'Description must be at least 10 characters.',
+        'max.description':
+          'Description may not be greater than 100 characters.',
+        'required.products': 'Products is required.'
+      });
 
       if (!isValid) {
         return dispatch({ type: SET_CATEGORY_FORM_ERRORS, payload: errors });

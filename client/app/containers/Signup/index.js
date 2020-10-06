@@ -115,7 +115,12 @@ class Signup extends React.PureComponent {
             toggleCheckboxChange={subscribeChange}
           />
           <div className='auth-actions'>
-            <Button type='submit' text='Sign Up' disabled={isSubmitting} />
+            <Button
+              type='submit'
+              variant='primary'
+              text='Sign Up'
+              disabled={isSubmitting}
+            />
             <Link className='redirect-link' to={'/login'}>
               Back to login
             </Link>

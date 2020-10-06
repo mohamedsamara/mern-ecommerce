@@ -112,7 +112,13 @@ export const addBrand = () => {
 
       const brand = getState().brand.brandFormData;
 
-      const { isValid, errors } = allFieldsValidation(brand, rules);
+      const { isValid, errors } = allFieldsValidation(brand, rules, {
+        'required.name': 'Name is required.',
+        'min.name': 'Name must be at least 6 characters.',
+        'required.description': 'Description is required.',
+        'min.description': 'Description must be at least 10 characters.',
+        'max.description': 'Description may not be greater than 100 characters.'
+      });
 
       if (!isValid) {
         return dispatch({ type: SET_BRAND_FORM_ERRORS, payload: errors });

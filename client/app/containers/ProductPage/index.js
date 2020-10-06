@@ -91,6 +91,7 @@ class ProductPage extends React.PureComponent {
                       error={shopFormErrors['quantity']}
                       label={'Quantity'}
                       name={'quantity'}
+                      decimals={false}
                       min={1}
                       max={product.inventory}
                       placeholder={'Product Quantity'}
@@ -106,6 +107,7 @@ class ProductPage extends React.PureComponent {
                   <div className='item-actions'>
                     {itemsInCart.includes(product._id) ? (
                       <Button
+                        variant='primary'
                         disabled={
                           product.inventory <= 0 && !shopFormErrors['quantity']
                         }
@@ -116,6 +118,7 @@ class ProductPage extends React.PureComponent {
                       />
                     ) : (
                       <Button
+                        variant='primary'
                         disabled={
                           product.quantity <= 0 && !shopFormErrors['quantity']
                         }

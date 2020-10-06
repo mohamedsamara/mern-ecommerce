@@ -25,7 +25,6 @@ button[type='reset'] {
   &:disabled {
     background-color: $disabled-bg;
     border-color: transparent !important;
-    // cursor: not-allowed;
     pointer-events: none;
   }
 }
@@ -41,21 +40,25 @@ button[type='reset'] {
   }
 }
 
+// size
 .input-btn {
-  &.text-only,
-  &.with-icon {
-    &.sm {
-      padding: 6px 10px;
-      min-width: 120px;
+  &.icon-only {
+    padding: 0 !important;
+    min-width: auto !important;
+  }
 
-      .btn-text {
-        font-size: $font-size-x-small;
-      }
-    }
+  &.sm {
+    padding: 6px 10px;
+    min-width: 100px;
 
-    &.md {
-      padding: 10px 16px;
+    .btn-text {
+      font-size: $font-size-x-small;
     }
+  }
+
+  &.md {
+    padding: 10px 16px;
+    min-width: 135px;
   }
 }
 
@@ -75,7 +78,7 @@ button[type='reset'] {
     }
 
     &:hover {
-      background-color: $btn-bg-hover;
+      background-color: $primary-bg;
 
       .btn-text {
         color: $white !important;
@@ -88,7 +91,7 @@ button[type='reset'] {
 
 // secondary button
 .input-btn {
-  &.custom-btn-default {
+  &.custom-btn-secondary {
     position: relative;
     border: $border-default;
     border-radius: $border-radius-default;
@@ -103,6 +106,7 @@ button[type='reset'] {
 
     &:hover {
       background-color: $theme-gray;
+      color: $font-custom-color !important;
 
       .btn-text {
         -webkit-transition: $layout-transition-speed;
@@ -137,12 +141,12 @@ button[type='reset'] {
 
 // button link
 .btn-link {
-  font-weight: $font-weight-bold-one;
   padding: 10px;
   border: $border-default;
   border-radius: $border-radius-default;
   display: inline-block;
   min-width: 150px;
+  font-weight: $font-weight-bold-one;
   color: $font-custom-color !important;
   background-color: $btn-bg;
   -webkit-transition: $layout-transition-speed;
@@ -166,8 +170,6 @@ button[type='reset'] {
 
   // text only styles
   &.text-only {
-    min-width: 135px;
-
     .btn-text {
       letter-spacing: 0.9px;
     }
@@ -202,7 +204,7 @@ button[type='reset'] {
 .input-btn {
   &.bag-btn {
     box-shadow: $custom-box-shadow;
-    min-width: 170px;
+    min-width: 185px;
     @include media-breakpoint-down(sm) {
       width: 100% !important;
     }

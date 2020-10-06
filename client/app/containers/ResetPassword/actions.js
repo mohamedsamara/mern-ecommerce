@@ -38,7 +38,15 @@ export const resetPassowrd = token => {
       };
       const user = getState().resetPassword.resetFormData;
 
-      const { isValid, errors } = allFieldsValidation(user, rules);
+      const { isValid, errors } = allFieldsValidation(user, rules, {
+        'required.password': 'Password is required.',
+        'min.password': 'Password must be at least 6 characters.',
+        'required.confirmPassword': 'Confirm password is required.',
+        'min.confirmPassword':
+          'Confirm password must be at least 6 characters.',
+        'same.confirmPassword':
+          'Confirm password and password fields must match.'
+      });
 
       if (!isValid) {
         return dispatch({
@@ -77,7 +85,15 @@ export const resetAccountPassword = () => {
 
       const user = getState().resetPassword.resetFormData;
 
-      const { isValid, errors } = allFieldsValidation(user, rules);
+      const { isValid, errors } = allFieldsValidation(user, rules, {
+        'required.password': 'Password is required.',
+        'min.password': 'Password must be at least 6 characters.',
+        'required.confirmPassword': 'Confirm password is required.',
+        'min.confirmPassword':
+          'Confirm password must be at least 6 characters.',
+        'same.confirmPassword':
+          'Confirm password and password fields must match.'
+      });
 
       if (!isValid) {
         return dispatch({

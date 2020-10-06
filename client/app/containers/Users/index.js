@@ -22,7 +22,7 @@ class Users extends React.PureComponent {
 
     return (
       <div className='users-dashboard'>
-        <SubPage title={'User List'} isMenuOpen={null} />
+        <SubPage title={'Users'} isMenuOpen={null} />
         <Table
           data={users}
           columns={columns}
