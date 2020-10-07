@@ -1,3 +1,18 @@
+.spinner-container {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  width: 100%;
+  left: 0;
+}
+
+.spinner-container {
+  &.overlay {
+    background: $transparent-white-bg;
+    z-index: 3000;
+  }
+}
+
 .spinner {
   position: fixed;
   bottom: 0;

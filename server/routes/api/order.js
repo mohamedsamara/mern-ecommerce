@@ -177,6 +177,7 @@ router.get('/:orderId', auth, (req, res) => {
 
           let order = {
             _id: doc._id,
+            cartId: doc.cart._id,
             total: doc.total,
             totalTax: 0,
             created: doc.created,
@@ -190,6 +191,29 @@ router.get('/:orderId', auth, (req, res) => {
           });
         });
     });
+});
+
+router.put('/cancel/item/:itemId', auth, async (req, res) => {
+  const itemId = req.params.itemId;
+
+  Cart.updateOne(
+    { 'products._id': itemId },
+    {
+      'products.$.status': 'Cancelled'
+    },
+    err => {
+      if (err) {
+        return res.status(400).json({
+          error: 'Your request could not be processed. Please try again.'
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        message: 'Item has been successfully cancelled!'
+      });
+    }
+  );
 });
 
 // calculate order tax amount

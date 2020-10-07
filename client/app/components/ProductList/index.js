@@ -16,7 +16,13 @@ const ProductList = props => {
     <div className='product-list'>
       <Row>
         {products.map((product, index) => (
-          <Col xs='6' md='4' lg='3' key={index} className='mb-3'>
+          <Col
+            xs='12'
+            md='6'
+            lg='4'
+            key={index}
+            className='mb-3 mb-md-3 px-3 px-md-2'
+          >
             <div className='product-container'>
               <div className='item-box'>
                 <div className='item-details'>

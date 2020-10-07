@@ -12,7 +12,7 @@ import { Row, Col } from 'reactstrap';
 import Button from '../../components/Button';
 
 const OrderItems = props => {
-  const { order } = props;
+  const { order, cancelOrderItem } = props;
 
   return (
     <div className='order-items pt-3'>
@@ -75,14 +75,17 @@ const OrderItems = props => {
                 </div>
               </div>
 
-              <div className='text-right mt-2 mt-md-0'>
-                <Button
-                  type='submit'
-                  size='sm'
-                  text='Cancel Item'
-                  className='cancel-order-btn'
-                />
-              </div>
+              {item.status !== 'Cancelled' && (
+                <div className='text-right mt-2 mt-md-0'>
+                  <Button
+                    type='submit'
+                    size='sm'
+                    text='Cancel Item'
+                    className='cancel-order-btn'
+                    onClick={() => cancelOrderItem(item._id)}
+                  />
+                </div>
+              )}
             </div>
           </Col>
         ))}

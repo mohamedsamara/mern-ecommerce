@@ -34,7 +34,10 @@ class OrderPage extends React.PureComponent {
         {isLoading ? (
           <LoadingIndicator />
         ) : order._id ? (
-          <OrderDetails order={order} />
+          <OrderDetails
+            order={order}
+            cancelOrderItem={this.props.cancelOrderItem}
+          />
         ) : (
           <NotFound message='no order found.' />
         )}
