@@ -32,7 +32,7 @@ class OrderPage extends React.PureComponent {
     return (
       <div className='order-page'>
         {isLoading ? (
-          <LoadingIndicator />
+          <LoadingIndicator backdrop />
         ) : order._id ? (
           <OrderDetails
             order={order}

@@ -105,12 +105,43 @@ button[type='reset'] {
     }
 
     &:hover {
-      background-color: $theme-gray;
+      background-color: $secondary-bg;
       color: $font-custom-color !important;
 
       .btn-text {
         -webkit-transition: $layout-transition-speed;
         transition: $layout-transition-speed;
+      }
+    }
+  }
+}
+
+// body.user-is-tabbing textarea {
+//   box-shadow: none;
+// }
+
+// danger button
+.input-btn {
+  &.custom-btn-danger {
+    position: relative;
+    border: $border-default;
+    border-radius: $border-radius-default;
+    background-color: $btn-bg;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+
+    .btn-text {
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+
+    &:hover {
+      background-color: $danger-bg;
+
+      .btn-text {
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
+        color: $white !important;
       }
     }
   }

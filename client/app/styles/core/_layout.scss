@@ -153,6 +153,9 @@ h6,
 /* scrollbar styles */
 
 body.user-is-tabbing *:focus {
-  outline: 2px solid $outline-color !important;
-  outline: 2px auto -webkit-focus-ring-color !important;
+  // outline: 2px solid $outline-color !important;
+  // outline: 2px auto -webkit-focus-ring-color !important;
+  outline: none;
+  box-shadow: $outline-box-shadow;
+  border-radius: $border-radius-default;
 }
