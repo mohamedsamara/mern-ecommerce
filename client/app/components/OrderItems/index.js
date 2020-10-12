@@ -9,8 +9,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
-import Button from '../../components/Button';
-import DropdownConfirm from '../../components/DropdownConfirm';
+import Button from '../Button';
+import DropdownConfirm from '../DropdownConfirm';
 
 const OrderItems = props => {
   const { order, cancelOrderItem } = props;
@@ -26,7 +26,7 @@ const OrderItems = props => {
           text='Confirm Cancel'
           role='menuitem'
           className='cancel-order-btn'
-          onClick={() => cancelOrderItem(item._id)}
+          onClick={() => cancelOrderItem(item._id, order.products)}
         />
       </div>
     );
@@ -93,7 +93,7 @@ const OrderItems = props => {
                 </div>
               </div>
 
-              {item.status !== 'Cancelled' && (
+              {item.status !== 'Cancelled' && order.products.length !== 1 && (
                 <div className='text-right mt-2 mt-md-0'>
                   <DropdownConfirm label='Cancel Item'>
                     {renderPopoverContent(item)}

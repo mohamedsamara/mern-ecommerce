@@ -74,16 +74,33 @@ export const fetchOrder = id => {
   };
 };
 
+export const cancelOrder = () => {
+  return async (dispatch, getState) => {
+    try {
+      const order = getState().order.order;
+
+      await axios.delete(`/api/order/cancel/${order._id}`);
+
+      dispatch(push(`/dashboard/orders`));
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
 export const cancelOrderItem = itemId => {
   return async (dispatch, getState) => {
     try {
-      const items = getState().order.order.products;
+      const order = getState().order.order;
 
-      // if(items.length===1){
+      const response = await axios.put(`/api/order/cancel/item/${itemId}`, {
+        orderId: order._id,
+        cartId: order.cartId
+      });
 
-      // }
-
-      const response = await axios.put(`/api/order/cancel/item/${itemId}`);
+      if (response.data.orderCancelled) {
+        dispatch(push(`/dashboard/orders`));
+      }
 
       const successfulOptions = {
         title: `${response.data.message}`,

@@ -8,212 +8,198 @@ const auth = require('../../middleware/auth');
 const mailgun = require('../../services/mailgun');
 const taxConfig = require('../../config/tax');
 
-router.post('/add', auth, (req, res) => {
-  const cart = req.body.cartId;
-  const total = req.body.total;
-  const user = req.user._id;
+router.post('/add', auth, async (req, res) => {
+  try {
+    const cart = req.body.cartId;
+    const total = req.body.total;
+    const user = req.user._id;
 
-  const order = new Order({
-    cart,
-    user,
-    total
-  });
+    const order = new Order({
+      cart,
+      user,
+      total
+    });
 
-  order.save((err, order) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    const orderDoc = await order.save();
 
-    Order.findById(order._id)
-      .populate('cart user', '-password')
-      .exec((err, doc) => {
-        if (err) {
-          return res.status(400).json({
-            error: 'Your request could not be processed. Please try again.'
-          });
-        }
+    await Order.findById(orderDoc._id).populate('cart user', '-password');
 
-        Cart.findById(doc.cart._id)
-          .populate({
-            path: 'products.product',
-            populate: {
-              path: 'brand'
-            }
-          })
-          .exec(async (err, data) => {
-            if (err) {
-              return res.status(400).json({
-                error: 'Your request could not be processed. Please try again.'
-              });
-            }
+    const cartDoc = await Cart.findById(orderDoc.cart._id).populate({
+      path: 'products.product',
+      populate: {
+        path: 'brand'
+      }
+    });
 
-            const order = {
-              _id: doc._id,
-              created: doc.created,
-              user: doc.user,
-              total: doc.total,
-              products: data.products
-            };
+    const newOrder = {
+      _id: orderDoc._id,
+      created: orderDoc.created,
+      user: orderDoc.user,
+      total: orderDoc.total,
+      products: cartDoc.products
+    };
 
-            await mailgun.sendEmail(
-              order.user.email,
-              'order-confirmation',
-              order
-            );
+    await mailgun.sendEmail(order.user.email, 'order-confirmation', newOrder);
 
-            res.status(200).json({
-              success: true,
-              message: `Your order has been placed successfully!`,
-              order: { _id: doc._id }
-            });
-          });
-      });
-  });
+    res.status(200).json({
+      success: true,
+      message: `Your order has been placed successfully!`,
+      order: { _id: orderDoc._id }
+    });
+  } catch (error) {}
 });
 
 // fetch all orders api
-router.get('/list', auth, (req, res) => {
-  const user = req.user._id;
+router.get('/list', auth, async (req, res) => {
+  try {
+    const user = req.user._id;
 
-  Order.find({ user })
-    .populate({
+    const orders = await Order.find({ user }).populate({
       path: 'cart'
-      // populate: {
-      //   path: 'cart.products',
-      //   populate: {
-      //     path: 'products.product',
-      //     populate: {
-      //       path: 'product.brand'
-      //     }
-      //   }
-      // }
-    })
-    .exec((err, docs) => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
-
-      if (docs.length > 0) {
-        const newDataSet = [];
-        docs.map(doc => {
-          Cart.findById(doc.cart._id)
-            .populate({
-              path: 'products.product',
-              populate: {
-                path: 'brand'
-              }
-            })
-            .exec((err, data) => {
-              if (err) {
-                return res.status(400).json({
-                  error:
-                    'Your request could not be processed. Please try again.'
-                });
-              }
-
-              const order = {
-                _id: doc._id,
-                total: parseFloat(Number(doc.total.toFixed(2))),
-                created: doc.created,
-                products: data.products
-              };
-
-              newDataSet.push(order);
-
-              if (newDataSet.length === docs.length) {
-                res.status(200).json({
-                  orders: newDataSet
-                });
-              }
-            });
-        });
-      } else {
-        res.status(404).json({
-          message: `You have no orders yet!`
-        });
-      }
     });
-});
 
-// fetch order api
-router.get('/:orderId', auth, (req, res) => {
-  const orderId = req.params.orderId;
-  const user = req.user._id;
+    const newOrders = orders.filter(order => order.cart);
 
-  Order.findOne({ _id: orderId, user })
-    .populate({
-      path: 'cart'
-    })
-    .exec((err, doc) => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
+    if (newOrders.length > 0) {
+      const newDataSet = [];
 
-      if (!doc) {
-        return res.status(404).json({
-          message: `Cannot find order with the id: ${orderId}.`
-        });
-      }
+      newOrders.map(async doc => {
+        const cartId = doc.cart._id;
 
-      Cart.findById(doc.cart._id)
-        .populate({
+        const cart = await Cart.findById(cartId).populate({
           path: 'products.product',
           populate: {
             path: 'brand'
           }
-        })
-        .exec((err, data) => {
-          if (err) {
-            return res.status(400).json({
-              error: 'Your request could not be processed. Please try again.'
-            });
-          }
-
-          let order = {
-            _id: doc._id,
-            cartId: doc.cart._id,
-            total: doc.total,
-            totalTax: 0,
-            created: doc.created,
-            products: data.products
-          };
-
-          order = caculateTaxAmount(order);
-
-          res.status(200).json({
-            order
-          });
         });
+
+        const order = {
+          _id: doc._id,
+          total: parseFloat(Number(doc.total.toFixed(2))),
+          created: doc.created,
+          products: cart.products
+        };
+
+        newDataSet.push(order);
+
+        if (newDataSet.length === newOrders.length) {
+          res.status(200).json({
+            orders: newDataSet
+          });
+        }
+      });
+    } else {
+      res.status(404).json({
+        message: `You have no orders yet!`
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
     });
+  }
+});
+
+// fetch order api
+router.get('/:orderId', auth, async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+    const user = req.user._id;
+
+    const orderDoc = await Order.findOne({ _id: orderId, user }).populate({
+      path: 'cart'
+    });
+
+    if (!orderDoc) {
+      res.status(404).json({
+        message: `Cannot find order with the id: ${orderId}.`
+      });
+    }
+
+    const cart = await Cart.findById(orderDoc.cart._id).populate({
+      path: 'products.product',
+      populate: {
+        path: 'brand'
+      }
+    });
+
+    let order = {
+      _id: orderDoc._id,
+      cartId: orderDoc.cart._id,
+      total: orderDoc.total,
+      totalTax: 0,
+      created: cart.created,
+      products: cart.products
+    };
+
+    order = caculateTaxAmount(order);
+
+    res.status(200).json({
+      order
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+router.delete('/cancel/:orderId', auth, async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+
+    const order = await Order.findOne({ _id: orderId });
+
+    await Order.deleteOne({ _id: orderId });
+    await Cart.deleteOne({ _id: order.cart });
+
+    res.status(200).json({
+      success: true
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 router.put('/cancel/item/:itemId', auth, async (req, res) => {
-  const itemId = req.params.itemId;
+  try {
+    const itemId = req.params.itemId;
+    const orderId = req.body.orderId;
+    const cartId = req.body.cartId;
 
-  Cart.updateOne(
-    { 'products._id': itemId },
-    {
-      'products.$.status': 'Cancelled'
-    },
-    err => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
+    await Cart.updateOne(
+      { 'products._id': itemId },
+      {
+        'products.$.status': 'Cancelled'
       }
+    );
 
-      res.status(200).json({
+    const cart = await Cart.findOne({ _id: cartId });
+    const items = cart.products.filter(item => item.status === 'Cancelled');
+
+    // All items are cancelled => Cancel order
+    if (cart.products.length === items.length) {
+      await Order.deleteOne({ _id: orderId });
+      await Cart.deleteOne({ _id: cartId });
+
+      return res.status(200).json({
         success: true,
-        message: 'Item has been successfully cancelled!'
+        orderCancelled: true,
+        message: 'You order has been cancelled successfully!'
       });
     }
-  );
+
+    res.status(200).json({
+      success: true,
+      message: 'Item has been cancelled successfully!'
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 // calculate order tax amount
