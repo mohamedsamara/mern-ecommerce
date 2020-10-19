@@ -8,8 +8,8 @@
   height: 100%;
   width: 470px;
   z-index: 1000;
-  -webkit-box-shadow: $box-shadow;
-  box-shadow: $box-shadow;
+  // -webkit-box-shadow: $box-shadow;
+  // box-shadow: $box-shadow;
   @include transition($layout-transition-higher-speed);
 
   @include media-breakpoint-down(xs) {

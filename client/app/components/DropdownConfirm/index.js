@@ -19,7 +19,7 @@ const DropdownConfirm = props => {
     <div className='dropdown-confirm'>
       <UncontrolledButtonDropdown>
         <DropdownToggle nav>
-          <div className='input-btn custom-btn-secondary md text-only'>
+          <div className='dropdown-action sm'>
             {label}
             <span className='fa fa-chevron-down dropdown-caret'></span>
           </div>

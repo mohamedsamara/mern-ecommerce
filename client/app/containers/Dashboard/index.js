@@ -20,23 +20,26 @@ class Dashboard extends React.PureComponent {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, isLoading } = this.props;
 
-    if (!user.role) {
-      return <LoadingIndicator inline />;
-    } else {
-      if (user.role === 'ROLE_MEMBER') {
-        return <Customer />;
-      } else {
-        return <Admin />;
-      }
-    }
+    return (
+      <>
+        {isLoading ? (
+          <LoadingIndicator inline />
+        ) : user.role === 'ROLE_MEMBER' ? (
+          <Customer />
+        ) : (
+          <Admin />
+        )}
+      </>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    user: state.account.user
+    user: state.account.user,
+    isLoading: state.account.isLoading
   };
 };
 

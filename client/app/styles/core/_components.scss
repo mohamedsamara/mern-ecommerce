@@ -1,5 +1,51 @@
 /* start dropdown confirm styles */
 .dropdown-confirm {
+  .dropdown-action {
+    position: relative;
+    border: $border-default;
+    border-radius: $border-radius-default;
+    background-color: $btn-bg;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+
+    &.sm {
+      padding: 6px 10px;
+      min-width: 100px;
+
+      .btn-text {
+        font-size: $font-size-x-small;
+      }
+    }
+
+    &.md {
+      padding: 10px 16px;
+      min-width: 135px;
+    }
+
+    .btn-text {
+      -webkit-transition: $layout-transition-speed;
+      transition: $layout-transition-speed;
+    }
+
+    &:hover {
+      background-color: $secondary-bg;
+      color: $font-custom-color !important;
+
+      .btn-text {
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
+      }
+    }
+  }
+
+  .btn-group {
+    &.show {
+      .dropdown-action {
+        background-color: $secondary-bg;
+      }
+    }
+  }
+
   .dropdown-menu {
     min-width: 250px;
   }

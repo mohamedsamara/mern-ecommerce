@@ -32,6 +32,30 @@
   text-overflow: ellipsis;
 }
 
+.box-link {
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
+
+  &:hover,
+  &:focus {
+    box-shadow: none !important;
+    color: $font-custom-color !important;
+    background-color: $secondary-bg;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
+}
+
+// default link
+.default-link {
+  color: $font-custom-color !important;
+  font-weight: $font-weight-bold-one;
+
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
 // redirect-link
 .redirect-link {
   color: $primary-color !important;
@@ -49,4 +73,14 @@
 
 .fa {
   font-size: $font-size-small !important;
+}
+
+.drawer-backdrop {
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
+
+  &.dark-overflow {
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
 }

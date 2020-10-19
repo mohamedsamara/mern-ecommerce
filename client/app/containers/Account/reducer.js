@@ -8,7 +8,8 @@ import {
   ACCOUNT_CHANGE,
   FETCH_PROFILE,
   TOGGLE_RESET_FORM,
-  CLEAR_ACCOUNT
+  CLEAR_ACCOUNT,
+  SET_PROFILE_LOADING
 } from './constants';
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
     firstName: '',
     lastName: ''
   },
-  isFormOpen: false
+  isFormOpen: false,
+  isLoading: false
 };
 
 const accountReducer = (state = initialState, action) => {
@@ -49,6 +51,11 @@ const accountReducer = (state = initialState, action) => {
           firstName: '',
           lastName: ''
         }
+      };
+    case SET_PROFILE_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
     default:
       return state;

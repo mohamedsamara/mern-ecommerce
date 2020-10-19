@@ -76,7 +76,7 @@ class ProductPage extends React.PureComponent {
                         see more from{' '}
                         <Link
                           to={`/shop/brand/${product.brand.slug}`}
-                          className='brand-link'
+                          className='default-link'
                         >
                           {product.brand.name}
                         </Link>
