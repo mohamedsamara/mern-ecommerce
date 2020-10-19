@@ -10,9 +10,27 @@ import { Link } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
 import Button from '../../components/Button';
+import DropdownConfirm from '../../components/DropdownConfirm';
 
 const OrderItems = props => {
-  const { order } = props;
+  const { order, cancelOrderItem } = props;
+
+  const renderPopoverContent = item => {
+    return (
+      <div className='d-flex flex-column align-items-center justify-content-center p-2'>
+        <p className='text-center mb-2'>{`Are you sure you want to cancel ${item.product.name}.`}</p>
+        <Button
+          variant='danger'
+          id='CancelOrderItemPopover'
+          size='sm'
+          text='Confirm Cancel'
+          role='menuitem'
+          className='cancel-order-btn'
+          onClick={() => cancelOrderItem(item._id)}
+        />
+      </div>
+    );
+  };
 
   return (
     <div className='order-items pt-3'>
@@ -75,14 +93,13 @@ const OrderItems = props => {
                 </div>
               </div>
 
-              <div className='text-right mt-2 mt-md-0'>
-                <Button
-                  type='submit'
-                  size='sm'
-                  text='Cancel Item'
-                  className='cancel-order-btn'
-                />
-              </div>
+              {item.status !== 'Cancelled' && (
+                <div className='text-right mt-2 mt-md-0'>
+                  <DropdownConfirm label='Cancel Item'>
+                    {renderPopoverContent(item)}
+                  </DropdownConfirm>
+                </div>
+              )}
             </div>
           </Col>
         ))}

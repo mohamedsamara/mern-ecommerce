@@ -21,7 +21,9 @@ class Newsletter extends React.PureComponent {
       formErrors
     } = this.props;
 
-    const SubscribeButton = <Button type='submit' text='Subscribe' />;
+    const SubscribeButton = (
+      <Button type='submit' variant='primary' text='Subscribe' />
+    );
 
     const handleSubmit = event => {
       event.preventDefault();

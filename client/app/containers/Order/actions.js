@@ -6,10 +6,12 @@
 
 import { push } from 'connected-react-router';
 import axios from 'axios';
+import { success } from 'react-notification-system-redux';
 
 import {
   FETCH_ORDERS,
   FETCH_ORDER,
+  UPDATE_ORDER,
   TOGGLE_ADD_ORDER,
   SET_ORDERS_LOADING,
   CLEAR_ORDERS
@@ -21,6 +23,13 @@ import handleError from '../../utils/error';
 export const toggleAddOrder = () => {
   return {
     type: TOGGLE_ADD_ORDER
+  };
+};
+
+export const updateOrder = value => {
+  return {
+    type: UPDATE_ORDER,
+    payload: value
   };
 };
 
@@ -61,6 +70,31 @@ export const fetchOrder = id => {
       handleError(error, dispatch);
     } finally {
       dispatch({ type: SET_ORDERS_LOADING, payload: false });
+    }
+  };
+};
+
+export const cancelOrderItem = itemId => {
+  return async (dispatch, getState) => {
+    try {
+      const items = getState().order.order.products;
+
+      // if(items.length===1){
+
+      // }
+
+      const response = await axios.put(`/api/order/cancel/item/${itemId}`);
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      dispatch(success(successfulOptions));
+      dispatch(updateOrder({ itemId, status: 'Cancelled' }, 'cencelled'));
+    } catch (error) {
+      handleError(error, dispatch);
     }
   };
 };

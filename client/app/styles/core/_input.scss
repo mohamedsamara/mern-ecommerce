@@ -1,13 +1,16 @@
 // start input text styles
 input[type='text'],
 input[type='number'],
-input[type='password'] {
+input[type='password'],
+textarea {
   width: 100%;
   padding: 8px 10px;
   border: $border-default;
   font-size: $font-size-medium;
   color: $font-custom-color;
   border-radius: $border-radius-default;
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
   cursor: text;
 
   &:focus {
@@ -15,6 +18,8 @@ input[type='password'] {
     color: $font-focus-color;
     border-color: $border-focus-color !important;
     box-shadow: none;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
   }
 
   &:disabled {
@@ -22,6 +27,10 @@ input[type='password'] {
     border: none !important;
     cursor: not-allowed;
   }
+}
+
+body.user-is-tabbing textarea {
+  box-shadow: none !important;
 }
 // end input text styles
 
@@ -33,13 +42,6 @@ input[type='password'] {
     color: $validation-color;
     height: 0;
     @include flex();
-    -webkit-transition: $layout-transition-speed;
-    transition: $layout-transition-speed;
-  }
-
-  .input-text,
-  textarea {
-    border-radius: $border-radius-default;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
   }
@@ -87,20 +89,6 @@ input[type='password'] {
     &.custom-btn-primary {
       border-left: none;
     }
-  }
-}
-
-.textarea,
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: $border-default;
-  cursor: text;
-
-  &:focus {
-    outline: none;
-    color: $font-focus-color;
-    border-color: $border-focus-color !important;
   }
 }
 

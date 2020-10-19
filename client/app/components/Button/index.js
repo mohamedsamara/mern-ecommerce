@@ -9,11 +9,13 @@ import React from 'react';
 const variants = {
   primary: 'custom-btn-primary',
   secondary: 'custom-btn-secondary',
+  danger: 'custom-btn-danger',
   link: 'custom-btn-link'
 };
 
 const Button = props => {
   const {
+    id,
     size,
     variant,
     tabIndex,
@@ -23,6 +25,7 @@ const Button = props => {
     disabled,
     className,
     text,
+    role,
     icon,
     onClick
   } = props;
@@ -40,9 +43,11 @@ const Button = props => {
 
   return (
     <button
+      id={id}
       tabIndex={tabIndex}
       aria-label={ariaLabel}
       aria-expanded={ariaExpanded}
+      role={role}
       disabled={disabled}
       className={classNames}
       type={type}
@@ -54,11 +59,11 @@ const Button = props => {
   );
 };
 
-export default Button;
-
 Button.defaultProps = {
   type: 'button',
   variant: 'secondary',
   size: 'md',
   className: ''
 };
+
+export default Button;

@@ -94,17 +94,22 @@
     padding-bottom: 16px;
     margin-bottom: 16px;
 
-    .cancel-order-btn {
-      width: 100%;
+    @include media-breakpoint-down(xs) {
+      .dropdown-confirm {
+        .btn-group {
+          width: 100%;
+
+          .nav-link {
+            width: 100%;
+            text-align: center;
+          }
+        }
+      }
     }
 
     @include media-breakpoint-up(md) {
       .box {
         width: 50%;
-      }
-
-      .cancel-order-btn {
-        width: auto;
       }
     }
 
@@ -140,7 +145,7 @@
 /* end order summary styles */
 
 .order-status {
-  color: $primary-color !important;
+  color: $default-color !important;
 }
 
 /* start order common styles */

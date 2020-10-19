@@ -24,6 +24,12 @@ $primary-bg: #2962ff;
 $secondary-color: #f8f9fa;
 $secondary-bg: #f8f9fa;
 
+$danger-color: #dc3545;
+$danger-bg: #dc3545;
+
+$default-color: #758696;
+$default-bg: #758696;
+
 // standard colors
 $blue: #20a8d8;
 $indigo: #6610f2 !default;
@@ -78,12 +84,14 @@ $separator-color: #e6e5ea;
 $dark-overflow-bg: #0006;
 $transparent-bg: #3232321f;
 $transparent-gray-bg: #f1f3f4f5;
+$transparent-white-bg: #f1f1f170;
 $hover-bg: #e3e8ea;
 $badge: $red;
 $disabled-bg: #d9dbdea1;
 
 $outline-color: #7aacfe;
 $validation-color: #dc3545;
+$outline-box-shadow: 0 0 0 3px #159ce466;
 $box-shadow: 0 0 10px 0 #e6e5ea;
 $custom-box-shadow: 0 1px #e6e5ea;
 $primary-box-shadow: 0 1px 2px #00000033;

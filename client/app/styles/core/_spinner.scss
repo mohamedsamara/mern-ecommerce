@@ -1,5 +1,21 @@
+.spinner-container {
+  height: 100%;
+  top: 0;
+  width: 100%;
+  left: 0;
+}
+
+.spinner-container {
+  &.overlay {
+    z-index: 3000;
+  }
+
+  &.backdrop {
+    background-color: $transparent-white-bg;
+  }
+}
+
 .spinner {
-  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;

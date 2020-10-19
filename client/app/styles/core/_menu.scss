@@ -45,7 +45,6 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    // background-color: $white;
 
     h1 {
       margin: 0;
@@ -57,20 +56,6 @@
 
     .menu-list {
       .menu-item {
-        // border-bottom: $border-default;
-        -webkit-transition: $layout-transition-speed;
-        transition: $layout-transition-speed;
-
-        &:hover {
-          background-color: $white;
-          -webkit-transition: $layout-transition-speed;
-          transition: $layout-transition-speed;
-
-          a {
-            color: $primary-color !important;
-          }
-        }
-
         a {
           color: $font-custom-color !important;
           font-weight: $font-weight-bold-one;
@@ -78,15 +63,30 @@
           display: block;
           padding: 10px 30px 10px 30px;
           border-left: 3px solid transparent;
-        }
+          -webkit-transition: $layout-transition-speed;
+          transition: $layout-transition-speed;
 
-        a.active-link {
-          font-weight: $font-weight-bold-two;
-          color: $primary-color !important;
-          border-color: $primary-color;
-          -webkit-transition: border-color ease-in $layout-transition-speed;
-          transition: border-color ease-in $layout-transition-speed;
-          background-color: $white;
+          &:hover {
+            background-color: $white;
+            -webkit-transition: $layout-transition-speed;
+            transition: $layout-transition-speed;
+            color: $primary-color !important;
+          }
+
+          &:focus {
+            box-shadow: none;
+            background-color: $white;
+            border-left: 3px solid $primary-color;
+          }
+
+          &.active-line {
+            font-weight: $font-weight-bold-two;
+            color: $primary-color !important;
+            border-color: $primary-color;
+            -webkit-transition: border-color ease-in $layout-transition-speed;
+            transition: border-color ease-in $layout-transition-speed;
+            background-color: $white;
+          }
         }
       }
     }
