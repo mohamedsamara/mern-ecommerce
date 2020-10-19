@@ -74,3 +74,13 @@
 .fa {
   font-size: $font-size-small !important;
 }
+
+.drawer-backdrop {
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
+
+  &.dark-overflow {
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
+}

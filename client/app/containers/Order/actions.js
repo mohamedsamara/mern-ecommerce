@@ -33,10 +33,17 @@ export const updateOrder = value => {
   };
 };
 
+export const setOrderLoading = value => {
+  return {
+    type: SET_ORDERS_LOADING,
+    payload: value
+  };
+};
+
 export const fetchOrders = () => {
   return async (dispatch, getState) => {
     try {
-      dispatch({ type: SET_ORDERS_LOADING, payload: true });
+      dispatch(setOrderLoading(true));
 
       const response = await axios.get(`/api/order/list`);
 
@@ -50,7 +57,7 @@ export const fetchOrders = () => {
       dispatch(clearOrders());
       handleError(error, dispatch);
     } finally {
-      dispatch({ type: SET_ORDERS_LOADING, payload: false });
+      dispatch(setOrderLoading(false));
     }
   };
 };
@@ -58,7 +65,7 @@ export const fetchOrders = () => {
 export const fetchOrder = id => {
   return async (dispatch, getState) => {
     try {
-      dispatch({ type: SET_ORDERS_LOADING, payload: true });
+      dispatch(setOrderLoading(true));
 
       const response = await axios.get(`/api/order/${id}`);
 
@@ -69,7 +76,7 @@ export const fetchOrder = id => {
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      dispatch({ type: SET_ORDERS_LOADING, payload: false });
+      dispatch(setOrderLoading(false));
     }
   };
 };

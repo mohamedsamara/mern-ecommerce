@@ -11,7 +11,8 @@ import {
   ACCOUNT_CHANGE,
   FETCH_PROFILE,
   TOGGLE_RESET_FORM,
-  CLEAR_ACCOUNT
+  CLEAR_ACCOUNT,
+  SET_PROFILE_LOADING
 } from './constants';
 import handleError from '../../utils/error';
 
@@ -37,14 +38,24 @@ export const clearAccount = () => {
   };
 };
 
+export const setProfileLoading = value => {
+  return {
+    type: SET_PROFILE_LOADING,
+    payload: value
+  };
+};
+
 export const fetchProfile = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch(setProfileLoading(true));
       const response = await axios.get(`/api/user`);
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
       handleError(error, dispatch);
+    } finally {
+      dispatch(setProfileLoading(false));
     }
   };
 };

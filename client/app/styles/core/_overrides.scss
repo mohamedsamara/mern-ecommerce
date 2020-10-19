@@ -84,3 +84,26 @@ hr {
   }
 }
 // end react-notification-system-redux overrides
+
+// start react select styles
+.select-option__control {
+  border: $border-default !important;
+  box-shadow: none !important;
+  color: $font-custom-color;
+  -webkit-transition: $layout-transition-speed;
+  transition: $layout-transition-speed;
+
+  &.select-option__control--is-focused {
+    border-color: $border-focus-color !important;
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
+
+  &:focus {
+    color: $font-focus-color;
+
+    -webkit-transition: $layout-transition-speed;
+    transition: $layout-transition-speed;
+  }
+}
+// end react select styles
