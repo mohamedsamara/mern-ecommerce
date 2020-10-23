@@ -14,7 +14,7 @@ const ProductList = props => {
 
   return (
     <div className='product-list'>
-      <Row>
+      <Row className='flex-row'>
         {products.map((product, index) => (
           <Col
             xs='12'

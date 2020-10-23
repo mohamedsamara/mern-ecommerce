@@ -89,6 +89,14 @@
   z-index: 999;
 }
 
+@mixin appearance($value: none) {
+  -webkit-appearance: $value;
+  -moz-appearance: $value;
+  -ms-appearance: $value;
+  -o-appearance: $value;
+  appearance: $value;
+}
+
 @mixin placeholder {
   ::-webkit-input-placeholder {
     @content;

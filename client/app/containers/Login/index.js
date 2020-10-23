@@ -83,19 +83,21 @@ class Login extends React.PureComponent {
             </Col>
           </Row>
           <hr />
-          <div className='auth-actions'>
-            <Button
-              type='submit'
-              variant='primary'
-              text='Login'
-              disabled={isSubmitting}
-            />
-            <Button
-              text='Create an account'
-              variant='link'
-              className='my-2 my-md-0 ml-md-3'
-              onClick={registerLink}
-            />
+          <div className='d-flex flex-column flex-md-row align-items-md-center justify-content-between'>
+            <div className='d-flex justify-content-between align-items-center mb-3 mb-md-0'>
+              <Button
+                type='submit'
+                variant='primary'
+                text='Login'
+                disabled={isSubmitting}
+              />
+              <Button
+                text='Create an account'
+                variant='link'
+                className='ml-md-3'
+                onClick={registerLink}
+              />
+            </div>
             <Link
               className='redirect-link forgot-password-link'
               to={'/forgot-password'}

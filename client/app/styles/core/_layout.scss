@@ -2,6 +2,8 @@
 
 html {
   overflow: visible;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -16,6 +18,8 @@ body {
   margin: 0;
   padding: 0;
   position: relative;
+  text-rendering: optimizeLegibility;
+  // -webkit-font-smoothing: antialiased;
 }
 
 .application {
