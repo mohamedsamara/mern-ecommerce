@@ -19,7 +19,7 @@
   }
 
   &:active {
-    background-color: $white;
+    background-color: $secondary-bg;
   }
 
   a {
@@ -107,3 +107,30 @@ hr {
   }
 }
 // end react select styles
+
+// start carousel styles
+.carousel-container {
+  .react-multiple-carousel__arrow {
+    z-index: 900;
+  }
+
+  .carousel-dot-list-style {
+    .react-multi-carousel-dot {
+      button {
+        border-color: $border-color-primary;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .react-multi-carousel-dot--active {
+      button {
+        background-color: $secondary-bg;
+      }
+    }
+  }
+}
+
+// end carousel styles

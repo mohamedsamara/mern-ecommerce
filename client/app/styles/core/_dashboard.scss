@@ -79,15 +79,11 @@
         text-transform: capitalize;
         color: $font-custom-color !important;
         font-weight: $font-weight-bold-one;
-      }
 
-      a.active-link {
-        font-weight: $font-weight-bold-two;
-        background-color: $white;
-
-        // &:hover {
-        //   color: $font-hover-color !important;
-        // }
+        &.active-link {
+          font-weight: $font-weight-bold-two;
+          background-color: $white;
+        }
       }
     }
   }

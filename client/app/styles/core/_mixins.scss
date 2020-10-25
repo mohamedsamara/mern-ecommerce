@@ -1,5 +1,5 @@
 // transition mixin
-@mixin transition($speed) {
+@mixin transition($speed: $layout-transition-speed) {
   -webkit-transition: all $speed ease;
   -moz-transition: all $speed ease;
   -o-transition: all $speed ease;

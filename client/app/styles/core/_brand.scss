@@ -11,20 +11,20 @@
 
 .brand-list {
   .brand-box {
+    height: 100%;
     padding: 10px;
     border: $border-default;
-    height: 100%;
+    border-radius: $border-radius-default;
+    @include transition();
 
     .brand-link {
       display: block;
     }
 
     &:hover {
+      background-color: $secondary-bg;
       border-color: $border-hover-color;
-      -moz-transition: border-color $layout-transition-speed ease-in-out;
-      -webkit-transition: border-color $layout-transition-speed ease-in-out;
-      -ms-transition: border-color $layout-transition-speed ease-in-out;
-      transition: border-color $layout-transition-speed ease-in-out;
+      @include transition();
     }
 
     .brand-desc {
