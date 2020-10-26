@@ -40,15 +40,17 @@
   background-color: $theme-white;
 
   .menu-header {
-    padding: 10px 0px 10px 30px;
-    @include flex();
-    flex-wrap: wrap;
-    justify-content: space-between;
+    border-bottom: $border-default;
+    text-align: right;
+    padding-right: 5px;
     align-items: center;
+    justify-content: flex-end;
+    height: 50px;
+    @include flex();
+  }
 
-    h1 {
-      margin: 0;
-    }
+  .menu-title {
+    padding: 10px 0px 10px 30px;
   }
 
   .menu-body {
@@ -63,17 +65,17 @@
           display: block;
           padding: 10px 30px 10px 30px;
           border-left: 3px solid transparent;
-          -webkit-transition: $layout-transition-speed;
-          transition: $layout-transition-speed;
+          @include transition();
 
           &:hover {
             background-color: $white;
-            -webkit-transition: $layout-transition-speed;
-            transition: $layout-transition-speed;
+            border-left: 3px solid $primary-color;
             color: $primary-color !important;
+            @include transition();
           }
 
           &:focus {
+            outline: none;
             box-shadow: none;
             background-color: $white;
             border-left: 3px solid $primary-color;
@@ -81,11 +83,10 @@
 
           &.active-line {
             font-weight: $font-weight-bold-two;
+            background-color: $white;
             color: $primary-color !important;
             border-color: $primary-color;
-            -webkit-transition: border-color ease-in $layout-transition-speed;
-            transition: border-color ease-in $layout-transition-speed;
-            background-color: $white;
+            @include transition();
           }
         }
       }

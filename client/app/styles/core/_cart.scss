@@ -78,10 +78,10 @@
     border-bottom: $border-default;
     text-align: right;
     padding-right: 5px;
-    @include flex();
     align-items: center;
     justify-content: flex-end;
     height: 50px;
+    @include flex();
   }
 
   .empty-cart {

@@ -20,6 +20,18 @@
   padding: 0;
 }
 
+.flex-row {
+  @include media-breakpoint-up(md) {
+    margin-right: -8px;
+    margin-left: -8px;
+  }
+}
+
+.flex-sm-row {
+  margin-right: -8px;
+  margin-left: -8px;
+}
+
 .flex-1 {
   flex: 1;
 }
@@ -33,16 +45,14 @@
 }
 
 .box-link {
-  -webkit-transition: $layout-transition-speed;
-  transition: $layout-transition-speed;
+  @include transition();
 
   &:hover,
   &:focus {
     box-shadow: none !important;
     color: $font-custom-color !important;
     background-color: $secondary-bg;
-    -webkit-transition: $layout-transition-speed;
-    transition: $layout-transition-speed;
+    @include transition();
   }
 }
 
@@ -76,11 +86,9 @@
 }
 
 .drawer-backdrop {
-  -webkit-transition: $layout-transition-speed;
-  transition: $layout-transition-speed;
+  @include transition();
 
   &.dark-overflow {
-    -webkit-transition: $layout-transition-speed;
-    transition: $layout-transition-speed;
+    @include transition();
   }
 }

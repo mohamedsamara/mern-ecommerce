@@ -4,7 +4,8 @@ input[type='submit'],
 input[type='reset'],
 button[type='button'],
 button[type='submit'],
-button[type='reset'] {
+button[type='reset'],
+button {
   border: none;
   background: transparent;
   color: $font-custom-color !important;
@@ -116,9 +117,10 @@ button[type='reset'] {
   }
 }
 
-// body.user-is-tabbing textarea {
-//   box-shadow: none;
-// }
+body.user-is-tabbing button:focus {
+  box-shadow: none;
+  outline: 1px dotted;
+}
 
 // danger button
 .input-btn {

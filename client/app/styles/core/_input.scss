@@ -12,6 +12,7 @@ textarea {
   -webkit-transition: $layout-transition-speed;
   transition: $layout-transition-speed;
   cursor: text;
+  @include appearance();
 
   &:focus {
     outline: none;

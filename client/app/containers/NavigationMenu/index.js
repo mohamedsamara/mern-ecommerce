@@ -29,18 +29,19 @@ class NavigationMenu extends React.PureComponent {
 
     return (
       <div className='navigation-menu'>
-        <Container>
-          <div className='menu-header'>
-            <h1 className='logo'>MERN Store</h1>
-            {isMenuOpen && (
-              <Button
-                ariaLabel='close the menu'
-                icon={<CloseIcon />}
-                onClick={toggleMenu}
-              />
-            )}
-          </div>
-          <div className='menu-body'>
+        <div className='menu-header'>
+          {isMenuOpen && (
+            <Button
+              ariaLabel='close the menu'
+              icon={<CloseIcon />}
+              onClick={toggleMenu}
+            />
+          )}
+        </div>
+        <div className='menu-body'>
+          <Container>
+            <h3 className='menu-title'>Shop By Category</h3>
+
             <nav role='navigation'>
               <ul className='menu-list'>
                 {categories.map((link, index) => (
@@ -57,8 +58,8 @@ class NavigationMenu extends React.PureComponent {
                 ))}
               </ul>
             </nav>
-          </div>
-        </Container>
+          </Container>
+        </div>
       </div>
     );
   }

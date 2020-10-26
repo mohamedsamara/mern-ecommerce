@@ -2,6 +2,8 @@
 
 html {
   overflow: visible;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -16,6 +18,8 @@ body {
   margin: 0;
   padding: 0;
   position: relative;
+  text-rendering: optimizeLegibility;
+  // -webkit-font-smoothing: antialiased;
 }
 
 .application {
@@ -39,10 +43,10 @@ body {
 }
 
 .wrapper {
-  padding: 60px 0px;
+  padding: 170px 0px 25px;
 
-  @include media-breakpoint-down(sm) {
-    padding: 200px 0px;
+  @include media-breakpoint-up(md) {
+    padding: 25px 0px;
   }
 }
 
@@ -84,6 +88,11 @@ a {
   &:focus {
     outline: none;
   }
+}
+
+body.user-is-tabbing a:focus {
+  box-shadow: none;
+  outline: 1px dotted;
 }
 
 h1,
@@ -155,6 +164,7 @@ h6,
 body.user-is-tabbing *:focus {
   // outline: 2px solid $outline-color !important;
   // outline: 2px auto -webkit-focus-ring-color !important;
+  // outline: 1px dotted !important;
   outline: none;
   box-shadow: $outline-box-shadow;
   border-radius: $border-radius-default;

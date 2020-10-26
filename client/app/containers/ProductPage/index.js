@@ -53,8 +53,8 @@ class ProductPage extends React.PureComponent {
         {isLoading ? (
           <LoadingIndicator />
         ) : Object.keys(product).length > 0 ? (
-          <Row>
-            <Col xs='12' md='5' lg='5' className='mb-3'>
+          <Row className='flex-row'>
+            <Col xs='12' md='5' lg='5' className='mb-3 px-3 px-md-2'>
               <div className='item-image'>
                 <img src={'/images/placeholder-image.png'} />
                 {product.inventory <= 0 && !shopFormErrors['quantity'] ? (
@@ -64,7 +64,7 @@ class ProductPage extends React.PureComponent {
                 )}
               </div>
             </Col>
-            <Col xs='12' md='7' lg='7' className='mb-3'>
+            <Col xs='12' md='7' lg='7' className='mb-3 px-3 px-md-2'>
               <div className='product-container'>
                 <div className='item-box'>
                   <div className='item-details'>

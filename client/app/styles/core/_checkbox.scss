@@ -15,8 +15,11 @@ input[type='checkbox'] {
 }
 
 body.user-is-tabbing input[type='checkbox']:focus + label {
-  outline: 2px solid $outline-color !important;
-  outline: 2px auto -webkit-focus-ring-color !important;
+  // outline: 2px solid $outline-color !important;
+  // outline: 2px auto -webkit-focus-ring-color !important;
+
+  box-shadow: none;
+  outline: 1px dotted;
 }
 
 input[type='checkbox'] + label {
