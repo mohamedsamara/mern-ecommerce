@@ -31,7 +31,6 @@ import { allFieldsValidation } from '../../utils/validation';
 export const productChange = (name, value) => {
   let formData = {};
   formData[name] = value;
-
   return {
     type: PRODUCT_CHANGE,
     payload: formData
@@ -60,7 +59,6 @@ export const fetchProducts = (filter, slug) => {
 
     try {
       const response = await axios.get(`/api/product/list`);
-
       dispatch({
         type: FETCH_PRODUCTS,
         payload: response.data.products
@@ -145,7 +143,7 @@ export const fetchProductsSelect = () => {
     try {
       const response = await axios.get(`/api/product/list/select`);
 
-      let formattedProducts = formatSelectOptions(response.data.products, true);
+       let formattedProducts = formatSelectOptions(response.data.products, true);
 
       dispatch({
         type: FETCH_PRODUCTS_SELECT,
@@ -191,7 +189,8 @@ export const addProduct = () => {
         quantity: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
-        brand: 'required'
+        brand: 'required',
+        image:'required'
       };
 
       const product = getState().product.productFormData;
@@ -214,14 +213,22 @@ export const addProduct = () => {
         'required.quantity': 'Quantity is required.',
         'required.price': 'Price is required.',
         'required.taxable': 'Taxable is required.',
-        'required.brand': 'Brand is required.'
+        'required.brand': 'Brand is required.',
+        'required.image': 'Please upload files with jpg, jpeg, png format.'
       });
 
       if (!isValid) {
         return dispatch({ type: SET_PRODUCT_FORM_ERRORS, payload: errors });
       }
-
-      const response = await axios.post(`/api/product/add`, newProduct);
+      const formData = new FormData();
+      if (newProduct.image) {
+        for (var key in newProduct) {
+           if (newProduct.hasOwnProperty(key)) {
+             formData.append(key, newProduct[key]);
+           }
+        }
+      }
+      const response = await axios.post(`/api/product/add`, formData,{headers: {'Content-Type': 'multipart/form-data'}});
 
       const successfulOptions = {
         title: `${response.data.message}`,

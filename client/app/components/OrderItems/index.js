@@ -11,6 +11,7 @@ import { Row, Col } from 'reactstrap';
 
 import Button from '../Button';
 import DropdownConfirm from '../DropdownConfirm';
+import { arrayBufferToBase64 } from '../../helpers/base64';
 
 const OrderItems = props => {
   const { order, cancelOrderItem } = props;
@@ -31,7 +32,7 @@ const OrderItems = props => {
       </div>
     );
   };
-
+  
   return (
     <div className='order-items pt-3'>
       <h2>Order Items</h2>
@@ -42,7 +43,7 @@ const OrderItems = props => {
               <div className='d-flex justify-content-between flex-column flex-md-row'>
                 <div className='d-flex align-items-center box'>
                   <div className='item-image'>
-                    <img src={'/images/placeholder-image.png'} />
+                    <img src={`${arrayBufferToBase64(item.product.image)}`} />
                   </div>
                   <div className='d-md-flex flex-1 align-items-start ml-4 item-box'>
                     <div className='item-details'>

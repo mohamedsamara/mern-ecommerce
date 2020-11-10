@@ -21,7 +21,8 @@ const AddProduct = props => {
     handleBrandSelect,
     selectedBrands,
     brands,
-    taxableSelect
+    taxableSelect,
+    image
   } = props;
 
   const handleSubmit = event => {
@@ -122,6 +123,19 @@ const AddProduct = props => {
               value={selectedBrands}
               handleSelectChange={value => {
                 handleBrandSelect(value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12'>
+            <Input
+              type={'file'}
+              error={formErrors['file']}
+              name={'image'}
+              label={'file'}
+              placeholder={'Please Upload Image'}
+              value={image}
+              onInputChange={(name, value) => {
+                productChange(name, value);
               }}
             />
           </Col>

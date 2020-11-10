@@ -17,6 +17,7 @@ import Button from '../../components/Button';
 import { BagIcon } from '../../components/Icon';
 import NotFound from '../../components/NotFound';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import { arrayBufferToBase64 } from '../../helpers/base64';
 
 class ProductPage extends React.PureComponent {
   componentDidMount() {
@@ -49,6 +50,7 @@ class ProductPage extends React.PureComponent {
     } = this.props;
 
     return (
+
       <div className='product-shop'>
         {isLoading ? (
           <LoadingIndicator />
@@ -56,7 +58,7 @@ class ProductPage extends React.PureComponent {
           <Row className='flex-row'>
             <Col xs='12' md='5' lg='5' className='mb-3 px-3 px-md-2'>
               <div className='item-image'>
-                <img src={'/images/placeholder-image.png'} />
+                <img src={`${arrayBufferToBase64(product.image)}`} />
                 {product.inventory <= 0 && !shopFormErrors['quantity'] ? (
                   <p className='stock out-of-stock'>Out of stock</p>
                 ) : (
