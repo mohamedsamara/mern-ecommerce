@@ -32,7 +32,7 @@ const OrderItems = props => {
       </div>
     );
   };
-  
+
   return (
     <div className='order-items pt-3'>
       <h2>Order Items</h2>
@@ -43,7 +43,13 @@ const OrderItems = props => {
               <div className='d-flex justify-content-between flex-column flex-md-row'>
                 <div className='d-flex align-items-center box'>
                   <div className='item-image'>
-                    <img src={`${arrayBufferToBase64(item.product.image)}`} />
+                    <img
+                      src={
+                        item.product.image
+                          ? `${arrayBufferToBase64(item.product.image)}`
+                          : '/images/placeholder-image.png'
+                      }
+                    />
                   </div>
                   <div className='d-md-flex flex-1 align-items-start ml-4 item-box'>
                     <div className='item-details'>

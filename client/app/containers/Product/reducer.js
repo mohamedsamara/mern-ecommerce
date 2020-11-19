@@ -21,10 +21,7 @@ import {
   SET_PRODUCTS_LOADING
 } from './constants';
 
-import React from 'react'
-import { render } from 'react-dom'
 import { arrayBufferToBase64 } from '../../helpers/base64';
-//window.React = React
 
 const initialState = {
   products: [],
@@ -39,7 +36,7 @@ const initialState = {
     quantity: 1,
     price: 1,
     taxable: 0,
-    image:{}
+    image: {}
   },
   isLoading: false,
   productShopData: {
@@ -87,11 +84,13 @@ const initialState = {
       sort: true
     },
     {
-      dataField: 'image',
-      text: 'Product Image',
-      formatter: (cell, row) => {
-         return (<img src={`${arrayBufferToBase64(cell)}`}/>)
-      }
+      // dataField: 'image',
+      // text: 'Product Image'
+      // formatter: (cell, row) => {
+      //   return (
+      //     <>{product.image && <img src={`${arrayBufferToBase64(cell)}`} />}</>
+      //   );
+      // }
     }
   ]
 };

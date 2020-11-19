@@ -57,6 +57,12 @@
       border-bottom: none;
     }
 
+    .item-image {
+      width: 70px;
+      height: 70px;
+      border-radius: $border-radius-default;
+    }
+
     .price {
       font-size: $font-size-medium;
     }

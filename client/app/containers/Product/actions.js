@@ -143,7 +143,7 @@ export const fetchProductsSelect = () => {
     try {
       const response = await axios.get(`/api/product/list/select`);
 
-       let formattedProducts = formatSelectOptions(response.data.products, true);
+      let formattedProducts = formatSelectOptions(response.data.products, true);
 
       dispatch({
         type: FETCH_PRODUCTS_SELECT,
@@ -190,7 +190,7 @@ export const addProduct = () => {
         price: 'required|numeric',
         taxable: 'required',
         brand: 'required',
-        image:'required'
+        image: 'required'
       };
 
       const product = getState().product.productFormData;
@@ -223,12 +223,15 @@ export const addProduct = () => {
       const formData = new FormData();
       if (newProduct.image) {
         for (var key in newProduct) {
-           if (newProduct.hasOwnProperty(key)) {
-             formData.append(key, newProduct[key]);
-           }
+          if (newProduct.hasOwnProperty(key)) {
+            formData.append(key, newProduct[key]);
+          }
         }
       }
-      const response = await axios.post(`/api/product/add`, formData,{headers: {'Content-Type': 'multipart/form-data'}});
+
+      const response = await axios.post(`/api/product/add`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
 
       const successfulOptions = {
         title: `${response.data.message}`,

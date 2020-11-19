@@ -68,17 +68,13 @@
 }
 
 .product-shop {
-  .item-image {
-    position: relative;
-
-    .stock {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 10px;
-      background-color: $white;
-      border-bottom-left-radius: $border-radius-default;
-    }
+  .stock {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    background-color: $white;
+    border-bottom-left-radius: $border-radius-default;
   }
 
   .product-container {
@@ -94,6 +90,14 @@
   .item-box {
     .item-name {
       font-size: $font-size-huge !important;
+    }
+
+    .item-image {
+      width: 90px;
+
+      img {
+        border-radius: $border-radius-default;
+      }
     }
 
     .item-details {

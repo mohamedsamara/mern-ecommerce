@@ -10,7 +10,6 @@ const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 
-
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, image, cb) {
@@ -25,85 +24,86 @@ const upload = multer({
   },
   fileFilter(req, image, cb) {
     if (!image.originalname.match(/\.(jpeg|jpg|png)$/)) {
-      return cb(
-        new Error(
-          'only upload files with jpg, jpeg, png format.'
-        )
-      );
+      return cb(new Error('only upload files with jpg, jpeg, png format.'));
     }
     cb(undefined, true); // continue with upload
   }
 });
 
-router.post('/add', auth, role.checkRole(role.ROLES.Admin), upload.single('image'),(req, res) => {
+router.post(
+  '/add',
+  auth,
+  role.checkRole(role.ROLES.Admin),
+  upload.single('image'),
+  (req, res) => {
+    const sku = req.body.sku;
+    const name = req.body.name;
+    const description = req.body.description;
+    const quantity = req.body.quantity;
+    const price = req.body.price;
+    const taxable = req.body.taxable;
+    const brand = req.body.brand;
+    const image = {
+      data: fs.readFileSync(req.file.path),
+      contentType: req.file.mimetype
+    };
 
-  const sku = req.body.sku;
-  const name = req.body.name;
-  const description = req.body.description;
-  const quantity = req.body.quantity;
-  const price = req.body.price;
-  const taxable = req.body.taxable;
-  const brand = req.body.brand;
-  const image = {
-    data: fs.readFileSync(req.file.path),
-    contentType: req.file.mimetype
-  }
-
-  if (!sku) {
-    return res.status(400).json({ error: 'You must enter sku.' });
-  }
-
-  if (!description || !name) {
-    return res
-      .status(400)
-      .json({ error: 'You must enter description & name.' });
-  }
-
-  if (!quantity) {
-    return res.status(400).json({ error: 'You must enter a quantity.' });
-  }
-
-  if (!price) {
-    return res.status(400).json({ error: 'You must enter a price.' });
-  }
-
-  Product.findOne({ sku }, (err, existingProduct) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
+    if (!sku) {
+      return res.status(400).json({ error: 'You must enter sku.' });
     }
 
-    if (existingProduct) {
-      return res.status(400).json({ error: 'This sku is already in use.' });
+    if (!description || !name) {
+      return res
+        .status(400)
+        .json({ error: 'You must enter description & name.' });
     }
 
-    const product = new Product({
-      sku,
-      name,
-      description,
-      quantity,
-      price,
-      taxable,
-      brand,
-      image
-    });
+    if (!quantity) {
+      return res.status(400).json({ error: 'You must enter a quantity.' });
+    }
 
-    product.save((err, data) => {
+    if (!price) {
+      return res.status(400).json({ error: 'You must enter a price.' });
+    }
+
+    Product.findOne({ sku }, (err, existingProduct) => {
       if (err) {
         return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
         });
       }
 
-      res.status(200).json({
-        success: true,
-        message: `Product has been added successfully!`,
-        product: data
+      if (existingProduct) {
+        return res.status(400).json({ error: 'This sku is already in use.' });
+      }
+
+      const product = new Product({
+        sku,
+        name,
+        description,
+        quantity,
+        price,
+        taxable,
+        brand,
+        image
+      });
+
+      product.save((err, data) => {
+        if (err) {
+          return res.status(400).json({
+            error: 'Your request could not be processed. Please try again.'
+          });
+        }
+
+        res.status(200).json({
+          success: true,
+          message: `Product has been added successfully!`,
+          product: data
+        });
       });
     });
-  });
-});
+  }
+);
 
 // fetch product api
 router.get('/item/:slug', (req, res) => {

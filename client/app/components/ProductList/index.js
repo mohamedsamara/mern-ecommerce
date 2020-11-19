@@ -28,7 +28,9 @@ const ProductList = props => {
                 <div className='item-details'>
                   <div className='item-body'>
                     <Link to={`/product/${product.slug}`} className='item-link'>
-                      <img src={`${arrayBufferToBase64(product.image)}`} />
+                      {product.image && (
+                        <img src={`${arrayBufferToBase64(product.image)}`} />
+                      )}
                       <h1 className='item-name'>{product.name}</h1>
                       {product.brand && (
                         <p className='by'>
@@ -40,11 +42,11 @@ const ProductList = props => {
                   </div>
                   <div className='item-footer'>
                     <p className='price'>${product.price}</p>
-                    { product.quantity > 0 ? (
-                    <p className='stock in-stock'>In stock</p>
-                  ) : (
-                    <p className='stock out-of-stock'>Out of stock</p>
-                  )} 
+                    {/* {product.quantity > 0 ? (
+                      <p className='stock in-stock'>In stock</p>
+                    ) : (
+                      <p className='stock out-of-stock'>Out of stock</p>
+                    )} */}
                   </div>
                 </div>
               </div>

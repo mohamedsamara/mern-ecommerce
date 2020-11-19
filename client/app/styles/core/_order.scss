@@ -21,11 +21,11 @@
             border-radius: $border-radius-default;
           }
 
-          @include media-breakpoint-up(lg) {
-            height: 128px;
-          }
+          // @include media-breakpoint-up(lg) {
+          //   height: 128px;
+          // }
 
-          @include media-breakpoint-up(xl) {
+          @include media-breakpoint-up(lg) {
             width: 90px;
             height: 90px;
           }
