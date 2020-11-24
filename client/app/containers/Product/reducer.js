@@ -3,6 +3,7 @@
  * Product reducer
  *
  */
+import React from 'react';
 
 import {
   FETCH_PRODUCTS,
@@ -84,13 +85,15 @@ const initialState = {
       sort: true
     },
     {
-      // dataField: 'image',
-      // text: 'Product Image'
-      // formatter: (cell, row) => {
-      //   return (
-      //     <>{product.image && <img src={`${arrayBufferToBase64(cell)}`} />}</>
-      //   );
-      // }
+      dataField: 'image',
+      text: 'Product Image',
+      formatter: (cell, row) => {
+        return (
+          <>
+            {cell && cell.data && <img src={`${arrayBufferToBase64(cell)}`} />}
+          </>
+        );
+      }
     }
   ]
 };
