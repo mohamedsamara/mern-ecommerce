@@ -1,4 +1,6 @@
 const express = require('express');
+const multer = require('multer');
+const fs = require('fs');
 const router = express.Router();
 
 // Bring in Models & Helpers
@@ -8,7 +10,33 @@ const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 
-router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, image, cb) {
+      cb(null, './files');
+    },
+    filename(req, image, cb) {
+      cb(null, `${new Date().getTime()}_${image.originalname}`);
+    }
+  }),
+  limits: {
+    fileSize: 1000000 // max file size 1MB = 1000000 bytes
+  },
+  fileFilter(req, image, cb) {
+    if (!image.originalname.match(/\.(jpeg|jpg|png)$/)) {
+      return cb(
+        new Error(
+          'only upload files with jpg, jpeg, png format.'
+        )
+      );
+    }
+    cb(undefined, true); // continue with upload
+  }
+});
+
+router.post('/add', auth, role.checkRole(role.ROLES.Admin), upload.single('image'),(req, res) => {
+
   const sku = req.body.sku;
   const name = req.body.name;
   const description = req.body.description;
@@ -16,6 +44,10 @@ router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
   const price = req.body.price;
   const taxable = req.body.taxable;
   const brand = req.body.brand;
+  const image = {
+    data: fs.readFileSync(req.file.path),
+    contentType: req.file.mimetype
+  }
 
   if (!sku) {
     return res.status(400).json({ error: 'You must enter sku.' });
@@ -53,7 +85,8 @@ router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
       quantity,
       price,
       taxable,
-      brand
+      brand,
+      image
     });
 
     product.save((err, data) => {

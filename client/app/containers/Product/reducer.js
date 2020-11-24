@@ -21,6 +21,11 @@ import {
   SET_PRODUCTS_LOADING
 } from './constants';
 
+import React from 'react'
+import { render } from 'react-dom'
+import { arrayBufferToBase64 } from '../../helpers/base64';
+//window.React = React
+
 const initialState = {
   products: [],
   product: {},
@@ -33,7 +38,8 @@ const initialState = {
     description: '',
     quantity: 1,
     price: 1,
-    taxable: 0
+    taxable: 0,
+    image:{}
   },
   isLoading: false,
   productShopData: {
@@ -79,6 +85,13 @@ const initialState = {
       dataField: 'brand.name',
       text: 'Product Brand',
       sort: true
+    },
+    {
+      dataField: 'image',
+      text: 'Product Image',
+      formatter: (cell, row) => {
+         return (<img src={`${arrayBufferToBase64(cell)}`}/>)
+      }
     }
   ]
 };
@@ -158,7 +171,8 @@ const productReducer = (state = initialState, action) => {
           name: '',
           description: '',
           quantity: 1,
-          price: 0
+          price: 0,
+          image: {}
         },
         formErrors: {},
         selectedProducts: []

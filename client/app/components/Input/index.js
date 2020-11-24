@@ -25,7 +25,11 @@ const Input = props => {
   } = props;
 
   const _onChange = e => {
-    onInputChange(e.target.name, e.target.value);
+    if (e.target.name == 'image') {
+      onInputChange(e.target.name, e.target.files[0]);
+    } else {
+      onInputChange(e.target.name, e.target.value);
+    }
   };
 
   if (type === 'textarea') {

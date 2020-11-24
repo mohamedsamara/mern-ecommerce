@@ -5,16 +5,15 @@
  */
 
 import React from 'react';
-
 import { Link } from 'react-router-dom';
-
 import { formatDate } from '../../helpers/date';
+import { arrayBufferToBase64 } from '../../helpers/base64';
 
 const OrderList = props => {
   const { orders } = props;
 
   const renderFirstItem = products => {
-    return <img src={'/images/placeholder-image.png'} />;
+    return <img src={`${arrayBufferToBase64(products[0].product.image)}`} />;
   };
 
   return (
