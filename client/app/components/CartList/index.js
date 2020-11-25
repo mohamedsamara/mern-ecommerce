@@ -24,23 +24,27 @@ const CartList = props => {
         <div key={index} className='item-box'>
           <div className='item-details'>
             <Container>
-              <img
-                src={`${
-                  item.imageUrl
-                    ? item.imageUrl
-                    : '../images/placeholder-image.png'
-                }`}
-              />
-
               <Row className='mb-2 align-items-center'>
                 <Col xs='9'>
-                  <Link
-                    to={`/product/${item.slug}`}
-                    className='item-link'
-                    onClick={handleProductClick}
-                  >
-                    <h1 className='item-name'>{item.name}</h1>
-                  </Link>
+                  <div className='d-flex align-items-center'>
+                    <img
+                      className='item-image mr-2'
+                      src={`${
+                        item.imageUrl
+                          ? item.imageUrl
+                          : '../images/placeholder-image.png'
+                      }`}
+                    />
+                    <Link
+                      to={`/product/${item.slug}`}
+                      className='item-link'
+                      onClick={handleProductClick}
+                    >
+                      <h1 className='item-name one-line-ellipsis'>
+                        {item.name}
+                      </h1>
+                    </Link>
+                  </div>
                 </Col>
                 <Col xs='3' className='text-right'>
                   <Button

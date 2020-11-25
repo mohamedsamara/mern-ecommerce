@@ -13,7 +13,7 @@
       .order-first-item {
         align-self: center;
 
-        img {
+        .item-image {
           border-top-right-radius: $border-radius-default;
           border-top-left-radius: $border-radius-default;
 
@@ -22,10 +22,6 @@
           }
 
           @include media-breakpoint-up(lg) {
-            height: 128px;
-          }
-
-          @include media-breakpoint-up(xl) {
             width: 90px;
             height: 90px;
           }
@@ -114,11 +110,8 @@
     }
 
     .item-image {
-      width: 90px;
-
-      img {
-        border-radius: $border-radius-default;
-      }
+      width: 80px;
+      border-radius: $border-radius-default;
     }
   }
 

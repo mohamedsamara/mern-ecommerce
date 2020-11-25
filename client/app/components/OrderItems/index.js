@@ -41,15 +41,14 @@ const OrderItems = props => {
             <div className='order-item-box'>
               <div className='d-flex justify-content-between flex-column flex-md-row'>
                 <div className='d-flex align-items-center box'>
-                  <div className='item-image'>
-                    <img
-                      src={`${
-                        item.product.imageUrl
-                          ? item.product.imageUrl
-                          : '../images/placeholder-image.png'
-                      }`}
-                    />
-                  </div>
+                  <img
+                    className='item-image'
+                    src={`${
+                      item.product.imageUrl
+                        ? item.product.imageUrl
+                        : '../images/placeholder-image.png'
+                    }`}
+                  />
                   <div className='d-md-flex flex-1 align-items-start ml-4 item-box'>
                     <div className='item-details'>
                       <Link

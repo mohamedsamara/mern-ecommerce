@@ -56,8 +56,9 @@ class ProductPage extends React.PureComponent {
         ) : Object.keys(product).length > 0 ? (
           <Row className='flex-row'>
             <Col xs='12' md='5' lg='5' className='mb-3 px-3 px-md-2'>
-              <div className='item-image'>
+              <div className='position-relative'>
                 <img
+                  className='item-image'
                   src={`${
                     product.imageUrl
                       ? product.imageUrl
