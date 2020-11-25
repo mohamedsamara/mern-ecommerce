@@ -35,9 +35,10 @@ const CartList = props => {
                           : '/images/placeholder-image.png'
                       }`}
                     />
+
                     <Link
                       to={`/product/${item.slug}`}
-                      className='item-link'
+                      className='item-link one-line-ellipsis'
                       onClick={handleProductClick}
                     >
                       <h1 className='item-name one-line-ellipsis'>

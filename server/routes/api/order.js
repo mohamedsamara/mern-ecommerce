@@ -4,6 +4,7 @@ const router = express.Router();
 // Bring in Models & Helpers
 const Order = require('../../models/order');
 const Cart = require('../../models/cart');
+const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 const mailgun = require('../../services/mailgun');
 const taxConfig = require('../../config/tax');
@@ -153,6 +154,9 @@ router.delete('/cancel/:orderId', auth, async (req, res) => {
     const orderId = req.params.orderId;
 
     const order = await Order.findOne({ _id: orderId });
+    const foundCart = await Cart.findOne({ _id: order.cart });
+
+    increaseQuantity(foundCart.products);
 
     await Order.deleteOne({ _id: orderId });
     await Cart.deleteOne({ _id: order.cart });
@@ -173,11 +177,19 @@ router.put('/cancel/item/:itemId', auth, async (req, res) => {
     const orderId = req.body.orderId;
     const cartId = req.body.cartId;
 
+    const foundCart = await Cart.findOne({ 'products._id': itemId });
+    const foundCartProduct = foundCart.products.find(p => p._id == itemId);
+
     await Cart.updateOne(
       { 'products._id': itemId },
       {
         'products.$.status': 'Cancelled'
       }
+    );
+
+    await Product.update(
+      { _id: foundCartProduct.product },
+      { $inc: { quantity: 1 } }
     );
 
     const cart = await Cart.findOne({ _id: cartId });
@@ -212,16 +224,20 @@ const caculateTaxAmount = order => {
 
   order.totalTax = 0;
 
-  order.products.map(item => {
-    if (item.product.taxable) {
-      const price = Number(item.product.price).toFixed(2);
-      const taxAmount = Math.round(price * taxRate * 100) / 100;
-      item.priceWithTax = parseFloat(price) + parseFloat(taxAmount);
-      order.totalTax += taxAmount;
-    }
+  if (order.products && order.products.length > 0) {
+    order.products.map(item => {
+      if (item.product) {
+        if (item.product.taxable) {
+          const price = Number(item.product.price).toFixed(2);
+          const taxAmount = Math.round(price * taxRate * 100) / 100;
+          item.priceWithTax = parseFloat(price) + parseFloat(taxAmount);
+          order.totalTax += taxAmount;
+        }
 
-    item.totalPrice = parseFloat(item.totalPrice.toFixed(2));
-  });
+        item.totalPrice = parseFloat(item.totalPrice.toFixed(2));
+      }
+    });
+  }
 
   order.totalWithTax = order.total + order.totalTax;
 
@@ -231,6 +247,19 @@ const caculateTaxAmount = order => {
   );
   order.totalWithTax = parseFloat(Number(order.totalWithTax.toFixed(2)));
   return order;
+};
+
+const increaseQuantity = products => {
+  let bulkOptions = products.map(item => {
+    return {
+      updateOne: {
+        filter: { _id: item.product },
+        update: { $inc: { quantity: +item.quantity } }
+      }
+    };
+  });
+
+  Product.bulkWrite(bulkOptions);
 };
 
 module.exports = router;

@@ -44,24 +44,31 @@ const OrderItems = props => {
                   <img
                     className='item-image'
                     src={`${
-                      item.product.imageUrl
+                      item.product && item.product.imageUrl
                         ? item.product.imageUrl
                         : '/images/placeholder-image.png'
                     }`}
                   />
                   <div className='d-md-flex flex-1 align-items-start ml-4 item-box'>
                     <div className='item-details'>
-                      <Link
-                        to={`/product/${item.product.slug}`}
-                        className='item-link'
-                      >
-                        <h4 className='item-name'>{item.product.name}</h4>
-                      </Link>
-                      <div className='d-flex align-items-center justify-content-between'>
-                        <span className='price'>${item.product.price}</span>
-                      </div>
+                      {item.product ? (
+                        <>
+                          <Link
+                            to={`/product/${item.product.slug}`}
+                            className='item-link'
+                          >
+                            <h4 className='item-name one-line-ellipsis'>
+                              {item.product.name}
+                            </h4>
+                          </Link>
+                          <div className='d-flex align-items-center justify-content-between'>
+                            <span className='price'>${item.product.price}</span>
+                          </div>
+                        </>
+                      ) : (
+                        <h4>Not Available</h4>
+                      )}
                     </div>
-
                     <div className='d-flex justify-content-between flex-wrap d-md-none mt-1'>
                       <p className='mb-1'>
                         Status
@@ -98,13 +105,15 @@ const OrderItems = props => {
                 </div>
               </div>
 
-              {item.status !== 'Cancelled' && order.products.length !== 1 && (
-                <div className='text-right mt-2 mt-md-0'>
-                  <DropdownConfirm label='Cancel Item'>
-                    {renderPopoverContent(item)}
-                  </DropdownConfirm>
-                </div>
-              )}
+              {item.product &&
+                item.status !== 'Cancelled' &&
+                order.products.length !== 1 && (
+                  <div className='text-right mt-2 mt-md-0'>
+                    <DropdownConfirm label='Cancel Item'>
+                      {renderPopoverContent(item)}
+                    </DropdownConfirm>
+                  </div>
+                )}
             </div>
           </Col>
         ))}

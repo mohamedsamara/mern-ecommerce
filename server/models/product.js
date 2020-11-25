@@ -42,7 +42,8 @@ const ProductSchema = new Schema({
   },
   brand: {
     type: Schema.Types.ObjectId,
-    ref: 'Brand'
+    ref: 'Brand',
+    default: null
   },
   updated: Date,
   created: {
