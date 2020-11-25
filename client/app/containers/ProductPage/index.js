@@ -76,7 +76,9 @@ class ProductPage extends React.PureComponent {
               <div className='product-container'>
                 <div className='item-box'>
                   <div className='item-details'>
-                    <h1 className='item-name'>{product.name}</h1>
+                    <h1 className='item-name one-line-ellipsis'>
+                      {product.name}
+                    </h1>
                     <p className='sku'>{product.sku}</p>
                     <hr />
                     {product.brand && (

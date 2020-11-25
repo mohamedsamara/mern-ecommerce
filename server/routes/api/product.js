@@ -26,7 +26,7 @@ router.post(
       const quantity = req.body.quantity;
       const price = req.body.price;
       const taxable = req.body.taxable;
-      const brand = req.body.brand;
+      const brand = req.body.brand != 0 ? req.body.brand : null;
       const image = req.file;
 
       if (!sku) {
@@ -53,24 +53,29 @@ router.post(
         return res.status(400).json({ error: 'This sku is already in use.' });
       }
 
-      const s3bucket = new AWS.S3({
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        region: process.env.AWS_REGION
-      });
+      let imageUrl = '';
+      let imageKey = '';
 
-      const params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: image.originalname,
-        Body: image.buffer,
-        ContentType: image.mimetype,
-        ACL: 'public-read'
-      };
+      if (image) {
+        const s3bucket = new AWS.S3({
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+          region: process.env.AWS_REGION
+        });
 
-      const s3Upload = await s3bucket.upload(params).promise();
+        const params = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: image.originalname,
+          Body: image.buffer,
+          ContentType: image.mimetype,
+          ACL: 'public-read'
+        };
 
-      const imageUrl = s3Upload.Location;
-      const imageKey = s3Upload.key;
+        const s3Upload = await s3bucket.upload(params).promise();
+
+        imageUrl = s3Upload.Location;
+        imageKey = s3Upload.key;
+      }
 
       const product = new Product({
         sku,
