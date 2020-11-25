@@ -187,7 +187,7 @@ router.put('/cancel/item/:itemId', auth, async (req, res) => {
       }
     );
 
-    await Product.update(
+    await Product.updateOne(
       { _id: foundCartProduct.product },
       { $inc: { quantity: 1 } }
     );
