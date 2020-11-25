@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/mohamedsamara/mern-ecommerce#readme",
   "dependencies": {
+    "aws-sdk": "^2.799.0",
     "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.3.1",

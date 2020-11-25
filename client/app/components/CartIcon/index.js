@@ -10,7 +10,7 @@ import { BagIcon } from '../Icon';
 import Button from '../Button';
 
 const CartIcon = props => {
-  const { onClick, cartItems } = props;
+  const { className, onClick, cartItems } = props;
 
   const Icon = (
     <span className='cart-icon'>
@@ -25,6 +25,7 @@ const CartIcon = props => {
 
   return (
     <Button
+      className={className}
       ariaLabel={
         items > 0 ? `your cart have ${items} items` : 'your cart is empty'
       }

@@ -46,7 +46,11 @@ router.post('/add', auth, async (req, res) => {
       message: `Your order has been placed successfully!`,
       order: { _id: orderDoc._id }
     });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 // fetch all orders api

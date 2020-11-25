@@ -50,15 +50,21 @@ class ProductPage extends React.PureComponent {
     } = this.props;
 
     return (
-
       <div className='product-shop'>
         {isLoading ? (
           <LoadingIndicator />
         ) : Object.keys(product).length > 0 ? (
           <Row className='flex-row'>
             <Col xs='12' md='5' lg='5' className='mb-3 px-3 px-md-2'>
-              <div className='item-image'>
-                <img src={`${arrayBufferToBase64(product.image)}`} />
+              <div className='position-relative'>
+                <img
+                  className='item-image'
+                  src={`${
+                    product.imageUrl
+                      ? product.imageUrl
+                      : '/images/placeholder-image.png'
+                  }`}
+                />
                 {product.inventory <= 0 && !shopFormErrors['quantity'] ? (
                   <p className='stock out-of-stock'>Out of stock</p>
                 ) : (

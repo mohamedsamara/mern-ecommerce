@@ -88,6 +88,7 @@ class Navigation extends React.PureComponent {
             >
               <div className='brand'>
                 <Button
+                  className='d-none d-md-block'
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
                   onClick={toggleMenu}
@@ -120,7 +121,11 @@ class Navigation extends React.PureComponent {
               lg={{ size: 9, order: 3 }}
             >
               <Navbar color='light' light expand='md'>
-                <CartIcon cartItems={cartItems} onClick={toggleCart} />
+                <CartIcon
+                  className='d-none d-md-block'
+                  cartItems={cartItems}
+                  onClick={toggleCart}
+                />
                 <Nav navbar>
                   <Dropdown
                     nav
