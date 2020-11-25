@@ -28,7 +28,7 @@ const handleError = (err, dispatch, title = '') => {
       // dispatch(error(unsuccessfulOptions));
     } else if (err.response.status === 401) {
       unsuccessfulOptions.message = 'Unauthorized Access! Please login again';
-      // dispatch(signOut());
+      dispatch(signOut());
       dispatch(error(unsuccessfulOptions));
     } else if (err.response.status === 403) {
       unsuccessfulOptions.message =

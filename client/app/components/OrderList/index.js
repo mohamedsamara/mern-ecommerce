@@ -18,7 +18,7 @@ const OrderList = props => {
         src={`${
           products[0].product.image
             ? products[0].product.image
-            : '../images/placeholder-image.png'
+            : '/images/placeholder-image.png'
         }`}
       />
     );

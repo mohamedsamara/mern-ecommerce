@@ -46,7 +46,7 @@ const OrderItems = props => {
                     src={`${
                       item.product.imageUrl
                         ? item.product.imageUrl
-                        : '../images/placeholder-image.png'
+                        : '/images/placeholder-image.png'
                     }`}
                   />
                   <div className='d-md-flex flex-1 align-items-start ml-4 item-box'>

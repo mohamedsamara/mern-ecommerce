@@ -87,13 +87,7 @@ const initialState = {
       dataField: 'imageUrl',
       text: 'Product Image',
       formatter: cell => {
-        return (
-          <>
-            {cell && (
-              <img src={`${cell ? cell : '../images/placeholder-image.png'}`} />
-            )}
-          </>
-        );
+        return <img src={`${cell ? cell : '/images/placeholder-image.png'}`} />;
       }
     }
   ]

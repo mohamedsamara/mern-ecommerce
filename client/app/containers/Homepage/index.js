@@ -37,14 +37,14 @@ class Homepage extends React.PureComponent {
           </Col>
           <Col xs='12' lg='3' className='order-lg-1 mb-3 px-3 px-md-2'>
             <div className='d-flex flex-column h-100 justify-content-between'>
-              <img src='../images/banners/banner-2.jpg' className='mb-3' />
-              <img src='../images/banners/banner-5.jpg' />
+              <img src='/images/banners/banner-2.jpg' className='mb-3' />
+              <img src='/images/banners/banner-5.jpg' />
             </div>
           </Col>
           <Col xs='12' lg='3' className='order-lg-3 mb-3 px-3 px-md-2'>
             <div className='d-flex flex-column h-100 justify-content-between'>
-              <img src='../images/banners/banner-2.jpg' className='mb-3' />
-              <img src='../images/banners/banner-6.jpg' />
+              <img src='/images/banners/banner-2.jpg' className='mb-3' />
+              <img src='/images/banners/banner-6.jpg' />
             </div>
           </Col>
         </Row>
