@@ -8,7 +8,6 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { arrayBufferToBase64 } from '../../helpers/base64';
 
 const ProductList = props => {
   const { products } = props;
@@ -28,7 +27,13 @@ const ProductList = props => {
                 <div className='item-details'>
                   <div className='item-body'>
                     <Link to={`/product/${product.slug}`} className='item-link'>
-                      <img src={`${arrayBufferToBase64(product.image)}`} />
+                      <img
+                        src={`${
+                          product.imageUrl
+                            ? product.imageUrl
+                            : '../images/placeholder-image.png'
+                        }`}
+                      />
                       <h1 className='item-name'>{product.name}</h1>
                       {product.brand && (
                         <p className='by'>
@@ -40,11 +45,11 @@ const ProductList = props => {
                   </div>
                   <div className='item-footer'>
                     <p className='price'>${product.price}</p>
-                    { product.quantity > 0 ? (
-                    <p className='stock in-stock'>In stock</p>
-                  ) : (
-                    <p className='stock out-of-stock'>Out of stock</p>
-                  )} 
+                    {product.quantity > 0 ? (
+                      <p className='stock in-stock'>In stock</p>
+                    ) : (
+                      <p className='stock out-of-stock'>Out of stock</p>
+                    )}
                   </div>
                 </div>
               </div>

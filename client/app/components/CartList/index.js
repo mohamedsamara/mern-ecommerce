@@ -8,7 +8,6 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 import { Container, Row, Col } from 'reactstrap';
-import { arrayBufferToBase64 } from '../../helpers/base64';
 
 import Button from '../Button';
 
@@ -25,7 +24,14 @@ const CartList = props => {
         <div key={index} className='item-box'>
           <div className='item-details'>
             <Container>
-              <img src={`${arrayBufferToBase64(item.image)}`} />
+              <img
+                src={`${
+                  item.imageUrl
+                    ? item.imageUrl
+                    : '../images/placeholder-image.png'
+                }`}
+              />
+
               <Row className='mb-2 align-items-center'>
                 <Col xs='9'>
                   <Link

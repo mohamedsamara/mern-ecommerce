@@ -13,7 +13,15 @@ const OrderList = props => {
   const { orders } = props;
 
   const renderFirstItem = products => {
-    return <img src={`${arrayBufferToBase64(products[0].product.image)}`} />;
+    return (
+      <img
+        src={`${
+          products[0].product.image
+            ? products[0].product.image
+            : '../images/placeholder-image.png'
+        }`}
+      />
+    );
   };
 
   return (

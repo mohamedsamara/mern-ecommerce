@@ -21,8 +21,10 @@ const ProductSchema = new Schema({
   },
   slug: { type: String, slug: 'name', unique: true },
   image: {
-    data: Buffer,
-    contentType: String
+    type: String
+  },
+  imageKey: {
+    type: String
   },
   description: {
     type: String,
