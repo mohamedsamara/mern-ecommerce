@@ -20,7 +20,7 @@ const ProductSchema = new Schema({
     trim: true
   },
   slug: { type: String, slug: 'name', unique: true },
-  image: {
+  imageUrl: {
     type: String
   },
   imageKey: {
