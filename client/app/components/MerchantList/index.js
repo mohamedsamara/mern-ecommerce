@@ -94,11 +94,3 @@ const MerchantList = props => {
 };
 
 export default MerchantList;
-
-// brand: "adidis"
-// business: "selling shoes"
-// created: "2020-10-29T12:32:37.731Z"
-// isApproved: false
-// name: "meo meo"
-// phoneNumber: "1234567890"
-// status: "Waiting Approval"

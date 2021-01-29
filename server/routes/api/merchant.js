@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 // Bring in Models & Helpers
 const Merchant = require('../../models/merchant');
+const User = require('../../models/user');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
@@ -88,14 +91,18 @@ router.put('/approve/:merchantId', auth, async (req, res) => {
       isActive: true
     };
 
-    await Merchant.findOneAndUpdate(query, update, {
+    const merchantDoc = await Merchant.findOneAndUpdate(query, update, {
       new: true
     });
+
+    await createMerchantUser(merchantDoc.email, merchantId, req.headers.host);
 
     res.status(200).json({
       success: true
     });
   } catch (error) {
+    console.log(error, '-----error---');
+
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -125,5 +132,93 @@ router.put('/reject/:merchantId', auth, async (req, res) => {
     });
   }
 });
+
+router.post('/signup/:token', async (req, res) => {
+  try {
+    const { email, firstName, lastName, password } = req.body;
+
+    if (!email) {
+      return res
+        .status(400)
+        .json({ error: 'You must enter an email address.' });
+    }
+
+    if (!firstName || !lastName) {
+      return res.status(400).json({ error: 'You must enter your full name.' });
+    }
+
+    if (!password) {
+      return res.status(400).json({ error: 'You must enter a password.' });
+    }
+
+    const userDoc = await User.findOne({
+      email,
+      resetPasswordToken: req.params.token
+    });
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    const query = { _id: userDoc._id };
+    const update = {
+      email,
+      firstName,
+      lastName,
+      password: hash,
+      resetPasswordToken: undefined
+    };
+
+    await User.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+const createMerchantUser = async (email, merchant, host) => {
+  const firstName = '';
+  const lastName = '';
+
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    const query = { _id: existingUser._id };
+    const update = {
+      merchant,
+      role: 'ROLE_MERCHANT'
+    };
+
+    return await User.findOneAndUpdate(query, update, {
+      new: true
+    });
+  } else {
+    const buffer = await crypto.randomBytes(48);
+    const resetToken = buffer.toString('hex');
+    const resetPasswordToken = resetToken;
+
+    const user = new User({
+      email,
+      firstName,
+      lastName,
+      resetPasswordToken,
+      merchant,
+      role: 'ROLE_MERCHANT'
+    });
+
+    await mailgun.sendEmail(email, 'merchant-signup', host, {
+      resetToken,
+      email
+    });
+
+    return await user.save();
+  }
+};
 
 module.exports = router;

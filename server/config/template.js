@@ -24,6 +24,19 @@ exports.confirmResetPasswordEmail = () => {
   return message;
 };
 
+exports.merchantSignup = (host, { resetToken, email }) => {
+  const message = {
+    subject: 'Merchant Registration',
+    text: `${
+      'Congratulations! Your application has been accepted. Please complete your Merchant account signup by clicking on the link below. \n\n' +
+      'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+      'http://'
+    }${host}/merchant-signup/${resetToken}?email=${email}\n\n`
+  };
+
+  return message;
+};
+
 exports.signupEmail = name => {
   const message = {
     subject: 'Account Registration',

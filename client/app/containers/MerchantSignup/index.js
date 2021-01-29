@@ -1,6 +1,6 @@
 /*
  *
- * Signup
+ * MerchantSignup
  *
  */
 
@@ -8,48 +8,42 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
-import { Redirect, Link } from 'react-router-dom';
 
 import actions from '../../actions';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import LoadingIndicator from '../../components/LoadingIndicator';
-import SignupProvider from '../../components/SignupProvider';
-import Checkbox from '../../components/Checkbox';
 
-class Signup extends React.PureComponent {
+class MerchantSignup extends React.PureComponent {
+  componentDidMount() {
+    const email = this.props.location.search.split('=')[1];
+    this.props.merchantSignupChange('email', email);
+  }
+
   render() {
     const {
-      authenticated,
       signupFormData,
       formErrors,
-      isLoading,
-      isSubmitting,
-      isSubscribed,
-      signupChange,
-      signUp,
-      subscribeChange
+      merchantSignupChange,
+      merchantSignUp
     } = this.props;
 
-    if (authenticated) return <Redirect to='/dashboard' />;
-
     const handleSubmit = event => {
+      const token = this.props.match.params.token;
       event.preventDefault();
-      signUp();
+
+      merchantSignUp(token);
     };
 
     return (
-      <div className='signup-form'>
-        {isLoading && <LoadingIndicator />}
-        <h2>Sign Up</h2>
-        <hr />
+      <div className='merchant-signup-form'>
         <form onSubmit={handleSubmit} noValidate>
           <Row>
-            <Col
-              xs={{ size: 12, order: 2 }}
-              md={{ size: '6', order: 1 }}
-              className='col-no-padding'
-            >
+            <Col xs={{ size: 12 }} md={{ size: 6, offset: 3 }} className='p-0'>
+              <Col xs='12' md='12'>
+                <h2 className='text-center'>Complete Sign Up</h2>
+                <hr />
+              </Col>
+
               <Col xs='12' md='12'>
                 <Input
                   type={'text'}
@@ -59,7 +53,7 @@ class Signup extends React.PureComponent {
                   placeholder={'Please Enter Your Email'}
                   value={signupFormData.email}
                   onInputChange={(name, value) => {
-                    signupChange(name, value);
+                    merchantSignupChange(name, value);
                   }}
                 />
               </Col>
@@ -72,7 +66,7 @@ class Signup extends React.PureComponent {
                   placeholder={'Please Enter Your First Name'}
                   value={signupFormData.firstName}
                   onInputChange={(name, value) => {
-                    signupChange(name, value);
+                    merchantSignupChange(name, value);
                   }}
                 />
               </Col>
@@ -85,7 +79,7 @@ class Signup extends React.PureComponent {
                   placeholder={'Please Enter Your Last Name'}
                   value={signupFormData.lastName}
                   onInputChange={(name, value) => {
-                    signupChange(name, value);
+                    merchantSignupChange(name, value);
                   }}
                 />
               </Col>
@@ -98,33 +92,20 @@ class Signup extends React.PureComponent {
                   placeholder={'Please Enter Your Password'}
                   value={signupFormData.password}
                   onInputChange={(name, value) => {
-                    signupChange(name, value);
+                    merchantSignupChange(name, value);
                   }}
                 />
               </Col>
-            </Col>
-            <Col xs={{ size: 12, order: 1 }} md={{ size: '6', order: 2 }}>
-              <SignupProvider />
+              <Col xs='12' md='12'>
+                <Button
+                  className='mt-3'
+                  type='submit'
+                  variant='primary'
+                  text='Get Started'
+                />
+              </Col>
             </Col>
           </Row>
-          <hr />
-          <Checkbox
-            id={'subscribe'}
-            label={'Subscribe to newsletter'}
-            checked={isSubscribed}
-            toggleCheckboxChange={subscribeChange}
-          />
-          <div className='d-flex flex-column flex-md-row align-items-md-center justify-content-between'>
-            <Button
-              type='submit'
-              variant='primary'
-              text='Sign Up'
-              disabled={isSubmitting}
-            />
-            <Link className='mt-3 mt-md-0 redirect-link' to={'/login'}>
-              Back to login
-            </Link>
-          </div>
         </form>
       </div>
     );
@@ -133,13 +114,9 @@ class Signup extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    authenticated: state.authentication.authenticated,
-    signupFormData: state.signup.signupFormData,
-    formErrors: state.signup.formErrors,
-    isLoading: state.signup.isLoading,
-    isSubmitting: state.signup.isSubmitting,
-    isSubscribed: state.signup.isSubscribed
+    signupFormData: state.merchant.signupFormData,
+    formErrors: state.merchant.signupFormErrors
   };
 };
 
-export default connect(mapStateToProps, actions)(Signup);
+export default connect(mapStateToProps, actions)(MerchantSignup);
