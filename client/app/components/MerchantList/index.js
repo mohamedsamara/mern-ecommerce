@@ -26,6 +26,10 @@ const MerchantList = props => {
             <p className='two-line-ellipsis'>{merchant.brand}</p>
             <label className='text-black'>Name</label>
             <p className='two-line-ellipsis'>{merchant.name}</p>
+            <label className='text-black'>Email</label>
+            <p className='two-line-ellipsis'>
+              {merchant.email ? merchant.email : 'N/A'}
+            </p>
             <label className='text-black'>Phone Number</label>
             <p>{merchant.phoneNumber}</p>
             <label className='text-black'>Request date</label>
@@ -37,13 +41,24 @@ const MerchantList = props => {
                 <CheckIcon className='text-green' />
                 <p className='d-inline-block ml-2'>Approved</p>
               </>
-            ) : (
+            ) : merchant.email ? (
               <Button
                 variant='secondary'
                 size='md'
                 text='Approve'
                 //   onClick={() => cancelOrderItem(item._id, order.products)}
               />
+            ) : (
+              <p>
+                Merchant doesn't have email. Call at
+                <a
+                  href={`tel:${merchant.phoneNumber}`}
+                  className='text-primary'
+                >
+                  {' '}
+                  {merchant.phoneNumber}
+                </a>
+              </p>
             )}
           </div>
         </div>
