@@ -5,8 +5,8 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
@@ -21,7 +21,7 @@ import Users from '../Users';
 import Category from '../Category';
 import Product from '../Product';
 import Brand from '../Brand';
-import Merchants from '../Merchant';
+import Merchant from '../Merchant';
 import Order from '../Order';
 
 class Admin extends React.PureComponent {
@@ -51,7 +51,7 @@ class Admin extends React.PureComponent {
                 <Route path='/dashboard/categories' component={Category} />
                 <Route path='/dashboard/brands' component={Brand} />
                 <Route path='/dashboard/users' component={Users} />
-                <Route path='/dashboard/merchants' component={Merchants} />
+                <Route path='/dashboard/merchants' component={Merchant} />
                 <Route path='/dashboard/orders' component={Order} />
                 <Route path='*' component={Page404} />
               </Switch>

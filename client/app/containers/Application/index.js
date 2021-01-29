@@ -5,16 +5,16 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import actions from '../../actions';
 
 // routes
-import LoginPage from '../Login';
-import SignupPage from '../Signup';
+import Login from '../Login';
+import Signup from '../Signup';
 import MerchantSignup from '../MerchantSignup';
 import HomePage from '../Homepage';
 import Dashboard from '../Dashboard';
@@ -76,8 +76,8 @@ class Application extends React.PureComponent {
                 <Route path='/product/:slug' component={ProductPage} />
                 <Route path='/order/success/:id' component={OrderSuccess} />
                 <Route path='/order/:id' component={OrderPage} />
-                <Route path='/login' component={LoginPage} />
-                <Route path='/register' component={SignupPage} />
+                <Route path='/login' component={Login} />
+                <Route path='/register' component={Signup} />
                 <Route
                   path='/merchant-signup/:token'
                   component={MerchantSignup}

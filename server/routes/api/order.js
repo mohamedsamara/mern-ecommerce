@@ -94,8 +94,8 @@ router.get('/list', auth, async (req, res) => {
         }
       });
     } else {
-      res.status(404).json({
-        message: `You have no orders yet!`
+      res.status(200).json({
+        orders: []
       });
     }
   } catch (error) {

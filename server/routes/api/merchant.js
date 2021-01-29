@@ -6,6 +6,7 @@ const crypto = require('crypto');
 // Bring in Models & Helpers
 const Merchant = require('../../models/merchant');
 const User = require('../../models/user');
+const Brand = require('../../models/brand');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
@@ -96,13 +97,12 @@ router.put('/approve/:merchantId', auth, async (req, res) => {
     });
 
     await createMerchantUser(merchantDoc.email, merchantId, req.headers.host);
+    await createMerchantBrand(merchantDoc);
 
     res.status(200).json({
       success: true
     });
   } catch (error) {
-    console.log(error, '-----error---');
-
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -182,6 +182,16 @@ router.post('/signup/:token', async (req, res) => {
   }
 });
 
+const createMerchantBrand = async ({ _id, brand, business }) => {
+  const newBrand = new Brand({
+    name: brand,
+    description: business,
+    merchant: _id
+  });
+
+  return await newBrand.save();
+};
+
 const createMerchantUser = async (email, merchant, host) => {
   const firstName = '';
   const lastName = '';
@@ -192,7 +202,7 @@ const createMerchantUser = async (email, merchant, host) => {
     const query = { _id: existingUser._id };
     const update = {
       merchant,
-      role: 'ROLE_MERCHANT'
+      role: role.ROLES.Merchant
     };
 
     return await User.findOneAndUpdate(query, update, {
@@ -209,7 +219,7 @@ const createMerchantUser = async (email, merchant, host) => {
       lastName,
       resetPasswordToken,
       merchant,
-      role: 'ROLE_MERCHANT'
+      role: role.ROLES.Merchant
     });
 
     await mailgun.sendEmail(email, 'merchant-signup', host, {
