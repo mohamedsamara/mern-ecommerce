@@ -20,34 +20,7 @@ const initialState = {
     brand: '',
     business: ''
   },
-  formErrors: {},
-  columns: [
-    {
-      hidden: true,
-      dataField: '_id',
-      text: ''
-    },
-    {
-      dataField: 'name',
-      text: 'Name'
-    },
-    {
-      dataField: 'phoneNumber',
-      text: 'Phone Number'
-    },
-    {
-      dataField: 'status',
-      text: 'Status'
-    },
-    {
-      dataField: 'brand',
-      text: 'Brand'
-    },
-    {
-      dataField: 'business',
-      text: 'Business Description'
-    }
-  ]
+  formErrors: {}
 };
 
 const merchantReducer = (state = initialState, action) => {

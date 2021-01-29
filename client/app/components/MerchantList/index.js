@@ -8,12 +8,10 @@ import React from 'react';
 
 import { formatDate } from '../../helpers/date';
 import Button from '../Button';
-import { CheckIcon } from '../Icon';
+import { CheckIcon, RefreshIcon } from '../Icon';
 
 const MerchantList = props => {
-  const { merchants } = props;
-
-  console.log({ merchants });
+  const { merchants, approveMerchant, rejectMerchant } = props;
 
   return (
     <div className='merchant-list'>
@@ -36,18 +34,46 @@ const MerchantList = props => {
             <p>{formatDate(merchant.created)}</p>
 
             <hr />
-            {merchant.isApproved ? (
+
+            {merchant.status === 'Approved' ? (
               <>
                 <CheckIcon className='text-green' />
                 <p className='d-inline-block ml-2'>Approved</p>
               </>
+            ) : merchant.status === 'Rejected' ? (
+              <>
+                <div className='d-flex align-items-center mb-3'>
+                  <RefreshIcon className='text-primary' />
+                  <p className='fw-2 d-inline-block ml-3 mb-0'>
+                    Re Approve Merchant
+                  </p>
+                </div>
+
+                <Button
+                  className='text-uppercase'
+                  variant='primary'
+                  size='md'
+                  text='Approve'
+                  onClick={() => approveMerchant(merchant)}
+                />
+              </>
             ) : merchant.email ? (
-              <Button
-                variant='secondary'
-                size='md'
-                text='Approve'
-                //   onClick={() => cancelOrderItem(item._id, order.products)}
-              />
+              <div className='d-flex flex-column flex-sm-row'>
+                <Button
+                  className='text-uppercase'
+                  variant='dark'
+                  size='md'
+                  text='Approve'
+                  onClick={() => approveMerchant(merchant)}
+                />
+                <Button
+                  className='mt-3 mt-sm-0 ml-sm-2 text-uppercase'
+                  variant='danger'
+                  size='md'
+                  text='Reject'
+                  onClick={() => rejectMerchant(merchant)}
+                />
+              </div>
             ) : (
               <p>
                 Merchant doesn't have email. Call at

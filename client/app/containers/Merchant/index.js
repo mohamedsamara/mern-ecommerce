@@ -18,13 +18,17 @@ class Merchant extends React.PureComponent {
   }
 
   render() {
-    const { merchants, columns } = this.props;
+    const { merchants, approveMerchant, rejectMerchant } = this.props;
 
     return (
       <div className='merchant-dashboard'>
         <SubPage title={'Merchants'} isMenuOpen={null} />
 
-        <MerchantList merchants={merchants} />
+        <MerchantList
+          merchants={merchants}
+          approveMerchant={approveMerchant}
+          rejectMerchant={rejectMerchant}
+        />
       </div>
     );
   }
@@ -32,8 +36,7 @@ class Merchant extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    merchants: state.merchant.merchants,
-    columns: state.merchant.columns
+    merchants: state.merchant.merchants
   };
 };
 

@@ -20,14 +20,14 @@ const MerchantSchema = new Schema({
     type: String,
     trim: true
   },
-  isApproved: {
+  isActive: {
     type: Boolean,
     default: false
   },
   status: {
     type: String,
     default: 'Waiting Approval',
-    enum: ['Not Active', 'Active', 'Waiting Approval', 'Rejected']
+    enum: ['Waiting Approval', 'Rejected', 'Approved']
   },
   updated: Date,
   created: {

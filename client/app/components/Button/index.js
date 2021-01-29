@@ -10,7 +10,8 @@ const variants = {
   primary: 'custom-btn-primary',
   secondary: 'custom-btn-secondary',
   danger: 'custom-btn-danger',
-  link: 'custom-btn-link'
+  link: 'custom-btn-link',
+  dark: 'custom-btn-dark'
 };
 
 const Button = props => {

@@ -64,7 +64,7 @@ router.get(
   role.checkRole(role.ROLES.Admin),
   async (req, res) => {
     try {
-      const merchants = await Merchant.find({});
+      const merchants = await Merchant.find({}).sort('-created');
 
       res.status(200).json({
         merchants
@@ -76,5 +76,54 @@ router.get(
     }
   }
 );
+
+// approve merchant
+router.put('/approve/:merchantId', auth, async (req, res) => {
+  try {
+    const merchantId = req.params.merchantId;
+
+    const query = { _id: merchantId };
+    const update = {
+      status: 'Approved',
+      isActive: true
+    };
+
+    await Merchant.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+// reject merchant
+router.put('/reject/:merchantId', auth, async (req, res) => {
+  try {
+    const merchantId = req.params.merchantId;
+
+    const query = { _id: merchantId };
+    const update = {
+      status: 'Rejected'
+    };
+
+    await Merchant.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
 
 module.exports = router;
