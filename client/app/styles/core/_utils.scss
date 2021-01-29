@@ -36,9 +36,41 @@
   flex: 1;
 }
 
+.fw-0 {
+  font-weight: $font-weight-normal;
+}
+
+.fw-1 {
+  font-weight: $font-weight-bold-one;
+}
+
+.fw-2 {
+  font-weight: $font-weight-bold-two;
+}
+
+.fw-3 {
+  font-weight: $font-weight-bold-three;
+}
+
+.text-black {
+  color: $black;
+}
+
+.text-green {
+  color: $green;
+}
+
 .one-line-ellipsis {
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.two-line-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
