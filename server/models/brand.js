@@ -25,6 +25,11 @@ const BrandSchema = new Schema({
     type: String,
     trim: true
   },
+  merchant: {
+    type: Schema.Types.ObjectId,
+    ref: 'Merchant',
+    default: null
+  },
   updated: Date,
   created: {
     type: Date,

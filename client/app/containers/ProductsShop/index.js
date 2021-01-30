@@ -5,13 +5,14 @@
  */
 
 import React from 'react';
+
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import ProductList from '../../components/ProductList';
-import NotFound from '../../components/NotFound';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import ProductList from '../../components/Store/ProductList';
+import NotFound from '../../components/Common/NotFound';
+import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
 class ProductsShop extends React.PureComponent {
   componentDidMount() {

@@ -48,7 +48,7 @@ router.post('/add', auth, async (req, res) => {
       order: { _id: orderDoc._id }
     });
   } catch (error) {
-    return res.status(400).json({
+    res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
   }
@@ -94,8 +94,8 @@ router.get('/list', auth, async (req, res) => {
         }
       });
     } else {
-      res.status(404).json({
-        message: `You have no orders yet!`
+      res.status(200).json({
+        orders: []
       });
     }
   } catch (error) {

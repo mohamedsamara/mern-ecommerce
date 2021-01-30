@@ -26,10 +26,10 @@ import {
 
 import actions from '../../actions';
 
-import Button from '../../components/Button';
-import CartIcon from '../../components/CartIcon';
-import { BarsIcon } from '../../components/Icon';
-import MiniBrand from '../../components/MiniBrand';
+import Button from '../../components/Common/Button';
+import CartIcon from '../../components/Common/CartIcon';
+import { BarsIcon } from '../../components/Common/Icon';
+import MiniBrand from '../../components/Store//MiniBrand';
 import Menu from '../NavigationMenu';
 import Cart from '../Cart';
 

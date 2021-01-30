@@ -5,12 +5,13 @@
  */
 
 import React from 'react';
+
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import Table from '../../components/Table';
-import SubPage from '../../components/SubPage';
+import SubPage from '../../components/Manager/SubPage';
+import Table from '../../components/Common/Table';
 
 class Users extends React.PureComponent {
   componentDidMount() {

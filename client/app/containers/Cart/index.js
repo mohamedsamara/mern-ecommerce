@@ -9,11 +9,11 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import CartList from '../../components/CartList';
-import CartSummary from '../../components/CartSummary';
-import Checkout from '../../components/Checkout';
-import { BagIcon, CloseIcon } from '../../components/Icon';
-import Button from '../../components/Button';
+import CartList from '../../components/Store/CartList';
+import CartSummary from '../../components/Store/CartSummary';
+import Checkout from '../../components/Store/Checkout';
+import { BagIcon, CloseIcon } from '../../components/Common/Icon';
+import Button from '../../components/Common/Button';
 
 class Cart extends React.PureComponent {
   render() {

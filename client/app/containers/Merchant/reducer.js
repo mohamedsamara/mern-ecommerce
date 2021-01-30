@@ -8,7 +8,10 @@ import {
   FETCH_MERCHANTS,
   SELL_FORM_CHANGE,
   SET_SELL_FORM_ERRORS,
-  SELL_FORM_RESET
+  SELL_FORM_RESET,
+  SIGNUP_CHANGE,
+  SET_SIGNUP_FORM_ERRORS,
+  SIGNUP_RESET
 } from './constants';
 
 const initialState = {
@@ -21,33 +24,13 @@ const initialState = {
     business: ''
   },
   formErrors: {},
-  columns: [
-    {
-      hidden: true,
-      dataField: '_id',
-      text: ''
-    },
-    {
-      dataField: 'name',
-      text: 'Name'
-    },
-    {
-      dataField: 'phoneNumber',
-      text: 'Phone Number'
-    },
-    {
-      dataField: 'status',
-      text: 'Status'
-    },
-    {
-      dataField: 'brand',
-      text: 'Brand'
-    },
-    {
-      dataField: 'business',
-      text: 'Business Description'
-    }
-  ]
+  signupFormData: {
+    email: '',
+    firstName: '',
+    lastName: '',
+    password: ''
+  },
+  signupFormErrors: {}
 };
 
 const merchantReducer = (state = initialState, action) => {
@@ -78,6 +61,27 @@ const merchantReducer = (state = initialState, action) => {
           business: ''
         },
         formErrors: {}
+      };
+    case SIGNUP_CHANGE:
+      return {
+        ...state,
+        signupFormData: { ...state.signupFormData, ...action.payload }
+      };
+
+    case SET_SIGNUP_FORM_ERRORS:
+      return {
+        ...state,
+        signupFormErrors: action.payload
+      };
+    case SIGNUP_RESET:
+      return {
+        ...state,
+        signupFormData: {
+          email: '',
+          firstName: '',
+          lastName: '',
+          password: ''
+        }
       };
     default:
       return state;

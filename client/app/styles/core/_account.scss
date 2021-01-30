@@ -19,13 +19,21 @@
         align-items: center;
       }
 
-      .admin {
-        padding: 6px 8px;
+      .role {
+        padding: 8px 10px;
         border-radius: $border-radius-default;
-        background-color: $primary-color;
-        color: $white;
         font-weight: $font-weight-bold-one;
         margin-left: 10px;
+      }
+
+      .admin {
+        background-color: $primary-bg;
+        color: $white;
+      }
+
+      .merchant {
+        background-color: $secondary-bg;
+        // color: $white;
       }
 
       .provider-email {
