@@ -148,30 +148,12 @@ export const merchantSignUp = token => {
         return dispatch({ type: SET_SIGNUP_FORM_ERRORS, payload: errors });
       }
 
-      const response = await axios.post(
-        `/api/merchant/signup/${token}`,
-        merchant
-      );
+      await axios.post(`/api/merchant/signup/${token}`, merchant);
 
-      // const successfulOptions = {
-      //   title: `You have signed up successfully! You will be receiving an email as well. Thank you!`,
-      //   position: 'tr',
-      //   autoDismiss: 1
-      // };
-
-      // localStorage.setItem('token', response.data.token);
-
-      // setToken(response.data.token);
-
-      // dispatch(setAuth());
-      // dispatch(success(successfulOptions));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
       const title = `Please try to signup again!`;
       handleError(error, dispatch, title);
-    } finally {
-      // dispatch({ type: SET_SIGNUP_SUBMITTING, payload: false });
-      // dispatch({ type: SET_SIGNUP_LOADING, payload: false });
     }
   };
 };

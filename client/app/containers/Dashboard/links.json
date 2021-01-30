@@ -12,8 +12,8 @@
   "ROLE_MERCHANT": [
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
-    { "to": "/products", "name": "Manage Products" },
     { "to": "/brands", "name": "Manage Brands" },
+    { "to": "/products", "name": "Manage Products" },
     { "to": "/orders", "name": "Manage Orders" }
   ],
   "ROLE_MEMBER": [

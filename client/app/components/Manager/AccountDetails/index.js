@@ -23,7 +23,7 @@ const AccountDetails = props => {
     <div className='account-details'>
       <div className='info'>
         <div className='desc'>
-          <p>
+          <p className='one-line-ellipsis'>
             {user.provider === 'email' ? (
               user.email
             ) : (
@@ -32,7 +32,13 @@ const AccountDetails = props => {
               </span>
             )}
           </p>
-          {user.role !== 'ROLE_MEMBER' && <span className='admin'>Admin</span>}
+          {user.role === 'ROLE_ADMIN' ? (
+            <span className='role admin'>Admin</span>
+          ) : (
+            user.role === 'ROLE_MERCHANT' && (
+              <span className='role merchant'>Merchant</span>
+            )
+          )}
         </div>
       </div>
       <form onSubmit={handleSubmit}>
