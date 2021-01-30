@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
@@ -14,7 +15,7 @@ import ProductsShop from '../ProductsShop';
 import BrandsShop from '../BrandsShop';
 import CategoryShop from '../CategoryShop';
 
-import Page404 from '../../components/Page404';
+import Page404 from '../../components/Common/Page404';
 
 class Shop extends React.PureComponent {
   componentDidMount() {

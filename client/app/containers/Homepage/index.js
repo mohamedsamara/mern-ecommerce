@@ -5,14 +5,14 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
 import banners from './banners.json';
-import CarouselSlider from '../../components/CarouselSlider';
-import { responsiveOneItemCarousel } from '../../components/CarouselSlider/helpers';
+import CarouselSlider from '../../components/Common/CarouselSlider';
+import { responsiveOneItemCarousel } from '../../components/Common/CarouselSlider/helpers';
 
 class Homepage extends React.PureComponent {
   render() {

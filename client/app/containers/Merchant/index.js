@@ -5,12 +5,13 @@
  */
 
 import React from 'react';
+
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import SubPage from '../../components/SubPage';
-import MerchantList from '../../components/MerchantList';
+import SubPage from '../../components/Manager/SubPage';
+import MerchantList from '../../components/Manager/MerchantList';
 
 class Merchant extends React.PureComponent {
   componentDidMount() {

@@ -12,11 +12,11 @@ import { Link } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import Input from '../../components/Input';
-import Button from '../../components/Button';
-import { BagIcon } from '../../components/Icon';
-import NotFound from '../../components/NotFound';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import Input from '../../components/Common/Input';
+import Button from '../../components/Common/Button';
+import { BagIcon } from '../../components/Common/Icon';
+import NotFound from '../../components/Common/NotFound';
+import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
 class ProductPage extends React.PureComponent {
   componentDidMount() {

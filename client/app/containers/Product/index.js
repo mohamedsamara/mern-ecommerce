@@ -5,13 +5,14 @@
  */
 
 import React from 'react';
+
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import AddProduct from '../../components/AddProduct';
-import Table from '../../components/Table';
-import SubPage from '../../components/SubPage';
+import SubPage from '../../components/Manager/SubPage';
+import AddProduct from '../../components/Manager/AddProduct';
+import Table from '../../components/Common/Table';
 
 class Product extends React.PureComponent {
   componentDidMount() {

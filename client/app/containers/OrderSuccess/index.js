@@ -5,14 +5,14 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import NotFound from '../../components/NotFound';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import NotFound from '../../components/Common/NotFound';
+import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
 class OrderSuccess extends React.PureComponent {
   componentDidMount() {

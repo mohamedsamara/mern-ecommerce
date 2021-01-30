@@ -9,9 +9,9 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import AddCategory from '../../components/AddCategory';
-import Table from '../../components/Table';
-import SubPage from '../../components/SubPage';
+import AddCategory from '../../components/Manager/AddCategory';
+import SubPage from '../../components/Manager/SubPage';
+import Table from '../../components/Common/Table';
 
 class Category extends React.PureComponent {
   componentDidMount() {

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import BrandList from '../../components/BrandList';
+import BrandList from '../../components/Store/BrandList';
 
 class BrandsPage extends React.PureComponent {
   componentDidMount() {
