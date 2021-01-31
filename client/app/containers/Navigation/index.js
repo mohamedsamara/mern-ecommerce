@@ -35,7 +35,7 @@ import Cart from '../Cart';
 
 class Navigation extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchBrands();
+    this.props.fetchStoreBrands();
   }
 
   render() {
@@ -231,7 +231,7 @@ const mapStateToProps = state => {
     isCartOpen: state.navigation.isCartOpen,
     isBrandOpen: state.navigation.isBrandOpen,
     cartItems: state.cart.cartItems,
-    brands: state.brand.brands,
+    brands: state.brand.storeBrands,
     authenticated: state.authentication.authenticated,
     user: state.account.user
   };

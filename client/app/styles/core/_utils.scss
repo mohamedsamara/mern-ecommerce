@@ -61,7 +61,11 @@
 }
 
 .text-primary {
-  color: $primary-color;
+  color: $primary-color !important;
+}
+
+.text-secondary {
+  color: $secondary-color !important;
 }
 
 .one-line-ellipsis {

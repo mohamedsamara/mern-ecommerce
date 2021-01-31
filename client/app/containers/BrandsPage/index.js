@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
@@ -13,7 +14,7 @@ import BrandList from '../../components/Store/BrandList';
 
 class BrandsPage extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchBrands();
+    this.props.fetchStoreBrands();
   }
 
   render() {
@@ -29,7 +30,7 @@ class BrandsPage extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    brands: state.brand.brands
+    brands: state.brand.storeBrands
   };
 };
 

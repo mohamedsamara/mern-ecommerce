@@ -31,7 +31,7 @@ const Customer = props => {
               <Route exact path='/dashboard' component={Account} />
               <Route path='/dashboard/security' component={AccountSecurity} />
               <Route path='/dashboard/products' component={Product} />
-              <Route path='/dashboard/brands' component={Brand} />
+              <Route path='/dashboard/brand' component={Brand} />
               <Route path='/dashboard/orders' component={Order} />
               <Route path='*' component={Page404} />
             </Switch>
