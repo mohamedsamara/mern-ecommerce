@@ -7,68 +7,29 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import SubPage from '../../components/Manager/SubPage';
-import AddProduct from '../../components/Manager/AddProduct';
-import Table from '../../components/Common/Table';
+import List from './List';
+import Add from './Add';
+import Edit from './Edit';
+import Page404 from '../../components/Common/Page404';
 
 class Product extends React.PureComponent {
-  componentDidMount() {
-    this.props.fetchBrandsSelect();
-    this.props.fetchProducts();
-  }
-
   render() {
-    const {
-      productFormData,
-      formErrors,
-      productChange,
-      addProduct,
-      products,
-      columns,
-      toggleAddProduct,
-      isProductAddOpen,
-      deleteProduct,
-      handleBrandSelect,
-      selectedBrands,
-      brands,
-      taxableSelect
-    } = this.props;
+    const { user } = this.props;
 
     return (
       <div className='product-dashboard'>
-        <SubPage
-          title={isProductAddOpen ? 'Add Product' : 'Products'}
-          isMenuOpen={isProductAddOpen}
-          toggleMenu={toggleAddProduct}
-        >
-          {isProductAddOpen ? (
-            <AddProduct
-              productFormData={productFormData}
-              formErrors={formErrors}
-              productChange={productChange}
-              addProduct={addProduct}
-              handleBrandSelect={handleBrandSelect}
-              selectedBrands={selectedBrands}
-              brands={brands}
-              taxableSelect={taxableSelect}
-            />
-          ) : (
-            <Table
-              data={products}
-              columns={columns}
-              striped={true}
-              hover={true}
-              condensed={true}
-              csv={true}
-              search={true}
-              isRowEvents={true}
-              clickAction={(id, index) => deleteProduct(id, index)}
-            />
-          )}
-        </SubPage>
+        <Switch>
+          <Route exact path='/dashboard/product' component={List} />
+          <Route exact path='/dashboard/product/edit/:id' component={Edit} />
+          {/* {user.role === 'ROLE_ADMIN' && ( */}
+          <Route exact path='/dashboard/product/add' component={Add} />
+          {/* )} */}
+          <Route path='*' component={Page404} />
+        </Switch>
       </div>
     );
   }
@@ -76,14 +37,7 @@ class Product extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    productFormData: state.product.productFormData,
-    products: state.product.products,
-    formErrors: state.product.formErrors,
-    columns: state.product.columns,
-    isProductAddOpen: state.product.isProductAddOpen,
-    taxableSelect: state.product.taxableSelect,
-    selectedBrands: state.brand.selectedBrands,
-    brands: state.brand.brandsSelect
+    user: state.account.user
   };
 };
 

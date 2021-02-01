@@ -51,7 +51,8 @@ const brandReducer = (state = initialState, action) => {
     case FETCH_BRAND:
       return {
         ...state,
-        brand: action.payload
+        brand: action.payload,
+        editFormErrors: {}
       };
     case FETCH_BRANDS_SELECT:
       return {
@@ -98,7 +99,6 @@ const brandReducer = (state = initialState, action) => {
         ...state,
         formErrors: action.payload
       };
-
     case SET_BRAND_FORM_EDIT_ERRORS:
       return {
         ...state,

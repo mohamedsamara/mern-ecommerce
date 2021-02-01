@@ -37,7 +37,7 @@ const Admin = props => {
                 path='/dashboard/security'
                 component={AccountSecurity}
               />
-              <Route path='/dashboard/products' component={Product} />
+              <Route path='/dashboard/product' component={Product} />
               <Route path='/dashboard/categories' component={Category} />
               <Route path='/dashboard/brand' component={Brand} />
               <Route path='/dashboard/users' component={Users} />

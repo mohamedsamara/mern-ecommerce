@@ -1,6 +1,6 @@
 /**
  *
- * EditBrand
+ * EditProduct
  *
  */
 
@@ -11,16 +11,22 @@ import { Row, Col } from 'reactstrap';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
-const EditBrand = props => {
-  const { brand, brandChange, formErrors, updateBrand, deleteBrand } = props;
+const EditProduct = props => {
+  const {
+    product,
+    productChange,
+    formErrors,
+    updateProduct,
+    deleteProduct
+  } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
-    updateBrand();
+    updateProduct();
   };
 
   return (
-    <div className='edit-brand'>
+    <div className='edit-product'>
       <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12'>
@@ -29,10 +35,10 @@ const EditBrand = props => {
               error={formErrors['name']}
               label={'Name'}
               name={'name'}
-              placeholder={'Brand Name'}
-              value={brand.name}
+              placeholder={'Product Name'}
+              value={product.name}
               onInputChange={(name, value) => {
-                brandChange(name, value);
+                productChange(name, value);
               }}
             />
           </Col>
@@ -42,10 +48,10 @@ const EditBrand = props => {
               error={formErrors['description']}
               label={'Description'}
               name={'description'}
-              placeholder={'Brand Description'}
-              value={brand.description}
+              placeholder={'Product Description'}
+              value={product.description}
               onInputChange={(name, value) => {
-                brandChange(name, value);
+                productChange(name, value);
               }}
             />
           </Col>
@@ -60,7 +66,7 @@ const EditBrand = props => {
           <Button
             variant='danger'
             text='Delete'
-            onClick={() => deleteBrand(brand._id)}
+            onClick={() => deleteProduct(product._id)}
           />
         </div>
       </form>
@@ -68,4 +74,4 @@ const EditBrand = props => {
   );
 };
 
-export default EditBrand;
+export default EditProduct;

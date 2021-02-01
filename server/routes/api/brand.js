@@ -126,19 +126,29 @@ router.put(
   }
 );
 
-router.get('/list/select', auth, async (req, res) => {
-  try {
-    const brands = await Brand.find({}, 'name');
+router.get(
+  '/list/select',
+  auth,
+  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  async (req, res) => {
+    try {
+      const brands = await Brand.find(
+        {
+          merchant: req.user.merchant
+        },
+        'name'
+      );
 
-    res.status(200).json({
-      brands
-    });
-  } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
-    });
+      res.status(200).json({
+        brands
+      });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
   }
-});
+);
 
 router.delete(
   '/delete/:id',

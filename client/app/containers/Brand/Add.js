@@ -18,8 +18,8 @@ class Add extends React.PureComponent {
     const {
       history,
       brandFormData,
-      brandChange,
       formErrors,
+      brandChange,
       addBrand
     } = this.props;
 
@@ -42,7 +42,6 @@ class Add extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    brands: state.brand.brands,
     brandFormData: state.brand.brandFormData,
     formErrors: state.brand.formErrors
   };

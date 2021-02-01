@@ -2,7 +2,7 @@
   "ROLE_ADMIN": [
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
-    { "to": "/products", "name": "Manage Products" },
+    { "to": "/product", "name": "Manage Products" },
     { "to": "/categories", "name": "Manage Categories" },
     { "to": "/brand", "name": "Manage Brands" },
     { "to": "/users", "name": "Manage Users" },
@@ -13,7 +13,7 @@
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/brand", "name": "Manage Brands" },
-    { "to": "/products", "name": "Manage Products" },
+    { "to": "/product", "name": "Manage Products" },
     { "to": "/orders", "name": "Manage Orders" }
   ],
   "ROLE_MEMBER": [

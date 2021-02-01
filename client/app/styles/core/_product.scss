@@ -1,14 +1,33 @@
 /* start product dashboard styles */
 .product-dashboard {
-  .table-section {
-    margin: 20px 0px;
-  }
+  .p-list {
+    .product-box {
+      height: 100%;
+      border-radius: $border-radius-default;
+      box-shadow: $secondary-box-shadow;
+      @include transition();
 
-  .desc-column {
-    white-space: normal !important;
-    @include text-ellipsis(2, 2);
+      &:hover {
+        background-color: $secondary-bg;
+        @include transition();
+      }
+
+      .item-image {
+        border-radius: $border-radius-default;
+
+        @include media-breakpoint-up(lg) {
+          width: 140px;
+          height: 140px;
+        }
+      }
+
+      .product-desc {
+        @include text-ellipsis(2);
+      }
+    }
   }
 }
+
 /* end product dashboard styles */
 
 /* start product list styles */

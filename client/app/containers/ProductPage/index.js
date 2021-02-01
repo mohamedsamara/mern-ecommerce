@@ -21,14 +21,14 @@ import LoadingIndicator from '../../components/Common/LoadingIndicator';
 class ProductPage extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchProduct(slug);
+    this.props.fetchStoreProduct(slug);
     document.body.classList.add('product-page');
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.slug !== prevProps.match.params.slug) {
       const slug = this.props.match.params.slug;
-      this.props.fetchProduct(slug);
+      this.props.fetchStoreProduct(slug);
     }
   }
 
@@ -152,7 +152,7 @@ class ProductPage extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    product: state.product.product,
+    product: state.product.storeProduct,
     productShopData: state.product.productShopData,
     shopFormErrors: state.product.shopFormErrors,
     itemsInCart: state.cart.itemsInCart,

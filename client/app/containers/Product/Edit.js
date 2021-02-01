@@ -10,49 +10,49 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import EditBrand from '../../components/Manager/EditBrand';
+import EditProduct from '../../components/Manager/EditProduct';
 import SubPage from '../../components/Manager/SubPage';
 import NotFound from '../../components/Common/NotFound';
 
 class Edit extends React.PureComponent {
   componentDidMount() {
-    const brandId = this.props.match.params.id;
-    this.props.fetchBrand(brandId);
+    const productId = this.props.match.params.id;
+    this.props.fetchProduct(productId);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
-      const brandId = this.props.match.params.id;
-      this.props.fetchBrand(brandId);
+      const productId = this.props.match.params.id;
+      this.props.fetchProduct(productId);
     }
   }
 
   render() {
     const {
       history,
-      brand,
+      product,
       formErrors,
-      brandEditChange,
-      updateBrand,
-      deleteBrand
+      productEditChange,
+      updateProduct,
+      deleteProduct
     } = this.props;
 
     return (
       <SubPage
-        title='Edit Brand'
+        title='Edit Product'
         actionTitle='Cancel'
         handleAction={() => history.goBack()}
       >
-        {brand?._id ? (
-          <EditBrand
-            brand={brand}
-            brandChange={brandEditChange}
+        {product?._id ? (
+          <EditProduct
+            product={product}
             formErrors={formErrors}
-            updateBrand={updateBrand}
-            deleteBrand={deleteBrand}
+            productChange={productEditChange}
+            updateProduct={updateProduct}
+            deleteProduct={deleteProduct}
           />
         ) : (
-          <NotFound message='no brand found.' />
+          <NotFound message='no product found.' />
         )}
       </SubPage>
     );
@@ -61,8 +61,8 @@ class Edit extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    brand: state.brand.brand,
-    formErrors: state.brand.editFormErrors
+    product: state.product.product,
+    formErrors: state.product.editFormErrors
   };
 };
 
