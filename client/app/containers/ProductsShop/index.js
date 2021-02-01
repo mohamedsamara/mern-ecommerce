@@ -17,7 +17,7 @@ import LoadingIndicator from '../../components/Common/LoadingIndicator';
 class ProductsShop extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchProducts(slug);
+    this.props.fetchStoreProducts(slug);
   }
 
   render() {
@@ -39,7 +39,7 @@ class ProductsShop extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products,
+    products: state.product.storeProducts,
     isLoading: state.product.isLoading
   };
 };

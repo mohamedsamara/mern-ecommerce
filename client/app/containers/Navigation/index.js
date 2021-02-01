@@ -35,7 +35,7 @@ import Cart from '../Cart';
 
 class Navigation extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchBrands();
+    this.props.fetchStoreBrands();
   }
 
   render() {
@@ -120,7 +120,7 @@ class Navigation extends React.PureComponent {
               md={{ size: 9, order: 1 }}
               lg={{ size: 9, order: 3 }}
             >
-              <Navbar color='light' light expand='md'>
+              <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
                 <CartIcon
                   className='d-none d-md-block'
                   cartItems={cartItems}
@@ -231,7 +231,7 @@ const mapStateToProps = state => {
     isCartOpen: state.navigation.isCartOpen,
     isBrandOpen: state.navigation.isBrandOpen,
     cartItems: state.cart.cartItems,
-    brands: state.brand.brands,
+    brands: state.brand.storeBrands,
     authenticated: state.authentication.authenticated,
     user: state.account.user
   };

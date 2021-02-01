@@ -150,6 +150,21 @@ body.user-is-tabbing button:focus {
   }
 }
 
+// none button
+.input-btn {
+  &.custom-btn-none {
+    position: relative;
+    padding: 6px 10px;
+    min-width: auto;
+    border: $border-default;
+    border-radius: $border-radius-default;
+
+    &:hover {
+      color: $font-custom-color !important;
+    }
+  }
+}
+
 // link button
 .input-btn {
   &.custom-btn-link {
