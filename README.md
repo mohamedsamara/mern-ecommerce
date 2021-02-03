@@ -22,11 +22,11 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
 ## What's Next 
 
   * Add a payment method solution to enable checkout and collecting payments
-  * Associate each Merchant with each brand and payment account 
-  * Build a feature to manage Merchants registrations with the ability to approve/reject by admins in a realtime implementation
-  * Enable Admins to edit, delete, disable a category, product or a brand
-  * Enable Merchants to edit, delete, disable their own brand and products
-  * Enable Admins and Merhcants to upload product images
+  * Associate each Merchant to a payment account 
+  * Enable Admins to disable a category, product or a brand
+  * Enable Admins to manage users module
+  * Enable Merchants disable their own brand and products
+  * Enable Merchants to add products to a specific category
 
 
 ## Demo
