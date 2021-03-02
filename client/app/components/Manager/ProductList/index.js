@@ -19,7 +19,7 @@ const ProductList = props => {
           key={index}
           className='d-block'
         >
-          <div className='product-box mb-3 d-flex flex-column flex-lg-row align-items-center'>
+          <div className='product-box mb-3 d-flex flex-column flex-lg-row align-items-lg-center'>
             <img
               className='item-image'
               src={`${

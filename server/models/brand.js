@@ -16,7 +16,11 @@ const BrandSchema = new Schema({
     type: String,
     trim: true
   },
-  slug: { type: String, slug: 'name', unique: true },
+  slug: {
+    type: String,
+    slug: 'name',
+    unique: true
+  },
   image: {
     data: Buffer,
     contentType: String

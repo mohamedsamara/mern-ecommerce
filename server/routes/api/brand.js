@@ -63,9 +63,15 @@ router.get(
   role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
   async (req, res) => {
     try {
-      const brands = await Brand.find({
-        merchant: req.user.merchant
-      }).populate('merchant', 'name');
+      let brands = null;
+
+      if (req.user.merchant) {
+        brands = await Brand.find({
+          merchant: req.user.merchant
+        }).populate('merchant', 'name');
+      } else {
+        brands = await Brand.find({}).populate('merchant', 'name');
+      }
 
       res.status(200).json({
         brands
@@ -132,12 +138,18 @@ router.get(
   role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
   async (req, res) => {
     try {
-      const brands = await Brand.find(
-        {
-          merchant: req.user.merchant
-        },
-        'name'
-      );
+      let brands = null;
+
+      if (req.user.merchant) {
+        brands = await Brand.find(
+          {
+            merchant: req.user.merchant
+          },
+          'name'
+        );
+      } else {
+        brands = await Brand.find({}, 'name');
+      }
 
       res.status(200).json({
         brands

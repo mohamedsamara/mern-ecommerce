@@ -328,6 +328,7 @@ export const updateProduct = () => {
   };
 };
 
+// delete product api
 export const deleteProduct = id => {
   return async (dispatch, getState) => {
     try {
