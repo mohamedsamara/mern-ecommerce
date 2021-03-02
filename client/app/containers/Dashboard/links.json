@@ -3,7 +3,7 @@
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/product", "name": "Manage Products" },
-    { "to": "/categories", "name": "Manage Categories" },
+    { "to": "/category", "name": "Manage Categories" },
     { "to": "/brand", "name": "Manage Brands" },
     { "to": "/users", "name": "Manage Users" },
     { "to": "/merchants", "name": "Manage Merchants" },

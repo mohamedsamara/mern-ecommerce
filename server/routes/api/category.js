@@ -53,25 +53,70 @@ router.get('/list', (req, res) => {
   });
 });
 
+// fetch category api
+router.get('/:id', async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+
+    const categoryDoc = await Category.findOne({ _id: categoryId }).populate(
+      'brand'
+    );
+
+    if (!categoryDoc) {
+      return res.status(404).json({
+        message: 'No Category found.'
+      });
+    }
+
+    res.status(200).json({
+      category: categoryDoc
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+router.put('/:id', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+    const update = req.body.category;
+    const query = { _id: categoryId };
+
+    await Category.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Category has been updated successfully!'
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
 router.delete(
   '/delete/:id',
   auth,
   role.checkRole(role.ROLES.Admin),
-  (req, res) => {
-    Category.deleteOne({ _id: req.params.id }, (err, data) => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
+  async (req, res) => {
+    try {
+      const product = await Category.deleteOne({ _id: req.params.id });
 
       res.status(200).json({
         success: true,
         message: `Category has been deleted successfully!`,
-        brand: data
+        product
       });
-    });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
   }
 );
-
 module.exports = router;
