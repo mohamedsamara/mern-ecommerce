@@ -206,8 +206,8 @@ export const addProduct = () => {
     try {
       const rules = {
         sku: 'required|min:6',
-        name: 'required|min:6',
-        description: 'required|min:10|max:100',
+        name: 'required|min:1',
+        description: 'required|min:1|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
@@ -225,13 +225,13 @@ export const addProduct = () => {
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
         'required.sku': 'Sku is required.',
-        'min.sku': 'Sku must be at least 6 characters.',
+        'min.sku': 'Sku must be at least 1 character.',
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 6 characters.',
+        'min.name': 'Name must be at least 1 characters.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 10 characters.',
+        'min.description': 'Description must be at least 1 character.',
         'max.description':
-          'Description may not be greater than 100 characters.',
+          'Description may not be greater than 200 characters.',
         'required.quantity': 'Quantity is required.',
         'required.price': 'Price is required.',
         'required.taxable': 'Taxable is required.',
@@ -281,8 +281,8 @@ export const updateProduct = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: 'required|min:6',
-        description: 'required|min:10|max:100'
+        name: 'required|min:1',
+        description: 'required|min:1|max:200'
       };
 
       const product = getState().product.product;
@@ -294,10 +294,10 @@ export const updateProduct = () => {
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 6 characters.',
+        'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 10 characters.',
-        'max.description': 'Description may not be greater than 100 characters.'
+        'min.description': 'Description must be at least 1 character.',
+        'max.description': 'Description may not be greater than 200 characters.'
       });
 
       if (!isValid) {
