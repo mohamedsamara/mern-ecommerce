@@ -7,16 +7,6 @@
 .subscribe {
   .inline-btn-box {
     .input-text-block {
-      .input-text {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-      }
-
-      .custom-btn-primary {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-
       @include media-breakpoint-between(md, lg) {
         flex-direction: column;
 
@@ -26,8 +16,8 @@
 
         .custom-btn-primary {
           margin-top: 10px;
-          border-left: $border-default;
-          border-radius: $border-radius-default;
+          border-left: $border-default !important;
+          border-radius: $border-radius-default !important;
         }
       }
     }
