@@ -96,8 +96,8 @@ export const addCategory = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: 'required|min:6',
-        description: 'required|min:10|max:100',
+        name: 'required|min:1',
+        description: 'required|min:1|max:200',
         products: 'required'
       };
 
@@ -113,11 +113,11 @@ export const addCategory = () => {
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 6 characters.',
+        'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 10 characters.',
+        'min.description': 'Description must be at least 1 character.',
         'max.description':
-          'Description may not be greater than 100 characters.',
+          'Description may not be greater than 200 characters.',
         'required.products': 'Products is required.'
       });
 
@@ -154,8 +154,8 @@ export const updateCategory = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: 'required|min:6',
-        description: 'required|min:10|max:100'
+        name: 'required|min:1',
+        description: 'required|min:1|max:200'
       };
 
       const category = getState().category.category;
@@ -167,10 +167,10 @@ export const updateCategory = () => {
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 6 characters.',
+        'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 10 characters.',
-        'max.description': 'Description may not be greater than 100 characters.'
+        'min.description': 'Description must be at least 1 character.',
+        'max.description': 'Description may not be greater than 200 characters.'
       });
 
       if (!isValid) {
