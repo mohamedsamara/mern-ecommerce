@@ -8,6 +8,7 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
+import UserRole from '../UserRole';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
@@ -23,7 +24,7 @@ const AccountDetails = props => {
     <div className='account-details'>
       <div className='info'>
         <div className='desc'>
-          <p className='one-line-ellipsis'>
+          <p className='one-line-ellipsis mr-3'>
             {user.provider === 'email' ? (
               user.email
             ) : (
@@ -32,13 +33,7 @@ const AccountDetails = props => {
               </span>
             )}
           </p>
-          {user.role === 'ROLE_ADMIN' ? (
-            <span className='role admin'>Admin</span>
-          ) : (
-            user.role === 'ROLE_MERCHANT' && (
-              <span className='role merchant'>Merchant</span>
-            )
-          )}
+          <UserRole user={user} />
         </div>
       </div>
       <form onSubmit={handleSubmit}>

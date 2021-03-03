@@ -7,19 +7,38 @@ const Brand = require('../../models/brand');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 
-// fetch all users api
-router.get('/list', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
-  User.find({}, (err, data) => {
-    if (err) {
-      return res.status(400).json({
+// search users api
+router.get(
+  '/list',
+  auth,
+  role.checkRole(role.ROLES.Admin),
+  async (req, res) => {
+    try {
+      const { search } = req.query;
+
+      const regex = new RegExp(search, 'i');
+
+      const users = await User.find(
+        {
+          $or: [
+            { firstName: { $regex: regex } },
+            { lastName: { $regex: regex } },
+            { email: { $regex: regex } }
+          ]
+        },
+        { password: 0, _id: 0 }
+      ).populate('merchant', 'name');
+
+      res.status(200).json({
+        users
+      });
+    } catch (error) {
+      res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
-    res.status(200).json({
-      users: data
-    });
-  });
-});
+  }
+);
 
 router.get('/', auth, async (req, res) => {
   try {
@@ -39,31 +58,26 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-router.put('/', auth, (req, res) => {
-  const user = req.user._id;
-  const update = req.body.profile;
-  const query = { _id: user };
+router.put('/', auth, async (req, res) => {
+  try {
+    const user = req.user._id;
+    const update = req.body.profile;
+    const query = { _id: user };
 
-  User.findOneAndUpdate(
-    query,
-    update,
-    {
+    const userDoc = await User.findOneAndUpdate(query, update, {
       new: true
-    },
-    (err, user) => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
+    });
 
-      res.status(200).json({
-        success: true,
-        message: 'Your profile is successfully updated!',
-        user
-      });
-    }
-  );
+    res.status(200).json({
+      success: true,
+      message: 'Your profile is successfully updated!',
+      user: userDoc
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 module.exports = router;

@@ -87,10 +87,15 @@ body.user-is-tabbing textarea {
     flex-direction: row;
   }
 
+  .input-text {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
   .input-btn {
-    &.custom-btn-primary {
-      border-left: none;
-    }
+    border-left: none !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
   }
 }
 

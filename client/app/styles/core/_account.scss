@@ -19,23 +19,6 @@
         align-items: center;
       }
 
-      .role {
-        padding: 8px 10px;
-        border-radius: $border-radius-default;
-        font-weight: $font-weight-bold-one;
-        margin-left: 10px;
-      }
-
-      .admin {
-        background-color: $primary-bg;
-        color: $white;
-      }
-
-      .merchant {
-        background-color: $secondary-bg;
-        // color: $white;
-      }
-
       .provider-email {
         text-transform: capitalize;
       }
@@ -48,5 +31,3 @@
     }
   }
 }
-
-// end reset password form styles

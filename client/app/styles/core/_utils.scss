@@ -132,3 +132,12 @@
     @include transition();
   }
 }
+
+.avatar {
+  border-radius: 50%;
+}
+
+.avatar-sm {
+  width: 60px;
+  height: 60px;
+}
