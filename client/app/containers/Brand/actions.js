@@ -125,18 +125,18 @@ export const addBrand = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: 'required|min:6',
-        description: 'required|min:10|max:100'
+        name: 'required|min:1',
+        description: 'required|min:1|max:200'
       };
 
       const brand = getState().brand.brandFormData;
 
       const { isValid, errors } = allFieldsValidation(brand, rules, {
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 6 characters.',
+        'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 10 characters.',
-        'max.description': 'Description may not be greater than 100 characters.'
+        'min.description': 'Description must be at least 1 character.',
+        'max.description': 'Description may not be greater than 200 characters.'
       });
 
       if (!isValid) {
@@ -172,8 +172,8 @@ export const updateBrand = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: 'required|min:6',
-        description: 'required|min:10|max:100'
+        name: 'required|min:1',
+        description: 'required|min:1|max:200'
       };
 
       const brand = getState().brand.brand;
@@ -185,10 +185,10 @@ export const updateBrand = () => {
 
       const { isValid, errors } = allFieldsValidation(newBrand, rules, {
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 6 characters.',
+        'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 10 characters.',
-        'max.description': 'Description may not be greater than 100 characters.'
+        'min.description': 'Description must be at least 1 character.',
+        'max.description': 'Description may not be greater than 200 characters.'
       });
 
       if (!isValid) {

@@ -19,13 +19,12 @@ class List extends React.PureComponent {
   }
 
   render() {
-    const { history, products, user } = this.props;
+    const { history, products } = this.props;
 
     return (
       <>
         <SubPage
           title='Products'
-          // actionTitle={user.role === 'ROLE_ADMIN' && 'Add'}
           actionTitle='Add'
           handleAction={() => history.push('/dashboard/product/add')}
         >

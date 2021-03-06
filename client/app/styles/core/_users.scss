@@ -1,10 +1,30 @@
 .users-dashboard {
-  //   .table-section {
-  //     margin: 20px 0px;
-  //   }
-
-  .email-column {
-    white-space: normal !important;
-    @include text-ellipsis(2, 2);
+  .u-list {
+    .user-box {
+      border-radius: $border-radius-default;
+      box-shadow: $primary-box-shadow;
+    }
   }
 }
+
+/* start user role styles */
+.role {
+  padding: 8px 10px;
+  border-radius: $border-radius-default;
+  font-weight: $font-weight-bold-one;
+
+  &.admin {
+    background-color: $primary-bg;
+    color: $white;
+  }
+
+  &.merchant {
+    background-color: $dark-bg;
+    color: $white;
+  }
+
+  &.member {
+    background-color: $secondary-bg;
+  }
+}
+/* end user role styles */

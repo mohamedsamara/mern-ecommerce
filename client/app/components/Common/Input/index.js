@@ -57,7 +57,7 @@ const Input = props => {
 
     const handleOnInput = e => {
       if (!decimals) {
-        event.target.value = event.target.value.replace(/[^0-9]*/g, '');
+        e.target.value = e.target.value.replace(/[^0-9]*/g, '');
       }
     };
     return (

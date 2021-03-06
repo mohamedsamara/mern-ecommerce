@@ -1,0 +1,43 @@
+.address-dashboard {
+  .a-list {
+    .address-box {
+      height: 100%;
+      border-radius: $border-radius-default;
+      box-shadow: $secondary-box-shadow;
+      @include transition();
+
+      &:hover {
+        background-color: $secondary-bg;
+        @include transition();
+      }
+
+      .address-desc {
+        @include text-ellipsis(2);
+      }
+    }
+  }
+}
+
+.address-list {
+  .address-box {
+    height: 100%;
+    padding: 10px;
+    border: $border-default;
+    border-radius: $border-radius-default;
+    @include transition();
+
+    .address-link {
+      display: block;
+    }
+
+    &:hover {
+      background-color: $secondary-bg;
+      border-color: $border-hover-color;
+      @include transition();
+    }
+
+    .address-desc {
+      @include text-ellipsis(2);
+    }
+  }
+}

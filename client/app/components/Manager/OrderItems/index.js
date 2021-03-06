@@ -57,7 +57,7 @@ const OrderItems = props => {
                             to={`/product/${item.product.slug}`}
                             className='item-link'
                           >
-                            <h4 className='item-name one-line-ellipsis'>
+                            <h4 className='d-block item-name one-line-ellipsis'>
                               {item.product.name}
                             </h4>
                           </Link>
