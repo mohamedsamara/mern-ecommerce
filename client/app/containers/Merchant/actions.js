@@ -11,7 +11,10 @@ import {
   FETCH_MERCHANTS,
   SELL_FORM_CHANGE,
   SET_SELL_FORM_ERRORS,
-  SELL_FORM_RESET
+  SELL_FORM_RESET,
+  SIGNUP_CHANGE,
+  SET_SIGNUP_FORM_ERRORS,
+  SIGNUP_RESET
 } from './constants';
 
 import handleError from '../../utils/error';
@@ -23,6 +26,16 @@ export const sellFormChange = (name, value) => {
 
   return {
     type: SELL_FORM_CHANGE,
+    payload: formData
+  };
+};
+
+export const merchantSignupChange = (name, value) => {
+  let formData = {};
+  formData[name] = value;
+
+  return {
+    type: SIGNUP_CHANGE,
     payload: formData
   };
 };
@@ -84,6 +97,63 @@ export const fetchMerchants = () => {
       });
     } catch (error) {
       handleError(error, dispatch);
+    }
+  };
+};
+
+export const approveMerchant = merchant => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.put(`/api/merchant/approve/${merchant._id}`);
+
+      dispatch(fetchMerchants());
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
+export const rejectMerchant = merchant => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.put(`/api/merchant/reject/${merchant._id}`);
+
+      dispatch(fetchMerchants());
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
+export const merchantSignUp = token => {
+  return async (dispatch, getState) => {
+    try {
+      const rules = {
+        email: 'required|email',
+        password: 'required|min:6',
+        firstName: 'required',
+        lastName: 'required'
+      };
+
+      const merchant = getState().merchant.signupFormData;
+
+      const { isValid, errors } = allFieldsValidation(merchant, rules, {
+        'required.email': 'Email is required.',
+        'required.password': 'Password is required.',
+        'required.firstName': 'First Name is required.',
+        'required.lastName': 'Last Name is required.'
+      });
+
+      if (!isValid) {
+        return dispatch({ type: SET_SIGNUP_FORM_ERRORS, payload: errors });
+      }
+
+      await axios.post(`/api/merchant/signup/${token}`, merchant);
+
+      dispatch({ type: SIGNUP_RESET });
+    } catch (error) {
+      const title = `Please try to signup again!`;
+      handleError(error, dispatch, title);
     }
   };
 };

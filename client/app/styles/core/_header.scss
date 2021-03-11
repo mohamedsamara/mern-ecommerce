@@ -46,10 +46,6 @@
     line-height: 100%;
   }
 
-  // .fa-cart-plus {
-  //   position: relative;
-  // }
-
   .fa {
     cursor: pointer;
     color: $theme-dark-gray;
@@ -75,29 +71,11 @@
     }
 
     .cart-icon {
-      @include media-breakpoint-down(sm) {
-        display: none;
-      }
-
-      // .cart-badge {
-      //   top: -12px;
-      // }
-
       .bag-icon {
         vertical-align: text-bottom;
       }
     }
   }
-
-  // .log-out {
-  //   color: $font-color !important;
-  //   display: block;
-  //   padding: 5px 15px;
-
-  //   &:focus {
-  //     outline: none;
-  //   }
-  // }
 
   .navbar-nav {
     flex-direction: row;
@@ -150,12 +128,6 @@
     @include media-breakpoint-down(sm) {
       margin-top: 10px;
       justify-content: center;
-    }
-
-    .bars-icon {
-      @include media-breakpoint-down(sm) {
-        display: none;
-      }
     }
 
     h1 {

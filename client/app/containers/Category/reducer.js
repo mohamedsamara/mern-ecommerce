@@ -6,8 +6,11 @@
 
 import {
   FETCH_CATEGORIES,
+  FETCH_CATEGORY,
   CATEGORY_CHANGE,
+  CATEGORY_EDIT_CHANGE,
   SET_CATEGORY_FORM_ERRORS,
+  SET_CATEGORY_FORM_EDIT_ERRORS,
   RESET_CATEGORY,
   TOGGLE_ADD_CATEGORY,
   ADD_CATEGORY,
@@ -16,29 +19,16 @@ import {
 
 const initialState = {
   categories: [],
+  category: {
+    _id: ''
+  },
   isCategoryAddOpen: false,
   categoryFormData: {
     name: '',
     description: ''
   },
   formErrors: {},
-  columns: [
-    {
-      hidden: true,
-      dataField: '_id',
-      text: ''
-    },
-    {
-      dataField: 'name',
-      text: 'Category Name',
-      sort: true
-    },
-    {
-      dataField: 'description',
-      text: 'Category Description',
-      classes: 'desc-column'
-    }
-  ]
+  editFormErrors: {}
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -48,17 +38,23 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         categories: action.payload
       };
+    case FETCH_CATEGORY:
+      return {
+        ...state,
+        category: action.payload
+      };
     case ADD_CATEGORY:
       return {
         ...state,
         categories: [...state.categories, action.payload]
       };
     case REMOVE_CATEGORY:
+      const index = state.categories.findIndex(b => b._id === action.payload);
       return {
         ...state,
         categories: [
-          ...state.categories.slice(0, action.payload),
-          ...state.categories.slice(action.payload + 1)
+          ...state.categories.slice(0, index),
+          ...state.categories.slice(index + 1)
         ]
       };
     case CATEGORY_CHANGE:
@@ -66,10 +62,23 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         categoryFormData: { ...state.categoryFormData, ...action.payload }
       };
+    case CATEGORY_EDIT_CHANGE:
+      return {
+        ...state,
+        category: {
+          ...state.category,
+          ...action.payload
+        }
+      };
     case SET_CATEGORY_FORM_ERRORS:
       return {
         ...state,
         formErrors: action.payload
+      };
+    case SET_CATEGORY_FORM_EDIT_ERRORS:
+      return {
+        ...state,
+        editFormErrors: action.payload
       };
     case RESET_CATEGORY:
       return {

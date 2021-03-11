@@ -16,7 +16,11 @@ const BrandSchema = new Schema({
     type: String,
     trim: true
   },
-  slug: { type: String, slug: 'name', unique: true },
+  slug: {
+    type: String,
+    slug: 'name',
+    unique: true
+  },
   image: {
     data: Buffer,
     contentType: String
@@ -24,6 +28,11 @@ const BrandSchema = new Schema({
   description: {
     type: String,
     trim: true
+  },
+  merchant: {
+    type: Schema.Types.ObjectId,
+    ref: 'Merchant',
+    default: null
   },
   updated: Date,
   created: {
