@@ -26,16 +26,16 @@ import {
 
 import actions from '../../actions';
 
-import Button from '../../components/Common/Button';
-import CartIcon from '../../components/Common/CartIcon';
-import { BarsIcon } from '../../components/Common/Icon';
-import MiniBrand from '../../components/Store//MiniBrand';
+import Button from '../../components/Button';
+import CartIcon from '../../components/CartIcon';
+import { BarsIcon } from '../../components/Icon';
+import MiniBrand from '../../components/MiniBrand';
 import Menu from '../NavigationMenu';
 import Cart from '../Cart';
 
 class Navigation extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchStoreBrands();
+    this.props.fetchBrands();
   }
 
   render() {
@@ -88,7 +88,6 @@ class Navigation extends React.PureComponent {
             >
               <div className='brand'>
                 <Button
-                  className='d-none d-md-block'
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
                   onClick={toggleMenu}
@@ -120,12 +119,8 @@ class Navigation extends React.PureComponent {
               md={{ size: 9, order: 1 }}
               lg={{ size: 9, order: 3 }}
             >
-              <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
-                <CartIcon
-                  className='d-none d-md-block'
-                  cartItems={cartItems}
-                  onClick={toggleCart}
-                />
+              <Navbar color='light' light expand='md'>
+                <CartIcon cartItems={cartItems} onClick={toggleCart} />
                 <Nav navbar>
                   <Dropdown
                     nav
@@ -231,7 +226,7 @@ const mapStateToProps = state => {
     isCartOpen: state.navigation.isCartOpen,
     isBrandOpen: state.navigation.isBrandOpen,
     cartItems: state.cart.cartItems,
-    brands: state.brand.storeBrands,
+    brands: state.brand.brands,
     authenticated: state.authentication.authenticated,
     user: state.account.user
   };

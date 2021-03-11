@@ -1,20 +1,11 @@
 .brand-dashboard {
-  .b-list {
-    .brand-box {
-      height: 100%;
-      border-radius: $border-radius-default;
-      box-shadow: $secondary-box-shadow;
-      @include transition();
+  // .table-section {
+  //   margin: 20px 0px;
+  // }
 
-      &:hover {
-        background-color: $secondary-bg;
-        @include transition();
-      }
-
-      .brand-desc {
-        @include text-ellipsis(2);
-      }
-    }
+  .desc-column {
+    white-space: normal !important;
+    @include text-ellipsis(2, 2);
   }
 }
 

@@ -5,30 +5,31 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
-import { Row, Col } from 'reactstrap';
-import { Link } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import Input from '../../components/Common/Input';
-import Button from '../../components/Common/Button';
-import { BagIcon } from '../../components/Common/Icon';
-import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import { Row, Col } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import { BagIcon } from '../../components/Icon';
+import NotFound from '../../components/NotFound';
+import LoadingIndicator from '../../components/LoadingIndicator';
+import { arrayBufferToBase64 } from '../../helpers/base64';
 
 class ProductPage extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchStoreProduct(slug);
+    this.props.fetchProduct(slug);
     document.body.classList.add('product-page');
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.slug !== prevProps.match.params.slug) {
       const slug = this.props.match.params.slug;
-      this.props.fetchStoreProduct(slug);
+      this.props.fetchProduct(slug);
     }
   }
 
@@ -58,26 +59,25 @@ class ProductPage extends React.PureComponent {
               <div className='position-relative'>
                 <img
                   className='item-image'
-                  src={`${
-                    product.imageUrl
-                      ? product.imageUrl
+                  src={
+                    product.image
+                      ? `${arrayBufferToBase64(product.image)}`
                       : '/images/placeholder-image.png'
-                    }`}
+                  }
                 />
+
                 {product.inventory <= 0 && !shopFormErrors['quantity'] ? (
                   <p className='stock out-of-stock'>Out of stock</p>
                 ) : (
-                    <p className='stock in-stock'>In stock</p>
-                  )}
+                  <p className='stock in-stock'>In stock</p>
+                )}
               </div>
             </Col>
             <Col xs='12' md='7' lg='7' className='mb-3 px-3 px-md-2'>
               <div className='product-container'>
                 <div className='item-box'>
                   <div className='item-details'>
-                    <h1 className='item-name one-line-ellipsis'>
-                      {product.name}
-                    </h1>
+                    <h1 className='item-name'>{product.name}</h1>
                     <p className='sku'>{product.sku}</p>
                     <hr />
                     {product.brand && (
@@ -126,25 +126,25 @@ class ProductPage extends React.PureComponent {
                         onClick={() => handleRemoveFromCart(product)}
                       />
                     ) : (
-                        <Button
-                          variant='primary'
-                          disabled={
-                            product.quantity <= 0 && !shopFormErrors['quantity']
-                          }
-                          text='Add To Bag'
-                          className='bag-btn'
-                          icon={<BagIcon />}
-                          onClick={() => handleAddToCart(product)}
-                        />
-                      )}
+                      <Button
+                        variant='primary'
+                        disabled={
+                          product.quantity <= 0 && !shopFormErrors['quantity']
+                        }
+                        text='Add To Bag'
+                        className='bag-btn'
+                        icon={<BagIcon />}
+                        onClick={() => handleAddToCart(product)}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
             </Col>
           </Row>
         ) : (
-              <NotFound message='no product found.' />
-            )}
+          <NotFound message='no product found.' />
+        )}
       </div>
     );
   }
@@ -152,7 +152,7 @@ class ProductPage extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    product: state.product.storeProduct,
+    product: state.product.product,
     productShopData: state.product.productShopData,
     shopFormErrors: state.product.shopFormErrors,
     itemsInCart: state.cart.itemsInCart,

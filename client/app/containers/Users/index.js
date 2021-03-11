@@ -5,29 +5,33 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import UserList from '../../components/Manager/UserList';
-import UserSearch from '../../components/Manager/UserSearch';
-import SubPage from '../../components/Manager/SubPage';
-import NotFound from '../../components/Common/NotFound';
+import Table from '../../components/Table';
+import SubPage from '../../components/SubPage';
 
 class Users extends React.PureComponent {
+  componentDidMount() {
+    this.props.fetchUsers();
+  }
+
   render() {
-    const { users, searchUsers } = this.props;
+    const { users, columns } = this.props;
 
     return (
       <div className='users-dashboard'>
-        <SubPage title='Users' />
-        <UserSearch onSearchSubmit={searchUsers} />
-        {users.length > 0 ? (
-          <UserList users={users} />
-        ) : (
-          <NotFound message='No Users Found!' />
-        )}
+        <SubPage title={'Users'} isMenuOpen={null} />
+        <Table
+          data={users}
+          columns={columns}
+          striped={true}
+          hover={true}
+          condensed={true}
+          csv={true}
+          search={true}
+        />
       </div>
     );
   }
@@ -35,7 +39,8 @@ class Users extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    users: state.users.users
+    users: state.users.users,
+    columns: state.users.columns
   };
 };
 

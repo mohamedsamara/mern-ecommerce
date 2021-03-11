@@ -5,17 +5,16 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
+
 import { Switch, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import actions from '../../actions';
 
 // routes
-import Login from '../Login';
-import Signup from '../Signup';
-import MerchantSignup from '../MerchantSignup';
+import LoginPage from '../Login';
+import SignupPage from '../Signup';
 import HomePage from '../Homepage';
 import Dashboard from '../Dashboard';
 import Navigation from '../Navigation';
@@ -32,8 +31,8 @@ import OrderSuccess from '../OrderSuccess';
 import OrderPage from '../OrderPage';
 import AuthSuccess from '../AuthSuccess';
 
-import Footer from '../../components/Common/Footer';
-import Page404 from '../../components/Common/Page404';
+import Footer from '../../components/Footer';
+import Page404 from '../../components/Page404';
 
 class Application extends React.PureComponent {
   componentDidMount() {
@@ -76,12 +75,8 @@ class Application extends React.PureComponent {
                 <Route path='/product/:slug' component={ProductPage} />
                 <Route path='/order/success/:id' component={OrderSuccess} />
                 <Route path='/order/:id' component={OrderPage} />
-                <Route path='/login' component={Login} />
-                <Route path='/register' component={Signup} />
-                <Route
-                  path='/merchant-signup/:token'
-                  component={MerchantSignup}
-                />
+                <Route path='/login' component={LoginPage} />
+                <Route path='/register' component={SignupPage} />
                 <Route path='/forgot-password' component={ForgotPassword} />
                 <Route
                   path='/reset-password/:token'

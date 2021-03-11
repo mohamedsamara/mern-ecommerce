@@ -8,10 +8,10 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import setToken from '../../utils/token';
 
 import actions from '../../actions';
-import setToken from '../../utils/token';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 class AuthSuccess extends React.PureComponent {
   componentDidMount() {

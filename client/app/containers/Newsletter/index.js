@@ -5,13 +5,12 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import Input from '../../components/Common/Input';
-import Button from '../../components/Common/Button';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 class Newsletter extends React.PureComponent {
   render() {

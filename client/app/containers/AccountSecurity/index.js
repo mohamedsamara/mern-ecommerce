@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import SubPage from '../../components/Manager/SubPage';
-import ResetPasswordForm from '../../components/Common/ResetPasswordForm';
+import ResetPasswordForm from '../../components/ResetPasswordForm';
+import SubPage from '../../components/SubPage';
 
 class AccountSecurity extends React.PureComponent {
   componentDidMount() {}

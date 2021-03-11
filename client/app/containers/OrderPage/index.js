@@ -5,14 +5,13 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import OrderDetails from '../../components/Manager/OrderDetails';
-import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import OrderDetails from '../../components/OrderDetails';
+import NotFound from '../../components/NotFound';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 class OrderPage extends React.PureComponent {
   componentDidMount() {

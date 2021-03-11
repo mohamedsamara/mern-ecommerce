@@ -7,7 +7,31 @@
 import { FETCH_USERS } from './constants';
 
 const initialState = {
-  users: []
+  users: [],
+  columns: [
+    {
+      hidden: true,
+      dataField: '_id',
+      text: ''
+    },
+    {
+      dataField: 'email',
+      text: 'User Email',
+      classes: 'email-column'
+    },
+    {
+      dataField: 'role',
+      text: 'User Role'
+    },
+    {
+      dataField: 'firstName',
+      text: 'First Name'
+    },
+    {
+      dataField: 'lastName',
+      text: 'Last Name'
+    }
+  ]
 };
 
 const usersReducer = (state = initialState, action) => {

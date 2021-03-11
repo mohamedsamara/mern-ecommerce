@@ -6,13 +6,10 @@
 
 import {
   FETCH_BRANDS,
-  FETCH_STORE_BRANDS,
-  FETCH_BRAND,
   BRAND_CHANGE,
-  BRAND_EDIT_CHANGE,
   SET_BRAND_FORM_ERRORS,
-  SET_BRAND_FORM_EDIT_ERRORS,
   RESET_BRAND,
+  TOGGLE_ADD_BRAND,
   ADD_BRAND,
   REMOVE_BRAND,
   FETCH_BRANDS_SELECT,
@@ -21,11 +18,7 @@ import {
 
 const initialState = {
   brands: [],
-  storeBrands: [],
-  brand: {
-    name: '',
-    description: ''
-  },
+  isBrandAddOpen: false,
   brandsSelect: [],
   selectedBrands: [],
   brandFormData: {
@@ -33,7 +26,23 @@ const initialState = {
     description: ''
   },
   formErrors: {},
-  editFormErrors: {}
+  columns: [
+    {
+      hidden: true,
+      dataField: '_id',
+      text: ''
+    },
+    {
+      dataField: 'name',
+      text: 'Brand Name',
+      sort: true
+    },
+    {
+      dataField: 'description',
+      text: 'Brand Description',
+      classes: 'desc-column'
+    }
+  ]
 };
 
 const brandReducer = (state = initialState, action) => {
@@ -42,17 +51,6 @@ const brandReducer = (state = initialState, action) => {
       return {
         ...state,
         brands: action.payload
-      };
-    case FETCH_STORE_BRANDS:
-      return {
-        ...state,
-        storeBrands: action.payload
-      };
-    case FETCH_BRAND:
-      return {
-        ...state,
-        brand: action.payload,
-        editFormErrors: {}
       };
     case FETCH_BRANDS_SELECT:
       return {
@@ -70,12 +68,11 @@ const brandReducer = (state = initialState, action) => {
         brands: [...state.brands, action.payload]
       };
     case REMOVE_BRAND:
-      const index = state.brands.findIndex(b => b._id === action.payload);
       return {
         ...state,
         brands: [
-          ...state.brands.slice(0, index),
-          ...state.brands.slice(index + 1)
+          ...state.brands.slice(0, action.payload),
+          ...state.brands.slice(action.payload + 1)
         ]
       };
     case BRAND_CHANGE:
@@ -86,23 +83,10 @@ const brandReducer = (state = initialState, action) => {
           ...action.payload
         }
       };
-    case BRAND_EDIT_CHANGE:
-      return {
-        ...state,
-        brand: {
-          ...state.brand,
-          ...action.payload
-        }
-      };
     case SET_BRAND_FORM_ERRORS:
       return {
         ...state,
         formErrors: action.payload
-      };
-    case SET_BRAND_FORM_EDIT_ERRORS:
-      return {
-        ...state,
-        editFormErrors: action.payload
       };
     case RESET_BRAND:
       return {
@@ -113,6 +97,11 @@ const brandReducer = (state = initialState, action) => {
         },
         selectedBrands: [],
         formErrors: {}
+      };
+    case TOGGLE_ADD_BRAND:
+      return {
+        ...state,
+        isBrandAddOpen: !state.isBrandAddOpen
       };
     default:
       return state;

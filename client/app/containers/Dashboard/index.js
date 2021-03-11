@@ -10,13 +10,9 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import Admin from '../../components/Manager/Dashboard/Admin';
-import Merchant from '../../components/Manager/Dashboard/Merchant';
-import Customer from '../../components/Manager/Dashboard/Customer';
-
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
-
-import dashboardLinks from './links.json';
+import Admin from '../Admin';
+import Customer from '../Customer';
+import LoadingIndicator from '../../components/LoadingIndicator';
 
 class Dashboard extends React.PureComponent {
   componentDidMount() {
@@ -24,30 +20,16 @@ class Dashboard extends React.PureComponent {
   }
 
   render() {
-    const { user, isLoading, isMenuOpen, toggleDashboardMenu } = this.props;
+    const { user, isLoading } = this.props;
 
     return (
       <>
         {isLoading ? (
           <LoadingIndicator inline />
-        ) : user.role === 'ROLE_ADMIN' ? (
-          <Admin
-            isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_ADMIN']}
-            toggleMenu={toggleDashboardMenu}
-          />
-        ) : user.role === 'ROLE_MERCHANT' ? (
-          <Merchant
-            isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_MERCHANT']}
-            toggleMenu={toggleDashboardMenu}
-          />
+        ) : user.role === 'ROLE_MEMBER' ? (
+          <Customer />
         ) : (
-          <Customer
-            isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_MEMBER']}
-            toggleMenu={toggleDashboardMenu}
-          />
+          <Admin />
         )}
       </>
     );
@@ -57,8 +39,7 @@ class Dashboard extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     user: state.account.user,
-    isLoading: state.account.isLoading,
-    isMenuOpen: state.dashboard.isMenuOpen
+    isLoading: state.account.isLoading
   };
 };
 

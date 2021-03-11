@@ -5,31 +5,67 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import List from './List';
-import Add from './Add';
-import Edit from './Edit';
-import Page404 from '../../components/Common/Page404';
+import AddCategory from '../../components/AddCategory';
+import Table from '../../components/Table';
+import SubPage from '../../components/SubPage';
 
 class Category extends React.PureComponent {
+  componentDidMount() {
+    this.props.fetchCategories();
+    this.props.fetchProductsSelect();
+  }
+
   render() {
-    const { user } = this.props;
+    const {
+      categoryFormData,
+      categoryChange,
+      addCategory,
+      categories,
+      formErrors,
+      columns,
+      isCategoryAddOpen,
+      toggleAddCategory,
+      deleteCategory,
+      products,
+      selectedProducts,
+      handleProductSelect
+    } = this.props;
 
     return (
       <div className='category-dashboard'>
-        <Switch>
-          <Route exact path='/dashboard/category' component={List} />
-          <Route exact path='/dashboard/category/edit/:id' component={Edit} />
-          {/* {user.role === 'ROLE_ADMIN' && ( */}
-          <Route exact path='/dashboard/category/add' component={Add} />
-          {/* )} */}
-          <Route path='*' component={Page404} />
-        </Switch>
+        <SubPage
+          title={isCategoryAddOpen ? 'Add Category' : 'Categories'}
+          isMenuOpen={isCategoryAddOpen}
+          toggleMenu={toggleAddCategory}
+        >
+          {isCategoryAddOpen ? (
+            <AddCategory
+              categoryFormData={categoryFormData}
+              formErrors={formErrors}
+              categoryChange={categoryChange}
+              addCategory={addCategory}
+              products={products}
+              selectedProducts={selectedProducts}
+              handleProductSelect={handleProductSelect}
+            />
+          ) : (
+            <Table
+              data={categories}
+              columns={columns}
+              striped={true}
+              hover={true}
+              condensed={true}
+              csv={true}
+              search={true}
+              isRowEvents={true}
+              clickAction={(id, index) => deleteCategory(id, index)}
+            />
+          )}
+        </SubPage>
       </div>
     );
   }
@@ -37,7 +73,13 @@ class Category extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    user: state.account.user
+    categoryFormData: state.category.categoryFormData,
+    isCategoryAddOpen: state.category.isCategoryAddOpen,
+    categories: state.category.categories,
+    formErrors: state.category.formErrors,
+    columns: state.category.columns,
+    products: state.product.productsSelect,
+    selectedProducts: state.product.selectedProducts
   };
 };
 

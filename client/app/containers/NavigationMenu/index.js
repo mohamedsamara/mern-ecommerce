@@ -5,15 +5,15 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Container } from 'reactstrap';
 
 import actions from '../../actions';
 
-import Button from '../../components/Common/Button';
-import { CloseIcon } from '../../components/Common/Icon';
+import { NavLink } from 'react-router-dom';
+import { Container } from 'reactstrap';
+
+import Button from '../../components/Button';
+import { CloseIcon } from '../../components/Icon';
 
 class NavigationMenu extends React.PureComponent {
   componentDidMount() {

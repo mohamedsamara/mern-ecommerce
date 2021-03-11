@@ -128,39 +128,23 @@ body.user-is-tabbing button:focus {
     position: relative;
     border: $border-default;
     border-radius: $border-radius-default;
-    background-color: $danger-bg;
+    background-color: $btn-bg;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
 
     .btn-text {
-      color: $white !important;
       -webkit-transition: $layout-transition-speed;
       transition: $layout-transition-speed;
     }
 
     &:hover {
-      background-color: $danger-hover-bg;
+      background-color: $danger-bg;
 
       .btn-text {
         -webkit-transition: $layout-transition-speed;
         transition: $layout-transition-speed;
         color: $white !important;
       }
-    }
-  }
-}
-
-// none button
-.input-btn {
-  &.custom-btn-none {
-    position: relative;
-    padding: 6px 10px;
-    min-width: auto;
-    border: $border-default;
-    border-radius: $border-radius-default;
-
-    &:hover {
-      color: $font-custom-color !important;
     }
   }
 }
@@ -183,34 +167,6 @@ body.user-is-tabbing button:focus {
         opacity: 0.9;
         -webkit-transition: $layout-transition-speed;
         transition: $layout-transition-speed;
-      }
-    }
-  }
-}
-
-// dark button
-.input-btn {
-  &.custom-btn-dark {
-    position: relative;
-    border: $border-default;
-    border-radius: $border-radius-default;
-    background-color: $dark-bg;
-    -webkit-transition: $layout-transition-speed;
-    transition: $layout-transition-speed;
-
-    .btn-text {
-      color: $white !important;
-      -webkit-transition: $layout-transition-speed;
-      transition: $layout-transition-speed;
-    }
-
-    &:hover {
-      background-color: $dark-hover-bg;
-
-      .btn-text {
-        -webkit-transition: $layout-transition-speed;
-        transition: $layout-transition-speed;
-        color: $white !important;
       }
     }
   }

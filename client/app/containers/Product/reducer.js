@@ -7,17 +7,14 @@ import React from 'react';
 
 import {
   FETCH_PRODUCTS,
-  FETCH_STORE_PRODUCTS,
   FETCH_PRODUCT,
-  FETCH_STORE_PRODUCT,
   PRODUCT_CHANGE,
-  PRODUCT_EDIT_CHANGE,
   PRODUCT_SHOP_CHANGE,
   SET_PRODUCT_FORM_ERRORS,
-  SET_PRODUCT_FORM_EDIT_ERRORS,
   SET_PRODUCT_SHOP_FORM_ERRORS,
   RESET_PRODUCT,
   RESET_PRODUCT_SHOP,
+  TOGGLE_ADD_PRODUCT,
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   PRODUCT_SELECT,
@@ -25,13 +22,11 @@ import {
   SET_PRODUCTS_LOADING
 } from './constants';
 
+import { arrayBufferToBase64 } from '../../helpers/base64';
+
 const initialState = {
   products: [],
-  storeProducts: [],
-  product: {
-    _id: ''
-  },
-  storeProduct: {},
+  product: {},
   productsSelect: [],
   selectedProducts: [],
   isProductAddOpen: false,
@@ -53,8 +48,54 @@ const initialState = {
     { value: 0, label: 'No' }
   ],
   formErrors: {},
-  editFormErrors: {},
-  shopFormErrors: {}
+  shopFormErrors: {},
+  columns: [
+    {
+      hidden: true,
+      dataField: '_id',
+      text: ''
+    },
+    {
+      dataField: 'sku',
+      text: 'Product Sku'
+    },
+    {
+      dataField: 'name',
+      text: 'Product Name',
+      sort: true
+    },
+    {
+      dataField: 'description',
+      text: 'Product Description',
+      classes: 'desc-column'
+    },
+    {
+      dataField: 'quantity',
+      text: 'Product Quantity',
+      sort: true
+    },
+    {
+      dataField: 'price',
+      text: 'Product Price',
+      sort: true
+    },
+    {
+      dataField: 'brand.name',
+      text: 'Product Brand',
+      sort: true
+    },
+    {
+      dataField: 'image',
+      text: 'Product Image',
+      formatter: (cell, row) => {
+        return (
+          <>
+            {cell && cell.data && <img src={`${arrayBufferToBase64(cell)}`} />}
+          </>
+        );
+      }
+    }
+  ]
 };
 
 const productReducer = (state = initialState, action) => {
@@ -64,21 +105,10 @@ const productReducer = (state = initialState, action) => {
         ...state,
         products: action.payload
       };
-    case FETCH_STORE_PRODUCTS:
-      return {
-        ...state,
-        storeProducts: action.payload
-      };
     case FETCH_PRODUCT:
       return {
         ...state,
         product: action.payload,
-        editFormErrors: {}
-      };
-    case FETCH_STORE_PRODUCT:
-      return {
-        ...state,
-        storeProduct: action.payload,
         productShopData: {
           quantity: 1
         },
@@ -97,12 +127,11 @@ const productReducer = (state = initialState, action) => {
         products: [...state.products, action.payload]
       };
     case REMOVE_PRODUCT:
-      const index = state.products.findIndex(b => b._id === action.payload);
       return {
         ...state,
         products: [
-          ...state.products.slice(0, index),
-          ...state.products.slice(index + 1)
+          ...state.products.slice(0, action.payload),
+          ...state.products.slice(action.payload + 1)
         ]
       };
     case PRODUCT_CHANGE:
@@ -110,14 +139,6 @@ const productReducer = (state = initialState, action) => {
         ...state,
         productFormData: {
           ...state.productFormData,
-          ...action.payload
-        }
-      };
-    case PRODUCT_EDIT_CHANGE:
-      return {
-        ...state,
-        product: {
-          ...state.product,
           ...action.payload
         }
       };
@@ -138,11 +159,6 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         formErrors: action.payload
-      };
-    case SET_PRODUCT_FORM_EDIT_ERRORS:
-      return {
-        ...state,
-        editFormErrors: action.payload
       };
     case SET_PRODUCT_SHOP_FORM_ERRORS:
       return {
@@ -171,6 +187,8 @@ const productReducer = (state = initialState, action) => {
         },
         shopFormErrors: {}
       };
+    case TOGGLE_ADD_PRODUCT:
+      return { ...state, isProductAddOpen: !state.isProductAddOpen };
     default:
       return state;
   }

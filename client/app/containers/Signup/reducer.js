@@ -33,11 +33,9 @@ const signupReducer = (state = initialState, action) => {
         ...state,
         signupFormData: { ...state.signupFormData, ...action.payload }
       };
+
     case SUBSCRIBE_CHANGE:
-      return {
-        ...state,
-        isSubscribed: !state.isSubscribed
-      };
+      return { ...state, isSubscribed: !state.isSubscribed };
     case SET_SIGNUP_FORM_ERRORS:
       return {
         ...state,

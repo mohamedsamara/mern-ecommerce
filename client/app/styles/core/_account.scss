@@ -19,6 +19,15 @@
         align-items: center;
       }
 
+      .admin {
+        padding: 6px 8px;
+        border-radius: $border-radius-default;
+        background-color: $primary-color;
+        color: $white;
+        font-weight: $font-weight-bold-one;
+        margin-left: 10px;
+      }
+
       .provider-email {
         text-transform: capitalize;
       }
@@ -31,3 +40,5 @@
     }
   }
 }
+
+// end reset password form styles

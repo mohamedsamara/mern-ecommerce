@@ -13,13 +13,17 @@
       .order-first-item {
         align-self: center;
 
-        .item-image {
+        img {
           border-top-right-radius: $border-radius-default;
           border-top-left-radius: $border-radius-default;
 
           @include media-breakpoint-up(lg) {
             border-radius: $border-radius-default;
           }
+
+          // @include media-breakpoint-up(lg) {
+          //   height: 128px;
+          // }
 
           @include media-breakpoint-up(lg) {
             width: 90px;
@@ -109,13 +113,12 @@
       }
     }
 
-    .item-details {
-      max-width: 200px;
-    }
-
     .item-image {
-      width: 80px;
-      border-radius: $border-radius-default;
+      width: 90px;
+
+      img {
+        border-radius: $border-radius-default;
+      }
     }
   }
 

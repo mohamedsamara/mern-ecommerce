@@ -2,9 +2,8 @@
   .subpage-header {
     @include flex();
     justify-content: space-between;
-    align-items: center;
     border-bottom: $border-primary;
-    padding-bottom: 16px;
+    padding-bottom: 10px;
 
     h2 {
       margin: 0;

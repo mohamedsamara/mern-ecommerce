@@ -5,13 +5,12 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import SubPage from '../../components/Manager/SubPage';
-import MerchantList from '../../components/Manager/MerchantList';
+import Table from '../../components/Table';
+import SubPage from '../../components/SubPage';
 
 class Merchant extends React.PureComponent {
   componentDidMount() {
@@ -19,16 +18,19 @@ class Merchant extends React.PureComponent {
   }
 
   render() {
-    const { merchants, approveMerchant, rejectMerchant } = this.props;
+    const { merchants, columns } = this.props;
 
     return (
       <div className='merchant-dashboard'>
         <SubPage title={'Merchants'} isMenuOpen={null} />
-
-        <MerchantList
-          merchants={merchants}
-          approveMerchant={approveMerchant}
-          rejectMerchant={rejectMerchant}
+        <Table
+          data={merchants}
+          columns={columns}
+          striped={true}
+          hover={true}
+          condensed={true}
+          csv={true}
+          search={true}
         />
       </div>
     );
@@ -37,7 +39,8 @@ class Merchant extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    merchants: state.merchant.merchants
+    merchants: state.merchant.merchants,
+    columns: state.merchant.columns
   };
 };
 

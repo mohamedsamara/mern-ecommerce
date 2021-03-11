@@ -9,6 +9,7 @@ import { connectRouter } from 'connected-react-router';
 import { reducer as notifications } from 'react-notification-system-redux';
 
 // import reducers
+
 import applicationReducer from './containers/Application/reducer';
 import homepageReducer from './containers/Homepage/reducer';
 import signupReducer from './containers/Signup/reducer';
@@ -18,9 +19,9 @@ import navigationReducer from './containers/Navigation/reducer';
 import authenticationReducer from './containers/Authentication/reducer';
 import cartReducer from './containers/Cart/reducer';
 import newsletterReducer from './containers/Newsletter/reducer';
-import dashboardReducer from './containers/Dashboard/reducer';
+import customerReducer from './containers/Customer/reducer';
+import adminReducer from './containers/Admin/reducer';
 import accountReducer from './containers/Account/reducer';
-import addressReducer from './containers/Address/reducer';
 import resetPasswordReducer from './containers/ResetPassword/reducer';
 import usersReducer from './containers/Users/reducer';
 import productReducer from './containers/Product/reducer';
@@ -45,9 +46,9 @@ const createReducer = history =>
     authentication: authenticationReducer,
     cart: cartReducer,
     newsletter: newsletterReducer,
-    dashboard: dashboardReducer,
+    customer: customerReducer,
+    admin: adminReducer,
     account: accountReducer,
-    address:addressReducer,
     resetPassword: resetPasswordReducer,
     users: usersReducer,
     product: productReducer,
