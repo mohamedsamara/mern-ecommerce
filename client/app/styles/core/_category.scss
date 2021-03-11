@@ -1,10 +1,30 @@
+/* start category dashboard styles */
 .category-dashboard {
-  //   .table-section {
-  //     margin: 20px 0px;
-  //   }
+  .c-list {
+    .category-box {
+      height: 100%;
+      border-radius: $border-radius-default;
+      box-shadow: $secondary-box-shadow;
+      @include transition();
 
-  .desc-column {
-    white-space: normal !important;
-    @include text-ellipsis(2, 2);
+      &:hover {
+        background-color: $secondary-bg;
+        @include transition();
+      }
+
+      .item-image {
+        border-radius: $border-radius-default;
+
+        @include media-breakpoint-up(lg) {
+          width: 140px;
+          height: 140px;
+        }
+      }
+
+      .category-desc {
+        @include text-ellipsis(2);
+      }
+    }
   }
 }
+/* end category dashboard styles */

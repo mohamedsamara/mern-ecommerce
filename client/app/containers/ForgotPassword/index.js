@@ -12,8 +12,8 @@ import { Redirect, Link } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import Input from '../../components/Input';
-import Button from '../../components/Button';
+import Input from '../../components/Common/Input';
+import Button from '../../components/Common/Button';
 
 class ForgotPassword extends React.PureComponent {
   render() {

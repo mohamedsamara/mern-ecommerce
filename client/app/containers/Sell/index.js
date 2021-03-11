@@ -5,14 +5,14 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
+import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
 
-import Input from '../../components/Input';
-import Button from '../../components/Button';
+import Input from '../../components/Common/Input';
+import Button from '../../components/Common/Button';
 
 class Sell extends React.PureComponent {
   render() {

@@ -1,5 +1,6 @@
 .panel-body {
-  padding: 10px;
+  // padding: 10px;
+
   @include media-breakpoint-down(sm) {
     margin-top: 20px;
   }

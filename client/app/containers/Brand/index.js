@@ -5,60 +5,31 @@
  */
 
 import React from 'react';
+
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import AddBrand from '../../components/AddBrand';
-import Table from '../../components/Table';
-import SubPage from '../../components/SubPage';
+import List from './List';
+import Add from './Add';
+import Edit from './Edit';
+import Page404 from '../../components/Common/Page404';
 
 class Brand extends React.PureComponent {
-  componentDidMount() {
-    this.props.fetchBrands();
-  }
-
   render() {
-    const {
-      brandFormData,
-      brandChange,
-      formErrors,
-      addBrand,
-      isBrandAddOpen,
-      brands,
-      columns,
-      toggleAddBrand,
-      deleteBrand
-    } = this.props;
+    const { user } = this.props;
 
     return (
       <div className='brand-dashboard'>
-        <SubPage
-          title={isBrandAddOpen ? 'Add Brand' : 'Brands'}
-          isMenuOpen={isBrandAddOpen}
-          toggleMenu={toggleAddBrand}
-        >
-          {isBrandAddOpen ? (
-            <AddBrand
-              brandFormData={brandFormData}
-              formErrors={formErrors}
-              brandChange={brandChange}
-              addBrand={addBrand}
-            />
-          ) : (
-            <Table
-              data={brands}
-              columns={columns}
-              striped={true}
-              hover={true}
-              condensed={true}
-              csv={true}
-              search={true}
-              isRowEvents={true}
-              clickAction={(id, index) => deleteBrand(id, index)}
-            />
+        <Switch>
+          <Route exact path='/dashboard/brand' component={List} />
+          <Route exact path='/dashboard/brand/edit/:id' component={Edit} />
+          {user.role === 'ROLE_ADMIN' && (
+            <Route exact path='/dashboard/brand/add' component={Add} />
           )}
-        </SubPage>
+          <Route path='*' component={Page404} />
+        </Switch>
       </div>
     );
   }
@@ -66,11 +37,7 @@ class Brand extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    brandFormData: state.brand.brandFormData,
-    isBrandAddOpen: state.brand.isBrandAddOpen,
-    brands: state.brand.brands,
-    formErrors: state.brand.formErrors,
-    columns: state.brand.columns
+    user: state.account.user
   };
 };
 
