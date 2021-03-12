@@ -14,6 +14,7 @@ import Page404 from '../../Common/Page404';
 
 import Account from '../../../containers/Account';
 import AccountSecurity from '../../../containers/AccountSecurity';
+import Address from '../../../containers/Address';
 import Product from '../../../containers/Product';
 import Brand from '../../../containers/Brand';
 import Order from '../../../containers/Order';
@@ -30,6 +31,7 @@ const Customer = props => {
             <Switch>
               <Route exact path='/dashboard' component={Account} />
               <Route path='/dashboard/security' component={AccountSecurity} />
+              <Route path='/dashboard/address' component={Address} />
               <Route path='/dashboard/product' component={Product} />
               <Route path='/dashboard/brand' component={Brand} />
               <Route path='/dashboard/orders' component={Order} />
