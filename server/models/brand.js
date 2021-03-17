@@ -29,6 +29,10 @@ const BrandSchema = new Schema({
     type: String,
     trim: true
   },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   merchant: {
     type: Schema.Types.ObjectId,
     ref: 'Merchant',

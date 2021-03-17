@@ -34,7 +34,8 @@ class Edit extends React.PureComponent {
       formErrors,
       productEditChange,
       updateProduct,
-      deleteProduct
+      deleteProduct,
+      activateProduct
     } = this.props;
 
     return (
@@ -50,6 +51,7 @@ class Edit extends React.PureComponent {
             productChange={productEditChange}
             updateProduct={updateProduct}
             deleteProduct={deleteProduct}
+            activateProduct={activateProduct}
           />
         ) : (
           <NotFound message='no product found.' />

@@ -26,6 +26,7 @@ router.post(
       const quantity = req.body.quantity;
       const price = req.body.price;
       const taxable = req.body.taxable;
+      const isActive = req.body.isActive;
       const brand = req.body.brand != 0 ? req.body.brand : null;
       const image = req.file;
 
@@ -84,6 +85,7 @@ router.post(
         quantity,
         price,
         taxable,
+        isActive,
         brand,
         imageUrl,
         imageKey
@@ -282,6 +284,32 @@ router.get('/list/select', auth, async (req, res) => {
 
 router.put(
   '/:id',
+  auth,
+  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  async (req, res) => {
+    try {
+      const productId = req.params.id;
+      const update = req.body.product;
+      const query = { _id: productId };
+
+      await Product.findOneAndUpdate(query, update, {
+        new: true
+      });
+
+      res.status(200).json({
+        success: true,
+        message: 'Product has been updated successfully!'
+      });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
+router.put(
+  '/:id/active',
   auth,
   role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
   async (req, res) => {

@@ -1,0 +1,47 @@
+.switch-checkbox {
+  .switch-checkbox-input {
+    @include sr-only();
+  }
+
+  .switch-checkbox-input + .switch-label {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .switch-checkbox-input + .switch-label .switch-label-text {
+    font-weight: $font-weight-bold-two;
+    margin-right: 10px;
+  }
+
+  .switch-checkbox-input + .switch-label .switch-label-toggle {
+    justify-content: space-between;
+    cursor: pointer;
+    width: 40px;
+    height: 25px;
+    background: grey;
+    border-radius: 100px;
+    position: relative;
+    @include transition();
+  }
+
+  .switch-checkbox-input + .switch-label .switch-label-toggle::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: $border-radius-circle;
+    background-color: $white;
+    @include transition();
+  }
+
+  .switch-checkbox-input:checked + .switch-label .switch-label-toggle::before {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+  }
+
+  .switch-checkbox-input:checked + .switch-label .switch-label-toggle {
+    background: $theme-green;
+  }
+}

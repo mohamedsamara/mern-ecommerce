@@ -11,6 +11,7 @@ router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   const products = req.body.products;
+  const isActive = req.body.isActive;
 
   if (!description || !name) {
     return res
@@ -21,7 +22,8 @@ router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
   const category = new Category({
     name,
     description,
-    products
+    products,
+    isActive
   });
 
   category.save((err, data) => {
@@ -98,6 +100,32 @@ router.put('/:id', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
     });
   }
 });
+
+router.put(
+  '/:id/active',
+  auth,
+  role.checkRole(role.ROLES.Admin),
+  async (req, res) => {
+    try {
+      const categoryId = req.params.id;
+      const update = req.body.category;
+      const query = { _id: categoryId };
+
+      await Category.findOneAndUpdate(query, update, {
+        new: true
+      });
+
+      res.status(200).json({
+        success: true,
+        message: 'Category has been updated successfully!'
+      });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
 
 router.delete(
   '/delete/:id',

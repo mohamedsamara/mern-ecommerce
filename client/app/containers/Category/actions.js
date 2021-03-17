@@ -60,6 +60,7 @@ export const categorySelect = value => {
   };
 };
 
+// fetch store categories api
 export const fetchCategories = () => {
   return async (dispatch, getState) => {
     try {
@@ -194,6 +195,31 @@ export const updateCategory = () => {
         dispatch(success(successfulOptions));
 
         dispatch(goBack());
+      }
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
+// activate category api
+export const activateCategory = (id, value) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.put(`/api/category/${id}/active`, {
+        category: {
+          isActive: value
+        }
+      });
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      if (response.data.success === true) {
+        dispatch(success(successfulOptions));
       }
     } catch (error) {
       handleError(error, dispatch);

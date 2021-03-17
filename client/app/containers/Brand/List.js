@@ -19,7 +19,7 @@ class List extends React.PureComponent {
   }
 
   render() {
-    const { history, brands, user } = this.props;
+    const { history, brands, user, activateBrand } = this.props;
 
     return (
       <>
@@ -28,7 +28,7 @@ class List extends React.PureComponent {
           actionTitle={user.role === 'ROLE_ADMIN' && 'Add'}
           handleAction={() => history.push('/dashboard/brand/add')}
         >
-          <BrandList brands={brands} />
+          <BrandList brands={brands} activateBrand={activateBrand} />
         </SubPage>
       </>
     );

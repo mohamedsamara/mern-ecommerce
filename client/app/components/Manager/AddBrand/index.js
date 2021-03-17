@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
+import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 
 const AddBrand = props => {
@@ -47,6 +48,15 @@ const AddBrand = props => {
               onInputChange={(name, value) => {
                 brandChange(name, value);
               }}
+            />
+          </Col>
+          <Col xs='12' md='12' className='my-2'>
+            <Switch
+              id={'active-brand'}
+              name={'isActive'}
+              label={'Active?'}
+              checked={brandFormData.isActive}
+              toggleCheckboxChange={value => brandChange('isActive', value)}
             />
           </Col>
         </Row>

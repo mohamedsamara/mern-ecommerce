@@ -30,7 +30,8 @@ const initialState = {
   selectedBrands: [],
   brandFormData: {
     name: '',
-    description: ''
+    description: '',
+    isActive: true
   },
   formErrors: {},
   editFormErrors: {}
@@ -109,7 +110,8 @@ const brandReducer = (state = initialState, action) => {
         ...state,
         brandFormData: {
           name: '',
-          description: ''
+          description: '',
+          isActive: true
         },
         selectedBrands: [],
         formErrors: {}

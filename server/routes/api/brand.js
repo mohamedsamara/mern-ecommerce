@@ -14,6 +14,7 @@ router.post(
     try {
       const name = req.body.name;
       const description = req.body.description;
+      const isActive = req.body.isActive;
 
       if (!description || !name) {
         return res
@@ -23,7 +24,8 @@ router.post(
 
       const brand = new Brand({
         name,
-        description
+        description,
+        isActive
       });
 
       const brandDoc = await brand.save();
@@ -106,6 +108,36 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get(
+  '/list/select',
+  auth,
+  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  async (req, res) => {
+    try {
+      let brands = null;
+
+      if (req.user.merchant) {
+        brands = await Brand.find(
+          {
+            merchant: req.user.merchant
+          },
+          'name'
+        );
+      } else {
+        brands = await Brand.find({}, 'name');
+      }
+
+      res.status(200).json({
+        brands
+      });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
 router.put(
   '/:id',
   auth,
@@ -132,27 +164,23 @@ router.put(
   }
 );
 
-router.get(
-  '/list/select',
+router.put(
+  '/:id/active',
   auth,
   role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
   async (req, res) => {
     try {
-      let brands = null;
+      const brandId = req.params.id;
+      const update = req.body.brand;
+      const query = { _id: brandId };
 
-      if (req.user.merchant) {
-        brands = await Brand.find(
-          {
-            merchant: req.user.merchant
-          },
-          'name'
-        );
-      } else {
-        brands = await Brand.find({}, 'name');
-      }
+      await Brand.findOneAndUpdate(query, update, {
+        new: true
+      });
 
       res.status(200).json({
-        brands
+        success: true,
+        message: 'Brand has been updated successfully!'
       });
     } catch (error) {
       res.status(400).json({
