@@ -33,6 +33,10 @@ const CategorySchema = new Schema({
     type: String,
     trim: true
   },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   products: [
     {
       type: Schema.Types.ObjectId,

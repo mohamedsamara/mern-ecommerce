@@ -99,6 +99,32 @@ router.put('/:id', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
   }
 });
 
+router.put(
+  '/:id/active',
+  auth,
+  role.checkRole(role.ROLES.Admin),
+  async (req, res) => {
+    try {
+      const categoryId = req.params.id;
+      const update = req.body.category;
+      const query = { _id: categoryId };
+
+      await Category.findOneAndUpdate(query, update, {
+        new: true
+      });
+
+      res.status(200).json({
+        success: true,
+        message: 'Category has been updated successfully!'
+      });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
 router.delete(
   '/delete/:id',
   auth,

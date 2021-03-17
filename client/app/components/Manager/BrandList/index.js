@@ -23,11 +23,9 @@ const BrandList = props => {
               id={`enable-brand-${brand._id}`}
               name={'isActive'}
               checked={brand.isActive}
-              // brandChange
               toggleCheckboxChange={value => activateBrand(brand._id, value)}
             />
           </div>
-
           <Link to={`/dashboard/brand/edit/${brand._id}`} className='d-block'>
             <p className='brand-desc mb-2'>{brand.description}</p>
             {brand?.merchant && (

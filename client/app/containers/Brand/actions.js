@@ -234,8 +234,6 @@ export const activateBrand = (id, value) => {
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
-
-        // dispatch(goBack());
       }
     } catch (error) {
       handleError(error, dispatch);

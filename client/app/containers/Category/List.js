@@ -19,7 +19,7 @@ class List extends React.PureComponent {
   }
 
   render() {
-    const { history, categories } = this.props;
+    const { history, categories, activateCategory } = this.props;
 
     return (
       <>
@@ -28,7 +28,10 @@ class List extends React.PureComponent {
           actionTitle='Add'
           handleAction={() => history.push('/dashboard/category/add')}
         >
-          <CategoryList categories={categories} />
+          <CategoryList
+            categories={categories}
+            activateCategory={activateCategory}
+          />
         </SubPage>
       </>
     );

@@ -202,6 +202,31 @@ export const updateCategory = () => {
   };
 };
 
+// activate category api
+export const activateCategory = (id, value) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.put(`/api/category/${id}/active`, {
+        category: {
+          isActive: value
+        }
+      });
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      if (response.data.success === true) {
+        dispatch(success(successfulOptions));
+      }
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
 // delete category api
 export const deleteCategory = id => {
   return async (dispatch, getState) => {
