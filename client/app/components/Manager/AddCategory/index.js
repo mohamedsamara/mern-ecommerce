@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
+import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 
@@ -68,6 +69,15 @@ const AddCategory = props => {
               handleSelectChange={value => {
                 handleProductSelect(value);
               }}
+            />
+          </Col>
+          <Col xs='12' md='12' className='my-2'>
+            <Switch
+              id={'active-category'}
+              name={'isActive'}
+              label={'Active?'}
+              checked={categoryFormData.isActive}
+              toggleCheckboxChange={value => categoryChange('isActive', value)}
             />
           </Col>
         </Row>

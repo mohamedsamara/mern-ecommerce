@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
+import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 
@@ -137,6 +138,15 @@ const AddProduct = props => {
               onInputChange={(name, value) => {
                 productChange(name, value);
               }}
+            />
+          </Col>
+          <Col xs='12' md='12' className='my-2'>
+            <Switch
+              id={'active-product'}
+              name={'isActive'}
+              label={'Active?'}
+              checked={productFormData.isActive}
+              toggleCheckboxChange={value => productChange('isActive', value)}
             />
           </Col>
         </Row>

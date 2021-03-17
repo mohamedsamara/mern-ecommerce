@@ -26,6 +26,7 @@ router.post(
       const quantity = req.body.quantity;
       const price = req.body.price;
       const taxable = req.body.taxable;
+      const isActive = req.body.isActive;
       const brand = req.body.brand != 0 ? req.body.brand : null;
       const image = req.file;
 
@@ -84,6 +85,7 @@ router.post(
         quantity,
         price,
         taxable,
+        isActive,
         brand,
         imageUrl,
         imageKey

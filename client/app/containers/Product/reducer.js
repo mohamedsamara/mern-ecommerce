@@ -41,7 +41,8 @@ const initialState = {
     quantity: 1,
     price: 1,
     taxable: 0,
-    image: {}
+    image: {},
+    isActive: true
   },
   isLoading: false,
   productShopData: {
@@ -157,7 +158,8 @@ const productReducer = (state = initialState, action) => {
           description: '',
           quantity: 1,
           price: 0,
-          image: {}
+          image: {},
+          isActive: true
         },
         formErrors: {},
         selectedProducts: []

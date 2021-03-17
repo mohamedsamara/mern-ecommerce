@@ -25,7 +25,8 @@ const initialState = {
   isCategoryAddOpen: false,
   categoryFormData: {
     name: '',
-    description: ''
+    description: '',
+    isActive: true
   },
   formErrors: {},
   editFormErrors: {}
@@ -85,7 +86,8 @@ const categoryReducer = (state = initialState, action) => {
         ...state,
         categoryFormData: {
           name: '',
-          description: ''
+          description: '',
+          isActive: true
         },
         formErrors: {}
       };

@@ -14,6 +14,7 @@ router.post(
     try {
       const name = req.body.name;
       const description = req.body.description;
+      const isActive = req.body.isActive;
 
       if (!description || !name) {
         return res
@@ -23,7 +24,8 @@ router.post(
 
       const brand = new Brand({
         name,
-        description
+        description,
+        isActive
       });
 
       const brandDoc = await brand.save();
