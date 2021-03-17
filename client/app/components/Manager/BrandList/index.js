@@ -23,12 +23,12 @@ const BrandList = props => {
             <h4>{brand.name}</h4>
             <p className='brand-desc mb-2'>{brand.description}</p>
             {brand?.merchant && (
-              <>
+              <div className='d-flex'>
                 <label>Merchant</label>
-                <p className='brand-merchant mb-0 text-primary'>
+                <p className='brand-merchant mb-0 ml-2 text-primary'>
                   {brand.merchant.name}
                 </p>
-              </>
+              </div>
             )}
           </div>
         </Link>

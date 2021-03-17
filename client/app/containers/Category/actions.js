@@ -60,6 +60,7 @@ export const categorySelect = value => {
   };
 };
 
+// fetch store categories api
 export const fetchCategories = () => {
   return async (dispatch, getState) => {
     try {
