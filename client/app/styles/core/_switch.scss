@@ -1,0 +1,39 @@
+.switch-checkbox {
+  .switch-checkbox-input {
+    @include sr-only();
+  }
+
+  .switch-checkbox-input + .switch-label {
+    @include flex();
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 40px;
+    height: 25px;
+    background: grey;
+    border-radius: 100px;
+    position: relative;
+    @include transition();
+  }
+
+  .switch-checkbox-input + .switch-label::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: $border-radius-circle;
+    background-color: $white;
+    @include transition();
+  }
+
+  .switch-checkbox-input:checked + .switch-label::before {
+    left: calc(100% - 2px);
+    transform: translateX(-100%);
+  }
+
+  .switch-checkbox-input:checked + .switch-label {
+    background: $theme-green;
+  }
+}
