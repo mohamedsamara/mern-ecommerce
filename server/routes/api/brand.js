@@ -46,7 +46,9 @@ router.post(
 // fetch store brands api
 router.get('/list', async (req, res) => {
   try {
-    const brands = await Brand.find({}).populate('merchant', 'name');
+    const brands = await Brand.find({
+      isActive: true
+    }).populate('merchant', 'name');
 
     res.status(200).json({
       brands

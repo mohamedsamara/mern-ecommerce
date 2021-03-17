@@ -5,6 +5,7 @@
  */
 
 export const FETCH_CATEGORIES = 'src/Category/FETCH_CATEGORIES';
+export const FETCH_STORE_CATEGORIES = 'src/Category/FETCH_STORE_CATEGORIES';
 export const FETCH_CATEGORY = 'src/Category/FETCH_CATEGORY';
 export const CATEGORY_CHANGE = 'src/Category/CATEGORY_CHANGE';
 export const CATEGORY_EDIT_CHANGE = 'src/Category/CATEGORY_EDIT_CHANGE';

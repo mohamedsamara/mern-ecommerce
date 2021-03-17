@@ -109,7 +109,10 @@ router.post(
 // fetch store products api
 router.get('/list', async (req, res) => {
   try {
-    const products = await Product.find({}).populate('brand', 'name');
+    const products = await Product.find({ isActive: true }).populate(
+      'brand',
+      'name'
+    );
     res.status(200).json({
       products
     });

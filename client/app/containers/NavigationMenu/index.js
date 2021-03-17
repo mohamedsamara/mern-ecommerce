@@ -16,10 +16,6 @@ import Button from '../../components/Common/Button';
 import { CloseIcon } from '../../components/Common/Icon';
 
 class NavigationMenu extends React.PureComponent {
-  componentDidMount() {
-    this.props.fetchCategories();
-  }
-
   render() {
     const { isMenuOpen, categories, toggleMenu } = this.props;
 
@@ -41,7 +37,6 @@ class NavigationMenu extends React.PureComponent {
         <div className='menu-body'>
           <Container>
             <h3 className='menu-title'>Shop By Category</h3>
-
             <nav role='navigation'>
               <ul className='menu-list'>
                 {categories.map((link, index) => (
@@ -68,7 +63,7 @@ class NavigationMenu extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     isMenuOpen: state.navigation.isMenuOpen,
-    categories: state.category.categories
+    categories: state.category.storeCategories
   };
 };
 

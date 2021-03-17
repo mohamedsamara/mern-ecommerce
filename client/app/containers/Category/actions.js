@@ -10,6 +10,7 @@ import axios from 'axios';
 
 import {
   FETCH_CATEGORIES,
+  FETCH_STORE_CATEGORIES,
   FETCH_CATEGORY,
   CATEGORY_CHANGE,
   CATEGORY_EDIT_CHANGE,
@@ -61,10 +62,26 @@ export const categorySelect = value => {
 };
 
 // fetch store categories api
-export const fetchCategories = () => {
+export const fetchStoreCategories = () => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(`/api/category/list`);
+
+      dispatch({
+        type: FETCH_STORE_CATEGORIES,
+        payload: response.data.categories
+      });
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
+// fetch categories api
+export const fetchCategories = () => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(`/api/category`);
 
       dispatch({
         type: FETCH_CATEGORIES,
