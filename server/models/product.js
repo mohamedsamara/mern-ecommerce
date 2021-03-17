@@ -44,6 +44,10 @@ const ProductSchema = new Schema({
     type: Boolean,
     default: false
   },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   brand: {
     type: Schema.Types.ObjectId,
     ref: 'Brand',

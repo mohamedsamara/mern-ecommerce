@@ -9,6 +9,7 @@ import React from 'react';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
+import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 
 const EditProduct = props => {
@@ -17,7 +18,8 @@ const EditProduct = props => {
     productChange,
     formErrors,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    activateProduct
   } = props;
 
   const handleSubmit = event => {
@@ -52,6 +54,18 @@ const EditProduct = props => {
               value={product.description}
               onInputChange={(name, value) => {
                 productChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12'>
+            <Switch
+              id={`enable-product-${product._id}`}
+              name={'isActive'}
+              label={'Active?'}
+              checked={product?.isActive}
+              toggleCheckboxChange={value => {
+                productChange('isActive', value);
+                activateProduct(product._id, value);
               }}
             />
           </Col>

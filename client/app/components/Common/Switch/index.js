@@ -15,6 +15,14 @@ class Switch extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.checked !== this.props.checked) {
+      this.setState({
+        checked: this.props.checked
+      });
+    }
+  }
+
   _onChange(e) {
     const value = e.target.checked;
 
@@ -28,7 +36,7 @@ class Switch extends React.Component {
   }
 
   render() {
-    const { id, toggleCheckboxChange } = this.props;
+    const { id, label } = this.props;
     const { checked } = this.state;
 
     return (
@@ -37,11 +45,13 @@ class Switch extends React.Component {
           id={id}
           type={'checkbox'}
           className='switch-checkbox-input'
-          // value={label}
           checked={checked}
           onChange={e => this._onChange(e)}
         />
-        <label htmlFor={id} className='switch-label' />
+        <label htmlFor={id} className='switch-label'>
+          {label && <span className='switch-label-text'>{label} </span>}
+          <span className='switch-label-toggle'></span>
+        </label>
       </div>
     );
   }

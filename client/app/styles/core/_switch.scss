@@ -4,8 +4,16 @@
   }
 
   .switch-checkbox-input + .switch-label {
-    @include flex();
+    display: inline-flex;
     align-items: center;
+  }
+
+  .switch-checkbox-input + .switch-label .switch-label-text {
+    font-weight: $font-weight-bold-two;
+    margin-right: 10px;
+  }
+
+  .switch-checkbox-input + .switch-label .switch-label-toggle {
     justify-content: space-between;
     cursor: pointer;
     width: 40px;
@@ -16,7 +24,7 @@
     @include transition();
   }
 
-  .switch-checkbox-input + .switch-label::before {
+  .switch-checkbox-input + .switch-label .switch-label-toggle::before {
     content: '';
     position: absolute;
     top: 2px;
@@ -28,12 +36,12 @@
     @include transition();
   }
 
-  .switch-checkbox-input:checked + .switch-label::before {
+  .switch-checkbox-input:checked + .switch-label .switch-label-toggle::before {
     left: calc(100% - 2px);
     transform: translateX(-100%);
   }
 
-  .switch-checkbox-input:checked + .switch-label {
+  .switch-checkbox-input:checked + .switch-label .switch-label-toggle {
     background: $theme-green;
   }
 }

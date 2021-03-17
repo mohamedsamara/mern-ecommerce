@@ -328,6 +328,31 @@ export const updateProduct = () => {
   };
 };
 
+// activate product api
+export const activateProduct = (id, value) => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.put(`/api/product/${id}/active`, {
+        product: {
+          isActive: value
+        }
+      });
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      if (response.data.success === true) {
+        dispatch(success(successfulOptions));
+      }
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
 // delete product api
 export const deleteProduct = id => {
   return async (dispatch, getState) => {

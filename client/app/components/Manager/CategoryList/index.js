@@ -17,7 +17,7 @@ const CategoryList = props => {
     <div className='c-list'>
       {categories.map((category, index) => (
         <div key={index} className='mb-3 p-4 category-box'>
-          <div className='d-flex align-items-center justify-content-between mb-3'>
+          <div className='d-flex align-items-center justify-content-between mb-2'>
             <h4 className='mb-0'>{category.name}</h4>
             <Switch
               id={`enable-category-${category._id}`}

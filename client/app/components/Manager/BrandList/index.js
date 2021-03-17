@@ -17,7 +17,7 @@ const BrandList = props => {
     <div className='b-list'>
       {brands.map((brand, index) => (
         <div key={index} className='mb-3 p-4 brand-box'>
-          <div className='d-flex align-items-center justify-content-between mb-3'>
+          <div className='d-flex align-items-center justify-content-between mb-2'>
             <h4 className='mb-0'>{brand.name}</h4>
             <Switch
               id={`enable-brand-${brand._id}`}
