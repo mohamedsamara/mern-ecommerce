@@ -150,7 +150,7 @@ class Navigation extends React.PureComponent {
                       <div className='mini-brand'>
                         <MiniBrand
                           brands={brands}
-                          toggle={() => this.toggleBrand()}
+                          toggleBrand={() => this.toggleBrand()}
                         />
                       </div>
                     </DropdownMenu>

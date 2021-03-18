@@ -3,8 +3,10 @@ const router = express.Router();
 
 // Bring in Models & Helpers
 const Brand = require('../../models/brand');
+const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
+const store = require('../../helpers/store');
 
 router.post(
   '/add',
@@ -175,6 +177,12 @@ router.put(
       const brandId = req.params.id;
       const update = req.body.brand;
       const query = { _id: brandId };
+
+      // disable brand(brandId) products
+      if (!update.isActive) {
+        const products = await Product.find({ brand: brandId });
+        store.disableProducts(products);
+      }
 
       await Brand.findOneAndUpdate(query, update, {
         new: true

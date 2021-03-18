@@ -31,7 +31,7 @@ const DropdownConfirm = props => {
   );
 };
 
-DropdownConfirm.DropdownConfirm = {
+DropdownConfirm.defaultProps = {
   label: ''
 };
 
