@@ -38,6 +38,16 @@ class Navigation extends React.PureComponent {
     this.props.fetchStoreBrands();
   }
 
+  toggleBrand() {
+    this.props.fetchStoreBrands();
+    this.props.toggleBrand();
+  }
+
+  toggleMenu() {
+    this.props.fetchStoreCategories();
+    this.props.toggleMenu();
+  }
+
   render() {
     const {
       history,
@@ -50,8 +60,7 @@ class Navigation extends React.PureComponent {
       isCartOpen,
       isBrandOpen,
       toggleCart,
-      toggleMenu,
-      toggleBrand
+      toggleMenu
     } = this.props;
 
     return (
@@ -91,7 +100,7 @@ class Navigation extends React.PureComponent {
                   className='d-none d-md-block'
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
-                  onClick={toggleMenu}
+                  onClick={() => this.toggleMenu()}
                 />
                 <Link to='/'>
                   <h1 className='logo'>MERN Store</h1>
@@ -109,7 +118,7 @@ class Navigation extends React.PureComponent {
                 <Button
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
-                  onClick={toggleMenu}
+                  onClick={() => this.toggleMenu()}
                 />
                 <CartIcon cartItems={cartItems} onClick={toggleCart} />
               </div>
@@ -130,7 +139,7 @@ class Navigation extends React.PureComponent {
                   <Dropdown
                     nav
                     inNavbar
-                    toggle={toggleBrand}
+                    toggle={() => this.toggleBrand()}
                     isOpen={isBrandOpen}
                   >
                     <DropdownToggle nav>
@@ -139,7 +148,10 @@ class Navigation extends React.PureComponent {
                     </DropdownToggle>
                     <DropdownMenu right className='nav-brand-dropdown'>
                       <div className='mini-brand'>
-                        <MiniBrand brands={brands} toggleBrand={toggleBrand} />
+                        <MiniBrand
+                          brands={brands}
+                          toggleBrand={() => this.toggleBrand()}
+                        />
                       </div>
                     </DropdownMenu>
                   </Dropdown>

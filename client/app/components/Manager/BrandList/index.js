@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import Switch from '../../Common/Switch';
 
 const BrandList = props => {
-  const { brands, brandChange, activateBrand } = props;
+  const { brands, activateBrand } = props;
 
   return (
     <div className='b-list'>
@@ -20,6 +20,8 @@ const BrandList = props => {
           <div className='d-flex align-items-center justify-content-between mb-2'>
             <h4 className='mb-0'>{brand.name}</h4>
             <Switch
+              tooltip={brand.isActive}
+              tooltipContent={`Disabling ${brand.name} will also disable all ${brand.name} products.`}
               id={`enable-brand-${brand._id}`}
               name={'isActive'}
               checked={brand.isActive}

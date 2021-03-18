@@ -3,8 +3,10 @@ const router = express.Router();
 
 // Bring in Models & Helpers
 const Brand = require('../../models/brand');
+const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
+const store = require('../../helpers/store');
 
 router.post(
   '/add',
@@ -46,7 +48,9 @@ router.post(
 // fetch store brands api
 router.get('/list', async (req, res) => {
   try {
-    const brands = await Brand.find({}).populate('merchant', 'name');
+    const brands = await Brand.find({
+      isActive: true
+    }).populate('merchant', 'name');
 
     res.status(200).json({
       brands
@@ -173,6 +177,12 @@ router.put(
       const brandId = req.params.id;
       const update = req.body.brand;
       const query = { _id: brandId };
+
+      // disable brand(brandId) products
+      if (!update.isActive) {
+        const products = await Product.find({ brand: brandId });
+        store.disableProducts(products);
+      }
 
       await Brand.findOneAndUpdate(query, update, {
         new: true

@@ -6,6 +6,8 @@
 
 import React from 'react';
 
+import Tooltip from '../Tooltip';
+
 class Switch extends React.Component {
   constructor(props) {
     super(props);
@@ -36,11 +38,14 @@ class Switch extends React.Component {
   }
 
   render() {
-    const { id, label } = this.props;
+    const { id, label, tooltip, tooltipContent } = this.props;
     const { checked } = this.state;
 
+    const tooltipId = `tooltip-${id}`;
+
     return (
-      <div className='switch-checkbox'>
+      <div className='switch-checkbox' id={tooltipId}>
+        {tooltip && <Tooltip target={tooltipId}>{tooltipContent}</Tooltip>}
         <input
           id={id}
           type={'checkbox'}

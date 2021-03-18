@@ -20,6 +20,8 @@ const CategoryList = props => {
           <div className='d-flex align-items-center justify-content-between mb-2'>
             <h4 className='mb-0'>{category.name}</h4>
             <Switch
+              tooltip={category.isActive}
+              tooltipContent={`Disabling ${category.name} will also disable all ${category.name} products.`}
               id={`enable-category-${category._id}`}
               name={'isActive'}
               checked={category.isActive}
@@ -41,6 +43,3 @@ const CategoryList = props => {
 };
 
 export default CategoryList;
-
-{
-}

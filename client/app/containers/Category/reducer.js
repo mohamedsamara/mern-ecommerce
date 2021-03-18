@@ -6,6 +6,7 @@
 
 import {
   FETCH_CATEGORIES,
+  FETCH_STORE_CATEGORIES,
   FETCH_CATEGORY,
   CATEGORY_CHANGE,
   CATEGORY_EDIT_CHANGE,
@@ -19,6 +20,7 @@ import {
 
 const initialState = {
   categories: [],
+  storeCategories: [],
   category: {
     _id: ''
   },
@@ -38,6 +40,11 @@ const categoryReducer = (state = initialState, action) => {
       return {
         ...state,
         categories: action.payload
+      };
+    case FETCH_STORE_CATEGORIES:
+      return {
+        ...state,
+        storeCategories: action.payload
       };
     case FETCH_CATEGORY:
       return {

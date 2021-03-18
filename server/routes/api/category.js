@@ -6,6 +6,7 @@ const passport = require('passport');
 const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
+const store = require('../../helpers/store');
 
 router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
   const name = req.body.name;
@@ -41,8 +42,22 @@ router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
   });
 });
 
-// fetch all categories api
+// fetch store categories api
 router.get('/list', (req, res) => {
+  Category.find({ isActive: true }, (err, data) => {
+    if (err) {
+      return res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+    res.status(200).json({
+      categories: data
+    });
+  });
+});
+
+// fetch categories api
+router.get('/', (req, res) => {
   Category.find({}, (err, data) => {
     if (err) {
       return res.status(400).json({
@@ -111,6 +126,16 @@ router.put(
       const update = req.body.category;
       const query = { _id: categoryId };
 
+      // disable category(categoryId) products
+      if (!update.isActive) {
+        const categoryDoc = await Category.findOne(
+          { _id: categoryId, isActive: true },
+          'products -_id'
+        ).populate('products');
+
+        store.disableProducts(categoryDoc.products);
+      }
+
       await Category.findOneAndUpdate(query, update, {
         new: true
       });
@@ -147,4 +172,5 @@ router.delete(
     }
   }
 );
+
 module.exports = router;
