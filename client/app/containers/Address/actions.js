@@ -116,27 +116,20 @@ export const addAddress = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        fullName:'required',
-        phoneNumber:'required',
-        email:'required',
-        cityName:'required',
-        stateName:'required',
         address:'required',
-        pinCode:'required|min:6'
+        state:'required',
+        country:'required',
+        zipCode:'required|min:6'
       };
 
       const newAddress = getState().address.addressFormData;
       const isDefault = getState().address.isDefault;
 
       const { isValid, errors } = allFieldsValidation(newAddress, rules, {
-        'required.fullName': 'Full Name is required.',
-        'required.phoneNumber': 'Mobile Number is required.',
-        'required.email': 'Email Id is required.',
-        'required.cityName': 'City/Twon is required.',
-        'required.stateName': 'State/District is required.',
         'required.address': 'Flat / House No., Floor, Building, Street is required.',
-        'required.pinCode': 'pincode is required.',
-        'min.pinCode': 'Pincode must be at least 6 characters.'
+        'required.state': 'State is required.',
+        'required.country': 'Country is required.',
+        'required.pinCode': 'zipcode is required.'
       });
 
       if (!isValid) {
@@ -176,27 +169,20 @@ export const updateAddress = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        fullName:'required',
-        phoneNumber:'required',
-        email:'required',
-        cityName:'required',
-        stateName:'required',
+        country:'required',
+        state:'required',
         address:'required',
-        pinCode:'required|min:6'
+        zipCode:'required'
       };
 
       const newAddress = getState().address.address;
       const isDefault = getState().address.isDefault;
 
       const { isValid, errors } = allFieldsValidation(newAddress, rules, {
-        'required.fullName': 'Full Name is required.',
-        'required.phoneNumber': 'Mobile Number is required.',
-        'required.email': 'Email Id is required.',
-        'required.cityName': 'City/Twon is required.',
-        'required.stateName': 'State/District is required.',
+        'required.country': 'Country is required.',
+        'required.state': 'State is required.',
         'required.address': 'Flat / House No., Floor, Building, Street is required.',
-        'required.pinCode': 'pincode is required.',
-        'min.pinCode': 'Pincode must be at least 6 characters.'
+        'required.zipCode': 'zipcode is required.'
       });
 
       if (!isValid) {

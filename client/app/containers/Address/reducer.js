@@ -24,23 +24,17 @@ import {
 const initialState = {
   addresses:[],
   addressFormData: {
-    fullName:'',
-    phoneNumber:'',
-    email:'',
-    cityName:'',
-    stateName:'',
     address:'',
-    pinCode:'',
+    state:'',
+    country:'',
+    zipCode:'',
     landMark:''
   },
   address: {
-    fullName:'',
-    phoneNumber:'',
-    email:'',
-    cityName:'',
-    stateName:'',
     address:'',
-    pinCode:'',
+    state:'',
+    country:'',
+    zipCode:'',
     landMark:''
   },
   isDefault: false,
@@ -105,13 +99,10 @@ const addressReducer = (state = initialState, action) => {
       return {
         ...state,
         addressFormData: {
-          fullName:'',
-          phoneNumber:'',
-          email:'',
-          cityName:'',
-          stateName:'',
           address:'',
-          pinCode:'',
+          state:'',
+          country:'',
+          zipCode:'',
           landMark:''
         },
         formErrors: {}
