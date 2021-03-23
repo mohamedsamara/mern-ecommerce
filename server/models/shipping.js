@@ -1,26 +1,23 @@
 const Mongoose = require('mongoose');
 const { Schema } = Mongoose;
 
-// Order Schema
+// Shipping Schema
 const ShippingSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  address:{
+  address: {
     type: String
   },
-  state:{
+  state: {
     type: String
   },
-  country:{
+  country: {
     type: String
   },
-  landMark:{
+  zipCode: {
     type: String
-  },
-  zipCode:{
-        type: String
   },
   isDefault: {
     type: Boolean,
