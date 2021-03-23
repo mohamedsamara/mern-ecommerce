@@ -18,8 +18,6 @@ import {
   RESET_ADDRESS,
   ADD_ADDRESS,
   REMOVE_ADDRESS,
-  DEFAULT_CHANGE,
-  DEFAULT_EDIT_CHANGE,
   SET_ADDRESS_LOADING,
   ADDRESS_SELECT,
   FETCH_ADDRESSES_SELECT
@@ -54,19 +52,6 @@ export const handleAddressSelect = value => {
   };
 };
 
-export const defaultChange = () => {
-    return {
-      type: DEFAULT_CHANGE
-    }
-}
-
-export const defaultEditChange = value => {
-    return {
-      type: DEFAULT_EDIT_CHANGE,
-      payload: value
-    }
-}
-
 export const setAddressLoading = value => {
   return {
     type: SET_ADDRESS_LOADING,
@@ -78,7 +63,7 @@ export const fetchAddresses = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(setAddressLoading(true));
-      const response = await axios.get(`/api/address/list`);
+      const response = await axios.get(`/api/address`);
       dispatch({ type: FETCH_ADDRESSES, payload: response.data.addresses });
     } catch (error) {
       handleError(error, dispatch);
@@ -88,19 +73,11 @@ export const fetchAddresses = () => {
   };
 };
 
-
 // fetch address api
 export const fetchAddress = addressId => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(`/api/address/${addressId}`);
-
-      dispatch({
-        type: DEFAULT_EDIT_CHANGE,
-        payload: response.data.address.isDefault
-      });
-
-      delete response.data.address.isDefault
 
       dispatch({
         type: FETCH_ADDRESS,
@@ -116,20 +93,22 @@ export const addAddress = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        address:'required',
-        state:'required',
-        country:'required',
-        zipCode:'required|min:6'
+        address: 'required',
+        city: 'required',
+        state: 'required',
+        country: 'required',
+        zipCode: 'required|min:5'
       };
 
       const newAddress = getState().address.addressFormData;
       const isDefault = getState().address.isDefault;
 
       const { isValid, errors } = allFieldsValidation(newAddress, rules, {
-        'required.address': 'Flat / House No., Floor, Building, Street is required.',
+        'required.address': 'Address is required.',
+        'required.city': 'City is required.',
         'required.state': 'State is required.',
         'required.country': 'Country is required.',
-        'required.pinCode': 'zipcode is required.'
+        'required.zipCode': 'Zipcode is required.'
       });
 
       if (!isValid) {
@@ -139,7 +118,7 @@ export const addAddress = () => {
       const address = {
         isDefault,
         ...newAddress
-      }
+      };
 
       const response = await axios.post(`/api/address/add`, address);
 
@@ -169,32 +148,34 @@ export const updateAddress = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        country:'required',
-        state:'required',
-        address:'required',
-        zipCode:'required'
+        country: 'required',
+        city: 'required',
+        state: 'required',
+        address: 'required',
+        zipCode: 'required'
       };
 
       const newAddress = getState().address.address;
-      const isDefault = getState().address.isDefault;
 
       const { isValid, errors } = allFieldsValidation(newAddress, rules, {
-        'required.country': 'Country is required.',
+        'required.address': 'Address is required.',
+        'required.city': 'City is required.',
         'required.state': 'State is required.',
-        'required.address': 'Flat / House No., Floor, Building, Street is required.',
-        'required.zipCode': 'zipcode is required.'
+        'required.country': 'Country is required.',
+        'required.zipCode': 'Zipcode is required.'
       });
 
       if (!isValid) {
-        return dispatch({ type: SET_ADDRESS_FORM_EDIT_ERRORS, payload: errors });
+        return dispatch({
+          type: SET_ADDRESS_FORM_EDIT_ERRORS,
+          payload: errors
+        });
       }
 
-      const updateAddress = {
-        isDefault,
-        ...newAddress
-      }
-      console.log(isDefault,getState().address.isDefault,newAddress);
-      const response = await axios.put(`/api/address/${updateAddress._id}`, updateAddress);
+      const response = await axios.put(
+        `/api/address/${newAddress._id}`,
+        newAddress
+      );
 
       const successfulOptions = {
         title: `${response.data.message}`,

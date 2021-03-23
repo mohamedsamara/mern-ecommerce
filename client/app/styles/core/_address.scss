@@ -11,33 +11,19 @@
         @include transition();
       }
 
+      .address-icon {
+        width: 35px;
+        height: 35px;
+
+        @include media-breakpoint-up(lg) {
+          width: 50px;
+          height: 50px;
+        }
+      }
+
       .address-desc {
         @include text-ellipsis(2);
       }
-    }
-  }
-}
-
-.address-list {
-  .address-box {
-    height: 100%;
-    padding: 10px;
-    border: $border-default;
-    border-radius: $border-radius-default;
-    @include transition();
-
-    .address-link {
-      display: block;
-    }
-
-    &:hover {
-      background-color: $secondary-bg;
-      border-color: $border-hover-color;
-      @include transition();
-    }
-
-    .address-desc {
-      @include text-ellipsis(2);
     }
   }
 }

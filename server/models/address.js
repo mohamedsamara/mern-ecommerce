@@ -1,26 +1,26 @@
 const Mongoose = require('mongoose');
 const { Schema } = Mongoose;
 
-// Order Schema
-const ShippingSchema = new Schema({
+// Address Schema
+const AddressSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  address:{
+  address: {
     type: String
   },
-  state:{
+  city: {
     type: String
   },
-  country:{
+  state: {
     type: String
   },
-  landMark:{
+  country: {
     type: String
   },
-  zipCode:{
-        type: String
+  zipCode: {
+    type: String
   },
   isDefault: {
     type: Boolean,
@@ -33,4 +33,4 @@ const ShippingSchema = new Schema({
   }
 });
 
-module.exports = Mongoose.model('Shipping', ShippingSchema);
+module.exports = Mongoose.model('Address', AddressSchema);

@@ -14,32 +14,29 @@ import {
   RESET_ADDRESS,
   ADD_ADDRESS,
   REMOVE_ADDRESS,
-  DEFAULT_CHANGE,
-  DEFAULT_EDIT_CHANGE,
-  SET_ADDRESS_LOADING,
-  ADDRESS_SELECT,
-  FETCH_ADDRESSES_SELECT
+  SET_ADDRESS_LOADING
 } from './constants';
 
 const initialState = {
-  addresses:[],
+  addresses: [],
   addressFormData: {
-    address:'',
-    state:'',
-    country:'',
-    zipCode:'',
-    landMark:''
+    address: '',
+    city: '',
+    state: '',
+    country: '',
+    zipCode: ''
   },
   address: {
-    address:'',
-    state:'',
-    country:'',
-    zipCode:'',
-    landMark:''
+    _id: '',
+    address: '',
+    city: '',
+    state: '',
+    country: '',
+    zipCode: '',
+    isDefault: false
   },
-  isDefault: false,
   formErrors: {},
-  editFormErrors: {},
+  editFormErrors: {}
 };
 
 const addressReducer = (state = initialState, action) => {
@@ -52,13 +49,13 @@ const addressReducer = (state = initialState, action) => {
     case FETCH_ADDRESS:
       return {
         ...state,
-        address:action.payload,
+        address: action.payload,
         editFormErrors: {}
       };
     case ADD_ADDRESS:
       return {
         ...state,
-        addresses:[...state.addresses,action.payload]
+        addresses: [...state.addresses, action.payload]
       };
     case REMOVE_ADDRESS:
       const index = state.addresses.findIndex(b => b._id === action.payload);
@@ -99,18 +96,15 @@ const addressReducer = (state = initialState, action) => {
       return {
         ...state,
         addressFormData: {
-          address:'',
-          state:'',
-          country:'',
-          zipCode:'',
-          landMark:''
+          address: '',
+          city: '',
+          state: '',
+          country: '',
+          zipCode: '',
+          isDefault: false
         },
         formErrors: {}
       };
-    case DEFAULT_CHANGE:
-      return { ...state, isDefault: !state.isDefault };
-    case DEFAULT_EDIT_CHANGE:
-      return { ...state, isDefault: action.payload }
     case SET_ADDRESS_LOADING:
       return {
         ...state,
