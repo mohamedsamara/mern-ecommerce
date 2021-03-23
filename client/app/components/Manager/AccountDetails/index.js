@@ -38,7 +38,7 @@ const AccountDetails = props => {
       </div>
       <form onSubmit={handleSubmit}>
         <Row>
-          <Col xs='12' md='12'>
+          <Col xs='12' md='6'>
             <Input
               type={'text'}
               label={'First Name'}
@@ -50,13 +50,37 @@ const AccountDetails = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
+          <Col xs='12' md='6'>
             <Input
               type={'text'}
               label={'Last Name'}
               name={'lastName'}
               placeholder={'Please Enter Your Last Name'}
               value={user.lastName ? user.lastName : ''}
+              onInputChange={(name, value) => {
+                accountChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='6'>
+            <Input
+              type={'text'}
+              label={'Email'}
+              name={'email'}
+              placeholder={'Please Enter Your Email'}
+              value={user.email ? user.email : ''}
+              onInputChange={(name, value) => {
+                accountChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='6'>
+            <Input
+              type={'text'}
+              label={'Phone Number'}
+              name={'phoneNumber'}
+              placeholder={'Please Enter Your Phone Number'}
+              value={user.phoneNumber ? user.phoneNumber : ''}
               onInputChange={(name, value) => {
                 accountChange(name, value);
               }}

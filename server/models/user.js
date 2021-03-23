@@ -10,6 +10,9 @@ const UserSchema = new Schema({
       return this.provider !== 'email' ? false : true;
     }
   },
+  phoneNumber:{
+    type: String
+  },
   firstName: {
     type: String
   },

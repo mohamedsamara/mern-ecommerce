@@ -24,78 +24,13 @@ const EditAddress = props => {
     <div className='edit-address'>
       <form onSubmit={handleSubmit} noValidate>
         <Row>
-          <Col xs='12' lg='6'>
-            <Input
-              type={'text'}
-              error={formErrors['fullName']}
-              label={'Full Name'}
-              name={'fullName'}
-              placeholder={'Please Enter Your Full Name'}
-              value={address.fullName}
-              onInputChange={(name, value) => {
-                addressChange(name, value);
-              }}
-            />
-          </Col>
-          <Col xs='12' lg='6'>
-            <Input
-              type={'text'}
-              error={formErrors['phoneNumber']}
-              label={'Mobile Number'}
-              name={'phoneNumber'}
-              placeholder={'Please Enter Your Mobile Number'}
-              value={address.phoneNumber}
-              onInputChange={(name, value) => {
-                addressChange(name, value);
-              }}
-            />
-          </Col>
-          <Col xs='12' md='12'>
-            <Input
-              type={'text'}
-              error={formErrors['email']}
-              label={'Email'}
-              name={'email'}
-              placeholder={'Please Enter Your Email'}
-              value={address.email}
-              onInputChange={(name, value) => {
-                addressChange(name, value);
-              }}
-            />
-          </Col>
-          <Col xs='12' lg='6'>
-            <Input
-              type={'text'}
-              error={formErrors['cityName']}
-              label={'City/Town'}
-              name={'cityName'}
-              placeholder={'Please Enter Your City/Town'}
-              value={address.cityName}
-              onInputChange={(name, value) => {
-                addressChange(name, value);
-              }}
-            />
-          </Col>
-          <Col xs='12' lg='6'>
-            <Input
-              type={'text'}
-              error={formErrors['stateName']}
-              label={'State/province/district'}
-              name={'stateName'}
-              placeholder={'Please Enter Your State/province/district'}
-              value={address.stateName}
-              onInputChange={(name, value) => {
-                addressChange(name, value);
-              }}
-            />
-          </Col>
           <Col xs='12' md='12'>
             <Input
               type={'text'}
               error={formErrors['address']}
-              label={'Address example (preferred): Flat / House No., Floor, Building, Street'}
+              label={'Address example (preferred): Flat / House No., Floor, Building, Street, City, etc'}
               name={'address'}
-              placeholder={'Address example (preferred): Flat / House No., Floor, Building, Street'}
+              placeholder={'Address example (preferred): Flat / House No., Floor, Building, Street, City, etc'}
               value={address.address}
               onInputChange={(name, value) => {
                 addressChange(name, value);
@@ -105,11 +40,37 @@ const EditAddress = props => {
           <Col xs='12' lg='6'>
             <Input
               type={'text'}
-              error={formErrors['pinCode']}
-              label={'Pincode'}
-              name={'pinCode'}
-              placeholder={'Please Enter Your Pincode'}
-              value={address.pinCode}
+              error={formErrors['state']}
+              label={'State/province/district'}
+              name={'state'}
+              placeholder={'Please Enter Your State/province/district'}
+              value={address.state}
+              onInputChange={(name, value) => {
+                addressChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' lg='6'>
+            <Input
+              type={'text'}
+              error={formErrors['country']}
+              label={'Country'}
+              name={'country'}
+              placeholder={'Please Enter Your Country'}
+              value={address.country}
+              onInputChange={(name, value) => {
+                addressChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' lg='6'>
+            <Input
+              type={'text'}
+              error={formErrors['zipCode']}
+              label={'Zipcode'}
+              name={'zipCode'}
+              placeholder={'Please Enter Your Zipcode'}
+              value={address.zipCode}
               onInputChange={(name, value) => {
                 addressChange(name, value);
               }}

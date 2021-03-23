@@ -3,25 +3,17 @@ const router = express.Router();
 const passport = require('passport');
 
 // Bring in Models & Helpers
-const Address = require('../../models/address');
+const Shipping = require('../../models/shipping');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 
 router.post('/add', auth, (req, res) => {
 
   const user = req.user;
-  const phoneNumber = req.body.phoneNumber;
-  const email = req.body.email;
 
-  if (!email || !phoneNumber || !user._id) {
-    return res
-      .status(400)
-      .json({ error: 'You must enter email & phoneNumber.' });
-  }
+  const shipping = new Shipping(Object.assign(req.body,{user:user._id}));
 
-  const address = new Address(Object.assign(req.body,{user:user._id}));
-
-  address.save((err, data) => {
+  shipping.save((err, data) => {
     if (err) {
       return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
@@ -36,9 +28,9 @@ router.post('/add', auth, (req, res) => {
   });
 });
 
-// fetch all address api
+// fetch all Shipping api
 router.get('/list',  auth, (req, res) => {
-  Address.find({user:req.user._id}, (err, data) => {
+  Shipping.find({user:req.user._id}, (err, data) => {
     if (err) {
       return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
@@ -53,18 +45,18 @@ router.get('/list',  auth, (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const addressId = req.params.id;
+    const ShippingId = req.params.id;
 
-    const addressDoc = await Address.findOne({ _id: addressId });
+    const ShippingDoc = await Shipping.findOne({ _id: ShippingId });
 
-    if (!addressDoc) {
+    if (!ShippingDoc) {
       res.status(404).json({
-        message: `Cannot find address with the id: ${addressId}.`
+        message: `Cannot find Address with the id: ${ShippingId}.`
       });
     }
 
     res.status(200).json({
-      address: addressDoc
+      address: ShippingDoc
     });
   } catch (error) {
     res.status(400).json({
@@ -77,11 +69,11 @@ router.put(
   '/:id',
   async (req, res) => {
     try {
-      const addressId = req.params.id;
+      const ShippingId = req.params.id;
       const update = req.body;
-      const query = { _id: addressId };
+      const query = { _id: ShippingId };
 
-      await Address.findOneAndUpdate(query, update, {
+      await Shipping.findOneAndUpdate(query, update, {
         new: true
       });
 
@@ -100,7 +92,7 @@ router.put(
 router.delete(
   '/delete/:id',
   (req, res) => {
-    Address.deleteOne({ _id: req.params.id }, (err, data) => {
+    Shipping.deleteOne({ _id: req.params.id }, (err, data) => {
       if (err) {
         return res.status(400).json({
           error: 'Your request could not be processed. Please try again.'
@@ -110,7 +102,7 @@ router.delete(
       res.status(200).json({
         success: true,
         message: `Address has been deleted successfully!`,
-        brand: data
+        address: data
       });
     });
   }

@@ -20,9 +20,8 @@ const AddressList = props => {
           className='a-block'
         >
           <div className='mb-3 p-4 address-box'>
-            <h4>{address.fullName}</h4>
-            <h4>{address.phoneNumber}</h4>
-            <p className='address-desc mb-2'>{address.address},{address.landMark},{address.cityName},{address.stateName},{address.pinCode}</p>
+            <p className='address-desc mb-2'><b>{address.isDefault? 'Default Delivery Address : ': null}</b>{address.address},{address.state},{address.country},{address.zipCode}</p>
+            <p className='address-desc mb-2'><b>Landmark : </b>{address.landMark}</p>
           </div>
         </Link>
       ))}
