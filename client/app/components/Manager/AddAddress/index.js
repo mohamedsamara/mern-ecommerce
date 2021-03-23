@@ -13,14 +13,7 @@ import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
 const AddAddress = props => {
-  const {
-    addressFormData,
-    formErrors,
-    addressChange,
-    addAddress,
-    isDefault,
-    defaultChange
-  } = props;
+  const { addressFormData, formErrors, addressChange, addAddress } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -35,10 +28,23 @@ const AddAddress = props => {
             <Input
               type={'text'}
               error={formErrors['address']}
-              label={'Address example (preferred): Flat / House No., Floor, Building, Street, City, etc'}
+              label={'Address'}
               name={'address'}
-              placeholder={'Address example (preferred): Flat / House No., Floor, Building, Street, City, etc'}
+              placeholder={'Address: Street, House No / Apartment No'}
               value={addressFormData.address}
+              onInputChange={(name, value) => {
+                addressChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12'>
+            <Input
+              type={'text'}
+              error={formErrors['city']}
+              label={'City'}
+              name={'city'}
+              placeholder={'City'}
+              value={addressFormData.city}
               onInputChange={(name, value) => {
                 addressChange(name, value);
               }}
@@ -48,9 +54,9 @@ const AddAddress = props => {
             <Input
               type={'text'}
               error={formErrors['state']}
-              label={'State/province/district'}
+              label={'State'}
               name={'state'}
-              placeholder={'Please Enter Your State/province/district'}
+              placeholder={'State'}
               value={addressFormData.state}
               onInputChange={(name, value) => {
                 addressChange(name, value);
@@ -64,7 +70,7 @@ const AddAddress = props => {
               label={'Country'}
               name={'country'}
               placeholder={'Please Enter Your country'}
-              value={addressFormData.city}
+              value={addressFormData.country}
               onInputChange={(name, value) => {
                 addressChange(name, value);
               }}
@@ -83,26 +89,16 @@ const AddAddress = props => {
               }}
             />
           </Col>
-          <Col xs='12' lg='6'>
-            <Input
-              type={'text'}
-              error={formErrors['landMark']}
-              label={'Landmark'}
-              name={'landMark'}
-              placeholder={'Please Enter Your Landmark'}
-              value={addressFormData.landMark}
-              onInputChange={(name, value) => {
+          <Col xs='12' md='12'>
+            <Checkbox
+              id={'default'}
+              label={'As the Default'}
+              name={'isDefault'}
+              value={addressFormData.isDefault}
+              toggleCheckboxChange={(name, value) => {
                 addressChange(name, value);
               }}
             />
-          </Col>
-          <Col xs='12' md='12'>
-          <Checkbox
-            id={'default'}
-            label={'As the Default'}
-            checked={isDefault}
-            toggleCheckboxChange={defaultChange}
-          />
           </Col>
         </Row>
         <hr />

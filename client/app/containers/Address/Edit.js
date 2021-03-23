@@ -33,7 +33,6 @@ class Edit extends React.PureComponent {
       address,
       formErrors,
       addressEditChange,
-      isDefault,
       defaultChange,
       updateAddress,
       deleteAddress
@@ -52,7 +51,6 @@ class Edit extends React.PureComponent {
             formErrors={formErrors}
             updateAddress={updateAddress}
             deleteAddress={deleteAddress}
-            isDefault={isDefault}
             defaultChange={defaultChange}
           />
         ) : (
@@ -66,7 +64,6 @@ class Edit extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     address: state.address.address,
-    isDefault: state.address.isDefault,
     formErrors: state.address.editFormErrors
   };
 };

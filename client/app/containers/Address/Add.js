@@ -20,9 +20,7 @@ class Add extends React.PureComponent {
       addressFormData,
       formErrors,
       addressChange,
-      addAddress,
-      isDefault,
-      defaultChange
+      addAddress
     } = this.props;
 
     return (
@@ -36,8 +34,6 @@ class Add extends React.PureComponent {
           formErrors={formErrors}
           addressChange={addressChange}
           addAddress={addAddress}
-          isDefault={isDefault}
-          defaultChange={defaultChange}
         />
       </SubPage>
     );
@@ -47,7 +43,6 @@ class Add extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     addressFormData: state.address.addressFormData,
-    isDefault: state.address.isDefault,
     formErrors: state.address.formErrors
   };
 };

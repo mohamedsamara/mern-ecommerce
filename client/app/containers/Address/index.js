@@ -18,8 +18,6 @@ import Page404 from '../../components/Common/Page404';
 
 class Address extends React.PureComponent {
   render() {
-    const { user } = this.props;
-
     return (
       <div className='address-dashboard'>
         <Switch>

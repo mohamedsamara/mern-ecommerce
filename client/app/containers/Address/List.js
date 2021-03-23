@@ -12,6 +12,7 @@ import actions from '../../actions';
 
 import AddressList from '../../components/Manager/AddressList';
 import SubPage from '../../components/Manager/SubPage';
+import NotFound from '../../components/Common/NotFound';
 
 class List extends React.PureComponent {
   componentDidMount() {
@@ -28,7 +29,11 @@ class List extends React.PureComponent {
           actionTitle={'Add'}
           handleAction={() => history.push('/dashboard/address/add')}
         >
-          <AddressList addresses={addresses} />
+          {addresses.length > 0 ? (
+            <AddressList addresses={addresses} />
+          ) : (
+            <NotFound message='No Addresses Found!' />
+          )}
         </SubPage>
       </>
     );

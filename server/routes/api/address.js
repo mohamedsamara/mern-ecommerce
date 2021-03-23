@@ -1,19 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
 
 // Bring in Models & Helpers
-const Shipping = require('../../models/shipping');
+const Address = require('../../models/address');
 const auth = require('../../middleware/auth');
-const role = require('../../middleware/role');
 
 router.post('/add', auth, (req, res) => {
-
   const user = req.user;
 
-  const shipping = new Shipping(Object.assign(req.body,{user:user._id}));
+  const address = new Address(Object.assign(req.body, { user: user._id }));
 
-  shipping.save((err, data) => {
+  address.save((err, data) => {
     if (err) {
       return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
@@ -28,9 +25,9 @@ router.post('/add', auth, (req, res) => {
   });
 });
 
-// fetch all Shipping api
-router.get('/list',  auth, (req, res) => {
-  Shipping.find({user:req.user._id}, (err, data) => {
+// fetch all addresses api
+router.get('/', auth, (req, res) => {
+  Address.find({ user: req.user._id }, (err, data) => {
     if (err) {
       return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
@@ -45,18 +42,18 @@ router.get('/list',  auth, (req, res) => {
 
 router.get('/:id', async (req, res) => {
   try {
-    const ShippingId = req.params.id;
+    const addressId = req.params.id;
 
-    const ShippingDoc = await Shipping.findOne({ _id: ShippingId });
+    const addressDoc = await Address.findOne({ _id: addressId });
 
-    if (!ShippingDoc) {
+    if (!addressDoc) {
       res.status(404).json({
-        message: `Cannot find Address with the id: ${ShippingId}.`
+        message: `Cannot find Address with the id: ${addressId}.`
       });
     }
 
     res.status(200).json({
-      address: ShippingDoc
+      address: addressDoc
     });
   } catch (error) {
     res.status(400).json({
@@ -65,47 +62,41 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put(
-  '/:id',
-  async (req, res) => {
-    try {
-      const ShippingId = req.params.id;
-      const update = req.body;
-      const query = { _id: ShippingId };
+router.put('/:id', async (req, res) => {
+  try {
+    const addressId = req.params.id;
+    const update = req.body;
+    const query = { _id: addressId };
 
-      await Shipping.findOneAndUpdate(query, update, {
-        new: true
-      });
+    await Address.findOneAndUpdate(query, update, {
+      new: true
+    });
 
-      res.status(200).json({
-        success: true,
-        message: 'Address has been updated successfully!'
-      });
-    } catch (error) {
-      res.status(400).json({
+    res.status(200).json({
+      success: true,
+      message: 'Address has been updated successfully!'
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+router.delete('/delete/:id', (req, res) => {
+  Address.deleteOne({ _id: req.params.id }, (err, data) => {
+    if (err) {
+      return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
-  }
-);
 
-router.delete(
-  '/delete/:id',
-  (req, res) => {
-    Shipping.deleteOne({ _id: req.params.id }, (err, data) => {
-      if (err) {
-        return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
-        });
-      }
-
-      res.status(200).json({
-        success: true,
-        message: `Address has been deleted successfully!`,
-        address: data
-      });
+    res.status(200).json({
+      success: true,
+      message: `Address has been deleted successfully!`,
+      address: data
     });
-  }
-);
+  });
+});
 
 module.exports = router;

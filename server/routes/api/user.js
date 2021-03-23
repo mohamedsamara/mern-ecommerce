@@ -50,8 +50,6 @@ router.get('/', auth, async (req, res) => {
       user: userDoc
     });
   } catch (error) {
-    console.log(error);
-
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
