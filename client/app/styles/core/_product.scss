@@ -104,6 +104,16 @@
     height: 100%;
   }
 
+  .review-container {
+    background-color: $white;
+    padding: 20px;
+    box-shadow: $primary-box-shadow;
+    border-radius: $border-radius-default;
+    @include flex();
+    flex-direction: column;
+    height: 100%;
+  }
+
   .item-box {
     .item-name {
       font-size: $font-size-huge !important;

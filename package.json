@@ -62,6 +62,7 @@
     "react-dom": "^16.8.6",
     "react-multi-carousel": "^2.5.5",
     "react-notification-system-redux": "^2.0.0",
+	"react-rating-stars-component": "^2.2.0",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",
     "react-select": "^3.0.4",
