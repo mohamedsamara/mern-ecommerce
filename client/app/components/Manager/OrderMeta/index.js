@@ -46,12 +46,13 @@ const OrderMeta = props => {
           </Row>
         </Col>
         <Col xs='12' md='4' className='text-left text-md-right'>
-          <Button
+          {order.products.filter(i=> i.status =='Delivered').length <1?
+          (<Button
             id='CancelOrderItemPopover'
             size='sm'
             text='Cancel Order'
             onClick={cancelOrder}
-          />
+          />):('')}
         </Col>
       </Row>
     </div>

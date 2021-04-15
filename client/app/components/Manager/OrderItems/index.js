@@ -32,6 +32,27 @@ const OrderItems = props => {
     );
   };
 
+  const reviewContent = item => {
+    return (
+      <Link
+        to={{pathname: `/product/${item.product.slug}/add-review`,
+            state: { prevPath: location.pathname,
+            productId: item.product._id,
+            slug:item.product.slug
+          }}}
+        className='default-link'
+      >
+        <Button
+          variant='primary'
+          id='ReviewOrderItem'
+          size='sm'
+          text='Reivew Product'
+          role='menuitem'
+        />
+      </Link>
+    );
+  };
+
   return (
     <div className='order-items pt-3'>
       <h2>Order Items</h2>
@@ -104,16 +125,17 @@ const OrderItems = props => {
                   </div>
                 </div>
               </div>
-
-              {item.product &&
-                item.status !== 'Cancelled' &&
-                order.products.length !== 1 && (
+              {item.product && item.status == 'Delivered' ?
+              (<div className='text-right mt-2 mt-md-0'>
+                {reviewContent(item)}
+                </div>):
+                (item.status !== 'Cancelled' && order.products.length !== 1 && (
                   <div className='text-right mt-2 mt-md-0'>
                     <DropdownConfirm label='Cancel Item'>
                       {renderPopoverContent(item)}
                     </DropdownConfirm>
                   </div>
-                )}
+                ))}
             </div>
           </Col>
         ))}

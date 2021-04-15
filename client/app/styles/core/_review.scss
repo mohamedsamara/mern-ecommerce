@@ -1,0 +1,104 @@
+.review-dashboard {
+  .r-list {
+    .review-box {
+      height: 100%;
+      border-radius: $border-radius-default;
+      box-shadow: $secondary-box-shadow;
+      @include transition();
+      background-color: $white;
+
+      &:hover {
+        background-color: $secondary-bg;
+        @include transition();
+      }
+
+      .review-icon {
+        width: 35px;
+        height: 35px;
+
+        @include media-breakpoint-up(lg) {
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      .review-desc {
+        @include text-ellipsis(2);
+      }
+    }
+  }
+}
+
+.review-page {
+  .main {
+    background-color: $theme-white;
+  }
+}
+
+.heading {
+	font-size: 25px;
+	margin-right: 25px;
+}
+.fa {
+	font-size: 25px;
+}
+.checked {
+	color: orange;
+}
+.side {
+	float: left;
+	width: 15%;
+	margin-top: 10px;
+}
+.middle {
+	margin-top: 10px;
+	float: left;
+	width: 70%;
+}
+.right {
+	text-align: right;
+}
+.row {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+.bar-container {
+	width: 100%;
+	background-color: #f1f1f1;
+	text-align: center;
+	color: white;
+}
+.bar-5 {
+	height: 16px;
+	background-color: #4CAF50;
+}
+.bar-4 {
+	height: 16px;
+	background-color: #2196F3;
+}
+.bar-3 {
+	height: 16px;
+	background-color: #00bcd4;
+}
+.bar-2 {
+	height: 16px;
+	background-color: #ff9800;
+}
+.bar-1 {
+	height: 16px;
+	background-color: #f44336;
+}
+@media (max-width: 400px) {
+	.side {
+		width: 100%;
+	}
+	.middle {
+		width: 100%;
+	}
+	.right {
+		display: none;
+	}
+}
