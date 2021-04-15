@@ -23,12 +23,7 @@ import {
   REMOVE_PRODUCT,
   PRODUCT_SELECT,
   FETCH_PRODUCTS_SELECT,
-  SET_PRODUCTS_LOADING,
-  ADD_REVIEW,
-  FETCH_REVIEWS,
-  REVIEW_CHANGE,
-  RESET_REVIEW,
-  SET_REVIEW_FORM_ERRORS
+  SET_PRODUCTS_LOADING
 } from './constants';
 
 import { RESET_BRAND } from '../Brand/constants';
@@ -325,7 +320,7 @@ export const updateProduct = () => {
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
 
-        //dispatch(goBack());
+        dispatch(goBack());
       }
     } catch (error) {
       handleError(error, dispatch);
@@ -378,135 +373,6 @@ export const deleteProduct = id => {
         });
         dispatch(goBack());
       }
-    } catch (error) {
-      handleError(error, dispatch);
-    }
-  };
-};
-
-
-/*
-Product Review Actions
-*/
-
-export const reviewChange = (name, value) => {
-  let formData = {};
-  formData[name] = value;
-  return {
-    type: REVIEW_CHANGE,
-    payload: formData
-  };
-};
-
-
-export const addReview = (productId) => {
-  return async (dispatch, getState) => {
-    try {
-      const rules = {
-        title: 'required|min:6',
-        review: 'required|min:1|max:200',
-        rating: 'required|numeric',
-        isRecommended: 'required'
-      };
-
-      const review = getState().product.reviewFormData;
-
-      const newReview = {
-        ...review,
-        product:productId
-      };
-
-      const { isValid, errors } = allFieldsValidation(newReview, rules, {
-        'required.title': 'Title is required.',
-        'min.title': 'Title must be at least 6 character.',
-        'required.review': 'Review is required.',
-        'min.review': 'Review must be at least 1 characters.',
-        'max.review':'Review may not be greater than 200 characters.',
-        'required.rating': 'Rating is required.',
-        'required.isRecommended': 'Recommendable is required.'
-      });
-
-      if (!isValid) {
-        return dispatch({ type: SET_REVIEW_FORM_ERRORS, payload: errors });
-      }
-
-      const response = await axios.post(`/api/review/add`, newReview);
-
-      const successfulOptions = {
-        title: `${response.data.message}`,
-        position: 'tr',
-        autoDismiss: 1
-      };
-
-      if (response.data.success === true) {
-        dispatch(success(successfulOptions));
-        dispatch({
-          type: ADD_REVIEW,
-          payload: response.data.review
-        });
-        dispatch({ type: RESET_REVIEW });
-        dispatch(goBack());
-      }
-    } catch (error) {
-      handleError(error, dispatch);
-    }
-  };
-};
-
-
-// fetch reviews api
-export const fetchReviews = slug => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await axios.get(`/api/review/${slug}`);
-
-      var ratingSummary = [
-        {5:0},
-        {4:0},
-        {3:0},
-        {2:0},
-        {1:0}
-      ];
-      var totalRating = 0;
-      var totalReview = 0;
-
-      if(response.data.reviews.length > 0){
-        response.data.reviews.map((item, i) => {
-            totalRating += item.rating;
-            totalReview += 1;
-            switch (Math.round(item.rating)) {
-              case 5:
-                  ratingSummary[0][5] += 1
-                break;
-              case 4:
-                  ratingSummary[1][4] += 1
-                break;
-              case 3:
-                  ratingSummary[2][3] += 1
-                break;
-              case 2:
-                  ratingSummary[3][2] += 1
-                break;
-              case 1:
-                  ratingSummary[4][1] += 1
-                break;
-              default:
-                 0
-                break;
-            }
-        });
-      }
-
-      dispatch({
-        type: FETCH_REVIEWS,
-        payload: {
-          reviews:response.data.reviews,
-          ratingSummary:ratingSummary,
-          totalRating:totalRating,
-          totalReview:totalReview
-        }
-      });
-
     } catch (error) {
       handleError(error, dispatch);
     }
