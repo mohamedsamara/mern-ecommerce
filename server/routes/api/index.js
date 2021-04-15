@@ -11,7 +11,6 @@ const contactRoutes = require('./contact');
 const merchantRoutes = require('./merchant');
 const cartRoutes = require('./cart');
 const orderRoutes = require('./order');
-const reviewRoutes = require('./review');
 
 // auth routes
 router.use('/auth', authRoutes);
@@ -45,8 +44,5 @@ router.use('/cart', cartRoutes);
 
 // order routes
 router.use('/order', orderRoutes);
-
-// Review routes
-router.use('/review', reviewRoutes);
 
 module.exports = router;
