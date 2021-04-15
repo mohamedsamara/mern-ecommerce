@@ -62,6 +62,7 @@ class ProductPage extends React.PureComponent {
 
     const averageRating = Math.round(totalRating/totalReview);
     const addReviewPath = location.pathname.split('/')[location.pathname.split('/').length - 1];
+    
     return (
       <div className='product-shop'>
         {isLoading ? (
