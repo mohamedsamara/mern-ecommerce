@@ -5,7 +5,6 @@
  */
 
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -14,6 +13,8 @@ import actions from '../../actions';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
+import WriteReview from '../../components/Manager/WriteReview';
+import ReviewList from '../../components/Manager/ReviewList';
 import { BagIcon } from '../../components/Common/Icon';
 import NotFound from '../../components/Common/NotFound';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
@@ -22,6 +23,7 @@ class ProductPage extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
     this.props.fetchStoreProduct(slug);
+    this.props.fetchReviews(slug);
     document.body.classList.add('product-page');
   }
 
@@ -45,14 +47,27 @@ class ProductPage extends React.PureComponent {
       itemsInCart,
       productShopChange,
       handleAddToCart,
-      handleRemoveFromCart
+      handleRemoveFromCart,
+      recommedableSelect,
+      reviewFormData,
+      reviewChange,
+      reviewFormErrors,
+      addReview,
+      reviews,
+      ratingSummary,
+      totalRating,
+      totalReview,
+      location
     } = this.props;
 
+    const averageRating = Math.round(totalRating/totalReview);
+    const addReviewPath = location.pathname.split('/')[location.pathname.split('/').length - 1];
     return (
       <div className='product-shop'>
         {isLoading ? (
           <LoadingIndicator />
         ) : Object.keys(product).length > 0 ? (
+          <div>
           <Row className='flex-row'>
             <Col xs='12' md='5' lg='5' className='mb-3 px-3 px-md-2'>
               <div className='position-relative'>
@@ -142,6 +157,69 @@ class ProductPage extends React.PureComponent {
               </div>
             </Col>
           </Row>
+          {reviews.length > 0 || addReviewPath == 'add-review' ?(<Row className='flex-row'>
+            <Col xs='12' md='4' lg='4' className='mb-3 px-3 px-md-2'>
+              <div className='review-container'>
+                  <div className='r-list'>
+                    <span className="heading">User Rating</span>
+                    {isNaN(averageRating)==false?(
+                      Array(...Array(5)).map((v, i) =>
+                      i < averageRating ? (
+                        <span className="fa fa-star checked" key={i}></span>
+                      ):(
+                        <span className="fa fa-star" key={i}></span>
+                      )
+                    )):(<NotFound message='no review found.'/>)}
+                    <p>`{Math.round(totalRating/totalReview)} average based on {totalReview} reviews.`</p>
+                    <hr style={{border:"3px solid #f1f1f1"}}/>
+                  </div>
+                  <div className='r-list'>
+                  {totalReview > 0 ?
+                    (ratingSummary.map((i,obj) =>
+                      <div key={obj}>
+                        <div className="side">
+                          <div>{parseInt(Object.keys(i)[0])} star</div>
+                        </div>
+                        <div className="middle">
+                          <div className="bar-container">
+                            <div className={`bar-${parseInt(Object.keys(i)[0])}`}
+                                  style={{width:`${(i[Object.keys(i)[0]]/totalReview)*100}%`}}>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="side right">
+                          <div>{parseInt(i[Object.keys(i)[0]])}</div>
+                        </div>
+                      </div>
+                    )):(
+                      <NotFound message='no review found.' />
+                    )}
+                  </div>
+              </div>
+            </Col>
+            <Col xs='12' md='8' lg='8' className=' mb-3 px-3 px-md-2'>
+                {addReviewPath !== 'add-review'?(
+                  <div className='review-dashboard'>
+                    {reviews.length >0?(
+                      <ReviewList reviews={reviews}/>
+                    ):(
+                      <NotFound message='no review found.' />
+                    )}
+                  </div>
+                ):(
+                  <div className='review-container'>
+                  <WriteReview
+                    recommedableSelect={recommedableSelect}
+                    reviewFormData={reviewFormData}
+                    reviewChange={reviewChange}
+                    reviewFormErrors={reviewFormErrors}
+                    addReview={addReview}
+                    location={location}
+                  /></div>
+                )}
+            </Col>
+        </Row>):('')}
+        </div>
         ) : (
           <NotFound message='no product found.' />
         )}
@@ -156,6 +234,14 @@ const mapStateToProps = state => {
     productShopData: state.product.productShopData,
     shopFormErrors: state.product.shopFormErrors,
     itemsInCart: state.cart.itemsInCart,
+    recommedableSelect: state.product.recommedableSelect,
+    reviewFormData: state.product.reviewFormData,
+    reviewFormErrors: state.product.reviewFormErrors,
+    addReview: state.product.addReview,
+    reviews:state.product.reviews,
+    ratingSummary: state.product.ratingSummary,
+    totalRating: state.product.totalRating,
+    totalReview: state.product.totalReview,
     isLoading: state.product.isLoading
   };
 };
