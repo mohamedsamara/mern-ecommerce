@@ -227,7 +227,12 @@ router.get('/list/category/:slug', async (req, res) => {
     const categoryDoc = await Category.findOne(
       { slug, isActive: true },
       'products -_id'
-    ).populate('products');
+    ).populate({
+      path: 'products',
+      match: {
+        isActive: true
+      }
+    });
 
     if (!categoryDoc) {
       return res.status(404).json({
@@ -258,10 +263,10 @@ router.get('/list/brand/:slug', async (req, res) => {
       });
     }
 
-    const products = await Product.find({ brand: brand[0]._id }).populate(
-      'brand',
-      'name'
-    );
+    const products = await Product.find({
+      brand: brand[0]._id,
+      isActive: true
+    }).populate('brand', 'name');
 
     res.status(200).json({
       products
