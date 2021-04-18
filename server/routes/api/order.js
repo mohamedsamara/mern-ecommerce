@@ -88,6 +88,7 @@ router.get('/list', auth, async (req, res) => {
         newDataSet.push(order);
 
         if (newDataSet.length === newOrders.length) {
+          newDataSet.sort((a, b) => b.created - a.created);
           res.status(200).json({
             orders: newDataSet
           });
