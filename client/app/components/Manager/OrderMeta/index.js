@@ -15,6 +15,15 @@ import Button from '../../Common/Button';
 const OrderMeta = props => {
   const { order, cancelOrder } = props;
 
+  const renderMetaAction = () => {
+    const isNotDelivered =
+      order.products.filter(i => i.status === 'Delivered').length < 1;
+
+    if (isNotDelivered) {
+      return <Button size='sm' text='Cancel Order' onClick={cancelOrder} />;
+    }
+  };
+
   return (
     <div className='order-meta'>
       <div className='d-flex align-items-center justify-content-between mb-3 title'>
@@ -46,13 +55,7 @@ const OrderMeta = props => {
           </Row>
         </Col>
         <Col xs='12' md='4' className='text-left text-md-right'>
-          {order.products.filter(i=> i.status =='Delivered').length <1?
-          (<Button
-            id='CancelOrderItemPopover'
-            size='sm'
-            text='Cancel Order'
-            onClick={cancelOrder}
-          />):('')}
+          {renderMetaAction()}
         </Col>
       </Row>
     </div>

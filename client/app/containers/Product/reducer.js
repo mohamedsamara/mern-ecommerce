@@ -60,21 +60,24 @@ const initialState = {
   formErrors: {},
   editFormErrors: {},
   shopFormErrors: {},
-  reviews:[],
-  ratingSummary: [],
-  totalRating:0,
-  totalReview:0,
-  reviewFormData:{
-    title:'',
-    review:'',
-    rating:0,
-    isRecommended:0
+  reviews: [],
+  reviewsSummary: {
+    ratingSummary: [],
+    totalRatings: 0,
+    totalReviews: 0,
+    totalSummary: 0
+  },
+  reviewFormData: {
+    title: '',
+    review: '',
+    rating: 0,
+    isRecommended: 0
   },
   recommedableSelect: [
     { value: 1, label: 'Yes' },
     { value: 0, label: 'No' }
   ],
-  reviewFormErrors:{}
+  reviewFormErrors: {}
 };
 
 const productReducer = (state = initialState, action) => {
@@ -195,10 +198,8 @@ const productReducer = (state = initialState, action) => {
     case FETCH_REVIEWS:
       return {
         ...state,
-        reviews:action.payload.reviews,
-        ratingSummary:action.payload.ratingSummary,
-        totalReview:action.payload.totalReview,
-        totalRating:action.payload.totalRating,
+        reviews: action.payload.reviews,
+        reviewsSummary: action.payload.reviewsSummary
       };
     case ADD_REVIEW:
       return {
@@ -216,11 +217,11 @@ const productReducer = (state = initialState, action) => {
     case RESET_REVIEW:
       return {
         ...state,
-        reviewFormData:{
-          title:'',
-          review:'',
-          rating:0,
-          isRecommended:0
+        reviewFormData: {
+          title: '',
+          review: '',
+          rating: 0,
+          isRecommended: 0
         },
         reviewFormErrors: {}
       };

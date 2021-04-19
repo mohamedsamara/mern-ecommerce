@@ -384,11 +384,6 @@ export const deleteProduct = id => {
   };
 };
 
-
-/*
-Product Review Actions
-*/
-
 export const reviewChange = (name, value) => {
   let formData = {};
   formData[name] = value;
@@ -398,31 +393,29 @@ export const reviewChange = (name, value) => {
   };
 };
 
-
-export const addReview = (productId) => {
+export const addProductReview = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        title: 'required|min:6',
-        review: 'required|min:1|max:200',
-        rating: 'required|numeric',
+        title: 'required|min:1',
+        review: 'required|min:1',
+        rating: 'required|numeric|min:1',
         isRecommended: 'required'
       };
 
       const review = getState().product.reviewFormData;
+      const product = getState().product.storeProduct;
 
       const newReview = {
         ...review,
-        product:productId
+        product: product._id
       };
 
       const { isValid, errors } = allFieldsValidation(newReview, rules, {
         'required.title': 'Title is required.',
-        'min.title': 'Title must be at least 6 character.',
         'required.review': 'Review is required.',
-        'min.review': 'Review must be at least 1 characters.',
-        'max.review':'Review may not be greater than 200 characters.',
         'required.rating': 'Rating is required.',
+        'min.rating': 'Rating is required.',
         'required.isRecommended': 'Recommendable is required.'
       });
 
@@ -440,12 +433,13 @@ export const addReview = (productId) => {
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
-        dispatch({
-          type: ADD_REVIEW,
-          payload: response.data.review
-        });
+        dispatch(fetchProductReviews(product.slug));
+
+        // dispatch({
+        //   type: ADD_REVIEW,
+        //   payload: response.data.review
+        // });
         dispatch({ type: RESET_REVIEW });
-        dispatch(goBack());
       }
     } catch (error) {
       handleError(error, dispatch);
@@ -453,62 +447,79 @@ export const addReview = (productId) => {
   };
 };
 
-
 // fetch reviews api
-export const fetchReviews = slug => {
+export const fetchProductReviews = slug => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(`/api/review/${slug}`);
 
-      var ratingSummary = [
-        {5:0},
-        {4:0},
-        {3:0},
-        {2:0},
-        {1:0}
-      ];
-      var totalRating = 0;
-      var totalReview = 0;
-
-      if(response.data.reviews.length > 0){
-        response.data.reviews.map((item, i) => {
-            totalRating += item.rating;
-            totalReview += 1;
-            switch (Math.round(item.rating)) {
-              case 5:
-                  ratingSummary[0][5] += 1
-                break;
-              case 4:
-                  ratingSummary[1][4] += 1
-                break;
-              case 3:
-                  ratingSummary[2][3] += 1
-                break;
-              case 2:
-                  ratingSummary[3][2] += 1
-                break;
-              case 1:
-                  ratingSummary[4][1] += 1
-                break;
-              default:
-                 0
-                break;
-            }
-        });
-      }
+      const {
+        ratingSummary,
+        totalRatings,
+        totalReviews,
+        totalSummary
+      } = getProductReviewsSummary(response.data.reviews);
 
       dispatch({
         type: FETCH_REVIEWS,
         payload: {
-          reviews:response.data.reviews,
-          ratingSummary:ratingSummary,
-          totalRating:totalRating,
-          totalReview:totalReview
+          reviews: response.data.reviews,
+          reviewsSummary: {
+            ratingSummary,
+            totalRatings,
+            totalReviews,
+            totalSummary
+          }
         }
       });
-
     } catch (error) {
       handleError(error, dispatch);
     }
   };
+};
+
+const getProductReviewsSummary = reviews => {
+  let ratingSummary = [{ 5: 0 }, { 4: 0 }, { 3: 0 }, { 2: 0 }, { 1: 0 }];
+  let totalRatings = 0;
+  let totalReviews = 0;
+  let totalSummary = 0;
+
+  if (reviews.length > 0) {
+    reviews.map((item, i) => {
+      totalRatings += item.rating;
+      totalReviews += 1;
+
+      switch (Math.round(item.rating)) {
+        case 5:
+          ratingSummary[0][5] += 1;
+          totalSummary += 1;
+          break;
+        case 4:
+          ratingSummary[1][4] += 1;
+          totalSummary += 1;
+
+          break;
+        case 3:
+          ratingSummary[2][3] += 1;
+          totalSummary += 1;
+
+          break;
+        case 2:
+          ratingSummary[3][2] += 1;
+          totalSummary += 1;
+
+          break;
+        case 1:
+          ratingSummary[4][1] += 1;
+          totalSummary += 1;
+
+          break;
+        default:
+          0;
+          break;
+      }
+    });
+  }
+
+  return { ratingSummary, totalRatings, totalReviews, totalSummary };
 };

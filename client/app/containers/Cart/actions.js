@@ -32,7 +32,7 @@ export const handleAddToCart = product => {
     product.quantity = Number(getState().product.productShopData.quantity);
     product.totalPrice = product.quantity * product.price;
     product.totalPrice = parseFloat(product.totalPrice.toFixed(2));
-    const inventory = getState().product.product.inventory;
+    const inventory = getState().product.storeProduct.inventory;
 
     const result = calculatePurchaseQuantity(inventory);
 
@@ -46,6 +46,7 @@ export const handleAddToCart = product => {
     });
 
     if (!isValid) {
+      console.log('is here');
       return dispatch({ type: SET_PRODUCT_SHOP_FORM_ERRORS, payload: errors });
     }
 

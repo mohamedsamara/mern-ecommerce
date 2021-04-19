@@ -52,6 +52,10 @@
   font-weight: $font-weight-bold-three;
 }
 
+.fs-12 {
+  font-size: 12px;
+}
+
 .text-black {
   color: $black;
 }
@@ -84,6 +88,10 @@
   text-overflow: ellipsis;
 }
 
+.box-shadow-primary {
+  box-shadow: $primary-box-shadow;
+}
+
 .box-link {
   @include transition();
 
@@ -106,7 +114,6 @@
   }
 }
 
-// redirect-link
 .redirect-link {
   color: $primary-color !important;
   font-weight: $font-weight-bold-one;
@@ -122,7 +129,7 @@
 }
 
 .fa {
-  font-size: $font-size-small !important;
+  font-size: $font-size-small;
 }
 
 .drawer-backdrop {
