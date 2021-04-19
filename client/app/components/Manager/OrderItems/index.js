@@ -32,25 +32,24 @@ const OrderItems = props => {
     );
   };
 
-  const reviewContent = item => {
-    return (
-      <Link
-        to={{pathname: `/product/${item.product.slug}/add-review`,
-            state: { prevPath: location.pathname,
-            productId: item.product._id,
-            slug:item.product.slug
-          }}}
-        className='default-link'
-      >
-        <Button
-          variant='primary'
-          id='ReviewOrderItem'
-          size='sm'
-          text='Reivew Product'
-          role='menuitem'
-        />
-      </Link>
-    );
+  const renderItemsAction = item => {
+    if (item.product && item.status === 'Delivered') {
+      return (
+        <Link
+          to={`/product/${item.product.slug}`}
+          className='btn-link text-center py-2 fs-12'
+          style={{ minWidth: 120 }}
+        >
+          Reivew Product
+        </Link>
+      );
+    } else if (item.status !== 'Cancelled' && order.products.length !== 1) {
+      return (
+        <DropdownConfirm label='Cancel Item'>
+          {renderPopoverContent(item)}
+        </DropdownConfirm>
+      );
+    }
   };
 
   return (
@@ -91,11 +90,11 @@ const OrderItems = props => {
                       )}
                     </div>
                     <div className='d-flex justify-content-between flex-wrap d-md-none mt-1'>
-                      <p className='mb-1'>
+                      <p className='mb-1 mr-4'>
                         Status
                         <span className='order-label order-status'>{` ${item.status}`}</span>
                       </p>
-                      <p className='mb-1'>
+                      <p className='mb-1 mr-4'>
                         Quantity
                         <span className='order-label'>{` ${item.quantity}`}</span>
                       </p>
@@ -107,9 +106,9 @@ const OrderItems = props => {
                   </div>
                 </div>
 
-                <div className='d-none d-md-flex justify-content-around align-items-center box'>
+                <div className='d-none d-md-flex justify-content-between align-items-center box'>
                   <div className='text-center'>
-                    <p className='order-label order-status'>{` ${item.status}`}</p>
+                    <p className='order-label order-status'>{`${item.status}`}</p>
                     <p>Status</p>
                   </div>
 
@@ -125,17 +124,10 @@ const OrderItems = props => {
                   </div>
                 </div>
               </div>
-              {item.product && item.status == 'Delivered' ?
-              (<div className='text-right mt-2 mt-md-0'>
-                {reviewContent(item)}
-                </div>):
-                (item.status !== 'Cancelled' && order.products.length !== 1 && (
-                  <div className='text-right mt-2 mt-md-0'>
-                    <DropdownConfirm label='Cancel Item'>
-                      {renderPopoverContent(item)}
-                    </DropdownConfirm>
-                  </div>
-                ))}
+
+              <div className='text-right mt-2 mt-md-0'>
+                {renderItemsAction(item)}
+              </div>
             </div>
           </Col>
         ))}

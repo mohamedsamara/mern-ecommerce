@@ -1,13 +1,12 @@
 /**
  *
- * WriteReview
+ * Add
  *
  */
 
 import React from 'react';
 
-import { Row, Col, Label } from 'reactstrap';
-import ReactStars from 'react-rating-stars-component';
+import { Row, Col } from 'reactstrap';
 
 import SelectOption from '../../Common/SelectOption';
 import Input from '../../Common/Input';
@@ -28,15 +27,15 @@ const Add = props => {
   };
 
   return (
-    <div className='add-review'>
+    <div className='bg-white p-4 box-shadow-primary add-review'>
       <form onSubmit={handleSubmit} noValidate>
-        <h2>Add Review</h2>
+        <h2 className='mb-3'>Add Review</h2>
         <Row>
           <Col xs='12' md='12'>
             <Input
               type={'text'}
               error={reviewFormErrors['title']}
-              label={'Review Title'}
+              label={'Title'}
               name={'title'}
               placeholder={'Enter Review title'}
               value={reviewFormData.title}
@@ -44,41 +43,6 @@ const Add = props => {
                 reviewChange(name, value);
               }}
             />
-          </Col>
-          <Col xs='12' md='6'>
-            <SelectOption
-              error={reviewFormErrors['isRecommended']}
-              label={'Will you recommend this product?'}
-              multi={false}
-              name={'isRecommended'}
-              options={recommedableSelect}
-              handleSelectChange={value => {
-                reviewChange('isRecommended', value.value);
-              }}
-            />
-          </Col>
-          <Col xs='12' md='6'>
-            <Label style={{ fontSize: '14px', color: 'black' }} sm={2}>
-              Rating
-            </Label>
-            <Col md={10}>
-              <ReactStars
-                name='rate1'
-                starCount={5}
-                size={30}
-                color={'black'}
-                activeColor={'#ffb302'}
-                a11y={true}
-                isHalf={false}
-                emptyIcon={<i className='fa fa-star' />}
-                halfIcon={<i className='fa fa-star-half-alt' />}
-                filledIcon={<i className='fa fa-star' />}
-                value={reviewFormData.rating}
-                onChange={newValue => {
-                  reviewChange('rating', newValue);
-                }}
-              />
-            </Col>
           </Col>
           <Col xs='12' md='12'>
             <Input
@@ -93,8 +57,32 @@ const Add = props => {
               }}
             />
           </Col>
+          <Col xs='12' md='12'>
+            <Input
+              type={'stars'}
+              error={reviewFormErrors['rating']}
+              label={'Rating'}
+              name={'rating'}
+              value={reviewFormData.rating}
+              onInputChange={(name, value) => {
+                reviewChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12'>
+            <SelectOption
+              error={reviewFormErrors['isRecommended']}
+              label={'Will you recommend this product?'}
+              multi={false}
+              name={'isRecommended'}
+              options={recommedableSelect}
+              handleSelectChange={value => {
+                reviewChange('isRecommended', value.value);
+              }}
+            />
+          </Col>
         </Row>
-        <div className='add-review-actions'>
+        <div className='mt-4'>
           <Button type='submit' text='Publish Review' />
         </div>
       </form>

@@ -1,23 +1,29 @@
 /**
  *
- * ReviewList
+ * List
  *
  */
 
 import React from 'react';
 import ReactStars from 'react-rating-stars-component';
 
-import { Link } from 'react-router-dom';
-
 import { formatDate } from '../../../helpers/date';
-import { ReviewIcon } from '../../Common/Icon';
+import { getRandomColors } from '../../../helpers';
 
 const List = props => {
   const { reviews } = props;
 
   const getAvatar = review => {
+    const color = getRandomColors();
     if (review.user.firstName) {
-      return review.user.firstName.charAt(0);
+      return (
+        <div
+          className='d-flex flex-column justify-content-center align-items-center fw-1 text-white avatar'
+          style={{ backgroundColor: color ? color : 'red' }}
+        >
+          {review.user.firstName.charAt(0)}
+        </div>
+      );
     }
   };
 
@@ -25,16 +31,15 @@ const List = props => {
     <div className='review-list'>
       {reviews.map((review, index) => (
         <div className='d-flex align-items-center mb-3 review-box' key={index}>
-          <div className='mx-3'>
-            <div className='avatar'>{getAvatar(review)}</div>
-          </div>
+          <div className='mx-3'>{getAvatar(review)}</div>
           <div className='flex-1 p-3 p-lg-4'>
-            <div className='d-flex align-items-center justify-content-between mb-2'>
+            <div className='d-flex align-items-center justify-content-between'>
               <h4 className='mb-0 mr-2 one-line-ellipsis'>{review.title}</h4>
               <ReactStars
-                size={16.5}
+                classNames='mr-2'
+                size={16}
                 edit={false}
-                color={'black'}
+                color={'#adb5bd'}
                 activeColor={'#ffb302'}
                 a11y={true}
                 isHalf={true}
@@ -43,11 +48,9 @@ const List = props => {
                 filledIcon={<i className='fa fa-star' />}
                 value={review.rating}
               />
-              <p className='review-desc mb-2'>
-                {formatDate(`${review?.created}`)}
-              </p>
             </div>
-            <p className='review-desc mb-2'>{`${review?.review}`}</p>
+            <p className='mb-2 fs-12'>{formatDate(`${review?.created}`)}</p>
+            <p className='mb-0'>{`${review?.review}`}</p>
           </div>
         </div>
       ))}
@@ -55,4 +58,4 @@ const List = props => {
   );
 };
 
-export default List;
+export default React.memo(List);

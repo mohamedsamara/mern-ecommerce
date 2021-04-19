@@ -1,15 +1,15 @@
 /**
  *
- * WriteReview
+ * Summary
  *
  */
 
 import React from 'react';
 
-import { Row, Col, Label } from 'reactstrap';
 import ReactStars from 'react-rating-stars-component';
 
 import NotFound from '../../Common/NotFound';
+import { ReviewIcon } from '../../Common/Icon';
 
 const Summary = props => {
   const {
@@ -24,14 +24,14 @@ const Summary = props => {
     totalRatings > 0 && Math.round(totalRatings / totalReviews);
 
   return (
-    <div className='review-summary'>
+    <div className='bg-white p-4 box-shadow-primary review-summary'>
       <h2 className='mb-0'>Rating</h2>
       {averageRating && (
-        <div className='d-flex align-items-center'>
+        <div className='d-flex align-items-center mt-2'>
           <ReactStars
-            size={16.5}
+            size={17}
             edit={false}
-            color={'black'}
+            color={'#adb5bd'}
             activeColor={'#ffb302'}
             a11y={true}
             isHalf={true}
@@ -74,7 +74,7 @@ const Summary = props => {
         ))
       ) : (
         <NotFound>
-          <p className='mb-2'>No reviews found.</p>
+          <ReviewIcon width='40' height='40' className='my-2' />
           <p className='mb-2'>Be the first to add a review.</p>
         </NotFound>
       )}

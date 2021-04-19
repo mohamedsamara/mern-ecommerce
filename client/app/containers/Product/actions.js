@@ -384,10 +384,6 @@ export const deleteProduct = id => {
   };
 };
 
-/*
-Product Review Actions
-*/
-
 export const reviewChange = (name, value) => {
   let formData = {};
   formData[name] = value;
@@ -401,9 +397,9 @@ export const addProductReview = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        title: 'required|min:6',
-        review: 'required|min:1|max:200',
-        rating: 'required|numeric',
+        title: 'required|min:1',
+        review: 'required|min:1',
+        rating: 'required|numeric|min:1',
         isRecommended: 'required'
       };
 
@@ -417,11 +413,9 @@ export const addProductReview = () => {
 
       const { isValid, errors } = allFieldsValidation(newReview, rules, {
         'required.title': 'Title is required.',
-        'min.title': 'Title must be at least 6 character.',
         'required.review': 'Review is required.',
-        'min.review': 'Review must be at least 1 characters.',
-        'max.review': 'Review may not be greater than 200 characters.',
         'required.rating': 'Rating is required.',
+        'min.rating': 'Rating is required.',
         'required.isRecommended': 'Recommendable is required.'
       });
 
@@ -439,12 +433,13 @@ export const addProductReview = () => {
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
-        dispatch({
-          type: ADD_REVIEW,
-          payload: response.data.review
-        });
+        dispatch(fetchProductReviews(product.slug));
+
+        // dispatch({
+        //   type: ADD_REVIEW,
+        //   payload: response.data.review
+        // });
         dispatch({ type: RESET_REVIEW });
-        // dispatch(goBack());
       }
     } catch (error) {
       handleError(error, dispatch);
