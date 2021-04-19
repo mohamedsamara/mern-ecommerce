@@ -1,5 +1,56 @@
-.review-dashboard {
-  .r-list {
+.product-reviews {
+  .review-summary {
+    .left {
+      width: 12%;
+
+      @include media-breakpoint-down(md) {
+        width: 20%;
+      }
+    }
+    .middle {
+      width: 75%;
+
+      @include media-breakpoint-down(md) {
+        width: 60%;
+      }
+    }
+    .right {
+      width: 12%;
+      text-align: right;
+
+      @include media-breakpoint-down(md) {
+        width: 20%;
+      }
+    }
+
+    .bar-container {
+      width: 100%;
+      background-color: #f1f1f1;
+      text-align: center;
+      color: white;
+    }
+    .bar-5 {
+      height: 16px;
+      background-color: #4caf50;
+    }
+    .bar-4 {
+      height: 16px;
+      background-color: #2196f3;
+    }
+    .bar-3 {
+      height: 16px;
+      background-color: #00bcd4;
+    }
+    .bar-2 {
+      height: 16px;
+      background-color: #ff9800;
+    }
+    .bar-1 {
+      height: 16px;
+      background-color: #f44336;
+    }
+  }
+  .review-list {
     .review-box {
       height: 100%;
       border-radius: $border-radius-default;
@@ -29,76 +80,8 @@
   }
 }
 
-.review-page {
-  .main {
-    background-color: $theme-white;
-  }
-}
-
-.heading {
-	font-size: 25px;
-	margin-right: 25px;
-}
-.fa {
-	font-size: 25px;
-}
-.checked {
-	color: orange;
-}
-.side {
-	float: left;
-	width: 15%;
-	margin-top: 10px;
-}
-.middle {
-	margin-top: 10px;
-	float: left;
-	width: 70%;
-}
-.right {
-	text-align: right;
-}
-.row {
-	&:after {
-		content: "";
-		display: table;
-		clear: both;
-	}
-}
-.bar-container {
-	width: 100%;
-	background-color: #f1f1f1;
-	text-align: center;
-	color: white;
-}
-.bar-5 {
-	height: 16px;
-	background-color: #4CAF50;
-}
-.bar-4 {
-	height: 16px;
-	background-color: #2196F3;
-}
-.bar-3 {
-	height: 16px;
-	background-color: #00bcd4;
-}
-.bar-2 {
-	height: 16px;
-	background-color: #ff9800;
-}
-.bar-1 {
-	height: 16px;
-	background-color: #f44336;
-}
-@media (max-width: 400px) {
-	.side {
-		width: 100%;
-	}
-	.middle {
-		width: 100%;
-	}
-	.right {
-		display: none;
-	}
-}
+// .review-page {
+//   .main {
+//     background-color: $theme-white;
+//   }
+// }
