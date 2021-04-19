@@ -27,8 +27,9 @@ const Summary = props => {
     <div className='bg-white p-4 box-shadow-primary review-summary'>
       <h2 className='mb-0'>Rating</h2>
       {averageRating && (
-        <div className='d-flex align-items-center mt-2'>
+        <div className='d-flex flex-wrap align-items-center mt-2'>
           <ReactStars
+            classNames='mr-2'
             size={17}
             edit={false}
             color={'#adb5bd'}
@@ -40,9 +41,7 @@ const Summary = props => {
             filledIcon={<i className='fa fa-star' />}
             value={averageRating}
           />
-          {totalReviews > 0 && (
-            <span className='ml-2'>based on {totalReviews} reviews.</span>
-          )}
+          {totalReviews > 0 && <span>based on {totalReviews} reviews.</span>}
         </div>
       )}
 
