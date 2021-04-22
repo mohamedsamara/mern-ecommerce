@@ -46,7 +46,6 @@ export const handleAddToCart = product => {
     });
 
     if (!isValid) {
-      console.log('is here');
       return dispatch({ type: SET_PRODUCT_SHOP_FORM_ERRORS, payload: errors });
     }
 

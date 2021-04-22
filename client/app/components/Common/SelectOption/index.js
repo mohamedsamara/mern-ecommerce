@@ -10,7 +10,15 @@ import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
 const SelectOption = props => {
-  const { error, label, multi, options, value, handleSelectChange } = props;
+  const {
+    error,
+    label,
+    multi,
+    options,
+    defaultValue,
+    value,
+    handleSelectChange
+  } = props;
 
   const _handleSelectChange = value => {
     handleSelectChange(value);
@@ -29,6 +37,7 @@ const SelectOption = props => {
         components={animatedComponents}
         isMulti={multi}
         options={options}
+        defaultValue={defaultValue}
         value={value}
         onChange={_handleSelectChange}
       />

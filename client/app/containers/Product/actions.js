@@ -73,6 +73,12 @@ export const handleProductSelect = value => {
   };
 };
 
+export const resetProduct = () => {
+  return async (dispatch, getState) => {
+    dispatch({ type: RESET_PRODUCT });
+  };
+};
+
 // fetch products api
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -271,7 +277,7 @@ export const addProduct = () => {
           type: ADD_PRODUCT,
           payload: response.data.product
         });
-        dispatch({ type: RESET_PRODUCT });
+        dispatch(resetProduct());
         dispatch({ type: RESET_BRAND });
         dispatch(goBack());
       }
@@ -287,14 +293,22 @@ export const updateProduct = () => {
     try {
       const rules = {
         name: 'required|min:1',
-        description: 'required|min:1|max:200'
+        description: 'required|min:1|max:200',
+        quantity: 'required|numeric',
+        price: 'required|numeric',
+        taxable: 'required',
+        brand: 'required'
       };
 
       const product = getState().product.product;
 
       const newProduct = {
         name: product.name,
-        description: product.description
+        description: product.description,
+        quantity: product.quantity,
+        price: product.price,
+        taxable: product.taxable,
+        brand: product.brand
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
@@ -302,7 +316,12 @@ export const updateProduct = () => {
         'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
         'min.description': 'Description must be at least 1 character.',
-        'max.description': 'Description may not be greater than 200 characters.'
+        'max.description':
+          'Description may not be greater than 200 characters.',
+        'required.quantity': 'Quantity is required.',
+        'required.price': 'Price is required.',
+        'required.taxable': 'Taxable is required.',
+        'required.brand': 'Brand is required.'
       });
 
       if (!isValid) {

@@ -18,6 +18,7 @@ class Edit extends React.PureComponent {
   componentDidMount() {
     const productId = this.props.match.params.id;
     this.props.fetchProduct(productId);
+    this.props.fetchBrandsSelect();
   }
 
   componentDidUpdate(prevProps) {
@@ -32,22 +33,30 @@ class Edit extends React.PureComponent {
       history,
       product,
       formErrors,
+      selectedBrands,
+      brands,
       productEditChange,
       updateProduct,
       deleteProduct,
-      activateProduct
+      activateProduct,
+      resetProduct
     } = this.props;
 
     return (
       <SubPage
         title='Edit Product'
         actionTitle='Cancel'
-        handleAction={() => history.goBack()}
+        handleAction={() => {
+          resetProduct();
+          history.goBack();
+        }}
       >
         {product?._id ? (
           <EditProduct
             product={product}
             formErrors={formErrors}
+            selectedBrands={selectedBrands}
+            brands={brands}
             productChange={productEditChange}
             updateProduct={updateProduct}
             deleteProduct={deleteProduct}
@@ -64,7 +73,9 @@ class Edit extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     product: state.product.product,
-    formErrors: state.product.editFormErrors
+    formErrors: state.product.editFormErrors,
+    selectedBrands: state.brand.selectedBrands,
+    brands: state.brand.brandsSelect
   };
 };
 

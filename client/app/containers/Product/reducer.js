@@ -184,6 +184,9 @@ const productReducer = (state = initialState, action) => {
           image: {},
           isActive: true
         },
+        product: {
+          _id: ''
+        },
         formErrors: {},
         selectedProducts: []
       };

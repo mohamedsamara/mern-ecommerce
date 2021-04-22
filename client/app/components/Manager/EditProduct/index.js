@@ -11,12 +11,20 @@ import { Row, Col } from 'reactstrap';
 import Input from '../../Common/Input';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
+import SelectOption from '../../Common/SelectOption';
+
+const taxableSelect = [
+  { value: 1, label: 'Yes' },
+  { value: 0, label: 'No' }
+];
 
 const EditProduct = props => {
   const {
     product,
     productChange,
     formErrors,
+    selectedBrands,
+    brands,
     updateProduct,
     deleteProduct,
     activateProduct
@@ -57,7 +65,71 @@ const EditProduct = props => {
               }}
             />
           </Col>
+          <Col xs='12' lg='6'>
+            <Input
+              type={'number'}
+              error={formErrors['quantity']}
+              label={'Quantity'}
+              name={'quantity'}
+              decimals={false}
+              placeholder={'Product Quantity'}
+              value={product.quantity}
+              onInputChange={(name, value) => {
+                productChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' lg='6'>
+            <Input
+              type={'number'}
+              error={formErrors['price']}
+              label={'Price'}
+              name={'price'}
+              min={1}
+              placeholder={'Product Price'}
+              value={product.price}
+              onInputChange={(name, value) => {
+                productChange(name, value);
+              }}
+            />
+          </Col>
           <Col xs='12' md='12'>
+            <SelectOption
+              error={formErrors['taxable']}
+              label={'Taxable'}
+              multi={false}
+              name={'taxable'}
+              defaultValue={[
+                product.taxable ? taxableSelect[0] : taxableSelect[1]
+              ]}
+              options={taxableSelect}
+              handleSelectChange={value => {
+                productChange('taxable', value.value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12'>
+            <SelectOption
+              error={formErrors['brand']}
+              label={'Select Brand'}
+              multi={false}
+              options={brands}
+              defaultValue={
+                product.brand
+                  ? [
+                      {
+                        value: product.brand?._id,
+                        label: product.brand?.name
+                      }
+                    ]
+                  : brands[0]
+              }
+              handleSelectChange={value => {
+                productChange('brand', value.value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12' className='mt-3 mb-2'>
             <Switch
               id={`enable-product-${product._id}`}
               name={'isActive'}
