@@ -28,7 +28,11 @@ class List extends React.PureComponent {
           actionTitle={user.role === 'ROLE_ADMIN' && 'Add'}
           handleAction={() => history.push('/dashboard/brand/add')}
         >
-          <BrandList brands={brands} activateBrand={activateBrand} />
+          <BrandList
+            brands={brands}
+            activateBrand={activateBrand}
+            user={user}
+          />
         </SubPage>
       </>
     );

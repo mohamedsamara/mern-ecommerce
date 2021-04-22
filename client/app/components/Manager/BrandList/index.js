@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import Switch from '../../Common/Switch';
 
 const BrandList = props => {
-  const { brands, activateBrand } = props;
+  const { brands, activateBrand, user } = props;
 
   return (
     <div className='b-list'>
@@ -30,9 +30,9 @@ const BrandList = props => {
           </div>
           <Link to={`/dashboard/brand/edit/${brand._id}`} className='d-block'>
             <p className='brand-desc mb-2'>{brand.description}</p>
-            {brand?.merchant && (
+            {brand?.merchant && brand?.merchant?._id !== user?.merchant && (
               <div className='d-flex'>
-                <label>Merchant</label>
+                <label>By</label>
                 <p className='brand-merchant mb-0 ml-2 text-primary'>
                   {brand.merchant.name}
                 </p>
