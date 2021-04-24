@@ -258,6 +258,11 @@ router.get('/list/category/:slug', async (req, res) => {
       path: 'products',
       match: {
         isActive: true
+      },
+      populate: {
+        path: 'brand',
+        model: 'Brand',
+        select: 'name isActive'
       }
     });
 
