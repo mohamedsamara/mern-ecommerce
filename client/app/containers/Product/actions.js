@@ -300,8 +300,8 @@ export const updateProduct = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: 'required|min:1',
-        description: 'required|min:1|max:200',
+        name: 'required',
+        description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required'
@@ -321,9 +321,7 @@ export const updateProduct = () => {
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 1 character.',
         'max.description':
           'Description may not be greater than 200 characters.',
         'required.quantity': 'Quantity is required.',
@@ -424,8 +422,8 @@ export const addProductReview = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        title: 'required|min:1',
-        review: 'required|min:1',
+        title: 'required',
+        review: 'required',
         rating: 'required|numeric|min:1',
         isRecommended: 'required'
       };

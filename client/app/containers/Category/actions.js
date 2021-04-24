@@ -114,8 +114,8 @@ export const addCategory = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: 'required|min:1',
-        description: 'required|min:1|max:200',
+        name: 'required',
+        description: 'required|max:200',
         products: 'required'
       };
 
@@ -131,9 +131,7 @@ export const addCategory = () => {
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 1 character.',
         'max.description':
           'Description may not be greater than 200 characters.',
         'required.products': 'Products is required.'
@@ -172,8 +170,8 @@ export const updateCategory = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        name: 'required|min:1',
-        description: 'required|min:1|max:200'
+        name: 'required',
+        description: 'required|max:200'
       };
 
       const category = getState().category.category;
@@ -185,9 +183,7 @@ export const updateCategory = () => {
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 1 character.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 1 character.',
         'max.description': 'Description may not be greater than 200 characters.'
       });
 
