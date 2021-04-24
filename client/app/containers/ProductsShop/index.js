@@ -27,7 +27,7 @@ class ProductsShop extends React.PureComponent {
       <div className='products-shop'>
         {isLoading ? (
           <LoadingIndicator />
-        ) : products.length > 0 ? (
+        ) : products && products.length > 0 ? (
           <ProductList products={products} />
         ) : (
           <NotFound message='no products found.' />

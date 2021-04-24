@@ -21,13 +21,11 @@ class Add extends React.PureComponent {
   render() {
     const {
       history,
+      user,
       productFormData,
       formErrors,
-      taxableSelect,
-      selectedBrands,
       brands,
       productChange,
-      handleBrandSelect,
       addProduct
     } = this.props;
 
@@ -38,13 +36,11 @@ class Add extends React.PureComponent {
         handleAction={() => history.goBack()}
       >
         <AddProduct
+          user={user}
           productFormData={productFormData}
           formErrors={formErrors}
-          taxableSelect={taxableSelect}
-          selectedBrands={selectedBrands}
           brands={brands}
           productChange={productChange}
-          handleBrandSelect={handleBrandSelect}
           addProduct={addProduct}
         />
       </SubPage>
@@ -54,10 +50,9 @@ class Add extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
+    user: state.account.user,
     productFormData: state.product.productFormData,
     formErrors: state.product.formErrors,
-    taxableSelect: state.product.taxableSelect,
-    selectedBrands: state.brand.selectedBrands,
     brands: state.brand.brandsSelect
   };
 };

@@ -19,7 +19,6 @@ import {
   RESET_BRAND,
   ADD_BRAND,
   REMOVE_BRAND,
-  BRAND_SELECT,
   FETCH_BRANDS_SELECT
 } from './constants';
 
@@ -44,13 +43,6 @@ export const brandEditChange = (name, value) => {
   return {
     type: BRAND_EDIT_CHANGE,
     payload: formData
-  };
-};
-
-export const handleBrandSelect = value => {
-  return {
-    type: BRAND_SELECT,
-    payload: value
   };
 };
 

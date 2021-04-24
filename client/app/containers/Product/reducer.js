@@ -45,18 +45,18 @@ const initialState = {
     description: '',
     quantity: 1,
     price: 1,
-    taxable: 0,
     image: {},
-    isActive: true
+    isActive: true,
+    taxable: { value: 0, label: 'No' },
+    brand: {
+      value: 0,
+      label: 'No Options Selected'
+    }
   },
   isLoading: false,
   productShopData: {
     quantity: 1
   },
-  taxableSelect: [
-    { value: 1, label: 'Yes' },
-    { value: 0, label: 'No' }
-  ],
   formErrors: {},
   editFormErrors: {},
   shopFormErrors: {},
@@ -180,9 +180,14 @@ const productReducer = (state = initialState, action) => {
           name: '',
           description: '',
           quantity: 1,
-          price: 0,
+          price: 1,
           image: {},
-          isActive: true
+          isActive: true,
+          taxable: { value: 0, label: 'No' },
+          brand: {
+            value: 0,
+            label: 'No Options Selected'
+          }
         },
         product: {
           _id: ''

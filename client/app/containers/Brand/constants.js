@@ -15,5 +15,4 @@ export const SET_BRAND_FORM_EDIT_ERRORS =
 export const RESET_BRAND = 'src/Brand/RESET_BRAND';
 export const ADD_BRAND = 'src/Brand/ADD_BRAND';
 export const REMOVE_BRAND = 'src/Brand/REMOVE_BRAND';
-export const BRAND_SELECT = 'src/Brand/BRAND_SELECT';
 export const FETCH_BRANDS_SELECT = 'src/Brand/FETCH_BRANDS_SELECT';

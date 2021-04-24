@@ -20,10 +20,10 @@ const taxableSelect = [
 
 const EditProduct = props => {
   const {
+    user,
     product,
     productChange,
     formErrors,
-    selectedBrands,
     brands,
     updateProduct,
     deleteProduct,
@@ -99,36 +99,36 @@ const EditProduct = props => {
               label={'Taxable'}
               multi={false}
               name={'taxable'}
-              defaultValue={[
-                product.taxable ? taxableSelect[0] : taxableSelect[1]
-              ]}
+              value={[product.taxable ? taxableSelect[0] : taxableSelect[1]]}
               options={taxableSelect}
               handleSelectChange={value => {
                 productChange('taxable', value.value);
               }}
             />
           </Col>
-          <Col xs='12' md='12'>
-            <SelectOption
-              error={formErrors['brand']}
-              label={'Select Brand'}
-              multi={false}
-              options={brands}
-              defaultValue={
-                product.brand
-                  ? [
-                      {
-                        value: product.brand?._id,
-                        label: product.brand?.name
-                      }
-                    ]
-                  : brands[0]
-              }
-              handleSelectChange={value => {
-                productChange('brand', value.value);
-              }}
-            />
-          </Col>
+          {user.role === 'ROLE_ADMIN' && (
+            <Col xs='12' md='12'>
+              <SelectOption
+                error={formErrors['brand']}
+                label={'Select Brand'}
+                multi={false}
+                defaultValue={
+                  product.brand
+                    ? [
+                        {
+                          value: product.brand?._id,
+                          label: product.brand?.name
+                        }
+                      ]
+                    : brands[0]
+                }
+                options={brands}
+                handleSelectChange={value => {
+                  productChange('brand', value.value);
+                }}
+              />
+            </Col>
+          )}
           <Col xs='12' md='12' className='mt-3 mb-2'>
             <Switch
               id={`enable-product-${product._id}`}

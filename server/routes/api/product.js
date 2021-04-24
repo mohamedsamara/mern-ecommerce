@@ -27,7 +27,7 @@ router.post(
       const price = req.body.price;
       const taxable = req.body.taxable;
       const isActive = req.body.isActive;
-      const brand = req.body.brand != 0 ? req.body.brand : null;
+      const brand = req.body.brand;
       const image = req.file;
 
       if (!sku) {
@@ -109,12 +109,13 @@ router.post(
 // fetch store products api
 router.get('/list', async (req, res) => {
   try {
-    const products = await Product.find({ isActive: true }).populate(
-      'brand',
-      'name'
-    );
+    const products = await Product.find({ isActive: true }).populate({
+      path: 'brand',
+      select: 'name isActive'
+    });
+
     res.status(200).json({
-      products
+      products: products.filter(item => item?.brand?.isActive === true)
     });
   } catch (error) {
     res.status(400).json({
@@ -170,29 +171,52 @@ router.get(
 );
 
 // fetch product api
-router.get('/:id', async (req, res) => {
-  try {
-    const productId = req.params.id;
+router.get(
+  '/:id',
+  auth,
+  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  async (req, res) => {
+    try {
+      const productId = req.params.id;
 
-    const productDoc = await Product.findOne({ _id: productId }).populate(
-      'brand'
-    );
+      let productDoc = null;
 
-    if (!productDoc) {
-      return res.status(404).json({
-        message: 'No product found.'
+      if (req.user.merchant) {
+        const brands = await Brand.find({
+          merchant: req.user.merchant
+        }).populate('merchant', '_id');
+
+        const brandId = brands[0]['_id'];
+
+        productDoc = await Product.findOne({ _id: productId })
+          .populate({
+            path: 'brand',
+            select: 'name'
+          })
+          .where('brand', brandId);
+      } else {
+        productDoc = await Product.findOne({ _id: productId }).populate({
+          path: 'brand',
+          select: 'name'
+        });
+      }
+
+      if (!productDoc) {
+        return res.status(404).json({
+          message: 'No product found.'
+        });
+      }
+
+      res.status(200).json({
+        product: productDoc
+      });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
       });
     }
-
-    res.status(200).json({
-      product: productDoc
-    });
-  } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
-    });
   }
-});
+);
 
 // fetch product slug api
 router.get('/item/:slug', async (req, res) => {
@@ -200,10 +224,13 @@ router.get('/item/:slug', async (req, res) => {
     const slug = req.params.slug;
 
     const productDoc = await Product.findOne({ slug, isActive: true }).populate(
-      'brand'
+      {
+        path: 'brand',
+        select: 'name isActive'
+      }
     );
 
-    if (!productDoc) {
+    if (!productDoc || productDoc?.brand?.isActive === false) {
       return res.status(404).json({
         message: 'No product found.'
       });

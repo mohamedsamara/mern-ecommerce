@@ -13,16 +13,19 @@ import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
 
+const taxableSelect = [
+  { value: 1, label: 'Yes' },
+  { value: 0, label: 'No' }
+];
+
 const AddProduct = props => {
   const {
+    user,
     productFormData,
     formErrors,
     productChange,
     addProduct,
-    handleBrandSelect,
-    selectedBrands,
     brands,
-    taxableSelect,
     image
   } = props;
 
@@ -107,26 +110,32 @@ const AddProduct = props => {
             <SelectOption
               error={formErrors['taxable']}
               label={'Taxable'}
-              multi={false}
               name={'taxable'}
               options={taxableSelect}
+              value={productFormData.taxable}
               handleSelectChange={value => {
-                productChange('taxable', value.value);
+                productChange('taxable', value);
               }}
             />
           </Col>
           <Col xs='12' md='12'>
             <SelectOption
+              disabled={user.role === 'ROLE_MERCHANT'}
               error={formErrors['brand']}
+              name={'brand'}
               label={'Select Brand'}
-              multi={false}
               options={brands}
-              value={selectedBrands}
+              value={
+                user.role === 'ROLE_MERCHANT'
+                  ? brands[1]
+                  : productFormData.brand
+              }
               handleSelectChange={value => {
-                handleBrandSelect(value);
+                productChange('brand', value);
               }}
             />
           </Col>
+
           <Col xs='12' md='12'>
             <Input
               type={'file'}

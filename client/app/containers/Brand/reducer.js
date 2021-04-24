@@ -15,8 +15,7 @@ import {
   RESET_BRAND,
   ADD_BRAND,
   REMOVE_BRAND,
-  FETCH_BRANDS_SELECT,
-  BRAND_SELECT
+  FETCH_BRANDS_SELECT
 } from './constants';
 
 const initialState = {
@@ -27,7 +26,6 @@ const initialState = {
     description: ''
   },
   brandsSelect: [],
-  selectedBrands: [],
   brandFormData: {
     name: '',
     description: '',
@@ -59,11 +57,6 @@ const brandReducer = (state = initialState, action) => {
       return {
         ...state,
         brandsSelect: action.payload
-      };
-    case BRAND_SELECT:
-      return {
-        ...state,
-        selectedBrands: action.payload
       };
     case ADD_BRAND:
       return {
@@ -113,7 +106,6 @@ const brandReducer = (state = initialState, action) => {
           description: '',
           isActive: true
         },
-        selectedBrands: [],
         formErrors: {}
       };
     default:

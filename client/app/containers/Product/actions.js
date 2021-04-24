@@ -31,8 +31,6 @@ import {
   SET_REVIEW_FORM_ERRORS
 } from './constants';
 
-import { RESET_BRAND } from '../Brand/constants';
-
 import handleError from '../../utils/error';
 import { formatSelectOptions } from '../../helpers/select';
 import { allFieldsValidation } from '../../utils/validation';
@@ -216,9 +214,9 @@ export const addProduct = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        sku: 'required|min:6',
-        name: 'required|min:1',
-        description: 'required|min:1|max:200',
+        sku: 'required',
+        name: 'required',
+        description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
@@ -227,20 +225,30 @@ export const addProduct = () => {
       };
 
       const product = getState().product.productFormData;
-      const brand = getState().brand.selectedBrands.value;
+      const user = getState().account.user;
+      const brands = getState().brand.brandsSelect;
 
       const newProduct = {
-        ...product,
-        brand: brand
+        sku: product.sku,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        quantity: product.quantity,
+        image: product.image,
+        isActive: product.isActive,
+        taxable: product.taxable.value,
+        brand:
+          user.role !== 'ROLE_MERCHANT'
+            ? product?.brand.value !== 0
+              ? product?.brand.value
+              : null
+            : brands[1].value
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
         'required.sku': 'Sku is required.',
-        'min.sku': 'Sku must be at least 1 character.',
         'required.name': 'Name is required.',
-        'min.name': 'Name must be at least 1 characters.',
         'required.description': 'Description is required.',
-        'min.description': 'Description must be at least 1 character.',
         'max.description':
           'Description may not be greater than 200 characters.',
         'required.quantity': 'Quantity is required.',
@@ -261,6 +269,7 @@ export const addProduct = () => {
           }
         }
       }
+
       const response = await axios.post(`/api/product/add`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
@@ -278,7 +287,6 @@ export const addProduct = () => {
           payload: response.data.product
         });
         dispatch(resetProduct());
-        dispatch({ type: RESET_BRAND });
         dispatch(goBack());
       }
     } catch (error) {
@@ -296,8 +304,8 @@ export const updateProduct = () => {
         description: 'required|min:1|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required',
-        brand: 'required'
+        taxable: 'required'
+        // brand: 'required'
       };
 
       const product = getState().product.product;
@@ -308,7 +316,7 @@ export const updateProduct = () => {
         quantity: product.quantity,
         price: product.price,
         taxable: product.taxable,
-        brand: product.brand
+        brand: product?.brand !== 0 ? product?.brand : null
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
@@ -320,8 +328,8 @@ export const updateProduct = () => {
           'Description may not be greater than 200 characters.',
         'required.quantity': 'Quantity is required.',
         'required.price': 'Price is required.',
-        'required.taxable': 'Taxable is required.',
-        'required.brand': 'Brand is required.'
+        'required.taxable': 'Taxable is required.'
+        // 'required.brand': 'Brand is required.'
       });
 
       if (!isValid) {

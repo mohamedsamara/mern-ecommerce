@@ -31,9 +31,9 @@ class Edit extends React.PureComponent {
   render() {
     const {
       history,
+      user,
       product,
       formErrors,
-      selectedBrands,
       brands,
       productEditChange,
       updateProduct,
@@ -53,9 +53,9 @@ class Edit extends React.PureComponent {
       >
         {product?._id ? (
           <EditProduct
+            user={user}
             product={product}
             formErrors={formErrors}
-            selectedBrands={selectedBrands}
             brands={brands}
             productChange={productEditChange}
             updateProduct={updateProduct}
@@ -72,9 +72,9 @@ class Edit extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
+    user: state.account.user,
     product: state.product.product,
     formErrors: state.product.editFormErrors,
-    selectedBrands: state.brand.selectedBrands,
     brands: state.brand.brandsSelect
   };
 };
