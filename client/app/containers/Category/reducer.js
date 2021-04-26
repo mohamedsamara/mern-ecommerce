@@ -28,6 +28,7 @@ const initialState = {
   categoryFormData: {
     name: '',
     description: '',
+    products: [],
     isActive: true
   },
   formErrors: {},
@@ -94,9 +95,11 @@ const categoryReducer = (state = initialState, action) => {
         categoryFormData: {
           name: '',
           description: '',
+          products: [],
           isActive: true
         },
-        formErrors: {}
+        formErrors: {},
+        editFormErrors: {}
       };
     case TOGGLE_ADD_CATEGORY:
       return { ...state, isCategoryAddOpen: !state.isCategoryAddOpen };

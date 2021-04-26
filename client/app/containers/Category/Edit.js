@@ -18,6 +18,7 @@ class Edit extends React.PureComponent {
   componentDidMount() {
     const categoryId = this.props.match.params.id;
     this.props.fetchCategory(categoryId);
+    this.props.fetchProductsSelect();
   }
 
   componentDidUpdate(prevProps) {
@@ -30,6 +31,7 @@ class Edit extends React.PureComponent {
   render() {
     const {
       history,
+      products,
       category,
       formErrors,
       categoryEditChange,
@@ -45,6 +47,7 @@ class Edit extends React.PureComponent {
       >
         {category?._id ? (
           <EditCategory
+            products={products}
             category={category}
             formErrors={formErrors}
             categoryChange={categoryEditChange}
@@ -61,6 +64,7 @@ class Edit extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
+    products: state.product.productsSelect,
     category: state.category.category,
     formErrors: state.category.editFormErrors
   };

@@ -22,10 +22,11 @@ import {
   REMOVE_CATEGORY
 } from './constants';
 
-import { RESET_PRODUCT } from '../Product/constants';
-
 import handleError from '../../utils/error';
-import { unformatSelectOptions } from '../../helpers/select';
+import {
+  formatSelectOptions,
+  unformatSelectOptions
+} from '../../helpers/select';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const categoryChange = (name, value) => {
@@ -99,6 +100,11 @@ export const fetchCategory = id => {
     try {
       const response = await axios.get(`/api/category/${id}`);
 
+      response.data.category.products = formatSelectOptions(
+        response.data.category.products,
+        true
+      );
+
       dispatch({
         type: FETCH_CATEGORY,
         payload: response.data.category
@@ -120,13 +126,11 @@ export const addCategory = () => {
       };
 
       const category = getState().category.categoryFormData;
-      const products = getState().product.selectedProducts;
 
-      let newProducts = unformatSelectOptions(products);
-
-      let newCategory = {
-        products: newProducts,
-        ...category
+      const newCategory = {
+        name: category.name,
+        description: category.description,
+        products: unformatSelectOptions(category.products)
       };
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
@@ -134,7 +138,7 @@ export const addCategory = () => {
         'required.description': 'Description is required.',
         'max.description':
           'Description may not be greater than 200 characters.',
-        'required.products': 'Products is required.'
+        'required.products': 'Products are required.'
       });
 
       if (!isValid) {
@@ -156,7 +160,6 @@ export const addCategory = () => {
           payload: response.data.category
         });
         dispatch({ type: RESET_CATEGORY });
-        dispatch({ type: RESET_PRODUCT });
         dispatch(toggleAddCategory());
       }
     } catch (error) {
@@ -171,20 +174,24 @@ export const updateCategory = () => {
     try {
       const rules = {
         name: 'required',
-        description: 'required|max:200'
+        description: 'required|max:200',
+        products: 'required'
       };
 
       const category = getState().category.category;
 
       const newCategory = {
         name: category.name,
-        description: category.description
+        description: category.description,
+        products: category.products && unformatSelectOptions(category.products)
       };
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Name is required.',
         'required.description': 'Description is required.',
-        'max.description': 'Description may not be greater than 200 characters.'
+        'max.description':
+          'Description may not be greater than 200 characters.',
+        'required.products': 'Products are required.'
       });
 
       if (!isValid) {
@@ -206,7 +213,7 @@ export const updateCategory = () => {
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
-
+        dispatch({ type: RESET_CATEGORY });
         dispatch(goBack());
       }
     } catch (error) {

@@ -19,7 +19,6 @@ import {
   RESET_PRODUCT_SHOP,
   ADD_PRODUCT,
   REMOVE_PRODUCT,
-  PRODUCT_SELECT,
   FETCH_PRODUCTS_SELECT,
   SET_PRODUCTS_LOADING,
   ADD_REVIEW,
@@ -37,7 +36,6 @@ const initialState = {
   },
   storeProduct: {},
   productsSelect: [],
-  selectedProducts: [],
   isProductAddOpen: false,
   productFormData: {
     sku: '',
@@ -152,11 +150,6 @@ const productReducer = (state = initialState, action) => {
           ...action.payload
         }
       };
-    case PRODUCT_SELECT:
-      return {
-        ...state,
-        selectedProducts: action.payload
-      };
     case SET_PRODUCT_FORM_ERRORS:
       return {
         ...state,
@@ -192,8 +185,7 @@ const productReducer = (state = initialState, action) => {
         product: {
           _id: ''
         },
-        formErrors: {},
-        selectedProducts: []
+        formErrors: {}
       };
     case RESET_PRODUCT_SHOP:
       return {

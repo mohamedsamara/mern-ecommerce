@@ -21,7 +21,6 @@ import {
   RESET_PRODUCT,
   ADD_PRODUCT,
   REMOVE_PRODUCT,
-  PRODUCT_SELECT,
   FETCH_PRODUCTS_SELECT,
   SET_PRODUCTS_LOADING,
   ADD_REVIEW,
@@ -61,13 +60,6 @@ export const productShopChange = (name, value) => {
   return {
     type: PRODUCT_SHOP_CHANGE,
     payload: formData
-  };
-};
-
-export const handleProductSelect = value => {
-  return {
-    type: PRODUCT_SELECT,
-    payload: value
   };
 };
 

@@ -10,9 +10,11 @@ import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
+import SelectOption from '../../Common/SelectOption';
 
 const EditCategory = props => {
   const {
+    products,
     category,
     categoryChange,
     formErrors,
@@ -52,6 +54,18 @@ const EditCategory = props => {
               value={category.description}
               onInputChange={(name, value) => {
                 categoryChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12' md='12'>
+            <SelectOption
+              error={formErrors['products']}
+              label={'Select Products'}
+              multi={true}
+              defaultValue={category.products}
+              options={products}
+              handleSelectChange={value => {
+                categoryChange('products', value);
               }}
             />
           </Col>

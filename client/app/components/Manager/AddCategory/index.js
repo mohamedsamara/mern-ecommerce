@@ -15,13 +15,11 @@ import SelectOption from '../../Common/SelectOption';
 
 const AddCategory = props => {
   const {
+    products,
     categoryFormData,
     formErrors,
     categoryChange,
-    addCategory,
-    products,
-    selectedProducts,
-    handleProductSelect
+    addCategory
   } = props;
 
   const handleSubmit = event => {
@@ -65,9 +63,9 @@ const AddCategory = props => {
               label={'Select Products'}
               multi={true}
               options={products}
-              value={selectedProducts}
+              value={categoryFormData.products}
               handleSelectChange={value => {
-                handleProductSelect(value);
+                categoryChange('products', value);
               }}
             />
           </Col>

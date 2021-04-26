@@ -57,17 +57,17 @@ router.get('/list', (req, res) => {
 });
 
 // fetch categories api
-router.get('/', (req, res) => {
-  Category.find({}, (err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+router.get('/', async (req, res) => {
+  try {
+    const categories = await Category.find({});
     res.status(200).json({
-      categories: data
+      categories
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 // fetch category api
@@ -75,9 +75,10 @@ router.get('/:id', async (req, res) => {
   try {
     const categoryId = req.params.id;
 
-    const categoryDoc = await Category.findOne({ _id: categoryId }).populate(
-      'brand'
-    );
+    const categoryDoc = await Category.findOne({ _id: categoryId }).populate({
+      path: 'products',
+      select: 'name'
+    });
 
     if (!categoryDoc) {
       return res.status(404).json({

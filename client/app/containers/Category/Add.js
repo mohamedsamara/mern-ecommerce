@@ -24,8 +24,6 @@ class Add extends React.PureComponent {
       products,
       categoryFormData,
       formErrors,
-      selectedProducts,
-      handleProductSelect,
       categoryChange,
       addCategory
     } = this.props;
@@ -40,8 +38,6 @@ class Add extends React.PureComponent {
           products={products}
           categoryFormData={categoryFormData}
           formErrors={formErrors}
-          selectedProducts={selectedProducts}
-          handleProductSelect={handleProductSelect}
           categoryChange={categoryChange}
           addCategory={addCategory}
         />
@@ -54,8 +50,7 @@ const mapStateToProps = state => {
   return {
     products: state.product.productsSelect,
     categoryFormData: state.category.categoryFormData,
-    formErrors: state.category.formErrors,
-    selectedProducts: state.product.selectedProducts
+    formErrors: state.category.formErrors
   };
 };
 
