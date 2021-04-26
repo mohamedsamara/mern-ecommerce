@@ -23,8 +23,8 @@ import {
 } from '../Product/constants';
 
 import handleError from '../../utils/error';
-import { toggleCart } from '../Navigation/actions';
 import { allFieldsValidation } from '../../utils/validation';
+import { toggleCart } from '../Navigation/actions';
 
 // Handle Add To Cart
 export const handleAddToCart = product => {

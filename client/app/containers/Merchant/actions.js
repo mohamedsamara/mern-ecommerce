@@ -4,6 +4,7 @@
  *
  */
 
+import { push } from 'connected-react-router';
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 
@@ -20,6 +21,7 @@ import {
 
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
+import { signOut } from '../Login/actions';
 
 export const sellFormChange = (name, value) => {
   let formData = {};
@@ -121,7 +123,7 @@ export const approveMerchant = merchant => {
 export const rejectMerchant = merchant => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.put(`/api/merchant/reject/${merchant._id}`);
+      await axios.put(`/api/merchant/reject/${merchant._id}`);
 
       dispatch(fetchMerchants());
     } catch (error) {
@@ -155,6 +157,15 @@ export const merchantSignUp = token => {
 
       await axios.post(`/api/merchant/signup/${token}`, merchant);
 
+      const successfulOptions = {
+        title: `You have signed up successfully! Please sign in with the email and password. Thank you!`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      dispatch(signOut());
+      dispatch(success(successfulOptions));
+      dispatch(push('/login'));
       dispatch({ type: SIGNUP_RESET });
     } catch (error) {
       const title = `Please try to signup again!`;
