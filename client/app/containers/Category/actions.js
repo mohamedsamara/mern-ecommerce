@@ -17,7 +17,6 @@ import {
   SET_CATEGORY_FORM_ERRORS,
   SET_CATEGORY_FORM_EDIT_ERRORS,
   RESET_CATEGORY,
-  TOGGLE_ADD_CATEGORY,
   ADD_CATEGORY,
   REMOVE_CATEGORY
 } from './constants';
@@ -49,16 +48,16 @@ export const categoryEditChange = (name, value) => {
   };
 };
 
-export const toggleAddCategory = () => {
-  return {
-    type: TOGGLE_ADD_CATEGORY
-  };
-};
-
 export const categorySelect = value => {
   return {
     type: CATEGORY_SELECT,
     payload: value
+  };
+};
+
+export const resetCategory = () => {
+  return async (dispatch, getState) => {
+    dispatch({ type: RESET_CATEGORY });
   };
 };
 
@@ -101,8 +100,7 @@ export const fetchCategory = id => {
       const response = await axios.get(`/api/category/${id}`);
 
       response.data.category.products = formatSelectOptions(
-        response.data.category.products,
-        true
+        response.data.category.products
       );
 
       dispatch({
@@ -159,8 +157,8 @@ export const addCategory = () => {
           type: ADD_CATEGORY,
           payload: response.data.category
         });
-        dispatch({ type: RESET_CATEGORY });
-        dispatch(toggleAddCategory());
+        dispatch(resetCategory());
+        dispatch(goBack());
       }
     } catch (error) {
       handleError(error, dispatch);
@@ -213,7 +211,7 @@ export const updateCategory = () => {
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
-        dispatch({ type: RESET_CATEGORY });
+        dispatch(resetCategory());
         dispatch(goBack());
       }
     } catch (error) {

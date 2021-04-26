@@ -4,7 +4,9 @@
  * this helper formulate data into select options
  */
 
-export const formatSelectOptions = (data, isMulti) => {
+export const formatSelectOptions = (data, empty = false) => {
+  if (!data) return null;
+
   let newSelectOptions = [];
 
   data.map(option => {
@@ -16,7 +18,7 @@ export const formatSelectOptions = (data, isMulti) => {
     newSelectOptions.push(newOption);
   });
 
-  if (!isMulti) {
+  if (empty) {
     const emptyOption = {
       value: 0,
       label: 'No option selected'
@@ -29,6 +31,8 @@ export const formatSelectOptions = (data, isMulti) => {
 };
 
 export const unformatSelectOptions = data => {
+  if (!data) return null;
+
   let newSelectOptions = [];
 
   data.map(option => {

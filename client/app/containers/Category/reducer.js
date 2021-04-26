@@ -13,7 +13,6 @@ import {
   SET_CATEGORY_FORM_ERRORS,
   SET_CATEGORY_FORM_EDIT_ERRORS,
   RESET_CATEGORY,
-  TOGGLE_ADD_CATEGORY,
   ADD_CATEGORY,
   REMOVE_CATEGORY
 } from './constants';
@@ -24,7 +23,6 @@ const initialState = {
   category: {
     _id: ''
   },
-  isCategoryAddOpen: false,
   categoryFormData: {
     name: '',
     description: '',
@@ -98,11 +96,12 @@ const categoryReducer = (state = initialState, action) => {
           products: [],
           isActive: true
         },
+        category: {
+          _id: ''
+        },
         formErrors: {},
         editFormErrors: {}
       };
-    case TOGGLE_ADD_CATEGORY:
-      return { ...state, isCategoryAddOpen: !state.isCategoryAddOpen };
     default:
       return state;
   }

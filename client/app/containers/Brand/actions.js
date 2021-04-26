@@ -100,7 +100,7 @@ export const fetchBrandsSelect = () => {
     try {
       const response = await axios.get(`/api/brand/list/select`);
 
-      let formattedBrands = formatSelectOptions(response.data.brands);
+      const formattedBrands = formatSelectOptions(response.data.brands, true);
 
       dispatch({
         type: FETCH_BRANDS_SELECT,

@@ -31,7 +31,10 @@ import {
 } from './constants';
 
 import handleError from '../../utils/error';
-import { formatSelectOptions } from '../../helpers/select';
+import {
+  formatSelectOptions,
+  unformatSelectOptions
+} from '../../helpers/select';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const productChange = (name, value) => {
@@ -111,6 +114,12 @@ export const fetchProduct = id => {
       const response = await axios.get(`/api/product/${id}`);
 
       const inventory = response.data.product.quantity;
+      if (response.data.product.brand) {
+        response.data.product.brand = formatSelectOptions([
+          response.data.product.brand
+        ])[0];
+      }
+
       const product = { ...response.data.product, inventory };
 
       dispatch({
@@ -189,7 +198,7 @@ export const fetchProductsSelect = () => {
     try {
       const response = await axios.get(`/api/product/list/select`);
 
-      let formattedProducts = formatSelectOptions(response.data.products, true);
+      const formattedProducts = formatSelectOptions(response.data.products);
 
       dispatch({
         type: FETCH_PRODUCTS_SELECT,
@@ -220,6 +229,8 @@ export const addProduct = () => {
       const user = getState().account.user;
       const brands = getState().brand.brandsSelect;
 
+      const brand = unformatSelectOptions([product.brand]);
+
       const newProduct = {
         sku: product.sku,
         name: product.name,
@@ -231,8 +242,8 @@ export const addProduct = () => {
         taxable: product.taxable.value,
         brand:
           user.role !== 'ROLE_MERCHANT'
-            ? product?.brand.value !== 0
-              ? product?.brand.value
+            ? brand != 0
+              ? brand
               : null
             : brands[1].value
       };
@@ -296,11 +307,13 @@ export const updateProduct = () => {
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required'
-        // brand: 'required'
+        taxable: 'required',
+        brand: 'required'
       };
 
       const product = getState().product.product;
+
+      const brand = unformatSelectOptions([product.brand]);
 
       const newProduct = {
         name: product.name,
@@ -308,7 +321,7 @@ export const updateProduct = () => {
         quantity: product.quantity,
         price: product.price,
         taxable: product.taxable,
-        brand: product?.brand !== 0 ? product?.brand : null
+        brand: brand != 0 ? brand : null
       };
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
@@ -318,8 +331,8 @@ export const updateProduct = () => {
           'Description may not be greater than 200 characters.',
         'required.quantity': 'Quantity is required.',
         'required.price': 'Price is required.',
-        'required.taxable': 'Taxable is required.'
-        // 'required.brand': 'Brand is required.'
+        'required.taxable': 'Taxable is required.',
+        'required.brand': 'Brand is required.'
       });
 
       if (!isValid) {

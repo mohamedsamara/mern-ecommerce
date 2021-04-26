@@ -112,19 +112,10 @@ const EditProduct = props => {
                 error={formErrors['brand']}
                 label={'Select Brand'}
                 multi={false}
-                defaultValue={
-                  product.brand
-                    ? [
-                        {
-                          value: product.brand?._id,
-                          label: product.brand?.name
-                        }
-                      ]
-                    : brands[0]
-                }
+                defaultValue={product.brand}
                 options={brands}
                 handleSelectChange={value => {
-                  productChange('brand', value.value);
+                  productChange('brand', value);
                 }}
               />
             </Col>

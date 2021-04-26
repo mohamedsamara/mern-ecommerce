@@ -62,8 +62,8 @@ const AddCategory = props => {
               error={formErrors['products']}
               label={'Select Products'}
               multi={true}
-              options={products}
               value={categoryFormData.products}
+              options={products}
               handleSelectChange={value => {
                 categoryChange('products', value);
               }}

@@ -16,6 +16,7 @@ import NotFound from '../../components/Common/NotFound';
 
 class Edit extends React.PureComponent {
   componentDidMount() {
+    this.props.resetProduct();
     const productId = this.props.match.params.id;
     this.props.fetchProduct(productId);
     this.props.fetchBrandsSelect();
@@ -23,6 +24,7 @@ class Edit extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.props.resetProduct();
       const productId = this.props.match.params.id;
       this.props.fetchProduct(productId);
     }
@@ -38,18 +40,14 @@ class Edit extends React.PureComponent {
       productEditChange,
       updateProduct,
       deleteProduct,
-      activateProduct,
-      resetProduct
+      activateProduct
     } = this.props;
 
     return (
       <SubPage
         title='Edit Product'
         actionTitle='Cancel'
-        handleAction={() => {
-          resetProduct();
-          history.goBack();
-        }}
+        handleAction={history.goBack}
       >
         {product?._id ? (
           <EditProduct

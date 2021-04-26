@@ -16,6 +16,7 @@ import NotFound from '../../components/Common/NotFound';
 
 class Edit extends React.PureComponent {
   componentDidMount() {
+    this.props.resetCategory();
     const categoryId = this.props.match.params.id;
     this.props.fetchCategory(categoryId);
     this.props.fetchProductsSelect();
@@ -23,6 +24,7 @@ class Edit extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.id !== prevProps.match.params.id) {
+      this.props.resetCategory();
       const categoryId = this.props.match.params.id;
       this.props.fetchCategory(categoryId);
     }
@@ -43,7 +45,7 @@ class Edit extends React.PureComponent {
       <SubPage
         title='Edit Category'
         actionTitle='Cancel'
-        handleAction={() => history.goBack()}
+        handleAction={history.goBack}
       >
         {category?._id ? (
           <EditCategory
