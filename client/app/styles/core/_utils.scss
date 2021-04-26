@@ -100,6 +100,10 @@
   text-overflow: ellipsis;
 }
 
+.text-truncate {
+  @include text-truncate();
+}
+
 .box-shadow-primary {
   box-shadow: $primary-box-shadow;
 }

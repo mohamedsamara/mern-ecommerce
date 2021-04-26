@@ -439,8 +439,11 @@ export const addProductReview = () => {
       const product = getState().product.storeProduct;
 
       const newReview = {
-        ...review,
-        product: product._id
+        product: product._id,
+        isRecommended: review.isRecommended.value,
+        rating: review.rating,
+        review: review.review,
+        title: review.title
       };
 
       const { isValid, errors } = allFieldsValidation(newReview, rules, {

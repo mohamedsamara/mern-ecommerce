@@ -50,7 +50,6 @@ class ProductPage extends React.PureComponent {
       addProductReview,
       reviewsSummary,
       reviews,
-      recommedableSelect,
       reviewFormData,
       reviewChange,
       reviewFormErrors
@@ -153,7 +152,6 @@ class ProductPage extends React.PureComponent {
               </Col>
             </Row>
             <ProductReviews
-              recommedableSelect={recommedableSelect}
               reviewFormData={reviewFormData}
               reviewFormErrors={reviewFormErrors}
               reviews={reviews}
@@ -179,7 +177,6 @@ const mapStateToProps = state => {
     addReview: state.product.addReview,
     reviews: state.product.reviews,
     reviewsSummary: state.product.reviewsSummary,
-    recommedableSelect: state.product.recommedableSelect,
     reviewFormData: state.product.reviewFormData,
     reviewFormErrors: state.product.reviewFormErrors,
     itemsInCart: state.cart.itemsInCart

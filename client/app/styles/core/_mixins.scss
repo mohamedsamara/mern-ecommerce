@@ -77,8 +77,7 @@
   max-height: $numLines * $lineHeight + unquote('em');
 }
 
-@mixin text-truncate($width: 200) {
-  width: $width + unquote('px');
+@mixin text-truncate() {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

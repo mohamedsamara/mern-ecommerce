@@ -32,7 +32,6 @@ const ProductReviews = props => {
         )}
         <Col xs='12' md='7' lg='7' className='mb-3 px-3 px-md-2'>
           <AddReview
-            recommedableSelect={props.recommedableSelect}
             reviewFormData={props.reviewFormData}
             reviewChange={props.reviewChange}
             reviewFormErrors={props.reviewFormErrors}

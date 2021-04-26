@@ -19,13 +19,13 @@ const MerchantList = props => {
         <div key={index} className='merchant-box'>
           <div className='mb-3 p-4'>
             <label className='text-black'>Business</label>
-            <p className='fw-2 two-line-ellipsis'>{merchant.business}</p>
+            <p className='fw-2 text-truncate'>{merchant.business}</p>
             <label className='text-black'>Brand</label>
-            <p className='two-line-ellipsis'>{merchant.brand}</p>
+            <p className='text-truncate'>{merchant.brand}</p>
             <label className='text-black'>Name</label>
-            <p className='two-line-ellipsis'>{merchant.name}</p>
+            <p className='text-truncate'>{merchant.name}</p>
             <label className='text-black'>Email</label>
-            <p className='two-line-ellipsis'>
+            <p className='text-truncate'>
               {merchant.email ? merchant.email : 'N/A'}
             </p>
             <label className='text-black'>Phone Number</label>

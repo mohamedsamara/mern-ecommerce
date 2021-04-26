@@ -69,12 +69,11 @@ const initialState = {
     title: '',
     review: '',
     rating: 0,
-    isRecommended: 0
+    isRecommended: {
+      value: 1,
+      label: 'Yes'
+    }
   },
-  recommedableSelect: [
-    { value: 1, label: 'Yes' },
-    { value: 0, label: 'No' }
-  ],
   reviewFormErrors: {}
 };
 
@@ -221,7 +220,10 @@ const productReducer = (state = initialState, action) => {
           title: '',
           review: '',
           rating: 0,
-          isRecommended: 0
+          isRecommended: {
+            value: 1,
+            label: 'Yes'
+          }
         },
         reviewFormErrors: {}
       };

@@ -12,14 +12,13 @@ import SelectOption from '../../Common/SelectOption';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
+const recommedableSelect = [
+  { value: 1, label: 'Yes' },
+  { value: 0, label: 'No' }
+];
+
 const Add = props => {
-  const {
-    recommedableSelect,
-    reviewFormData,
-    reviewChange,
-    reviewFormErrors,
-    addReview
-  } = props;
+  const { reviewFormData, reviewChange, reviewFormErrors, addReview } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -73,11 +72,11 @@ const Add = props => {
             <SelectOption
               error={reviewFormErrors['isRecommended']}
               label={'Will you recommend this product?'}
-              multi={false}
               name={'isRecommended'}
+              value={reviewFormData.isRecommended}
               options={recommedableSelect}
               handleSelectChange={value => {
-                reviewChange('isRecommended', value.value);
+                reviewChange('isRecommended', value);
               }}
             />
           </Col>
