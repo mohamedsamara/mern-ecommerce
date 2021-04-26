@@ -226,7 +226,7 @@ router.get('/item/:slug', async (req, res) => {
     const productDoc = await Product.findOne({ slug, isActive: true }).populate(
       {
         path: 'brand',
-        select: 'name isActive'
+        select: 'name isActive slug'
       }
     );
 
@@ -240,6 +240,7 @@ router.get('/item/:slug', async (req, res) => {
       product: productDoc
     });
   } catch (error) {
+    console.log('error', error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });

@@ -28,15 +28,15 @@ router.post('/add', auth, (req, res) => {
 
 router.get('/:slug', async (req, res) => {
   try {
-    const product = await Product.findOne({ slug: req.params.slug });
+    const productDoc = await Product.findOne({ slug: req.params.slug });
 
-    if (!product._id) {
-      res.status(404).json({
-        message: `Cannot find reviews for product with the id: ${product._id}.`
+    if (!productDoc || productDoc?.brand?.isActive === false) {
+      return res.status(404).json({
+        message: 'No product found.'
       });
     }
 
-    const reviews = await Review.find({ product: product._id }).populate({
+    const reviews = await Review.find({ product: productDoc._id }).populate({
       path: 'user',
       select: 'firstName'
     });
