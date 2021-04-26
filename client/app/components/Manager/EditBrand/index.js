@@ -10,9 +10,17 @@ import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
+import Switch from '../../Common/Switch';
 
 const EditBrand = props => {
-  const { brand, brandChange, formErrors, updateBrand, deleteBrand } = props;
+  const {
+    brand,
+    brandChange,
+    formErrors,
+    updateBrand,
+    deleteBrand,
+    activateBrand
+  } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -47,6 +55,18 @@ const EditBrand = props => {
               onInputChange={(name, value) => {
                 brandChange(name, value);
               }}
+            />
+          </Col>
+          <Col xs='12' md='12' className='mt-3 mb-2'>
+            <Switch
+              style={{ width: 100 }}
+              tooltip={brand.isActive}
+              tooltipContent={`Disabling ${brand.name} will also disable all ${brand.name} products.`}
+              id={`enable-brand-${brand._id}`}
+              name={'isActive'}
+              label={'Active?'}
+              checked={brand.isActive}
+              toggleCheckboxChange={value => activateBrand(brand._id, value)}
             />
           </Col>
         </Row>

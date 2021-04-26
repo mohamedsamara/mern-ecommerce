@@ -3,6 +3,7 @@
   .c-list {
     .category-box {
       height: 100%;
+      z-index: -1;
       border-radius: $border-radius-default;
       box-shadow: $secondary-box-shadow;
       @include transition();
@@ -12,12 +13,22 @@
         @include transition();
       }
 
-      .item-image {
-        border-radius: $border-radius-default;
+      .toggle-box {
+        z-index: 1000;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 25px;
+        overflow: hidden;
+        // text-indent: 100%;
+        white-space: nowrap;
 
-        @include media-breakpoint-up(lg) {
-          width: 140px;
-          height: 140px;
+        &::before {
+          content: '';
+          position: absolute;
+          z-index: 1000;
+          width: 40px;
+          height: 30px;
         }
       }
 

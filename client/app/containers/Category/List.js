@@ -21,7 +21,7 @@ class List extends React.PureComponent {
   }
 
   render() {
-    const { history, categories, isLoading, activateCategory } = this.props;
+    const { history, categories, isLoading } = this.props;
 
     return (
       <>
@@ -33,10 +33,7 @@ class List extends React.PureComponent {
           {isLoading ? (
             <LoadingIndicator inline />
           ) : categories.length > 0 ? (
-            <CategoryList
-              categories={categories}
-              activateCategory={activateCategory}
-            />
+            <CategoryList categories={categories} />
           ) : (
             <NotFound message='no categories found.' />
           )}

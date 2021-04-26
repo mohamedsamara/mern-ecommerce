@@ -38,13 +38,15 @@ class Switch extends React.Component {
   }
 
   render() {
-    const { id, label, tooltip, tooltipContent } = this.props;
+    const { className, style, id, label, tooltip, tooltipContent } = this.props;
     const { checked } = this.state;
 
     const tooltipId = `tooltip-${id}`;
 
+    const classNames = `switch-checkbox${`${className && ` ${className}`}`}`;
+
     return (
-      <div className='switch-checkbox' id={tooltipId}>
+      <div className={classNames} id={tooltipId} style={style}>
         {tooltip && <Tooltip target={tooltipId}>{tooltipContent}</Tooltip>}
         <input
           id={id}
@@ -61,5 +63,9 @@ class Switch extends React.Component {
     );
   }
 }
+
+Switch.defaultProps = {
+  className: ''
+};
 
 export default Switch;

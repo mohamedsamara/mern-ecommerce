@@ -38,7 +38,8 @@ class Edit extends React.PureComponent {
       formErrors,
       categoryEditChange,
       updateCategory,
-      deleteCategory
+      deleteCategory,
+      activateCategory
     } = this.props;
 
     return (
@@ -55,6 +56,7 @@ class Edit extends React.PureComponent {
             categoryChange={categoryEditChange}
             updateCategory={updateCategory}
             deleteCategory={deleteCategory}
+            activateCategory={activateCategory}
           />
         ) : (
           <NotFound message='no category found.' />

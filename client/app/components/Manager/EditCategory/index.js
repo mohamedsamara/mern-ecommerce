@@ -11,6 +11,7 @@ import { Row, Col } from 'reactstrap';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 import SelectOption from '../../Common/SelectOption';
+import Switch from '../../Common/Switch';
 
 const EditCategory = props => {
   const {
@@ -19,7 +20,8 @@ const EditCategory = props => {
     categoryChange,
     formErrors,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    activateCategory
   } = props;
 
   const handleSubmit = event => {
@@ -67,6 +69,20 @@ const EditCategory = props => {
               handleSelectChange={value => {
                 categoryChange('products', value);
               }}
+            />
+          </Col>
+          <Col xs='12' md='12' className='mt-3 mb-2'>
+            <Switch
+              style={{ width: 100 }}
+              tooltip={category.isActive}
+              tooltipContent={`Disabling ${category.name} will also disable all ${category.name} products.`}
+              id={`enable-category-${category._id}`}
+              name={'isActive'}
+              label={'Active?'}
+              checked={category.isActive}
+              toggleCheckboxChange={value =>
+                activateCategory(category._id, value)
+              }
             />
           </Col>
         </Row>

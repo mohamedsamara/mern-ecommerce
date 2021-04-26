@@ -21,7 +21,7 @@ class List extends React.PureComponent {
   }
 
   render() {
-    const { history, brands, isLoading, user, activateBrand } = this.props;
+    const { history, brands, isLoading, user } = this.props;
 
     return (
       <>
@@ -33,11 +33,7 @@ class List extends React.PureComponent {
           {isLoading ? (
             <LoadingIndicator inline />
           ) : brands.length > 0 ? (
-            <BrandList
-              brands={brands}
-              activateBrand={activateBrand}
-              user={user}
-            />
+            <BrandList brands={brands} user={user} />
           ) : (
             <NotFound message='no brands found.' />
           )}
