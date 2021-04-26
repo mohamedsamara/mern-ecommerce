@@ -26,7 +26,7 @@ class List extends React.PureComponent {
     return (
       <>
         <SubPage
-          title='Brands'
+          title={user.role === 'ROLE_ADMIN' ? 'Brands' : 'Brand'}
           actionTitle={user.role === 'ROLE_ADMIN' && 'Add'}
           handleAction={() => history.push('/dashboard/brand/add')}
         >

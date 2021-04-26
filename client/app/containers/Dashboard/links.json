@@ -3,25 +3,25 @@
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/address", "name": "Address" },
-    { "to": "/product", "name": "Manage Products" },
-    { "to": "/category", "name": "Manage Categories" },
-    { "to": "/brand", "name": "Manage Brands" },
-    { "to": "/users", "name": "Manage Users" },
-    { "to": "/merchants", "name": "Manage Merchants" },
-    { "to": "/orders", "name": "Manage Orders" }
+    { "to": "/product", "name": "Products" },
+    { "to": "/category", "name": "Categories" },
+    { "to": "/brand", "name": "Brands" },
+    { "to": "/users", "name": "Users" },
+    { "to": "/merchants", "name": "Merchants" },
+    { "to": "/orders", "name": "Orders" }
   ],
   "ROLE_MERCHANT": [
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/address", "name": "Address" },
-    { "to": "/brand", "name": "Manage Brands" },
-    { "to": "/product", "name": "Manage Products" },
-    { "to": "/orders", "name": "Manage Orders" }
+    { "to": "/brand", "name": "Brand" },
+    { "to": "/product", "name": "Products" },
+    { "to": "/orders", "name": "Orders" }
   ],
   "ROLE_MEMBER": [
     { "to": "", "name": "Account Details" },
     { "to": "/security", "name": "Account Security" },
     { "to": "/address", "name": "Address" },
-    { "to": "/orders", "name": "Manage Orders" }
+    { "to": "/orders", "name": "Orders" }
   ]
 }
