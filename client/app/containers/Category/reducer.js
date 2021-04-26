@@ -12,9 +12,10 @@ import {
   CATEGORY_EDIT_CHANGE,
   SET_CATEGORY_FORM_ERRORS,
   SET_CATEGORY_FORM_EDIT_ERRORS,
-  RESET_CATEGORY,
   ADD_CATEGORY,
-  REMOVE_CATEGORY
+  REMOVE_CATEGORY,
+  SET_CATEGORIES_LOADING,
+  RESET_CATEGORY
 } from './constants';
 
 const initialState = {
@@ -30,7 +31,8 @@ const initialState = {
     isActive: true
   },
   formErrors: {},
-  editFormErrors: {}
+  editFormErrors: {},
+  isLoading: false
 };
 
 const categoryReducer = (state = initialState, action) => {
@@ -86,6 +88,11 @@ const categoryReducer = (state = initialState, action) => {
       return {
         ...state,
         editFormErrors: action.payload
+      };
+    case SET_CATEGORIES_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
     case RESET_CATEGORY:
       return {

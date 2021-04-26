@@ -32,7 +32,7 @@ const List = props => {
       {reviews.map((review, index) => (
         <div className='d-flex align-items-center mb-3 review-box' key={index}>
           <div className='mx-3'>{getAvatar(review)}</div>
-          <div className='flex-1 p-3 p-lg-4'>
+          <div className='p-3 p-lg-4 w-100'>
             <div className='d-flex align-items-center justify-content-between'>
               <h4 className='mb-0 mr-2 one-line-ellipsis'>{review.title}</h4>
               <ReactStars
@@ -50,7 +50,7 @@ const List = props => {
               />
             </div>
             <p className='mb-2 fs-12'>{formatDate(`${review?.created}`)}</p>
-            <p className='mb-0'>{`${review?.review}`}</p>
+            <p className='mb-0 three-line-ellipsis word-break-all'>{`${review?.review}`}</p>
           </div>
         </div>
       ))}

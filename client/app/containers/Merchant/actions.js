@@ -14,6 +14,7 @@ import {
   SELL_FORM_RESET,
   SIGNUP_CHANGE,
   SET_SIGNUP_FORM_ERRORS,
+  SET_MERCHANTS_LOADING,
   SIGNUP_RESET
 } from './constants';
 
@@ -89,6 +90,8 @@ export const sellWithUs = () => {
 export const fetchMerchants = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: SET_MERCHANTS_LOADING, payload: true });
+
       const response = await axios.get(`/api/merchant/list`);
 
       dispatch({
@@ -97,6 +100,8 @@ export const fetchMerchants = () => {
       });
     } catch (error) {
       handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_MERCHANTS_LOADING, payload: false });
     }
   };
 };

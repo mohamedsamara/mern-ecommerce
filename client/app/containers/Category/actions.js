@@ -16,9 +16,10 @@ import {
   CATEGORY_EDIT_CHANGE,
   SET_CATEGORY_FORM_ERRORS,
   SET_CATEGORY_FORM_EDIT_ERRORS,
-  RESET_CATEGORY,
   ADD_CATEGORY,
-  REMOVE_CATEGORY
+  REMOVE_CATEGORY,
+  SET_CATEGORIES_LOADING,
+  RESET_CATEGORY
 } from './constants';
 
 import handleError from '../../utils/error';
@@ -81,6 +82,7 @@ export const fetchStoreCategories = () => {
 export const fetchCategories = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: SET_CATEGORIES_LOADING, payload: true });
       const response = await axios.get(`/api/category`);
 
       dispatch({
@@ -89,6 +91,8 @@ export const fetchCategories = () => {
       });
     } catch (error) {
       handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_CATEGORIES_LOADING, payload: false });
     }
   };
 };

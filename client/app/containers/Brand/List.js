@@ -12,6 +12,8 @@ import actions from '../../actions';
 
 import BrandList from '../../components/Manager/BrandList';
 import SubPage from '../../components/Manager/SubPage';
+import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import NotFound from '../../components/Common/NotFound';
 
 class List extends React.PureComponent {
   componentDidMount() {
@@ -19,7 +21,7 @@ class List extends React.PureComponent {
   }
 
   render() {
-    const { history, brands, user, activateBrand } = this.props;
+    const { history, brands, isLoading, user, activateBrand } = this.props;
 
     return (
       <>
@@ -28,11 +30,17 @@ class List extends React.PureComponent {
           actionTitle={user.role === 'ROLE_ADMIN' && 'Add'}
           handleAction={() => history.push('/dashboard/brand/add')}
         >
-          <BrandList
-            brands={brands}
-            activateBrand={activateBrand}
-            user={user}
-          />
+          {isLoading ? (
+            <LoadingIndicator inline />
+          ) : brands.length > 0 ? (
+            <BrandList
+              brands={brands}
+              activateBrand={activateBrand}
+              user={user}
+            />
+          ) : (
+            <NotFound message='no brands found.' />
+          )}
         </SubPage>
       </>
     );
@@ -42,6 +50,7 @@ class List extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     brands: state.brand.brands,
+    isLoading: state.brand.isLoading,
     user: state.account.user
   };
 };

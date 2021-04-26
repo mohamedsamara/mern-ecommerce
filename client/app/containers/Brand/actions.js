@@ -16,10 +16,11 @@ import {
   BRAND_EDIT_CHANGE,
   SET_BRAND_FORM_ERRORS,
   SET_BRAND_FORM_EDIT_ERRORS,
-  RESET_BRAND,
   ADD_BRAND,
   REMOVE_BRAND,
-  FETCH_BRANDS_SELECT
+  FETCH_BRANDS_SELECT,
+  SET_BRANDS_LOADING,
+  RESET_BRAND
 } from './constants';
 
 import handleError from '../../utils/error';
@@ -66,6 +67,8 @@ export const fetchStoreBrands = () => {
 export const fetchBrands = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: SET_BRANDS_LOADING, payload: true });
+
       const response = await axios.get(`/api/brand`);
 
       dispatch({
@@ -74,6 +77,8 @@ export const fetchBrands = () => {
       });
     } catch (error) {
       handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_BRANDS_LOADING, payload: false });
     }
   };
 };

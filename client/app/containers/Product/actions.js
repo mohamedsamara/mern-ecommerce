@@ -76,6 +76,7 @@ export const resetProduct = () => {
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
     try {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
       const response = await axios.get(`/api/product`);
 
       dispatch({
@@ -84,6 +85,8 @@ export const fetchProducts = () => {
       });
     } catch (error) {
       handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
     }
   };
 };
@@ -91,9 +94,8 @@ export const fetchProducts = () => {
 // fetch store products api
 export const fetchStoreProducts = () => {
   return async (dispatch, getState) => {
-    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
-
     try {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
       const response = await axios.get(`/api/product/list`);
       dispatch({
         type: FETCH_STORE_PRODUCTS,

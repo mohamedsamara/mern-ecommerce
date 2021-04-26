@@ -12,6 +12,8 @@ import actions from '../../actions';
 
 import ProductList from '../../components/Manager/ProductList';
 import SubPage from '../../components/Manager/SubPage';
+import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import NotFound from '../../components/Common/NotFound';
 
 class List extends React.PureComponent {
   componentDidMount() {
@@ -19,7 +21,7 @@ class List extends React.PureComponent {
   }
 
   render() {
-    const { history, products } = this.props;
+    const { history, products, isLoading } = this.props;
 
     return (
       <>
@@ -28,7 +30,13 @@ class List extends React.PureComponent {
           actionTitle='Add'
           handleAction={() => history.push('/dashboard/product/add')}
         >
-          <ProductList products={products} />
+          {isLoading ? (
+            <LoadingIndicator inline />
+          ) : products.length > 0 ? (
+            <ProductList products={products} />
+          ) : (
+            <NotFound message='no products found.' />
+          )}
         </SubPage>
       </>
     );
@@ -38,6 +46,7 @@ class List extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     products: state.product.products,
+    isLoading: state.product.isLoading,
     user: state.account.user
   };
 };

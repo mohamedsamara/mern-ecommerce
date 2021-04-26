@@ -72,6 +72,10 @@
   color: $secondary-color !important;
 }
 
+.word-break-all {
+  word-break: break-all;
+}
+
 .one-line-ellipsis {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -83,6 +87,14 @@
 .two-line-ellipsis {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.three-line-ellipsis {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -12,10 +12,11 @@ import {
   BRAND_EDIT_CHANGE,
   SET_BRAND_FORM_ERRORS,
   SET_BRAND_FORM_EDIT_ERRORS,
-  RESET_BRAND,
   ADD_BRAND,
   REMOVE_BRAND,
-  FETCH_BRANDS_SELECT
+  FETCH_BRANDS_SELECT,
+  RESET_BRAND,
+  SET_BRANDS_LOADING
 } from './constants';
 
 const initialState = {
@@ -32,7 +33,8 @@ const initialState = {
     isActive: true
   },
   formErrors: {},
-  editFormErrors: {}
+  editFormErrors: {},
+  isLoading: false
 };
 
 const brandReducer = (state = initialState, action) => {
@@ -97,6 +99,11 @@ const brandReducer = (state = initialState, action) => {
       return {
         ...state,
         editFormErrors: action.payload
+      };
+    case SET_BRANDS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
     case RESET_BRAND:
       return {

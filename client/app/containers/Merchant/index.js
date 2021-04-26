@@ -12,6 +12,8 @@ import actions from '../../actions';
 
 import SubPage from '../../components/Manager/SubPage';
 import MerchantList from '../../components/Manager/MerchantList';
+import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import NotFound from '../../components/Common/NotFound';
 
 class Merchant extends React.PureComponent {
   componentDidMount() {
@@ -19,17 +21,28 @@ class Merchant extends React.PureComponent {
   }
 
   render() {
-    const { merchants, approveMerchant, rejectMerchant } = this.props;
+    const {
+      merchants,
+      isLoading,
+      approveMerchant,
+      rejectMerchant
+    } = this.props;
 
     return (
       <div className='merchant-dashboard'>
         <SubPage title={'Merchants'} isMenuOpen={null} />
 
-        <MerchantList
-          merchants={merchants}
-          approveMerchant={approveMerchant}
-          rejectMerchant={rejectMerchant}
-        />
+        {isLoading ? (
+          <LoadingIndicator inline />
+        ) : merchants.length > 0 ? (
+          <MerchantList
+            merchants={merchants}
+            approveMerchant={approveMerchant}
+            rejectMerchant={rejectMerchant}
+          />
+        ) : (
+          <NotFound message='no merchants found.' />
+        )}
       </div>
     );
   }
@@ -37,7 +50,8 @@ class Merchant extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    merchants: state.merchant.merchants
+    merchants: state.merchant.merchants,
+    isLoading: state.merchant.isLoading
   };
 };
 

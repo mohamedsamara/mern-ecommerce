@@ -5,25 +5,35 @@
 
   .review-summary {
     .left {
-      width: 12%;
+      width: 20%;
 
-      @include media-breakpoint-down(lg) {
-        width: 20%;
+      @include media-breakpoint-up(md) {
+        width: 25%;
+      }
+      @include media-breakpoint-up(lg) {
+        width: 15%;
       }
     }
     .middle {
-      width: 75%;
+      width: 60%;
 
-      @include media-breakpoint-down(lg) {
-        width: 60%;
+      @include media-breakpoint-up(md) {
+        width: 50%;
+      }
+      @include media-breakpoint-up(lg) {
+        width: 70%;
       }
     }
     .right {
-      width: 12%;
+      width: 20%;
       text-align: right;
 
-      @include media-breakpoint-down(lg) {
-        width: 20%;
+      @include media-breakpoint-up(md) {
+        width: 25%;
+      }
+
+      @include media-breakpoint-up(lg) {
+        width: 15%;
       }
     }
 

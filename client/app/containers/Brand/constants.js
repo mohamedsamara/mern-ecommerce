@@ -16,3 +16,4 @@ export const RESET_BRAND = 'src/Brand/RESET_BRAND';
 export const ADD_BRAND = 'src/Brand/ADD_BRAND';
 export const REMOVE_BRAND = 'src/Brand/REMOVE_BRAND';
 export const FETCH_BRANDS_SELECT = 'src/Brand/FETCH_BRANDS_SELECT';
+export const SET_BRANDS_LOADING = 'src/Brand/SET_BRANDS_LOADING';

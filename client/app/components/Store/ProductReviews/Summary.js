@@ -17,7 +17,7 @@ const Summary = props => {
   } = props;
 
   const getRatingPercentage = value => {
-    return parseInt(percentage(value, totalSummary).toFixed(2));
+    return parseFloat(percentage(value, totalSummary).toFixed(2));
   };
 
   const averageRating =
@@ -64,7 +64,7 @@ const Summary = props => {
                 ></div>
               </div>
             </div>
-            <div className='right'>
+            <div className='ml-2 right'>
               <span className='fw-2'>
                 {getRatingPercentage(parseInt(r[Object.keys(r)[0]]))}%
               </span>

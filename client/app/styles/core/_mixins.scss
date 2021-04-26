@@ -77,6 +77,13 @@
   max-height: $numLines * $lineHeight + unquote('em');
 }
 
+@mixin text-truncate($width: 200) {
+  width: $width + unquote('px');
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 // dark overflow
 @mixin dark-overflow {
   background-color: $dark-overflow-bg;

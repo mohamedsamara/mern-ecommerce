@@ -11,6 +11,7 @@ import {
   SELL_FORM_RESET,
   SIGNUP_CHANGE,
   SET_SIGNUP_FORM_ERRORS,
+  SET_MERCHANTS_LOADING,
   SIGNUP_RESET
 } from './constants';
 
@@ -30,7 +31,8 @@ const initialState = {
     lastName: '',
     password: ''
   },
-  signupFormErrors: {}
+  signupFormErrors: {},
+  isLoading: false
 };
 
 const merchantReducer = (state = initialState, action) => {
@@ -72,6 +74,11 @@ const merchantReducer = (state = initialState, action) => {
       return {
         ...state,
         signupFormErrors: action.payload
+      };
+    case SET_MERCHANTS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
     case SIGNUP_RESET:
       return {

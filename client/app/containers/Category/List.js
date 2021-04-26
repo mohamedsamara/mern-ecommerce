@@ -12,6 +12,8 @@ import actions from '../../actions';
 
 import CategoryList from '../../components/Manager/CategoryList';
 import SubPage from '../../components/Manager/SubPage';
+import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import NotFound from '../../components/Common/NotFound';
 
 class List extends React.PureComponent {
   componentDidMount() {
@@ -19,7 +21,7 @@ class List extends React.PureComponent {
   }
 
   render() {
-    const { history, categories, activateCategory } = this.props;
+    const { history, categories, isLoading, activateCategory } = this.props;
 
     return (
       <>
@@ -28,10 +30,16 @@ class List extends React.PureComponent {
           actionTitle='Add'
           handleAction={() => history.push('/dashboard/category/add')}
         >
-          <CategoryList
-            categories={categories}
-            activateCategory={activateCategory}
-          />
+          {isLoading ? (
+            <LoadingIndicator inline />
+          ) : categories.length > 0 ? (
+            <CategoryList
+              categories={categories}
+              activateCategory={activateCategory}
+            />
+          ) : (
+            <NotFound message='no categories found.' />
+          )}
         </SubPage>
       </>
     );
@@ -41,6 +49,7 @@ class List extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     categories: state.category.categories,
+    isLoading: state.category.isLoading,
     user: state.account.user
   };
 };
