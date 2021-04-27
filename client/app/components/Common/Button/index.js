@@ -29,6 +29,8 @@ const Button = props => {
     text,
     role,
     icon,
+    iconDirection,
+    iconClassName,
     onClick
   } = props;
 
@@ -41,7 +43,11 @@ const Button = props => {
 
   const classNames = `input-btn${`${className && ` ${className}`}`}${
     btnVariant && ` ${btnVariant}`
-  }${` ${size}`} ${btn}`;
+  }${` ${size}`} ${btn} ${
+    iconDirection === 'left' ? 'icon-left' : 'icon-right'
+  }`;
+
+  const iconClassNames = `btn-icon${`${iconClassName && ` ${iconClassName}`}`}`;
 
   return (
     <button
@@ -55,8 +61,17 @@ const Button = props => {
       type={type}
       onClick={onClick}
     >
-      {text && <span className='btn-text'>{text}</span>}
-      {icon && <div className='btn-icon'>{icon}</div>}
+      {iconDirection === 'left' ? (
+        <>
+          {icon && <div className={iconClassNames}>{icon}</div>}
+          {text && <span className='btn-text'>{text}</span>}
+        </>
+      ) : (
+        <>
+          {text && <span className='btn-text'>{text}</span>}
+          {icon && <div className={iconClassNames}>{icon}</div>}
+        </>
+      )}
     </button>
   );
 };
@@ -65,7 +80,9 @@ Button.defaultProps = {
   type: 'button',
   variant: 'secondary',
   size: 'md',
-  className: ''
+  className: '',
+  iconDirection: 'left',
+  iconClassName: ''
 };
 
 export default Button;

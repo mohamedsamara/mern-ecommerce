@@ -25,7 +25,8 @@ class Merchant extends React.PureComponent {
       merchants,
       isLoading,
       approveMerchant,
-      rejectMerchant
+      rejectMerchant,
+      deleteMerchant
     } = this.props;
 
     return (
@@ -39,6 +40,7 @@ class Merchant extends React.PureComponent {
             merchants={merchants}
             approveMerchant={approveMerchant}
             rejectMerchant={rejectMerchant}
+            deleteMerchant={deleteMerchant}
           />
         ) : (
           <NotFound message='no merchants found.' />

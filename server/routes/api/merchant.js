@@ -200,6 +200,27 @@ router.post('/signup/:token', async (req, res) => {
   }
 });
 
+router.delete(
+  '/delete/:id',
+  auth,
+  role.checkRole(role.ROLES.Admin),
+  async (req, res) => {
+    try {
+      const merchant = await Merchant.deleteOne({ _id: req.params.id });
+
+      res.status(200).json({
+        success: true,
+        message: `Merchant has been deleted successfully!`,
+        merchant
+      });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
 const createMerchantBrand = async ({ _id, brand, business }) => {
   const newBrand = new Brand({
     name: brand,

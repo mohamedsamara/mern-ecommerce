@@ -6,6 +6,7 @@
 
 import {
   FETCH_MERCHANTS,
+  REMOVE_MERCHANT,
   SELL_FORM_CHANGE,
   SET_SELL_FORM_ERRORS,
   SELL_FORM_RESET,
@@ -46,6 +47,16 @@ const merchantReducer = (state = initialState, action) => {
         ...state,
         merchants: action.payload
       };
+    case REMOVE_MERCHANT:
+      const index = state.merchants.findIndex(b => b._id === action.payload);
+      return {
+        ...state,
+        merchants: [
+          ...state.merchants.slice(0, index),
+          ...state.merchants.slice(index + 1)
+        ]
+      };
+
     case SELL_FORM_CHANGE:
       return {
         ...state,

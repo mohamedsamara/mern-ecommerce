@@ -107,7 +107,7 @@
       &.nav-brand-dropdown {
         padding: 0;
         @include media-breakpoint-down(sm) {
-          left: 0;
+          left: -30px;
           min-width: 270px;
         }
       }

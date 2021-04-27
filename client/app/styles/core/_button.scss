@@ -252,26 +252,56 @@ body.user-is-tabbing button:focus {
     }
   }
 
-  // with icon styles
-  &.with-icon {
-    .btn-text {
-      margin-left: 5px;
-    }
-
-    .btn-icon {
-      margin-left: 10px;
-    }
-
-    &:hover {
-      border-color: transparent;
-      -webkit-transition: $layout-transition-speed;
-      transition: $layout-transition-speed;
-
-      svg {
-        fill: $white;
-        stroke: $white !important;
+  &.custom-btn-primary {
+    &.with-icon {
+      &:hover {
+        border-color: transparent;
         -webkit-transition: $layout-transition-speed;
         transition: $layout-transition-speed;
+
+        svg {
+          fill: $white;
+          stroke: $white !important;
+          -webkit-transition: $layout-transition-speed;
+          transition: $layout-transition-speed;
+        }
+      }
+    }
+  }
+
+  &.custom-btn-danger {
+    &.with-icon {
+      &:hover {
+        border-color: transparent;
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
+
+        svg {
+          fill: $white;
+          stroke: $white !important;
+          -webkit-transition: $layout-transition-speed;
+          transition: $layout-transition-speed;
+        }
+      }
+    }
+  }
+
+  // with icon styles
+  &.with-icon {
+    &.icon-left {
+      .btn-icon {
+        margin-right: 6px;
+      }
+      .btn-text {
+        margin-right: 5px;
+      }
+    }
+    &.icon-right {
+      .btn-icon {
+        margin-left: 6px;
+      }
+      .btn-text {
+        margin-left: 5px;
       }
     }
   }

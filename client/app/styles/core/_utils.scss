@@ -104,6 +104,12 @@
   @include text-truncate();
 }
 
+.w-lg-auto {
+  @include media-breakpoint-up(lg) {
+    width: auto !important;
+  }
+}
+
 .box-shadow-primary {
   box-shadow: $primary-box-shadow;
 }

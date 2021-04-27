@@ -10,6 +10,7 @@ import axios from 'axios';
 
 import {
   FETCH_MERCHANTS,
+  REMOVE_MERCHANT,
   SELL_FORM_CHANGE,
   SET_SELL_FORM_ERRORS,
   SELL_FORM_RESET,
@@ -181,6 +182,31 @@ export const merchantSignUp = token => {
     } catch (error) {
       const title = `Please try to signup again!`;
       handleError(error, dispatch, title);
+    }
+  };
+};
+
+// delete merchant api
+export const deleteMerchant = id => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.delete(`/api/merchant/delete/${id}`);
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      if (response.data.success == true) {
+        dispatch(success(successfulOptions));
+        dispatch({
+          type: REMOVE_MERCHANT,
+          payload: id
+        });
+      }
+    } catch (error) {
+      handleError(error, dispatch);
     }
   };
 };
