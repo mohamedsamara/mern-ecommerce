@@ -17,21 +17,19 @@ const ProductList = props => {
         <Link
           to={`/dashboard/product/edit/${product._id}`}
           key={index}
-          className='d-block'
+          className='d-flex flex-row align-items-center mx-0 mb-3 product-box'
         >
-          <div className='d-flex flex-column flex-lg-row align-items-lg-center mb-3 product-box'>
-            <img
-              className='item-image'
-              src={`${
-                product && product.imageUrl
-                  ? product.imageUrl
-                  : '/images/placeholder-image.png'
-              }`}
-            />
-            <div className='p-4 p-lg-3'>
-              <h4>{product.name}</h4>
-              <p className='product-desc mb-2'>{product.description}</p>
-            </div>
+          <img
+            className='item-image'
+            src={`${
+              product && product.imageUrl
+                ? product.imageUrl
+                : '/images/placeholder-image.png'
+            }`}
+          />
+          <div className='d-flex flex-column justify-content-center px-3 text-truncate'>
+            <h4 className='text-truncate'>{product.name}</h4>
+            <p className='mb-2 text-truncate'>{product.description}</p>
           </div>
         </Link>
       ))}

@@ -13,36 +13,33 @@ const ProductList = props => {
   const { products } = props;
   return (
     <div className='product-list'>
-      <Row className='flex-row'>
-        {products.map((product, index) => (
-          <Col
-            xs='12'
-            md='6'
-            lg='4'
-            key={index}
-            className='mb-3 mb-md-3 px-3 px-md-2'
-          >
-            <div className='product-container'>
-              <div className='item-box'>
-                <div className='item-body'>
-                  <Link to={`/product/${product.slug}`} className='item-link'>
+      {products.map((product, index) => (
+        <div key={index} className='mb-3 mb-md-0'>
+          <div className='product-container'>
+            <div className='item-box'>
+              <Link to={`/product/${product.slug}`} className='item-link'>
+                <div className='item-image-container'>
+                  <div className='item-image-box'>
                     <img
+                      className='item-image'
                       src={`${
                         product.imageUrl
                           ? product.imageUrl
                           : '/images/placeholder-image.png'
                       }`}
                     />
-                    <div className='item-details p-3'>
-                      <h1 className='item-name'>{product.name}</h1>
-                      {product.brand && (
-                        <p className='by'>
-                          By <span>{product.brand.name}</span>
-                        </p>
-                      )}
-                      <p className='item-desc mb-0'>{product.description}</p>
-                    </div>
-                  </Link>
+                  </div>
+                </div>
+                <div className='item-body'>
+                  <div className='item-details p-3'>
+                    <h1 className='item-name'>{product.name}</h1>
+                    {product.brand && (
+                      <p className='by'>
+                        By <span>{product.brand.name}</span>
+                      </p>
+                    )}
+                    <p className='item-desc mb-0'>{product.description}</p>
+                  </div>
                 </div>
                 <div className='item-footer px-3'>
                   <p className='price'>${product.price}</p>
@@ -52,11 +49,11 @@ const ProductList = props => {
                       <p className='stock out-of-stock'>Out of stock</p>
                     )} */}
                 </div>
-              </div>
+              </Link>
             </div>
-          </Col>
-        ))}
-      </Row>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
