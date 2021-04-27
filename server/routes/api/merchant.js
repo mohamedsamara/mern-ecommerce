@@ -11,7 +11,7 @@ const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
 
-router.post('/add', async (req, res) => {
+router.post('/seller-request', async (req, res) => {
   try {
     const name = req.body.name;
     const business = req.body.business;
@@ -35,6 +35,14 @@ router.post('/add', async (req, res) => {
       return res
         .status(400)
         .json({ error: 'You must enter a phone number and an email address.' });
+    }
+
+    const existingMerchant = await Merchant.findOne({ email });
+
+    if (existingMerchant) {
+      return res
+        .status(400)
+        .json({ error: 'That email address is already in use.' });
     }
 
     const merchant = new Merchant({

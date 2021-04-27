@@ -13,10 +13,18 @@ import actions from '../../actions';
 
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
+import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
 class Sell extends React.PureComponent {
   render() {
-    const { sellFormData, formErrors, sellFormChange, sellWithUs } = this.props;
+    const {
+      sellFormData,
+      formErrors,
+      sellFormChange,
+      sellWithUs,
+      isSubmitting,
+      isLoading
+    } = this.props;
 
     const handleSubmit = event => {
       event.preventDefault();
@@ -25,6 +33,7 @@ class Sell extends React.PureComponent {
 
     return (
       <div className='sell'>
+        {isLoading && <LoadingIndicator />}
         <h2>Become A MERN Store Seller!</h2>
         <hr />
         <Row>
@@ -99,7 +108,7 @@ class Sell extends React.PureComponent {
               </Row>
               <hr />
               <div className='sell-actions'>
-                <Button type='submit' text='Submit' />
+                <Button type='submit' text='Submit' disabled={isSubmitting} />
               </div>
             </form>
           </Col>
@@ -134,7 +143,9 @@ class Sell extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     sellFormData: state.merchant.sellFormData,
-    formErrors: state.merchant.formErrors
+    formErrors: state.merchant.formErrors,
+    isSubmitting: state.merchant.isSellSubmitting,
+    isLoading: state.merchant.isSellLoading
   };
 };
 

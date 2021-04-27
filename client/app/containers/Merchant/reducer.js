@@ -12,6 +12,8 @@ import {
   SIGNUP_CHANGE,
   SET_SIGNUP_FORM_ERRORS,
   SET_MERCHANTS_LOADING,
+  SET_SELL_SUBMITTING,
+  SET_SELL_LOADING,
   SIGNUP_RESET
 } from './constants';
 
@@ -32,7 +34,9 @@ const initialState = {
     password: ''
   },
   signupFormErrors: {},
-  isLoading: false
+  isLoading: false,
+  isSellSubmitting: false,
+  isSellLoading: false
 };
 
 const merchantReducer = (state = initialState, action) => {
@@ -79,6 +83,16 @@ const merchantReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.payload
+      };
+    case SET_SELL_SUBMITTING:
+      return {
+        ...state,
+        isSellSubmitting: action.payload
+      };
+    case SET_SELL_LOADING:
+      return {
+        ...state,
+        isSellLoading: action.payload
       };
     case SIGNUP_RESET:
       return {

@@ -16,6 +16,8 @@ import {
   SIGNUP_CHANGE,
   SET_SIGNUP_FORM_ERRORS,
   SET_MERCHANTS_LOADING,
+  SET_SELL_SUBMITTING,
+  SET_SELL_LOADING,
   SIGNUP_RESET
 } from './constants';
 
@@ -73,7 +75,13 @@ export const sellWithUs = () => {
         return dispatch({ type: SET_SELL_FORM_ERRORS, payload: errors });
       }
 
-      const response = await axios.post('/api/merchant/add', merchant);
+      dispatch({ type: SET_SELL_SUBMITTING, payload: true });
+      dispatch({ type: SET_SELL_LOADING, payload: true });
+
+      const response = await axios.post(
+        '/api/merchant/seller-request',
+        merchant
+      );
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -85,6 +93,9 @@ export const sellWithUs = () => {
       dispatch(success(successfulOptions));
     } catch (error) {
       handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_SELL_SUBMITTING, payload: false });
+      dispatch({ type: SET_SELL_LOADING, payload: false });
     }
   };
 };
