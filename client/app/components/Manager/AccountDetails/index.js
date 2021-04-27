@@ -62,7 +62,8 @@ const AccountDetails = props => {
               }}
             />
           </Col>
-          <Col xs='12' md='6'>
+          {/* TODO: update email feature to be added instead form change */}
+          {/* <Col xs='12' md='6'>
             <Input
               type={'text'}
               label={'Email'}
@@ -73,8 +74,8 @@ const AccountDetails = props => {
                 accountChange(name, value);
               }}
             />
-          </Col>
-          <Col xs='12' md='6'>
+          </Col> */}
+          <Col xs='12' md='12'>
             <Input
               type={'text'}
               label={'Phone Number'}

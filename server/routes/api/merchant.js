@@ -96,7 +96,12 @@ router.put('/approve/:merchantId', auth, async (req, res) => {
       new: true
     });
 
-    await createMerchantUser(merchantDoc.email, merchantId, req.headers.host);
+    await createMerchantUser(
+      merchantDoc.email,
+      merchantDoc.name,
+      merchantId,
+      req.headers.host
+    );
 
     res.status(200).json({
       success: true
@@ -198,8 +203,8 @@ const createMerchantBrand = async ({ _id, brand, business }) => {
   return await newBrand.save();
 };
 
-const createMerchantUser = async (email, merchant, host) => {
-  const firstName = '';
+const createMerchantUser = async (email, name, merchant, host) => {
+  const firstName = name;
   const lastName = '';
 
   const existingUser = await User.findOne({ email });
@@ -216,6 +221,8 @@ const createMerchantUser = async (email, merchant, host) => {
     });
 
     await createMerchantBrand(merchantDoc);
+
+    await mailgun.sendEmail(email, 'merchant-welcome', null, name);
 
     return await User.findOneAndUpdate(query, update, {
       new: true

@@ -37,6 +37,17 @@ exports.merchantSignup = (host, { resetToken, email }) => {
   return message;
 };
 
+exports.merchantWelcome = name => {
+  const message = {
+    subject: 'Merchant Registration',
+    text:
+      `Hi ${name}! Congratulations! Your application for merchant account has been accepted. \n\n` +
+      `It looks like you already have a member account with us. Please sign in with your member credentials and you will be able to see your merchant account.`
+  };
+
+  return message;
+};
+
 exports.signupEmail = name => {
   const message = {
     subject: 'Account Registration',
