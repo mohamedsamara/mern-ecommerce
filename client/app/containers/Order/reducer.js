@@ -8,7 +8,6 @@ import {
   FETCH_ORDERS,
   FETCH_ORDER,
   UPDATE_ORDER,
-  TOGGLE_ADD_ORDER,
   SET_ORDERS_LOADING,
   CLEAR_ORDERS
 } from './constants';
@@ -23,8 +22,7 @@ const initialState = {
     total: 0,
     status: ''
   },
-  isLoading: false,
-  isOrderAddOpen: false
+  isLoading: false
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -58,11 +56,6 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.payload
-      };
-    case TOGGLE_ADD_ORDER:
-      return {
-        ...state,
-        isOrderAddOpen: !state.isOrderAddOpen
       };
     case CLEAR_ORDERS:
       return {

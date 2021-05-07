@@ -10,7 +10,6 @@ import axios from 'axios';
 import {
   ACCOUNT_CHANGE,
   FETCH_PROFILE,
-  TOGGLE_RESET_FORM,
   CLEAR_ACCOUNT,
   SET_PROFILE_LOADING
 } from './constants';
@@ -23,12 +22,6 @@ export const accountChange = (name, value) => {
   return {
     type: ACCOUNT_CHANGE,
     payload: formData
-  };
-};
-
-export const toggleResetForm = () => {
-  return {
-    type: TOGGLE_RESET_FORM
   };
 };
 

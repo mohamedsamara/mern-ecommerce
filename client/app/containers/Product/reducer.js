@@ -31,7 +31,6 @@ const initialState = {
   },
   storeProduct: {},
   productsSelect: [],
-  isProductAddOpen: false,
   productFormData: {
     sku: '',
     name: '',

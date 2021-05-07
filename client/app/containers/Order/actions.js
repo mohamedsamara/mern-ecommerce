@@ -12,19 +12,12 @@ import {
   FETCH_ORDERS,
   FETCH_ORDER,
   UPDATE_ORDER,
-  TOGGLE_ADD_ORDER,
   SET_ORDERS_LOADING,
   CLEAR_ORDERS
 } from './constants';
 import { clearCart, getCartId } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
-
-export const toggleAddOrder = () => {
-  return {
-    type: TOGGLE_ADD_ORDER
-  };
-};
 
 export const updateOrder = value => {
   return {

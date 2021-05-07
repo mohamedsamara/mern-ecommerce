@@ -15,7 +15,6 @@ import {
 } from './constants';
 
 import { signOut } from '../Login/actions';
-import { toggleResetForm } from '../Account/actions';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 
@@ -111,7 +110,6 @@ export const resetAccountPassword = () => {
 
       if (response.data.success === true) {
         dispatch(signOut());
-        dispatch(toggleResetForm());
       }
 
       dispatch(success(successfulOptions));

@@ -7,7 +7,6 @@
 import {
   ACCOUNT_CHANGE,
   FETCH_PROFILE,
-  TOGGLE_RESET_FORM,
   CLEAR_ACCOUNT,
   SET_PROFILE_LOADING
 } from './constants';
@@ -17,7 +16,6 @@ const initialState = {
     firstName: '',
     lastName: ''
   },
-  isFormOpen: false,
   isLoading: false
 };
 
@@ -38,11 +36,6 @@ const accountReducer = (state = initialState, action) => {
           ...state.user,
           ...action.payload
         }
-      };
-    case TOGGLE_RESET_FORM:
-      return {
-        ...state,
-        isFormOpen: !state.isFormOpen
       };
     case CLEAR_ACCOUNT:
       return {
