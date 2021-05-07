@@ -89,3 +89,22 @@
     }
   }
 }
+
+.review-dashboard {
+  .review-box {
+    border-radius: $border-radius-default;
+    box-shadow: $secondary-box-shadow;
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      font-size: $font-size-x-small;
+
+      @include media-breakpoint-up(md) {
+        width: 40px;
+        height: 40px;
+        font-size: $font-size-medium;
+      }
+    }
+  }
+}

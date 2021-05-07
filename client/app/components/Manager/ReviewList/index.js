@@ -7,29 +7,42 @@
 import React from 'react';
 
 import { formatDate } from '../../../helpers/date';
+import { getRandomColors } from '../../../helpers';
 import Button from '../../Common/Button';
 import { CheckIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
 
 const ReviewList = props => {
   const { reviews, approveReview, rejectReview, deleteReview } = props;
 
+  const getAvatar = review => {
+    const color = getRandomColors();
+    if (review.user.firstName) {
+      return (
+        <div
+          className='d-flex flex-column justify-content-center align-items-center fw-1 text-white avatar'
+          style={{ backgroundColor: color ? color : 'red' }}
+        >
+          {review.user.firstName.charAt(0)}
+        </div>
+      );
+    }
+  };
+
   return (
     <div className='reviews-list'>
       {reviews.map((review, index) => (
         <div key={index} className='review-box'>
           <div className='mb-3 p-4'>
-            <label className='text-black'>Title</label>
-            <p className='fw-2 text-truncate'>{review.title}</p>
+            <div className='d-flex align-items-center justify-content-between'>
+              <p className='fw-2 text-truncate'>{review.title}</p>
+              {getAvatar(review)}
+            </div>
+
             <label className='text-black'>Review</label>
-            <p className='text-truncate'>{review.review}</p>
+            <p className='word-break-all'>{review.review}</p>
             <label className='text-black'>Review date</label>
             <p>{formatDate(review.created)}</p>
-
             <hr />
-
-            {/* enum: ['Waiting Approval', 'Rejected', 'Approved'] */}
-
-            {/* Waiting Approval */}
             {review.status === 'Approved' ? (
               <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
                 <div className='d-flex flex-row mx-0'>
