@@ -22,15 +22,3 @@ export const ADD_PRODUCT = 'src/Product/ADD_PRODUCT';
 export const REMOVE_PRODUCT = 'src/Product/REMOVE_PRODUCT';
 export const FETCH_PRODUCTS_SELECT = 'src/Product/FETCH_PRODUCTS_SELECT';
 export const SET_PRODUCTS_LOADING = 'src/Product/SET_PRODUCTS_LOADING';
-
-/*
- *
- * Product Review constants
- *
- */
-
-export const ADD_REVIEW = 'src/Product/ADD_REVIEW';
-export const FETCH_REVIEWS = 'src/Product/FETCH_REVIEWS';
-export const REVIEW_CHANGE = 'src/Product/REVIEW_CHANGE';
-export const RESET_REVIEW = 'src/Product/RESET_REVIEW';
-export const SET_REVIEW_FORM_ERRORS = 'src/Product/SET_REVIEW_FORM_ERRORS';

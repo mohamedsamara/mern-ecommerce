@@ -174,11 +174,10 @@ const mapStateToProps = state => {
     productShopData: state.product.productShopData,
     shopFormErrors: state.product.shopFormErrors,
     isLoading: state.product.isLoading,
-    addReview: state.product.addReview,
-    reviews: state.product.reviews,
-    reviewsSummary: state.product.reviewsSummary,
-    reviewFormData: state.product.reviewFormData,
-    reviewFormErrors: state.product.reviewFormErrors,
+    reviews: state.review.reviews,
+    reviewsSummary: state.review.reviewsSummary,
+    reviewFormData: state.review.reviewFormData,
+    reviewFormErrors: state.review.reviewFormErrors,
     itemsInCart: state.cart.itemsInCart
   };
 };

@@ -19,7 +19,7 @@ const ReviewSchema = new Schema({
   },
   rating: {
     type: Number,
-	  default: 0
+    default: 0
   },
   review: {
     type: String,
@@ -28,6 +28,11 @@ const ReviewSchema = new Schema({
   isRecommended: {
     type: Boolean,
     default: true
+  },
+  status: {
+    type: String,
+    default: 'Waiting Approval',
+    enum: ['Waiting Approval', 'Rejected', 'Approved']
   },
   updated: Date,
   created: {

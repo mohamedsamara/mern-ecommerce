@@ -28,6 +28,7 @@ import * as shop from './containers/Shop/actions';
 import * as merchant from './containers/Merchant/actions';
 import * as contact from './containers/Contact/actions';
 import * as order from './containers/Order/actions';
+import * as review from './containers/Review/actions';
 
 export default function mapDispatchToProps(dispatch) {
   return bindActionCreators(
@@ -53,7 +54,8 @@ export default function mapDispatchToProps(dispatch) {
       ...shop,
       ...merchant,
       ...contact,
-      ...order
+      ...order,
+      ...review
     },
     dispatch
   );

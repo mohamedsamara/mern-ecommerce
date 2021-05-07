@@ -26,17 +26,36 @@ router.post('/add', auth, (req, res) => {
   });
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const reviews = await Review.find({
+      // status: 'Accepted'
+    });
+
+    res.status(200).json({
+      reviews
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
 router.get('/:slug', async (req, res) => {
   try {
     const productDoc = await Product.findOne({ slug: req.params.slug });
 
     if (!productDoc || productDoc?.brand?.isActive === false) {
       return res.status(404).json({
-        message: 'No product found.'
+        message: 'No reviews for this product.'
       });
     }
 
-    const reviews = await Review.find({ product: productDoc._id }).populate({
+    const reviews = await Review.find({
+      product: productDoc._id,
+      status: 'Accepted'
+    }).populate({
       path: 'user',
       select: 'firstName'
     });

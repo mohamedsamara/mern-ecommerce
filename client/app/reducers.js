@@ -31,6 +31,7 @@ import shopReducer from './containers/Shop/reducer';
 import merchantReducer from './containers/Merchant/reducer';
 import contactReducer from './containers/Contact/reducer';
 import orderReducer from './containers/Order/reducer';
+import reviewReducer from './containers/Review/reducer';
 
 const createReducer = history =>
   combineReducers({
@@ -47,7 +48,7 @@ const createReducer = history =>
     newsletter: newsletterReducer,
     dashboard: dashboardReducer,
     account: accountReducer,
-    address:addressReducer,
+    address: addressReducer,
     resetPassword: resetPasswordReducer,
     users: usersReducer,
     product: productReducer,
@@ -57,7 +58,8 @@ const createReducer = history =>
     shop: shopReducer,
     merchant: merchantReducer,
     contact: contactReducer,
-    order: orderReducer
+    order: orderReducer,
+    review: reviewReducer
   });
 
 export default createReducer;

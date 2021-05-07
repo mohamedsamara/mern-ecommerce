@@ -20,12 +20,7 @@ import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   FETCH_PRODUCTS_SELECT,
-  SET_PRODUCTS_LOADING,
-  ADD_REVIEW,
-  FETCH_REVIEWS,
-  REVIEW_CHANGE,
-  RESET_REVIEW,
-  SET_REVIEW_FORM_ERRORS
+  SET_PRODUCTS_LOADING
 } from './constants';
 
 const initialState = {
@@ -57,24 +52,7 @@ const initialState = {
   },
   formErrors: {},
   editFormErrors: {},
-  shopFormErrors: {},
-  reviews: [],
-  reviewsSummary: {
-    ratingSummary: [],
-    totalRatings: 0,
-    totalReviews: 0,
-    totalSummary: 0
-  },
-  reviewFormData: {
-    title: '',
-    review: '',
-    rating: 0,
-    isRecommended: {
-      value: 1,
-      label: 'Yes'
-    }
-  },
-  reviewFormErrors: {}
+  shopFormErrors: {}
 };
 
 const productReducer = (state = initialState, action) => {
@@ -193,44 +171,6 @@ const productReducer = (state = initialState, action) => {
           quantity: 1
         },
         shopFormErrors: {}
-      };
-    case FETCH_REVIEWS:
-      return {
-        ...state,
-        reviews: action.payload.reviews,
-        reviewsSummary: action.payload.reviewsSummary
-      };
-    case ADD_REVIEW:
-      return {
-        ...state,
-        reviews: [...state.reviews, action.payload]
-      };
-    case REVIEW_CHANGE:
-      return {
-        ...state,
-        reviewFormData: {
-          ...state.reviewFormData,
-          ...action.payload
-        }
-      };
-    case RESET_REVIEW:
-      return {
-        ...state,
-        reviewFormData: {
-          title: '',
-          review: '',
-          rating: 0,
-          isRecommended: {
-            value: 1,
-            label: 'Yes'
-          }
-        },
-        reviewFormErrors: {}
-      };
-    case SET_REVIEW_FORM_ERRORS:
-      return {
-        ...state,
-        reviewFormErrors: action.payload
       };
     default:
       return state;
