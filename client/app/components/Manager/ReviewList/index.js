@@ -6,6 +6,8 @@
 
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 import { formatDate } from '../../../helpers/date';
 import { getRandomColors } from '../../../helpers';
 import Button from '../../Common/Button';
@@ -28,20 +30,48 @@ const ReviewList = props => {
     }
   };
 
+  const getProduct = review => {
+    if (review.product) {
+      const product = review.product;
+      return (
+        <div className='d-flex flex-column justify-content-center align-items-center fw-1 text-white'>
+          <img
+            className='item-image'
+            src={`${
+              product.imageUrl
+                ? product.imageUrl
+                : '/images/placeholder-image.png'
+            }`}
+          />
+        </div>
+      );
+    }
+  };
+
   return (
     <div className='reviews-list'>
       {reviews.map((review, index) => (
         <div key={index} className='review-box'>
           <div className='mb-3 p-4'>
-            <div className='d-flex align-items-center justify-content-between'>
-              <p className='fw-2 text-truncate'>{review.title}</p>
+            <div className='d-flex flex-row mx-0 mb-2 mb-lg-3 align-items-center justify-content-between'>
+              <p className='mb-0 fw-2 text-truncate'>{review.title}</p>
               {getAvatar(review)}
             </div>
-
-            <label className='text-black'>Review</label>
-            <p className='word-break-all'>{review.review}</p>
-            <label className='text-black'>Review date</label>
-            <p>{formatDate(review.created)}</p>
+            <div className='d-flex flex-column flex-lg-row mx-0 mb-3 align-items-start justify-content-between'>
+              <div className='w-100 mb-3 mb-lg-0 review-product-box'>
+                <Link
+                  to={`/product/${review.product.slug}`}
+                  className='default-link'
+                >
+                  {review?.product.name}
+                </Link>
+                <p className='mt-1 mb-0 fw-2 word-break-all'>{review.review}</p>
+              </div>
+              {getProduct(review)}
+            </div>
+            <label className='text-black'>{`Review Added on ${formatDate(
+              review.created
+            )}`}</label>
             <hr />
             {review.status === 'Approved' ? (
               <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>

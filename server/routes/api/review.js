@@ -35,6 +35,10 @@ router.get('/', async (req, res) => {
         path: 'user',
         select: 'firstName'
       })
+      .populate({
+        path: 'product',
+        select: 'name slug imageUrl'
+      })
       .sort('-created');
 
     res.status(200).json({
