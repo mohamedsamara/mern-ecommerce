@@ -25,7 +25,7 @@ const CartList = props => {
           <div className='item-details'>
             <Container>
               <Row className='mb-2 align-items-center'>
-                <Col xs='9'>
+                <Col xs='10' className='pr-0'>
                   <div className='d-flex align-items-center'>
                     <img
                       className='item-image mr-2'
@@ -47,7 +47,7 @@ const CartList = props => {
                     </Link>
                   </div>
                 </Col>
-                <Col xs='3' className='text-right'>
+                <Col xs='2' className='text-right'>
                   <Button
                     ariaLabel={`remove ${item.name} from cart`}
                     icon={<i className='icon-trash' aria-hidden='true' />}

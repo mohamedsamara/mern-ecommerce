@@ -74,6 +74,13 @@ body.user-is-tabbing textarea {
 .input-box {
   margin: 10px 0px;
 
+  input[type='text'],
+  input[type='number'],
+  input[type='password'],
+  input[type='file'] {
+    height: 45px;
+  }
+
   label {
     margin-bottom: 5px;
     color: $font-custom-color;
@@ -109,6 +116,10 @@ body.user-is-tabbing textarea {
   }
 
   .select-container {
+    .select-option__control {
+      height: 42px;
+    }
+
     .select-option__multi-value__label {
       font-weight: $font-weight-bold-one;
       font-size: $font-size-small;

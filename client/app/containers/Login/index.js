@@ -50,7 +50,7 @@ class Login extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 2 }}
               md={{ size: '6', order: 1 }}
-              className='col-no-padding'
+              className='p-0'
             >
               <Col xs='12' md='12'>
                 <Input
@@ -79,7 +79,11 @@ class Login extends React.PureComponent {
                 />
               </Col>
             </Col>
-            <Col xs={{ size: 12, order: 1 }} md={{ size: '6', order: 2 }}>
+            <Col
+              xs={{ size: 12, order: 1 }}
+              md={{ size: '6', order: 2 }}
+              className='mb-2 mb-md-0'
+            >
               <SignupProvider />
             </Col>
           </Row>
