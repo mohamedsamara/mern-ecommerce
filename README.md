@@ -18,14 +18,10 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
   * Redux Thunk middleware to handle asynchronous redux actions
 
 
-
 ## What's Next 
 
   * Add a payment method solution to enable checkout and collecting payments
   * Associate each Merchant to a payment account 
-  * Enable Admin to edit products & category products
-  * Enable Merchants to add products to a specific category
-
 
 ## Demo
 
@@ -81,7 +77,6 @@ $ npm start
 $ npm run start:production
 ```
 
-
 ## Languages & tools
 
 - [Node](https://nodejs.org/en/)
@@ -93,4 +88,25 @@ $ npm run start:production
 - [React](https://reactjs.org/)
 
 - [Webpack](https://webpack.js.org/)
+
+
+### Code Formatter
+
+- Add a `.vscode` directory
+- Create a file `settings.json` inside `.vscode`
+- Install Prettier - Code formatter in VSCode
+- Add the following snippet:  
+
+```json
+
+    {
+      "editor.formatOnSave": true,
+      "prettier.singleQuote": true,
+      "prettier.arrowParens": "avoid",
+      "prettier.jsxSingleQuote": true,
+      "prettier.trailingComma": "none",
+      "javascript.preferences.quoteStyle": "single",
+    }
+
+```
 
