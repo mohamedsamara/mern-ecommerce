@@ -20,7 +20,7 @@ router.post('/add', auth, (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: `review has been added successfully!`,
+      message: `Your review has been added successfully and will appear when approved!`,
       review: data
     });
   });
@@ -30,7 +30,12 @@ router.get('/', async (req, res) => {
   try {
     const reviews = await Review.find({
       // status: 'Accepted'
-    });
+    })
+      .populate({
+        path: 'user',
+        select: 'firstName'
+      })
+      .sort('-created');
 
     res.status(200).json({
       reviews
@@ -55,10 +60,12 @@ router.get('/:slug', async (req, res) => {
     const reviews = await Review.find({
       product: productDoc._id,
       status: 'Accepted'
-    }).populate({
-      path: 'user',
-      select: 'firstName'
-    });
+    })
+      .populate({
+        path: 'user',
+        select: 'firstName'
+      })
+      .sort('-created');
 
     res.status(200).json({
       reviews
@@ -83,6 +90,55 @@ router.put('/:id', async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'review has been updated successfully!'
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+// approve review
+router.put('/approve/:reviewId', auth, async (req, res) => {
+  try {
+    const reviewId = req.params.reviewId;
+
+    const query = { _id: reviewId };
+    const update = {
+      status: 'Approved',
+      isActive: true
+    };
+
+    await Review.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+// reject review
+router.put('/reject/:reviewId', auth, async (req, res) => {
+  try {
+    const reviewId = req.params.reviewId;
+
+    const query = { _id: reviewId };
+    const update = {
+      status: 'Rejected'
+    };
+
+    await Review.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true
     });
   } catch (error) {
     res.status(400).json({

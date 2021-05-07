@@ -11,9 +11,9 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import SubPage from '../../components/Manager/SubPage';
-import MerchantList from '../../components/Manager/MerchantList';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
+import MerchantList from '../../components/Manager/MerchantList';
 
 class Merchant extends React.PureComponent {
   componentDidMount() {
@@ -32,7 +32,6 @@ class Merchant extends React.PureComponent {
     return (
       <div className='merchant-dashboard'>
         <SubPage title={'Merchants'} isMenuOpen={null} />
-
         {isLoading ? (
           <LoadingIndicator inline />
         ) : merchants.length > 0 ? (

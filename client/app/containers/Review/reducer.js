@@ -7,8 +7,10 @@
 import {
   FETCH_REVIEWS,
   ADD_REVIEW,
+  REMOVE_REVIEW,
   FETCH_PRODUCT_REVIEWS,
   REVIEW_CHANGE,
+  SET_REVIEWS_LOADING,
   RESET_REVIEW,
   SET_REVIEW_FORM_ERRORS
 } from './constants';
@@ -51,7 +53,16 @@ const reviewReducer = (state = initialState, action) => {
     case ADD_REVIEW:
       return {
         ...state,
-        reviews: [...state.reviews, action.payload]
+        productReviews: [...state.productReviews, action.payload]
+      };
+    case REMOVE_REVIEW:
+      const index = state.reviews.findIndex(b => b._id === action.payload);
+      return {
+        ...state,
+        reviews: [
+          ...state.reviews.slice(0, index),
+          ...state.reviews.slice(index + 1)
+        ]
       };
     case REVIEW_CHANGE:
       return {
@@ -60,6 +71,11 @@ const reviewReducer = (state = initialState, action) => {
           ...state.reviewFormData,
           ...action.payload
         }
+      };
+    case SET_REVIEWS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
     case RESET_REVIEW:
       return {
@@ -80,6 +96,7 @@ const reviewReducer = (state = initialState, action) => {
         ...state,
         reviewFormErrors: action.payload
       };
+
     default:
       return state;
   }

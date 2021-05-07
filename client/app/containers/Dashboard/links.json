@@ -8,7 +8,8 @@
     { "to": "/brand", "name": "Brands" },
     { "to": "/users", "name": "Users" },
     { "to": "/merchants", "name": "Merchants" },
-    { "to": "/orders", "name": "Orders" }
+    { "to": "/orders", "name": "Orders" },
+    { "to": "/review", "name": "Reviews" }
   ],
   "ROLE_MERCHANT": [
     { "to": "", "name": "Account Details" },

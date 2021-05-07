@@ -56,7 +56,6 @@ const merchantReducer = (state = initialState, action) => {
           ...state.merchants.slice(index + 1)
         ]
       };
-
     case SELL_FORM_CHANGE:
       return {
         ...state,

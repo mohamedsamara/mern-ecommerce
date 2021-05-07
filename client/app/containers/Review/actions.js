@@ -9,13 +9,16 @@ import axios from 'axios';
 
 import {
   FETCH_REVIEWS,
+  SET_REVIEWS_LOADING,
   ADD_REVIEW,
+  REMOVE_REVIEW,
   FETCH_PRODUCT_REVIEWS,
   REVIEW_CHANGE,
   RESET_REVIEW,
   SET_REVIEW_FORM_ERRORS
 } from './constants';
 import handleError from '../../utils/error';
+import { allFieldsValidation } from '../../utils/validation';
 
 export const reviewChange = (name, value) => {
   let formData = {};
@@ -30,14 +33,64 @@ export const reviewChange = (name, value) => {
 export const fetchReviews = () => {
   return async (dispatch, getState) => {
     try {
-      // dispatch(setProfileLoading(true));
-      const response = await axios.get(`/api/reviews`);
+      dispatch({ type: SET_REVIEWS_LOADING, payload: true });
+
+      const response = await axios.get(`/api/review`);
 
       dispatch({ type: FETCH_REVIEWS, payload: response.data.reviews });
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      // dispatch(setProfileLoading(false));
+      dispatch({ type: SET_REVIEWS_LOADING, payload: false });
+    }
+  };
+};
+
+export const approveReview = review => {
+  return async (dispatch, getState) => {
+    try {
+      await axios.put(`/api/review/approve/${review._id}`);
+
+      dispatch(fetchReviews());
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
+export const rejectReview = review => {
+  return async (dispatch, getState) => {
+    try {
+      await axios.put(`/api/review/reject/${review._id}`);
+
+      dispatch(fetchReviews());
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
+// delete review api
+export const deleteReview = id => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.delete(`/api/review/delete/${id}`);
+
+      const successfulOptions = {
+        title: `${response.data.message}`,
+        position: 'tr',
+        autoDismiss: 1
+      };
+
+      if (response.data.success == true) {
+        dispatch(success(successfulOptions));
+        dispatch({
+          type: REMOVE_REVIEW,
+          payload: id
+        });
+      }
+    } catch (error) {
+      handleError(error, dispatch);
     }
   };
 };
@@ -83,7 +136,7 @@ export const addProductReview = () => {
         isRecommended: 'required'
       };
 
-      const review = getState().product.reviewFormData;
+      const review = getState().review.reviewFormData;
       const product = getState().product.storeProduct;
 
       const newReview = {

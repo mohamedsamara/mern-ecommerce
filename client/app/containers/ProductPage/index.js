@@ -174,7 +174,7 @@ const mapStateToProps = state => {
     productShopData: state.product.productShopData,
     shopFormErrors: state.product.shopFormErrors,
     isLoading: state.product.isLoading,
-    reviews: state.review.reviews,
+    reviews: state.review.productReviews,
     reviewsSummary: state.review.reviewsSummary,
     reviewFormData: state.review.reviewFormData,
     reviewFormErrors: state.review.reviewFormErrors,
