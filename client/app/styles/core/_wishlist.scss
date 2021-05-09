@@ -1,0 +1,30 @@
+/* start wishlist dashboard styles */
+.wishlist-dashboard {
+  .w-list {
+    .wishlist-box {
+      height: 120px;
+      max-height: 120px;
+      border-radius: $border-radius-default;
+      box-shadow: $secondary-box-shadow;
+      @include transition();
+
+      &:hover {
+        background-color: $secondary-bg;
+        @include transition();
+      }
+
+      .wishlist-image {
+        width: 120px;
+        min-width: 120px;
+        height: 120px;
+        object-fit: cover;
+        border-radius: $border-radius-default;
+      }
+
+      .wishlist-desc {
+        @include text-ellipsis(2);
+      }
+    }
+  }
+}
+/* end wishlist dashboard styles */
