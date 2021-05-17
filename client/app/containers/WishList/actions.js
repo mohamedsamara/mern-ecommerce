@@ -8,10 +8,14 @@ import { success, warning, info } from 'react-notification-system-redux';
 import { fetchStoreProducts } from '../Product/actions';
 import axios from 'axios';
 
-import { WISHLIST_CHANGE } from './constants';
+import {
+  FETCH_WISHLIST,
+  SET_WISHLIST_LOADING,
+  WISHLIST_CHANGE
+} from './constants';
 import handleError from '../../utils/error';
 
-export const wishlistChange = e => {
+export const updateWishlist = e => {
   return async (dispatch, getState) => {
     try {
       if (getState().authentication.authenticated == true) {
@@ -37,15 +41,13 @@ export const wishlistChange = e => {
           autoDismiss: 1
         };
 
-        if (response.data.success === true && wishlist.id !== '') {
+        if (response.data.success === true) {
           dispatch(success(successfulOptions));
-        } else {
-          dispatch(success(successfulOptions));
-          // dispatch(fetchStoreProducts());
+          dispatch(fetchWishlist());
         }
       } else {
         const retryOptions = {
-          title: `Please login for wishlisting a product`,
+          title: `Please login to wishlist a product`,
           position: 'tr',
           autoDismiss: 1
         };
@@ -53,6 +55,23 @@ export const wishlistChange = e => {
       }
     } catch (error) {
       handleError(error, dispatch);
+    }
+  };
+};
+
+// fetch wishlist api
+export const fetchWishlist = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({ type: SET_WISHLIST_LOADING, payload: true });
+
+      const response = await axios.get(`/api/wishlist`);
+
+      dispatch({ type: FETCH_WISHLIST, payload: response.data.wishlist });
+    } catch (error) {
+      handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_WISHLIST_LOADING, payload: false });
     }
   };
 };

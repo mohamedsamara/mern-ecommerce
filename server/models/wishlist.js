@@ -17,7 +17,10 @@ const WishlistSchema = new Schema({
     type: Boolean,
     default: false
   },
-  updated: Date,
+  updated: {
+    type: Date,
+    default: Date.now
+  },
   created: {
     type: Date,
     default: Date.now

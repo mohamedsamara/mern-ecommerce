@@ -91,36 +91,38 @@
 }
 
 .review-dashboard {
-  .review-box {
-    border-radius: $border-radius-default;
-    box-shadow: $secondary-box-shadow;
+  .r-list {
+    .review-box {
+      border-radius: $border-radius-default;
+      box-shadow: $secondary-box-shadow;
 
-    .avatar {
-      width: 30px;
-      height: 30px;
-      font-size: $font-size-x-small;
+      .avatar {
+        width: 30px;
+        height: 30px;
+        font-size: $font-size-x-small;
 
-      @include media-breakpoint-up(md) {
-        width: 40px;
-        height: 40px;
-        font-size: $font-size-medium;
+        @include media-breakpoint-up(md) {
+          width: 40px;
+          height: 40px;
+          font-size: $font-size-medium;
+        }
       }
     }
-  }
 
-  .review-product-box {
-    @include media-breakpoint-up(lg) {
-      width: 80%;
+    .review-product-box {
+      @include media-breakpoint-up(lg) {
+        width: 80%;
+      }
     }
-  }
 
-  .item-image {
-    border-radius: $border-radius-default;
+    .item-image {
+      border-radius: $border-radius-default;
 
-    @include media-breakpoint-up(lg) {
-      width: 70px;
-      height: 70px;
-      object-fit: cover;
+      @include media-breakpoint-up(lg) {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+      }
     }
   }
 }

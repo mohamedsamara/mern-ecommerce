@@ -32,7 +32,7 @@ class AddToWishList extends React.PureComponent {
   }
 
   render() {
-    const { product, wishlistChange, authenticated } = this.props;
+    const { product, updateWishlist, authenticated } = this.props;
 
     return (
       <div className='add-to-wishlist'>
@@ -42,7 +42,7 @@ class AddToWishList extends React.PureComponent {
             id={`checkbox_${product.sku}`}
             name={product._id}
             className='checkbox'
-            onChange={e => wishlistChange(e)}
+            onChange={e => updateWishlist(e)}
             defaultChecked={product.isLiked ? product.isLiked : false}
           />
         ) : (
@@ -51,7 +51,7 @@ class AddToWishList extends React.PureComponent {
             id={`checkbox_${this.props.product.sku}`}
             name={product._id}
             className='disabled-checkbox'
-            onChange={e => wishlistChange(e)}
+            onChange={e => updateWishlist(e)}
             defaultChecked={product.isLiked ? product.isLiked : false}
           />
         )}

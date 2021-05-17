@@ -18,7 +18,7 @@ import Address from '../../../containers/Address';
 import Product from '../../../containers/Product';
 import Brand from '../../../containers/Brand';
 import Order from '../../../containers/Order';
-import Wishlist from '../../../containers/WishListPage';
+import Wishlist from '../../../containers/WishList';
 
 const Customer = props => {
   return (

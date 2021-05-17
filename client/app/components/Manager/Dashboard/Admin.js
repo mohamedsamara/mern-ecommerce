@@ -22,7 +22,7 @@ import Product from '../../../containers/Product';
 import Brand from '../../../containers/Brand';
 import Merchant from '../../../containers/Merchant';
 import Review from '../../../containers/Review';
-import Wishlist from '../../../containers/WishListPage';
+import Wishlist from '../../../containers/WishList';
 
 const Admin = props => {
   return (

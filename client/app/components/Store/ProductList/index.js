@@ -14,17 +14,17 @@ import SocialShare from '../SocialShare';
 }
 
 const ProductList = props => {
-  const { products, wishlistChange, authenticated } = props;
+  const { products, updateWishlist, authenticated } = props;
   return (
     <div className='product-list'>
       {products.map((product, index) => (
         <div key={index} className='mb-3 mb-md-0'>
           <div className='product-container'>
             <div className='item-box'>
-              <div className='add-to-wishlist-box'>
+              <div className='add-wishlist-box'>
                 <AddToWishList
                   product={product}
-                  wishlistChange={wishlistChange}
+                  updateWishlist={updateWishlist}
                   authenticated={authenticated}
                 />
               </div>

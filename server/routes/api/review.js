@@ -28,9 +28,7 @@ router.post('/add', auth, (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
-    const reviews = await Review.find({
-      // status: 'Accepted'
-    })
+    const reviews = await Review.find({})
       .populate({
         path: 'user',
         select: 'firstName'
@@ -54,9 +52,9 @@ router.get('/', async (req, res) => {
 router.get('/:slug', async (req, res) => {
   try {
     const productDoc = await Product.findOne({ slug: req.params.slug });
-	
-    if (!productDoc || productDoc?.brand?.isActive === false) {    
-	return res.status(404).json({
+
+    if (!productDoc || productDoc?.brand?.isActive === false) {
+      return res.status(404).json({
         message: 'No reviews for this product.'
       });
     }

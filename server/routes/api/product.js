@@ -11,6 +11,7 @@ const Brand = require('../../models/brand');
 const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
+const checkAuth = require('../../helpers/auth');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -111,64 +112,59 @@ router.post(
 // fetch store products api
 router.get('/list', async (req, res) => {
   try {
-    const userDoc = req.headers.authorization !== undefined? await jwt.decode(req.headers.authorization.split(' ')[1]):req.headers.authorization;
+    const userDoc = await checkAuth(req);
 
-    if(userDoc !==undefined){
+    if (userDoc) {
       const products = await Product.aggregate([
-          {
-            $lookup: {
-              from: "wishlists",
-              let: { product: "$_id" },
-              pipeline: [
-                {
-                  $match: {
-                    $and: [
-                      { $expr: { $eq: ["$$product", "$product"] } },
-                      { user: new Mongoose.Types.ObjectId(userDoc.id)}
-                    ]
-                  }
+        {
+          $lookup: {
+            from: 'wishlists',
+            let: { product: '$_id' },
+            pipeline: [
+              {
+                $match: {
+                  $and: [
+                    { $expr: { $eq: ['$$product', '$product'] } },
+                    { user: new Mongoose.Types.ObjectId(userDoc.id) }
+                  ]
                 }
-              ],
-              as: "isLiked"
-            }
-          },
-          {
-            $lookup: {
-              from: "brands",
-              localField: "brand",
-              foreignField: "_id",
-              as: "brands"
-            }
-          },
-          {
-             $addFields: {
-               wishlistAddedDate: { $arrayElemAt: ["$isLiked.updated" || "$isLiked.created", 0] }
-             }
-           },
-          {
-            $addFields: {
-              isLiked: { $arrayElemAt: ["$isLiked.isLiked", 0] }
-            }
-          },
-          {
-            $unwind: "$brands"
-          },
-          {
-             $addFields: {
-                      "brand.name": "$brands.name" ,
-                      "brand._id": "$brands._id",
-                      "brand.isActive": "$brands.isActive"
-                   }
-              },
-          {
-             $match:{ isActive: true }
-          },
-          { $project: {"brands" : 0} }
-        ]);
+              }
+            ],
+            as: 'isLiked'
+          }
+        },
+        {
+          $lookup: {
+            from: 'brands',
+            localField: 'brand',
+            foreignField: '_id',
+            as: 'brands'
+          }
+        },
+        {
+          $addFields: {
+            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
+          }
+        },
+        {
+          $unwind: '$brands'
+        },
+        {
+          $addFields: {
+            'brand.name': '$brands.name',
+            'brand._id': '$brands._id',
+            'brand.isActive': '$brands.isActive'
+          }
+        },
+        {
+          $match: { isActive: true }
+        },
+        { $project: { brands: 0 } }
+      ]);
 
-        res.status(200).json({
-          products: products.filter(item => item?.brand?.isActive === true)
-        });
+      res.status(200).json({
+        products: products.filter(item => item?.brand?.isActive === true)
+      });
     } else {
       const products = await Product.find({ isActive: true }).populate({
         path: 'brand',
@@ -180,6 +176,7 @@ router.get('/list', async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('error', error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });

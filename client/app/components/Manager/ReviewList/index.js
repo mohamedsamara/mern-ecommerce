@@ -34,7 +34,7 @@ const ReviewList = props => {
     if (review.product) {
       const product = review.product;
       return (
-        <div className='d-flex flex-column justify-content-center align-items-center fw-1 text-white'>
+        <div className='d-flex flex-column justify-content-center align-items-center'>
           <img
             className='item-image'
             src={`${
@@ -49,7 +49,7 @@ const ReviewList = props => {
   };
 
   return (
-    <div className='reviews-list'>
+    <div className='r-list'>
       {reviews.map((review, index) => (
         <div key={index} className='review-box'>
           <div className='mb-3 p-4'>

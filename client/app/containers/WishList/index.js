@@ -17,24 +17,19 @@ import LoadingIndicator from '../../components/Common/LoadingIndicator';
 
 class Wishlist extends React.PureComponent {
   componentDidMount() {
-    this.props.fetchStoreProducts();
+    this.props.fetchWishlist();
   }
 
   render() {
-    const { products, isLoading, wishlistChange } = this.props;
-    const wishlistProducts = products.filter(
-      data => data.isLiked !== undefined && data.isLiked == true
-    );
+    const { wishlist, isLoading, updateWishlist } = this.props;
+
     return (
       <div className='wishlist-dashboard'>
         <SubPage title={'Your Wishlist'} isMenuOpen={null}>
           {isLoading ? (
             <LoadingIndicator inline />
-          ) : wishlistProducts.length > 0 ? (
-            <WishList
-              products={wishlistProducts}
-              wishlistChange={wishlistChange}
-            />
+          ) : wishlist.length > 0 ? (
+            <WishList wishlist={wishlist} updateWishlist={updateWishlist} />
           ) : (
             <NotFound message='you have no wishlist yet!' />
           )}
@@ -46,8 +41,8 @@ class Wishlist extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.storeProducts,
-    isLoading: state.order.isLoading
+    wishlist: state.wishlist.wishlist,
+    isLoading: state.wishlist.isLoading
   };
 };
 

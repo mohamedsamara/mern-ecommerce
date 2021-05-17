@@ -16,7 +16,7 @@ import Account from '../../../containers/Account';
 import AccountSecurity from '../../../containers/AccountSecurity';
 import Address from '../../../containers/Address';
 import Order from '../../../containers/Order';
-import Wishlist from '../../../containers/WishListPage';
+import Wishlist from '../../../containers/WishList';
 
 const Customer = props => {
   return (

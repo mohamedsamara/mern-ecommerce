@@ -100,9 +100,9 @@
   text-overflow: ellipsis;
 }
 
-.text-truncate {
-  @include text-truncate();
-}
+// .text-truncate {
+//   @include text-truncate();
+// }
 
 .w-lg-auto {
   @include media-breakpoint-up(lg) {

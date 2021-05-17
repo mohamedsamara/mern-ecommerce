@@ -27,7 +27,7 @@ class BrandsShop extends React.PureComponent {
   }
 
   render() {
-    const { products, isLoading, authenticated, wishlistChange } = this.props;
+    const { products, isLoading, authenticated, updateWishlist } = this.props;
 
     return (
       <div className='brands-shop'>
@@ -37,7 +37,7 @@ class BrandsShop extends React.PureComponent {
           <ProductList
             products={products}
             authenticated={authenticated}
-            wishlistChange={wishlistChange}
+            updateWishlist={updateWishlist}
           />
         ) : (
           <NotFound message='no products found.' />
