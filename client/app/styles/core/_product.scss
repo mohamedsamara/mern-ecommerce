@@ -53,6 +53,14 @@
 
     .item-box {
       height: 100%;
+      position: relative;
+
+      .add-to-wishlist-box {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+      }
 
       .item-link {
         display: flex;

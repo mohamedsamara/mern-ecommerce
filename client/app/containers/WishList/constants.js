@@ -1,6 +1,6 @@
 /*
  *
- * Wishlist constants
+ * WishList constants
  *
  */
 

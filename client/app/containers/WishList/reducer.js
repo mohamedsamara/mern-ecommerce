@@ -1,17 +1,13 @@
 /*
  *
- * Wishlist reducer
+ * WishList reducer
  *
  */
 
-import {
-  WINDOW_DIMENSION,
-  WISHLIST_CHANGE
-} from './constants';
+import { WINDOW_DIMENSION, WISHLIST_CHANGE } from './constants';
 
 const initialState = {
-  wishlistData:{},
-  isLiked:false
+  wishlistForm: {}
 };
 
 const wishListReducer = (state = initialState, action) => {
@@ -19,8 +15,8 @@ const wishListReducer = (state = initialState, action) => {
     case WISHLIST_CHANGE:
       return {
         ...state,
-        wishlistData: {
-          ...state.wishlistData,
+        wishlistForm: {
+          ...state.wishlistForm,
           ...action.payload
         }
       };

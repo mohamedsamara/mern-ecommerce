@@ -6,25 +6,30 @@
 
 import React from 'react';
 
-import { Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import Heart from './heart';
+import AddToWishList from '../AddToWishList';
+import SocialShare from '../SocialShare';
+{
+  /* <SocialShare product={product} /> */
+}
 
 const ProductList = props => {
-  const { products,isLiked,wishlistChange,authenticated } = props;
+  const { products, wishlistChange, authenticated } = props;
   return (
     <div className='product-list'>
       {products.map((product, index) => (
         <div key={index} className='mb-3 mb-md-0'>
           <div className='product-container'>
             <div className='item-box'>
-              <div className='item-link'>
-                <Heart
-                product={product}
-                isLiked={isLiked}
-                wishlistChange={wishlistChange}
-                authenticated={authenticated}
+              <div className='add-to-wishlist-box'>
+                <AddToWishList
+                  product={product}
+                  wishlistChange={wishlistChange}
+                  authenticated={authenticated}
                 />
+              </div>
+
+              <div className='item-link'>
                 <Link to={`/product/${product.slug}`}>
                   <div className='item-image-container'>
                     <div className='item-image-box'>

@@ -27,14 +27,18 @@ class CategoryShop extends React.PureComponent {
   }
 
   render() {
-    const { products, isLoading } = this.props;
+    const { products, isLoading, authenticated, wishlistChange } = this.props;
 
     return (
       <div className='category-shop'>
         {isLoading ? (
           <LoadingIndicator />
         ) : products.length > 0 ? (
-          <ProductList products={products} />
+          <ProductList
+            products={products}
+            authenticated={authenticated}
+            wishlistChange={wishlistChange}
+          />
         ) : (
           <NotFound message='no products found.' />
         )}
@@ -46,7 +50,8 @@ class CategoryShop extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     products: state.product.products,
-    isLoading: state.product.isLoading
+    isLoading: state.product.isLoading,
+    authenticated: state.authentication.authenticated
   };
 };
 

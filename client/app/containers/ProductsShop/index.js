@@ -21,7 +21,7 @@ class ProductsShop extends React.PureComponent {
   }
 
   render() {
-    const { products, isLoading, isLiked, wishlistChange,authenticated } = this.props;
+    const { products, isLoading, authenticated, wishlistChange } = this.props;
 
     return (
       <div className='products-shop'>
@@ -29,10 +29,9 @@ class ProductsShop extends React.PureComponent {
           <LoadingIndicator />
         ) : products && products.length > 0 ? (
           <ProductList
-          products={products}
-          isLiked={isLiked}
-          wishlistChange={wishlistChange}
-          authenticated={authenticated}
+            products={products}
+            authenticated={authenticated}
+            wishlistChange={wishlistChange}
           />
         ) : (
           <NotFound message='no products found.' />
@@ -46,8 +45,7 @@ const mapStateToProps = state => {
   return {
     products: state.product.storeProducts,
     isLoading: state.product.isLoading,
-    isLiked: state.wishlist.isLiked,
-    authenticated:state.authentication.authenticated
+    authenticated: state.authentication.authenticated
   };
 };
 

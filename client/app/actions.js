@@ -29,7 +29,7 @@ import * as merchant from './containers/Merchant/actions';
 import * as contact from './containers/Contact/actions';
 import * as order from './containers/Order/actions';
 import * as review from './containers/Review/actions';
-import * as wishlist from './containers/WishListPage/actions';
+import * as wishlist from './containers/WishList/actions';
 
 export default function mapDispatchToProps(dispatch) {
   return bindActionCreators(
