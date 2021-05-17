@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const AWS = require('aws-sdk');
+const Mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
 
 // Bring in Models & Helpers
 const Product = require('../../models/product');
@@ -109,14 +111,74 @@ router.post(
 // fetch store products api
 router.get('/list', async (req, res) => {
   try {
-    const products = await Product.find({ isActive: true }).populate({
-      path: 'brand',
-      select: 'name isActive'
-    });
+    const userDoc = req.headers.authorization !== undefined? await jwt.decode(req.headers.authorization.split(' ')[1]):req.headers.authorization;
 
-    res.status(200).json({
-      products: products.filter(item => item?.brand?.isActive === true)
-    });
+    if(userDoc !==undefined){
+      const products = await Product.aggregate([
+          {
+            $lookup: {
+              from: "wishlists",
+              let: { product: "$_id" },
+              pipeline: [
+                {
+                  $match: {
+                    $and: [
+                      { $expr: { $eq: ["$$product", "$product"] } },
+                      { user: new Mongoose.Types.ObjectId(userDoc.id)}
+                    ]
+                  }
+                }
+              ],
+              as: "isLiked"
+            }
+          },
+          {
+            $lookup: {
+              from: "brands",
+              localField: "brand",
+              foreignField: "_id",
+              as: "brands"
+            }
+          },
+          {
+             $addFields: {
+               wishlistAddedDate: { $arrayElemAt: ["$isLiked.updated" || "$isLiked.created", 0] }
+             }
+           },
+          {
+            $addFields: {
+              isLiked: { $arrayElemAt: ["$isLiked.isLiked", 0] }
+            }
+          },
+          {
+            $unwind: "$brands"
+          },
+          {
+             $addFields: {
+                      "brand.name": "$brands.name" ,
+                      "brand._id": "$brands._id",
+                      "brand.isActive": "$brands.isActive"
+                   }
+              },
+          {
+             $match:{ isActive: true }
+          },
+          { $project: {"brands" : 0} }
+        ]);
+
+        res.status(200).json({
+          products: products.filter(item => item?.brand?.isActive === true)
+        });
+    } else {
+      const products = await Product.find({ isActive: true }).populate({
+        path: 'brand',
+        select: 'name isActive'
+      });
+
+      res.status(200).json({
+        products: products.filter(item => item?.brand?.isActive === true)
+      });
+    }
   } catch (error) {
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'

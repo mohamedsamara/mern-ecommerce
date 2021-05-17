@@ -1,0 +1,95 @@
+/* Share Social Media*/
+
+
+$background:#B2B1CF;
+$white:#fff;
+
+.menu{
+  z-index:999;
+  position: sticky;
+  padding:0;
+  margin:0;
+  list-style-type:none;
+  .share{
+    i.fa{
+      height:50px;
+      width:50px;
+      text-align:center;
+      line-height:50px;
+      background-color: #fff;
+      //border-radius:2px;
+    }
+    &:hover{
+      &.bottom {
+        .submenu{
+          @for $i from 1 through 5{
+            li:nth-child(#{$i}){
+              opacity:1;
+              top:#{$i*50}px;
+              transform:rotate(0deg);
+              transition-delay:#{$i*0.08}s;
+            }
+          }
+        }
+      }
+      &.right{
+        .submenu{
+          @for $i from 1 through 5{
+            li:nth-child(#{$i}){
+              opacity:1;
+              left:#{$i*50}px;
+              transform:rotate(0deg);
+              transition-delay:#{$i*0.08}s;
+            }
+          }
+        }
+      }
+    }
+  }
+  .submenu{
+    list-style-type:none;
+    padding:0;
+    margin:0;
+    li{
+      transition:all ease-in-out 0.5s;
+      position:absolute;
+      top: 0;
+      left: 0;
+      z-index:-1;
+      opacity:0;
+      .al{
+        color: #212121;
+        &:hover{
+          i.fa{
+            color:#fff;
+          }
+          &.facebook{
+            i.fa{
+               background-color: #3b5999;
+            }
+          }
+          &.twitter{
+            i.fa{
+              background-color: #55acee;
+            }
+          }
+          &.envelope{
+            i.fa{
+              background-color: #FFA500;
+            }
+          }
+          &.whatsapp{
+            i.fa{
+              background-color: #25D366;
+            }
+          }
+        }
+      }
+    }
+    @for $i from 1 through 4{
+      li:nth-child(#{$i}){
+        transform:rotateX(#{$i*45}deg);
+      }
+    }
+  }
+}
