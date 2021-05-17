@@ -34,6 +34,7 @@ class Cart extends React.PureComponent {
         <div className='cart-header'>
           {isCartOpen && (
             <Button
+              borderless
               ariaLabel='close the cart'
               icon={<CloseIcon />}
               onClick={toggleCart}

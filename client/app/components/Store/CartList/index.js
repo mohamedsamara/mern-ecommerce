@@ -49,6 +49,7 @@ const CartList = props => {
                 </Col>
                 <Col xs='2' className='text-right'>
                   <Button
+                    borderless
                     ariaLabel={`remove ${item.name} from cart`}
                     icon={<i className='icon-trash' aria-hidden='true' />}
                     onClick={() => handleRemoveFromCart(item)}

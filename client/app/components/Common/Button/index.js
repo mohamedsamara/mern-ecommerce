@@ -31,13 +31,14 @@ const Button = props => {
     icon,
     iconDirection,
     iconClassName,
+    borderless,
     onClick
   } = props;
 
   const v = variant ? variants[variant] : '';
 
-  const btnVariant = icon && text ? v : icon && !text ? '' : v;
-  // const btnVariant = v;
+  // const btnVariant = icon && text ? v : icon && !text ? '' : v;
+  const btnVariant = v;
 
   const btn =
     icon && text ? 'with-icon' : icon && !text ? 'icon-only' : 'text-only';
@@ -46,7 +47,7 @@ const Button = props => {
     btnVariant && ` ${btnVariant}`
   }${` ${size}`} ${btn} ${
     iconDirection === 'left' ? 'icon-left' : 'icon-right'
-  }`;
+  } ${borderless ? 'border-0' : ''}`;
 
   const iconClassNames = `btn-icon${`${iconClassName && ` ${iconClassName}`}`}`;
 
@@ -83,7 +84,8 @@ Button.defaultProps = {
   size: 'md',
   className: '',
   iconDirection: 'left',
-  iconClassName: ''
+  iconClassName: '',
+  borderless: false
 };
 
 export default Button;

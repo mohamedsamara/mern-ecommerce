@@ -97,6 +97,7 @@ class Navigation extends React.PureComponent {
             >
               <div className='brand'>
                 <Button
+                  borderless
                   className='d-none d-md-block'
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
@@ -116,6 +117,7 @@ class Navigation extends React.PureComponent {
             >
               <div className='header-links'>
                 <Button
+                  borderless
                   ariaLabel='open the menu'
                   icon={<BarsIcon />}
                   onClick={() => this.toggleMenu()}

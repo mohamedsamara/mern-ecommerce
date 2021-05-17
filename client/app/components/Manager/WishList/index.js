@@ -7,28 +7,13 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
+
 import { formatDate } from '../../../helpers/date';
 import Button from '../../Common/Button';
-import NotFound from '../../Common/NotFound';
-import { CloseIcon } from '../../Common/Icon';
+import { XIcon } from '../../Common/Icon';
 
 const WishList = props => {
   const { wishlist, updateWishlist } = props;
-
-  // const getProduct = product => {
-  //   if (product.isLiked !== undefined && product.isLiked == true) {
-  //     return (
-  //       <img
-  //         className='wishlist-image'
-  //         src={`${
-  //           product.imageUrl
-  //             ? product.imageUrl
-  //             : '/images/placeholder-image.png'
-  //         }`}
-  //       />
-  //     );
-  //   }
-  // };
 
   const getProductImage = item => {
     if (item.product) {
@@ -71,9 +56,9 @@ const WishList = props => {
           </Link>
           <div className='remove-wishlist-box'>
             <Button
+              borderless
               variant='danger'
-              // className='mt-3 mt-lg-0'
-              icon={<CloseIcon width={15} />}
+              icon={<XIcon className='text-white' width={15} />}
               onClick={e => {
                 e.target.name = item.product._id;
                 e.target.checked = !item.isLiked;

@@ -25,6 +25,7 @@ const CartIcon = props => {
 
   return (
     <Button
+      borderless
       className={className}
       ariaLabel={
         items > 0 ? `your cart have ${items} items` : 'your cart is empty'
