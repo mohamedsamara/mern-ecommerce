@@ -9,6 +9,7 @@ var jwt = require('jsonwebtoken');
 const Product = require('../../models/product');
 const Brand = require('../../models/brand');
 const Category = require('../../models/category');
+const Wishlist = require('../../models/wishlist');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../helpers/auth');
@@ -117,6 +118,9 @@ router.get('/list', async (req, res) => {
     if (userDoc) {
       const products = await Product.aggregate([
         {
+          $match: { isActive: true }
+        },
+        {
           $lookup: {
             from: 'wishlists',
             let: { product: '$_id' },
@@ -156,9 +160,6 @@ router.get('/list', async (req, res) => {
             'brand.isActive': '$brands.isActive'
           }
         },
-        {
-          $match: { isActive: true }
-        },
         { $project: { brands: 0 } }
       ]);
 
@@ -176,7 +177,6 @@ router.get('/list', async (req, res) => {
       });
     }
   } catch (error) {
-    console.log('error', error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -310,6 +310,8 @@ router.get('/list/category/:slug', async (req, res) => {
   try {
     const slug = req.params.slug;
 
+    const userDoc = await checkAuth(req);
+
     const categoryDoc = await Category.findOne(
       { slug, isActive: true },
       'products -_id'
@@ -327,12 +329,45 @@ router.get('/list/category/:slug', async (req, res) => {
 
     if (!categoryDoc) {
       return res.status(404).json({
-        message: 'No products found.'
+        message: `Cannot find category with the slug: ${slug}.`
       });
     }
 
+    let products = [];
+
+    if (userDoc) {
+      const wishlist = await Wishlist.find({
+        user: userDoc.id,
+        isLiked: true
+      }).populate({
+        path: 'product',
+        select: '_id'
+      });
+
+      const ps = categoryDoc.products || [];
+
+      const newPs = [];
+      ps.map(p => {
+        let isLiked = false;
+
+        wishlist.map(w => {
+          if (String(w.product._id) === String(p._id)) {
+            isLiked = true;
+          }
+        });
+
+        const newProduct = { ...p.toObject(), isLiked };
+
+        newPs.push(newProduct);
+      });
+
+      products = newPs;
+    } else {
+      products = categoryDoc.products;
+    }
+
     res.status(200).json({
-      products: categoryDoc ? categoryDoc.products : categoryDoc
+      products
     });
   } catch (error) {
     res.status(400).json({
@@ -346,22 +381,82 @@ router.get('/list/brand/:slug', async (req, res) => {
   try {
     const slug = req.params.slug;
 
-    const brand = await Brand.find({ slug, isActive: true });
+    const brand = await Brand.findOne({ slug, isActive: true });
 
-    if (brand.length <= 0) {
+    if (!brand) {
       return res.status(404).json({
         message: `Cannot find brand with the slug: ${slug}.`
       });
     }
 
-    const products = await Product.find({
-      brand: brand[0]._id,
-      isActive: true
-    }).populate('brand', 'name');
+    const userDoc = await checkAuth(req);
 
-    res.status(200).json({
-      products
-    });
+    if (userDoc) {
+      const products = await Product.aggregate([
+        {
+          $match: {
+            brand: brand._id
+          }
+        },
+        {
+          $lookup: {
+            from: 'wishlists',
+            let: { product: '$_id' },
+            pipeline: [
+              {
+                $match: {
+                  $and: [
+                    { $expr: { $eq: ['$$product', '$product'] } },
+                    { user: new Mongoose.Types.ObjectId(userDoc.id) }
+                  ]
+                }
+              }
+            ],
+            as: 'isLiked'
+          }
+        },
+        {
+          $lookup: {
+            from: 'brands',
+            localField: 'brand',
+            foreignField: '_id',
+            as: 'brands'
+          }
+        },
+        {
+          $addFields: {
+            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
+          }
+        },
+        {
+          $unwind: '$brands'
+        },
+        {
+          $addFields: {
+            'brand.name': '$brands.name',
+            'brand._id': '$brands._id',
+            'brand.isActive': '$brands.isActive'
+          }
+        },
+        {
+          $match: { isActive: true }
+        },
+        { $project: { brands: 0 } }
+      ]);
+
+      res.status(200).json({
+        products
+      });
+    } else {
+      const products = await Product.find({
+        brand: brand._id,
+        isActive: true
+      }).populate('brand', 'name');
+
+      res.status(200).json({
+        products
+      });
+    }
   } catch (error) {
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
