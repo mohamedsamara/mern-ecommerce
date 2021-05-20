@@ -48,9 +48,7 @@
 
 // badge styles
 @mixin badge() {
-  background-color: $primary-bg;
   border-radius: 100%;
-  color: $white;
   font-size: 0.6rem;
   font-weight: 600;
   height: 16px;
@@ -59,6 +57,8 @@
   text-align: center;
   top: -7px;
   width: 16px;
+  background-color: $primary-bg;
+  color: $white;
   @include flex();
   justify-content: center;
   align-items: center;

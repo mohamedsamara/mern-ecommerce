@@ -314,6 +314,28 @@ body.user-is-tabbing button:focus {
     @include media-breakpoint-down(sm) {
       width: 100% !important;
     }
+
+    &:focus {
+      &.with-icon {
+        background-color: $primary-bg;
+        border-color: transparent;
+        -webkit-transition: $layout-transition-speed;
+        transition: $layout-transition-speed;
+
+        .btn-text {
+          color: $white;
+          -webkit-transition: $layout-transition-speed;
+          transition: $layout-transition-speed;
+        }
+
+        svg {
+          fill: $white;
+          stroke: $white !important;
+          -webkit-transition: $layout-transition-speed;
+          transition: $layout-transition-speed;
+        }
+      }
+    }
   }
 }
 

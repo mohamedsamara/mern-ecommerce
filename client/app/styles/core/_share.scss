@@ -1,0 +1,49 @@
+.share-box {
+  li {
+    margin-right: 14px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .share-btn {
+      @include flex();
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 35px;
+      height: 35px;
+      border-radius: $border-radius-circle;
+      color: $white !important;
+
+      &:focus {
+        outline: none;
+        box-shadow: $outline-box-shadow;
+      }
+
+      .fa {
+        font-size: $font-size-x-large;
+
+        &.fa-whatsapp {
+          font-size: $font-size-xx-large;
+        }
+      }
+
+      &.facebook {
+        background-color: #4267b2 !important;
+      }
+
+      &.twitter {
+        background-color: #1da1f2 !important;
+      }
+
+      &.envelope {
+        background-color: $theme-yellow !important;
+      }
+
+      &.whatsapp {
+        background-color: #128c7e !important;
+      }
+    }
+  }
+}

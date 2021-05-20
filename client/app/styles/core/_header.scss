@@ -140,7 +140,20 @@
   }
 
   .cart-badge {
-    @include badge();
+    border-radius: 100%;
+    font-size: 0.6rem;
+    font-weight: 600;
+    position: absolute;
+    top: -12px;
+    right: -14px;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    background-color: $primary-bg;
+    color: $white;
+    @include flex();
+    justify-content: center;
+    align-items: center;
   }
 
   .header-links {

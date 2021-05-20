@@ -16,7 +16,9 @@ const CartIcon = props => {
     <span className='cart-icon'>
       <BagIcon />
       {cartItems.length > 0 && (
-        <span className='cart-badge'>{cartItems.length}</span>
+        <span className='cart-badge'>
+          {cartItems.length >= 99 ? '99+' : cartItems.length}
+        </span>
       )}
     </span>
   );

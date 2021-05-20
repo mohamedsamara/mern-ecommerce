@@ -17,6 +17,7 @@ import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
 import { BagIcon } from '../../components/Common/Icon';
 import ProductReviews from '../../components/Store/ProductReviews';
+import SocialShare from '../../components/Store/SocialShare';
 
 class ProductPage extends React.PureComponent {
   componentDidMount() {
@@ -120,6 +121,9 @@ class ProductPage extends React.PureComponent {
                           productShopChange(name, value);
                         }}
                       />
+                    </div>
+                    <div className='my-4 item-share'>
+                      <SocialShare product={product} />
                     </div>
                     <div className='item-actions'>
                       {itemsInCart.includes(product._id) ? (
