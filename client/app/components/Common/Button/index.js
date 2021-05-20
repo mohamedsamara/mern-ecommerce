@@ -12,7 +12,8 @@ const variants = {
   danger: 'custom-btn-danger',
   link: 'custom-btn-link',
   dark: 'custom-btn-dark',
-  none: 'custom-btn-none'
+  none: 'custom-btn-none',
+  empty: ''
 };
 
 const Button = props => {

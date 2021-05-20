@@ -17,7 +17,12 @@ const SubPage = props => {
         <h2>{title}</h2>
         {actionTitle && (
           <div className='action'>
-            <Button variant='none' text={actionTitle} onClick={handleAction} />
+            <Button
+              variant='none'
+              size='sm'
+              text={actionTitle}
+              onClick={handleAction}
+            />
           </div>
         )}
       </div>
