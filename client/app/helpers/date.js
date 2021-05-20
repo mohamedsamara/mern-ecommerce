@@ -7,6 +7,7 @@
 const today = new Date();
 
 const dateOptions = {
+  timeZone: 'UTC',
   weekday: 'long',
   year: 'numeric',
   month: 'short',
@@ -30,5 +31,5 @@ export const formatDate = date => {
   //     day: "numeric"
   //   };
 
-  return newDate.toLocaleDateString(undefined, dateOptions);
+  return newDate.toLocaleDateString('en-US', dateOptions);
 };
