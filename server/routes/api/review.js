@@ -61,7 +61,7 @@ router.get('/:slug', async (req, res) => {
 
     const reviews = await Review.find({
       product: productDoc._id,
-      status: 'Accepted'
+      status: 'Approved'
     })
       .populate({
         path: 'user',

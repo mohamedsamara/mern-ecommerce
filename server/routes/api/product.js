@@ -395,6 +395,7 @@ router.get('/list/brand/:slug', async (req, res) => {
       const products = await Product.aggregate([
         {
           $match: {
+            isActive: true,
             brand: brand._id
           }
         },
@@ -437,9 +438,6 @@ router.get('/list/brand/:slug', async (req, res) => {
             'brand._id': '$brands._id',
             'brand.isActive': '$brands.isActive'
           }
-        },
-        {
-          $match: { isActive: true }
         },
         { $project: { brands: 0 } }
       ]);
