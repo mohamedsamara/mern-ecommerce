@@ -7,6 +7,7 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
+import ReactStars from 'react-rating-stars-component';
 
 import { formatDate } from '../../../helpers/date';
 import { getRandomColors } from '../../../helpers';
@@ -54,8 +55,14 @@ const ReviewList = props => {
         <div key={index} className='review-box'>
           <div className='mb-3 p-4'>
             <div className='d-flex flex-row mx-0 mb-2 mb-lg-3 align-items-center justify-content-between'>
-              <p className='mb-0 fw-2 text-truncate'>{review.title}</p>
-              {getAvatar(review)}
+              <div className='review-content'>
+                <div className='d-flex flex-row mx-0 mb-2 align-items-center justify-content-between'>
+                  <p className='mb-0 fw-2 text-truncate'>{review.title}</p>
+                  <div className='d-block d-lg-none'>{getAvatar(review)}</div>
+                </div>
+                <p className='mb-0 fw-2 word-break-all'>{review.review}</p>
+              </div>
+              <div className='d-none d-lg-block'>{getAvatar(review)}</div>
             </div>
             <div className='d-flex flex-column flex-lg-row mx-0 mb-3 align-items-start justify-content-between'>
               <div className='w-100 mb-3 mb-lg-0 review-product-box'>
@@ -65,7 +72,19 @@ const ReviewList = props => {
                 >
                   {review?.product.name}
                 </Link>
-                <p className='mt-1 mb-0 fw-2 word-break-all'>{review.review}</p>
+                <ReactStars
+                  classNames='mt-1 mt-lg-2'
+                  size={16}
+                  edit={false}
+                  color={'#adb5bd'}
+                  activeColor={'#ffb302'}
+                  a11y={true}
+                  isHalf={true}
+                  emptyIcon={<i className='fa fa-star' />}
+                  halfIcon={<i className='fa fa-star-half-alt' />}
+                  filledIcon={<i className='fa fa-star' />}
+                  value={review.rating}
+                />
               </div>
               {getProduct(review)}
             </div>

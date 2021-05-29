@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+
 import ReactStars from 'react-rating-stars-component';
 
 import { formatDate } from '../../../helpers/date';

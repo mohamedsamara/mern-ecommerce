@@ -107,6 +107,14 @@
           font-size: $font-size-medium;
         }
       }
+
+      .review-content {
+        width: 100%;
+
+        @include media-breakpoint-up(lg) {
+          width: 80%;
+        }
+      }
     }
 
     .review-product-box {
