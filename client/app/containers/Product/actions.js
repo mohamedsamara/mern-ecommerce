@@ -190,6 +190,25 @@ export const fetchCategoryProducts = slug => {
   };
 };
 
+export const fetchSearchProducts = slug => {
+  return async (dispatch, getState) => {
+    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+
+    try {
+      const response = await axios.get(`/api/product/list/search/${slug}`);
+      
+      dispatch({
+        type: FETCH_PRODUCTS,
+        payload: response.data.products
+      });
+    } catch (error) {
+      handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+    }
+  };
+};
+
 export const fetchProductsSelect = () => {
   return async (dispatch, getState) => {
     try {
