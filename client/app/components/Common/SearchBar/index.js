@@ -36,7 +36,7 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const { id, name, placeholder, className, inlineBtn, btnText, btnIcon } = this.props;
+    const { id, name, placeholder, className, inlineBtn, btnText } = this.props;
     const { value } = this.state;
 
     const styles = `search-box${inlineBtn ? ` inline-btn-box` : ''}`;
@@ -60,7 +60,7 @@ class SearchBar extends React.Component {
               }}
               onKeyPress={this.props.onKeyPress || null}
             />
-            <Button type='submit' variant='primary' text={btnText} icon={btnIcon}/>
+            <Button type='submit' variant='primary' text={btnText} />
           </div>
         </div>
       </form>
@@ -74,8 +74,7 @@ SearchBar.defaultProps = {
   name: 'search',
   placeholder: 'Search',
   inlineBtn: true,
-  btnText: 'Search',
-  btnIcon:''
+  btnText: 'Search'
 };
 
 export default SearchBar;
