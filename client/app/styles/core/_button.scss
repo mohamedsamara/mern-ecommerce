@@ -78,11 +78,6 @@ button {
       transition: $layout-transition-speed;
     }
 
-    #icon-111-search {
-      -webkit-transition: $layout-transition-speed;
-      transition: $layout-transition-speed;
-    }
-
     &:hover {
       background-color: $primary-bg;
 
@@ -91,13 +86,6 @@ button {
         -webkit-transition: $layout-transition-speed;
         transition: $layout-transition-speed;
       }
-
-      #icon-111-search {
-        fill: $white !important;
-        -webkit-transition: $layout-transition-speed;
-        transition: $layout-transition-speed;
-      }
-
     }
   }
 }
