@@ -305,6 +305,70 @@ router.get('/item/:slug', async (req, res) => {
   }
 });
 
+
+// fetch search product slug api
+router.get('/list/search/:slug', async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const userDoc = await checkAuth(req);
+
+    const productDoc = await Product.find({ slug:{$regex:new RegExp(slug)}, isActive: true }).populate(
+      {
+        path: 'brand',
+        select: 'name isActive slug'
+      }
+    );
+
+    if (productDoc.length < 0) {
+      return res.status(404).json({
+        message: 'No product found.'
+      });
+    }
+
+    let products = [];
+
+    if (userDoc) {
+      const wishlist = await Wishlist.find({
+        user: userDoc.id,
+        isLiked: true
+      }).populate({
+        path: 'product',
+        select: '_id'
+      });
+
+      const ps = productDoc || [];
+
+      const newPs = [];
+      ps.map(p => {
+        let isLiked = false;
+
+        wishlist.map(w => {
+          if (String(w.product._id) === String(p._id)) {
+            isLiked = true;
+          }
+        });
+
+        const newProduct = { ...p.toObject(), isLiked };
+
+        newPs.push(newProduct);
+      });
+
+      products = newPs;
+    } else {
+      products = productDoc;
+    }
+
+    res.status(200).json({
+      products: products
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+
 // fetch all products by category api
 router.get('/list/category/:slug', async (req, res) => {
   try {

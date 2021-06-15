@@ -27,8 +27,9 @@ import {
 import actions from '../../actions';
 
 import Button from '../../components/Common/Button';
+import SearchBar from '../../components/Common/SearchBar';
 import CartIcon from '../../components/Common/CartIcon';
-import { BarsIcon } from '../../components/Common/Icon';
+import { BarsIcon, SearchIcon } from '../../components/Common/Icon';
 import MiniBrand from '../../components/Store//MiniBrand';
 import Menu from '../NavigationMenu';
 import Cart from '../Cart';
@@ -46,6 +47,26 @@ class Navigation extends React.PureComponent {
   toggleMenu() {
     this.props.fetchStoreCategories();
     this.props.toggleMenu();
+  }
+
+  onChangeSearch(e) {
+    if(e.value.length > 0){
+      this.props.fetchSearchProducts(e.value)
+      this.props.history.push(`/shop/search/${e.value}`)
+    } else {
+      this.props.fetchStoreProducts()
+      this.props.history.push(`/shop`)
+    }
+  }
+
+  onSubmitSearch(e) {
+    if(e.value.length > 0){
+      this.props.fetchSearchProducts(e.value)
+      this.props.history.push(`/shop/search/${e.value}`)
+    } else {
+      this.props.fetchStoreProducts()
+      this.props.history.push(`/shop`)
+    }
   }
 
   render() {
@@ -92,7 +113,7 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 1 }}
               sm={{ size: 12, order: 1 }}
-              md={{ size: 3, order: 1 }}
+              md={{ size: 6, order: 1 }}
               lg={{ size: 3, order: 1 }}
             >
               <div className='brand'>
@@ -110,10 +131,27 @@ class Navigation extends React.PureComponent {
               </div>
             </Col>
             <Col
+              xs={{ size: 12, order: 4 }}
+              sm={{ size: 12, order: 4 }}
+              md={{ size: 12, order: 4 }}
+              lg={{ size: 5, order: 4 }}
+              >
+              <SearchBar
+              id= {'search'}
+              name= {'search'}
+              placeholder= {'Search'}
+              inlineBtn= {true}
+              btnText={''}
+              btnIcon={<SearchIcon />}
+              onSearch={e => this.onChangeSearch(e)}
+              onSearchSubmit={e => this.onSubmitSearch(e)}
+              />
+            </Col>
+            <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 4, order: 1 }}
-              lg={{ size: 5, order: 3 }}
+              md={{ size: 6, order: 2 }}
+              lg={{ size: 4, order: 4 }}
               className='desktop-hidden'
             >
               <div className='header-links'>
@@ -128,10 +166,10 @@ class Navigation extends React.PureComponent {
               </div>
             </Col>
             <Col
-              xs={{ size: 12, order: 2 }}
-              sm={{ size: 12, order: 2 }}
-              md={{ size: 9, order: 1 }}
-              lg={{ size: 9, order: 3 }}
+              xs={{ size: 12, order: 3 }}
+              sm={{ size: 12, order: 3 }}
+              md={{ size: 6, order: 3 }}
+              lg={{ size: 4, order: 4 }}
             >
               <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
                 <CartIcon
