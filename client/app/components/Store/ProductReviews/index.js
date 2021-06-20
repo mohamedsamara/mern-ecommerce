@@ -20,17 +20,8 @@ const ProductReviews = props => {
             <ReviewSummary reviewsSummary={props.reviewsSummary} />
           )}
         </Col>
-
-        {props.reviews.length > 0 && (
-          <Col xs='12' md='7' lg='7' className='mb-3 px-3 px-md-2'>
-            <ReviewList reviews={props.reviews} />
-          </Col>
-        )}
-
-        {props.reviews.length > 0 && (
-          <Col xs='12' md='5' lg='5' className='mb-3 px-3 px-md-2'></Col>
-        )}
         <Col xs='12' md='7' lg='7' className='mb-3 px-3 px-md-2'>
+          {props.reviews.length > 0 && <ReviewList reviews={props.reviews} />}
           <AddReview
             reviewFormData={props.reviewFormData}
             reviewChange={props.reviewChange}
