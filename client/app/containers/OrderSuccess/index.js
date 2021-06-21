@@ -38,8 +38,11 @@ class OrderSuccess extends React.PureComponent {
           <div className='order-message'>
             <h2>Thank you for your order.</h2>
             <p>
-              Order #<span className='order-label'>{order._id}</span> is
-              complete.
+              Order{' '}
+              <Link to={`/order/${order._id}`} className='order-label'>
+                #{order._id}
+              </Link>{' '}
+              is complete.
             </p>
             <p>A confirmation email will be sent to you shortly.</p>
             <div className='order-success-actions'>
