@@ -181,7 +181,8 @@ const getCartItems = cartItems => {
   cartItems.map(item => {
     const newItem = {};
     newItem.quantity = item.quantity;
-    newItem.totalPrice = item.totalPrice;
+    newItem.price = item.price;
+    newItem.taxable = item.taxable;
     newItem.product = item._id;
     newCartItems.push(newItem);
   });
