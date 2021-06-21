@@ -57,8 +57,10 @@
       border-bottom: none;
     }
 
-    .price {
-      font-size: $font-size-medium;
+    .value {
+      color: $font-custom-color;
+      font-weight: $font-weight-normal;
+      font-size: $font-size-xx-large;
     }
 
     .item-details {

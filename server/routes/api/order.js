@@ -7,7 +7,6 @@ const Cart = require('../../models/cart');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 const mailgun = require('../../services/mailgun');
-const taxConfig = require('../../config/tax');
 const store = require('../../helpers/store');
 
 router.post('/add', auth, async (req, res) => {
@@ -89,9 +88,10 @@ router.get('/list', auth, async (req, res) => {
         newDataSet.push(order);
 
         if (newDataSet.length === newOrders.length) {
-          newDataSet.sort((a, b) => b.created - a.created);
+          const ordersList = newDataSet.map(o => store.caculateTaxAmount(o));
+          ordersList.sort((a, b) => b.created - a.created);
           res.status(200).json({
-            orders: newDataSet
+            orders: ordersList
           });
         }
       });
