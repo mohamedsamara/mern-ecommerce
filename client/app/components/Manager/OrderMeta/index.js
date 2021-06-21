@@ -37,7 +37,7 @@ const OrderMeta = props => {
         <Col xs='12' md='8'>
           <Row>
             <Col xs='4'>
-              <p className='one-line-ellipsis'>Order Number</p>
+              <p className='one-line-ellipsis'>Order ID</p>
             </Col>
             <Col xs='8'>
               <span className='order-label one-line-ellipsis'>{` ${order._id}`}</span>
