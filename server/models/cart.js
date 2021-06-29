@@ -15,6 +15,10 @@ const CartItemSchema = new Schema({
     type: Number,
     default: 0
   },
+  totalTax: {
+    type: Number,
+    default: 0
+  },
   status: {
     type: String,
     default: 'Not processed',

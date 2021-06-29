@@ -5,75 +5,81 @@ const router = express.Router();
 const Cart = require('../../models/cart');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
+const store = require('../../helpers/store');
 
-router.post('/add', auth, (req, res) => {
-  const user = req.user._id;
-  const products = req.body.products;
+router.post('/add', auth, async (req, res) => {
+  try {
+    const user = req.user._id;
+    const items = req.body.products;
 
-  const cart = new Cart({
-    user,
-    products
-  });
+    const products = store.caculateItemsSalesTax(items);
 
-  cart.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    const cart = new Cart({
+      user,
+      products
+    });
+
+    const cartDoc = await cart.save();
 
     decreaseQuantity(products);
 
     res.status(200).json({
       success: true,
-      cartId: data.id
+      cartId: cartDoc.id
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
-router.delete('/delete/:cartId', auth, (req, res) => {
-  Cart.deleteOne({ _id: req.params.cartId }, err => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+router.delete('/delete/:cartId', auth, async (req, res) => {
+  try {
+    await Cart.deleteOne({ _id: req.params.cartId });
+
     res.status(200).json({
       success: true
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
-router.post('/add/:cartId', auth, (req, res) => {
-  const product = req.body.product;
-  const query = { _id: req.params.cartId };
+router.post('/add/:cartId', auth, async (req, res) => {
+  try {
+    const product = req.body.product;
+    const query = { _id: req.params.cartId };
 
-  Cart.updateOne(query, { $push: { products: product } }).exec(err => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    await Cart.updateOne(query, { $push: { products: product } }).exec();
+
     res.status(200).json({
       success: true
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
-router.delete('/delete/:cartId/:productId', auth, (req, res) => {
-  const product = { product: req.params.productId };
-  const query = { _id: req.params.cartId };
+router.delete('/delete/:cartId/:productId', auth, async (req, res) => {
+  try {
+    const product = { product: req.params.productId };
+    const query = { _id: req.params.cartId };
 
-  Cart.updateOne(query, { $pull: { products: product } }).exec(err => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    await Cart.updateOne(query, { $pull: { products: product } }).exec();
+
     res.status(200).json({
       success: true
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 const decreaseQuantity = products => {

@@ -50,6 +50,7 @@ class Navigation extends React.PureComponent {
     this.props.toggleMenu();
   }
 
+
   getSuggestionValue(suggestion){
     return suggestion.name;
   }
@@ -90,6 +91,7 @@ class Navigation extends React.PureComponent {
       </Link>
     );
   }
+
 
   render() {
     const {
@@ -146,7 +148,7 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 1 }}
               sm={{ size: 12, order: 1 }}
-              md={{ size: 6, order: 1 }}
+              md={{ size: 3, order: 1 }}
               lg={{ size: 3, order: 1 }}
             >
               <div className='brand'>
@@ -184,8 +186,8 @@ class Navigation extends React.PureComponent {
             <Col
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
-              md={{ size: 6, order: 2 }}
-              lg={{ size: 4, order: 4 }}
+              md={{ size: 4, order: 1 }}
+              lg={{ size: 5, order: 3 }}
               className='desktop-hidden'
             >
               <div className='header-links'>
@@ -200,10 +202,10 @@ class Navigation extends React.PureComponent {
               </div>
             </Col>
             <Col
-              xs={{ size: 12, order: 3 }}
-              sm={{ size: 12, order: 3 }}
-              md={{ size: 6, order: 3 }}
-              lg={{ size: 4, order: 4 }}
+              xs={{ size: 12, order: 2 }}
+              sm={{ size: 12, order: 2 }}
+              md={{ size: 9, order: 1 }}
+              lg={{ size: 9, order: 3 }}
             >
               <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
                 <CartIcon

@@ -51,7 +51,9 @@ router.post('/', auth, async (req, res) => {
 // fetch wishlist api
 router.get('/', auth, async (req, res) => {
   try {
-    const wishlist = await Wishlist.find({ isLiked: true })
+    const user = req.user._id;
+
+    const wishlist = await Wishlist.find({ user, isLiked: true })
       .populate({
         path: 'product',
         select: 'name slug price imageUrl'
