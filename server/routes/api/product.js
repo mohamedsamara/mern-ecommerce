@@ -306,18 +306,13 @@ router.get('/item/:slug', async (req, res) => {
 });
 
 
-// fetch search product slug api
-router.get('/list/search/:slug', async (req, res) => {
+// fetch  product name search api
+router.get('/list/search/:name', async (req, res) => {
   try {
-    const slug = req.params.slug;
+    const name = req.params.name;
     const userDoc = await checkAuth(req);
 
-    const productDoc = await Product.find({ slug:{$regex:new RegExp(slug)}, isActive: true }).populate(
-      {
-        path: 'brand',
-        select: 'name isActive slug'
-      }
-    );
+    const productDoc = await Product.find({ name:{$regex:new RegExp(name),$options: 'is'}, isActive: true},{name:1,slug:1,imageUrl:1,price:1,_id:0});
 
     if (productDoc.length < 0) {
       return res.status(404).json({
@@ -325,41 +320,8 @@ router.get('/list/search/:slug', async (req, res) => {
       });
     }
 
-    let products = [];
-
-    if (userDoc) {
-      const wishlist = await Wishlist.find({
-        user: userDoc.id,
-        isLiked: true
-      }).populate({
-        path: 'product',
-        select: '_id'
-      });
-
-      const ps = productDoc || [];
-
-      const newPs = [];
-      ps.map(p => {
-        let isLiked = false;
-
-        wishlist.map(w => {
-          if (String(w.product._id) === String(p._id)) {
-            isLiked = true;
-          }
-        });
-
-        const newProduct = { ...p.toObject(), isLiked };
-
-        newPs.push(newProduct);
-      });
-
-      products = newPs;
-    } else {
-      products = productDoc;
-    }
-
     res.status(200).json({
-      products: products
+      products: productDoc
     });
   } catch (error) {
     res.status(400).json({

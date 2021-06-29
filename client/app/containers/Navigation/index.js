@@ -6,7 +6,9 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-
+import Autosuggest from 'react-autosuggest';
+import AutosuggestHighlightMatch from "autosuggest-highlight/match";
+import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 import { Link, NavLink as ActiveLink, withRouter } from 'react-router-dom';
 
 import {
@@ -27,9 +29,8 @@ import {
 import actions from '../../actions';
 
 import Button from '../../components/Common/Button';
-import SearchBar from '../../components/Common/SearchBar';
 import CartIcon from '../../components/Common/CartIcon';
-import { BarsIcon, SearchIcon } from '../../components/Common/Icon';
+import { BarsIcon } from '../../components/Common/Icon';
 import MiniBrand from '../../components/Store//MiniBrand';
 import Menu from '../NavigationMenu';
 import Cart from '../Cart';
@@ -49,24 +50,45 @@ class Navigation extends React.PureComponent {
     this.props.toggleMenu();
   }
 
-  onChangeSearch(e) {
-    if(e.value.length > 0){
-      this.props.fetchSearchProducts(e.value)
-      this.props.history.push(`/shop/search/${e.value}`)
-    } else {
-      this.props.fetchStoreProducts()
-      this.props.history.push(`/shop`)
-    }
+  getSuggestionValue(suggestion){
+    return suggestion.name;
   }
 
-  onSubmitSearch(e) {
-    if(e.value.length > 0){
-      this.props.fetchSearchProducts(e.value)
-      this.props.history.push(`/shop/search/${e.value}`)
-    } else {
-      this.props.fetchStoreProducts()
-      this.props.history.push(`/shop`)
+
+  renderSuggestion(suggestion,{ query, isHighlighted }){
+
+    const BoldName = (suggestion,query) => {
+      const matches = AutosuggestHighlightMatch(suggestion.name, query);
+      const parts = AutosuggestHighlightParse(suggestion.name, matches);
+  
+      return (
+        <span>
+        {parts.map((part, index) => {
+          const className = part.highlight ? 'react-autosuggest__suggestion-match' : null;
+          return (
+            <span className={className} key={index}>
+              {part.text}
+            </span>
+          );
+        })}
+      </span>);
     }
+
+    return (
+      <Link to={`/product/${suggestion.slug}`}>
+        <span className="sugg-option">
+            <span className="icon-wrap"><img src={suggestion.imageUrl} /></span>
+             <Container>
+              <Row>
+                <Col><span className="name">{BoldName(suggestion,query)}</span></Col>
+              </Row>
+              <Row>
+                <Col><span className="price">${suggestion.price}</span></Col>
+              </Row>
+             </Container>
+        </span>
+      </Link>
+    );
   }
 
   render() {
@@ -81,8 +103,19 @@ class Navigation extends React.PureComponent {
       isCartOpen,
       isBrandOpen,
       toggleCart,
-      toggleMenu
+      toggleMenu,
+      value,
+      suggestions,
+      onChange,
+      onSuggestionsFetchRequested,
+      onSuggestionsClearRequested
     } = this.props;
+
+    const inputProps = {
+        placeholder: 'Search',
+        value,
+        onChange: onChange
+    };
 
     return (
       <header className='header fixed-mobile-header'>
@@ -136,15 +169,16 @@ class Navigation extends React.PureComponent {
               md={{ size: 12, order: 4 }}
               lg={{ size: 5, order: 4 }}
               >
-              <SearchBar
-              id= {'search'}
-              name= {'search'}
-              placeholder= {'Search'}
-              inlineBtn= {true}
-              btnText={''}
-              btnIcon={<SearchIcon />}
-              onSearch={e => this.onChangeSearch(e)}
-              onSearchSubmit={e => this.onSubmitSearch(e)}
+              <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={(value) => { onSuggestionsFetchRequested({value})}}
+                  onSuggestionsClearRequested={() => { onSuggestionsClearRequested()}}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={inputProps}
+                  onSuggestionSelected={(e,selectedValue)=>{
+                    history.push(`/product/${selectedValue.suggestion.slug}`)
+                  }}
               />
             </Col>
             <Col
@@ -287,7 +321,9 @@ const mapStateToProps = state => {
     cartItems: state.cart.cartItems,
     brands: state.brand.storeBrands,
     authenticated: state.authentication.authenticated,
-    user: state.account.user
+    user: state.account.user,
+    value:state.navigation.value,
+    suggestions:state.navigation.suggestions
   };
 };
 
