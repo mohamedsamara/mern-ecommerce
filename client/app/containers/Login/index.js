@@ -5,10 +5,10 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
 
-import { Row, Col } from 'reactstrap';
+import { connect } from 'react-redux';
 import { Redirect, Link } from 'react-router-dom';
+import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
 

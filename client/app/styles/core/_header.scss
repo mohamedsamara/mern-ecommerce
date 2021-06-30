@@ -32,8 +32,16 @@
 }
 
 .top-header {
-  align-items: center;
-  padding: 10px 0px;
+  // margin-top: 10px;
+  // margin-bottom: 10px;
+  // height: 95px;
+  padding: 16px 0px;
+
+  @include media-breakpoint-up(lg) {
+    // height: 60px;
+
+    padding: 22px ​0px;
+  }
 
   span {
     &:hover {

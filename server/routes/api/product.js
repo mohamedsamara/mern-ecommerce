@@ -305,14 +305,15 @@ router.get('/item/:slug', async (req, res) => {
   }
 });
 
-
 // fetch  product name search api
 router.get('/list/search/:name', async (req, res) => {
   try {
     const name = req.params.name;
-    const userDoc = await checkAuth(req);
 
-    const productDoc = await Product.find({ name:{$regex:new RegExp(name),$options: 'is'}, isActive: true},{name:1,slug:1,imageUrl:1,price:1,_id:0});
+    const productDoc = await Product.find(
+      { name: { $regex: new RegExp(name), $options: 'is' }, isActive: true },
+      { name: 1, slug: 1, imageUrl: 1, price: 1, _id: 0 }
+    );
 
     if (productDoc.length < 0) {
       return res.status(404).json({
@@ -329,7 +330,6 @@ router.get('/list/search/:name', async (req, res) => {
     });
   }
 });
-
 
 // fetch all products by category api
 router.get('/list/category/:slug', async (req, res) => {
