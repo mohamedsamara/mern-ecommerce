@@ -6,7 +6,9 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-
+import Autosuggest from 'react-autosuggest';
+import AutosuggestHighlightMatch from "autosuggest-highlight/match";
+import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 import { Link, NavLink as ActiveLink, withRouter } from 'react-router-dom';
 
 import {
@@ -48,6 +50,49 @@ class Navigation extends React.PureComponent {
     this.props.toggleMenu();
   }
 
+
+  getSuggestionValue(suggestion){
+    return suggestion.name;
+  }
+
+
+  renderSuggestion(suggestion,{ query, isHighlighted }){
+
+    const BoldName = (suggestion,query) => {
+      const matches = AutosuggestHighlightMatch(suggestion.name, query);
+      const parts = AutosuggestHighlightParse(suggestion.name, matches);
+  
+      return (
+        <span>
+        {parts.map((part, index) => {
+          const className = part.highlight ? 'react-autosuggest__suggestion-match' : null;
+          return (
+            <span className={className} key={index}>
+              {part.text}
+            </span>
+          );
+        })}
+      </span>);
+    }
+
+    return (
+      <Link to={`/product/${suggestion.slug}`}>
+        <span className="sugg-option">
+            <span className="icon-wrap"><img src={suggestion.imageUrl} /></span>
+             <Container>
+              <Row>
+                <Col><span className="name">{BoldName(suggestion,query)}</span></Col>
+              </Row>
+              <Row>
+                <Col><span className="price">${suggestion.price}</span></Col>
+              </Row>
+             </Container>
+        </span>
+      </Link>
+    );
+  }
+
+
   render() {
     const {
       history,
@@ -60,8 +105,19 @@ class Navigation extends React.PureComponent {
       isCartOpen,
       isBrandOpen,
       toggleCart,
-      toggleMenu
+      toggleMenu,
+      value,
+      suggestions,
+      onChange,
+      onSuggestionsFetchRequested,
+      onSuggestionsClearRequested
     } = this.props;
+
+    const inputProps = {
+        placeholder: 'Search',
+        value,
+        onChange: onChange
+    };
 
     return (
       <header className='header fixed-mobile-header'>
@@ -108,6 +164,24 @@ class Navigation extends React.PureComponent {
                   <h1 className='logo'>MERN Store</h1>
                 </Link>
               </div>
+            </Col>
+            <Col
+              xs={{ size: 12, order: 4 }}
+              sm={{ size: 12, order: 4 }}
+              md={{ size: 12, order: 4 }}
+              lg={{ size: 5, order: 4 }}
+              >
+              <Autosuggest
+                  suggestions={suggestions}
+                  onSuggestionsFetchRequested={(value) => { onSuggestionsFetchRequested({value})}}
+                  onSuggestionsClearRequested={() => { onSuggestionsClearRequested()}}
+                  getSuggestionValue={this.getSuggestionValue}
+                  renderSuggestion={this.renderSuggestion}
+                  inputProps={inputProps}
+                  onSuggestionSelected={(e,selectedValue)=>{
+                    history.push(`/product/${selectedValue.suggestion.slug}`)
+                  }}
+              />
             </Col>
             <Col
               xs={{ size: 12, order: 2 }}
@@ -249,7 +323,9 @@ const mapStateToProps = state => {
     cartItems: state.cart.cartItems,
     brands: state.brand.storeBrands,
     authenticated: state.authentication.authenticated,
-    user: state.account.user
+    user: state.account.user,
+    value:state.navigation.value,
+    suggestions:state.navigation.suggestions
   };
 };
 

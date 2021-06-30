@@ -305,6 +305,32 @@ router.get('/item/:slug', async (req, res) => {
   }
 });
 
+
+// fetch  product name search api
+router.get('/list/search/:name', async (req, res) => {
+  try {
+    const name = req.params.name;
+    const userDoc = await checkAuth(req);
+
+    const productDoc = await Product.find({ name:{$regex:new RegExp(name),$options: 'is'}, isActive: true},{name:1,slug:1,imageUrl:1,price:1,_id:0});
+
+    if (productDoc.length < 0) {
+      return res.status(404).json({
+        message: 'No product found.'
+      });
+    }
+
+    res.status(200).json({
+      products: productDoc
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+
 // fetch all products by category api
 router.get('/list/category/:slug', async (req, res) => {
   try {
