@@ -83,7 +83,6 @@ const merchantReducer = (state = initialState, action) => {
         ...state,
         signupFormData: { ...state.signupFormData, ...action.payload }
       };
-
     case SET_SIGNUP_FORM_ERRORS:
       return {
         ...state,

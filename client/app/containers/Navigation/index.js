@@ -5,12 +5,12 @@
  */
 
 import React from 'react';
-import { connect } from 'react-redux';
-import Autosuggest from 'react-autosuggest';
-import AutosuggestHighlightMatch from "autosuggest-highlight/match";
-import AutosuggestHighlightParse from "autosuggest-highlight/parse";
-import { Link, NavLink as ActiveLink, withRouter } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import { Link, NavLink as ActiveLink, withRouter } from 'react-router-dom';
+import Autosuggest from 'react-autosuggest';
+import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
+import AutosuggestHighlightParse from 'autosuggest-highlight/parse';
 import {
   Container,
   Row,
@@ -50,48 +50,53 @@ class Navigation extends React.PureComponent {
     this.props.toggleMenu();
   }
 
-
-  getSuggestionValue(suggestion){
+  getSuggestionValue(suggestion) {
     return suggestion.name;
   }
 
-
-  renderSuggestion(suggestion,{ query, isHighlighted }){
-
-    const BoldName = (suggestion,query) => {
+  renderSuggestion(suggestion, { query, isHighlighted }) {
+    const BoldName = (suggestion, query) => {
       const matches = AutosuggestHighlightMatch(suggestion.name, query);
       const parts = AutosuggestHighlightParse(suggestion.name, matches);
-  
+
       return (
         <span>
-        {parts.map((part, index) => {
-          const className = part.highlight ? 'react-autosuggest__suggestion-match' : null;
-          return (
-            <span className={className} key={index}>
-              {part.text}
-            </span>
-          );
-        })}
-      </span>);
-    }
+          {parts.map((part, index) => {
+            const className = part.highlight
+              ? 'react-autosuggest__suggestion-match'
+              : null;
+            return (
+              <span className={className} key={index}>
+                {part.text}
+              </span>
+            );
+          })}
+        </span>
+      );
+    };
 
     return (
       <Link to={`/product/${suggestion.slug}`}>
-        <span className="sugg-option">
-            <span className="icon-wrap"><img src={suggestion.imageUrl} /></span>
-             <Container>
-              <Row>
-                <Col><span className="name">{BoldName(suggestion,query)}</span></Col>
-              </Row>
-              <Row>
-                <Col><span className="price">${suggestion.price}</span></Col>
-              </Row>
-             </Container>
+        <span className='sugg-option'>
+          <span className='icon-wrap'>
+            <img src={suggestion.imageUrl} />
+          </span>
+          <Container>
+            <Row>
+              <Col>
+                <span className='name'>{BoldName(suggestion, query)}</span>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <span className='price'>${suggestion.price}</span>
+              </Col>
+            </Row>
+          </Container>
         </span>
       </Link>
     );
   }
-
 
   render() {
     const {
@@ -106,17 +111,19 @@ class Navigation extends React.PureComponent {
       isBrandOpen,
       toggleCart,
       toggleMenu,
-      value,
+      searchValue,
       suggestions,
-      onChange,
+      onSearch,
       onSuggestionsFetchRequested,
       onSuggestionsClearRequested
     } = this.props;
 
     const inputProps = {
-        placeholder: 'Search',
-        value,
-        onChange: onChange
+      placeholder: 'Search Products',
+      value: searchValue,
+      onChange: (_, { newValue }) => {
+        onSearch(newValue);
+      }
     };
 
     return (
@@ -144,7 +151,7 @@ class Navigation extends React.PureComponent {
           </Container>
         </div>
         <Container>
-          <Row className='top-header'>
+          <Row className='align-items-center top-header'>
             <Col
               xs={{ size: 12, order: 1 }}
               sm={{ size: 12, order: 1 }}
@@ -169,18 +176,19 @@ class Navigation extends React.PureComponent {
               xs={{ size: 12, order: 4 }}
               sm={{ size: 12, order: 4 }}
               md={{ size: 12, order: 4 }}
-              lg={{ size: 5, order: 4 }}
-              >
+              lg={{ size: 5, order: 2 }}
+              className='pt-2 pt-lg-0'
+            >
               <Autosuggest
-                  suggestions={suggestions}
-                  onSuggestionsFetchRequested={(value) => { onSuggestionsFetchRequested({value})}}
-                  onSuggestionsClearRequested={() => { onSuggestionsClearRequested()}}
-                  getSuggestionValue={this.getSuggestionValue}
-                  renderSuggestion={this.renderSuggestion}
-                  inputProps={inputProps}
-                  onSuggestionSelected={(e,selectedValue)=>{
-                    history.push(`/product/${selectedValue.suggestion.slug}`)
-                  }}
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={onSuggestionsClearRequested}
+                getSuggestionValue={this.getSuggestionValue}
+                renderSuggestion={this.renderSuggestion}
+                inputProps={inputProps}
+                onSuggestionSelected={(_, item) => {
+                  history.push(`/product/${item.suggestion.slug}`);
+                }}
               />
             </Col>
             <Col
@@ -205,7 +213,8 @@ class Navigation extends React.PureComponent {
               xs={{ size: 12, order: 2 }}
               sm={{ size: 12, order: 2 }}
               md={{ size: 9, order: 1 }}
-              lg={{ size: 9, order: 3 }}
+              lg={{ size: 4, order: 3 }}
+              // className='px-0'
             >
               <Navbar color='light' light expand='md' className='mt-1 mt-md-0'>
                 <CartIcon
@@ -324,8 +333,8 @@ const mapStateToProps = state => {
     brands: state.brand.storeBrands,
     authenticated: state.authentication.authenticated,
     user: state.account.user,
-    value:state.navigation.value,
-    suggestions:state.navigation.suggestions
+    searchValue: state.navigation.searchValue,
+    suggestions: state.navigation.searchSuggestions
   };
 };
 
