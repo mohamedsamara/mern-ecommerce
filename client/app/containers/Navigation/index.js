@@ -60,7 +60,7 @@ class Navigation extends React.PureComponent {
       const parts = AutosuggestHighlightParse(suggestion.name, matches);
 
       return (
-        <span>
+        <div>
           {parts.map((part, index) => {
             const className = part.highlight
               ? 'react-autosuggest__suggestion-match'
@@ -71,29 +71,36 @@ class Navigation extends React.PureComponent {
               </span>
             );
           })}
-        </span>
+        </div>
       );
     };
 
     return (
       <Link to={`/product/${suggestion.slug}`}>
-        <span className='sugg-option'>
-          <span className='icon-wrap'>
-            <img src={suggestion.imageUrl} />
-          </span>
-          <Container>
-            <Row>
-              <Col>
-                <span className='name'>{BoldName(suggestion, query)}</span>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <span className='price'>${suggestion.price}</span>
-              </Col>
-            </Row>
-          </Container>
-        </span>
+        <div className='d-flex'>
+          <img
+            className='item-image'
+            src={`${
+              suggestion.imageUrl
+                ? suggestion.imageUrl
+                : '/images/placeholder-image.png'
+            }`}
+          />
+          <div>
+            <Container>
+              <Row>
+                <Col>
+                  <span className='name'>{BoldName(suggestion, query)}</span>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <span className='price'>${suggestion.price}</span>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </div>
       </Link>
     );
   }
