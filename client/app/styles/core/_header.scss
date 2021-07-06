@@ -43,7 +43,7 @@
     padding: 22px ​0px;
   }
 
-  span {
+  .bars-icon {
     &:hover {
       opacity: 0.5;
     }
@@ -52,6 +52,10 @@
   .cart-icon {
     position: relative;
     line-height: 100%;
+
+    &:hover {
+      opacity: 0.5;
+    }
   }
 
   .fa {
