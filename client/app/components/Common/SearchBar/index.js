@@ -35,8 +35,25 @@ class SearchBar extends React.Component {
     }
   }
 
+  _onBlur(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    if (this.props.onBlur) {
+      this.props.onBlur({ name, value });
+    }
+  }
+
   render() {
-    const { id, name, placeholder, className, inlineBtn, btnText } = this.props;
+    const {
+      id,
+      name,
+      placeholder,
+      className,
+      inlineBtn,
+      btnText,
+      autoComplete
+    } = this.props;
     const { value } = this.state;
 
     const styles = `search-box${inlineBtn ? ` inline-btn-box` : ''}`;
@@ -49,6 +66,7 @@ class SearchBar extends React.Component {
         <div className={styles}>
           <div className='input-text-block'>
             <input
+              autoComplete={autoComplete}
               type='text'
               id={id}
               name={name}
@@ -58,6 +76,7 @@ class SearchBar extends React.Component {
               onChange={e => {
                 this._onChange(e);
               }}
+              onBlur={e => this._onBlur(e)}
               onKeyPress={this.props.onKeyPress || null}
             />
             <Button type='submit' variant='primary' text={btnText} />
@@ -74,7 +93,8 @@ SearchBar.defaultProps = {
   name: 'search',
   placeholder: 'Search',
   inlineBtn: true,
-  btnText: 'Search'
+  btnText: 'Search',
+  autoComplete: 'off'
 };
 
 export default SearchBar;

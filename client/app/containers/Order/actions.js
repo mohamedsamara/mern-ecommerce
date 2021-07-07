@@ -15,6 +15,7 @@ import {
   SET_ORDERS_LOADING,
   CLEAR_ORDERS
 } from './constants';
+
 import { clearCart, getCartId } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
@@ -38,7 +39,7 @@ export const fetchOrders = () => {
     try {
       dispatch(setOrderLoading(true));
 
-      const response = await axios.get(`/api/order/list`);
+      const response = await axios.get(`/api/order`);
 
       if (response.data.orders) {
         dispatch({

@@ -6,6 +6,7 @@ const Order = require('../../models/order');
 const Cart = require('../../models/cart');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
+const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
 const store = require('../../helpers/store');
 
@@ -54,46 +55,51 @@ router.post('/add', auth, async (req, res) => {
   }
 });
 
-// fetch all orders api
-router.get('/list', auth, async (req, res) => {
+// fetch orders api
+router.get('/', auth, async (req, res) => {
   try {
-    const user = req.user._id;
+    let ordersDoc = null;
 
-    const orders = await Order.find({ user }).populate({
-      path: 'cart'
-    });
-
-    const newOrders = orders.filter(order => order.cart);
-
-    if (newOrders.length > 0) {
-      const newDataSet = [];
-
-      newOrders.map(async doc => {
-        const cartId = doc.cart._id;
-
-        const cart = await Cart.findById(cartId).populate({
+    if (req.user.role === role.ROLES.Admin) {
+      ordersDoc = await Order.find({})
+        .populate({
+          path: 'cart'
+        })
+        .populate({
           path: 'products.product',
           populate: {
             path: 'brand'
           }
         });
+    } else {
+      const user = req.user._id;
 
-        const order = {
-          _id: doc._id,
-          total: parseFloat(Number(doc.total.toFixed(2))),
-          created: doc.created,
-          products: cart.products
+      ordersDoc = await Order.find({ user })
+        .populate({
+          path: 'cart'
+        })
+        .populate({
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        });
+    }
+
+    if (ordersDoc.length > 0) {
+      const newOrders = ordersDoc.map(o => {
+        return {
+          _id: o?._id,
+          total: parseFloat(Number(o?.total.toFixed(2))),
+          created: o?.created,
+          products: o?.cart?.products
         };
+      });
 
-        newDataSet.push(order);
-
-        if (newDataSet.length === newOrders.length) {
-          const ordersList = newDataSet.map(o => store.caculateTaxAmount(o));
-          ordersList.sort((a, b) => b.created - a.created);
-          res.status(200).json({
-            orders: ordersList
-          });
-        }
+      const orders = newOrders.map(o => store.caculateTaxAmount(o));
+      orders.sort((a, b) => b.created - a.created);
+      res.status(200).json({
+        orders
       });
     } else {
       res.status(200).json({
@@ -101,6 +107,7 @@ router.get('/list', auth, async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('error', error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -111,32 +118,47 @@ router.get('/list', auth, async (req, res) => {
 router.get('/:orderId', auth, async (req, res) => {
   try {
     const orderId = req.params.orderId;
-    const user = req.user._id;
 
-    const orderDoc = await Order.findOne({ _id: orderId, user }).populate({
-      path: 'cart'
-    });
+    let orderDoc = null;
+
+    if (req.user.role === role.ROLES.Admin) {
+      orderDoc = await Order.findOne({ _id: orderId })
+        .populate({
+          path: 'cart'
+        })
+        .populate({
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        });
+    } else {
+      const user = req.user._id;
+      orderDoc = await Order.findOne({ _id: orderId, user })
+        .populate({
+          path: 'cart'
+        })
+        .populate({
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        });
+    }
 
     if (!orderDoc) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `Cannot find order with the id: ${orderId}.`
       });
     }
-
-    const cart = await Cart.findById(orderDoc.cart._id).populate({
-      path: 'products.product',
-      populate: {
-        path: 'brand'
-      }
-    });
 
     let order = {
       _id: orderDoc._id,
       cartId: orderDoc.cart._id,
       total: orderDoc.total,
       totalTax: 0,
-      created: cart.created,
-      products: cart.products
+      created: orderDoc.created,
+      products: orderDoc.cart.products
     };
 
     order = store.caculateTaxAmount(order);
