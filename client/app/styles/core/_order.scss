@@ -109,6 +109,14 @@
       }
     }
 
+    .dropdown-confirm {
+      &.admin {
+        .dropdown-menu {
+          min-width: 150px;
+        }
+      }
+    }
+
     .item-details {
       max-width: 200px;
     }

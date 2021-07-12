@@ -7,33 +7,42 @@
 import React from 'react';
 
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, DropdownItem } from 'reactstrap';
 
 import Button from '../../Common/Button';
 import DropdownConfirm from '../../Common/DropdownConfirm';
 
 const OrderItems = props => {
-  const { order, cancelOrderItem } = props;
+  const { order, user, updateOrderItemStatus } = props;
 
   const renderPopoverContent = item => {
+    const statuses = [
+      'Not processed',
+      'Processing',
+      'Shipped',
+      'Delivered',
+      'Cancelled'
+    ];
+
     return (
-      <div className='d-flex flex-column align-items-center justify-content-center p-2'>
-        <p className='text-center mb-2'>{`Are you sure you want to cancel ${item.product.name}.`}</p>
-        <Button
-          variant='danger'
-          id='CancelOrderItemPopover'
-          size='sm'
-          text='Confirm Cancel'
-          role='menuitem'
-          className='cancel-order-btn'
-          onClick={() => cancelOrderItem(item._id, order.products)}
-        />
+      <div className='d-flex flex-column align-items-center justify-content-center'>
+        {statuses.map((s, i) => (
+          <DropdownItem
+            key={`${s}-${i}`}
+            className={s === item?.status ? 'active' : ''}
+            onClick={() => updateOrderItemStatus(item._id, s)}
+          >
+            {s}
+          </DropdownItem>
+        ))}
       </div>
     );
   };
 
   const renderItemsAction = item => {
-    if (item.product && item.status === 'Delivered') {
+    const isAdmin = user.role === 'ROLE_ADMIN';
+
+    if (item.status === 'Delivered') {
       return (
         <Link
           to={`/product/${item.product.slug}`}
@@ -43,12 +52,34 @@ const OrderItems = props => {
           Reivew Product
         </Link>
       );
-    } else if (item.status !== 'Cancelled' && order.products.length !== 1) {
-      return (
-        <DropdownConfirm label='Cancel Item'>
-          {renderPopoverContent(item)}
-        </DropdownConfirm>
-      );
+    } else if (item.status !== 'Cancelled') {
+      if (!isAdmin) {
+        return (
+          <DropdownConfirm label='Cancel'>
+            <div className='d-flex flex-column align-items-center justify-content-center p-2'>
+              <p className='text-center mb-2'>{`Are you sure you want to cancel ${item.product?.name}.`}</p>
+              <Button
+                variant='danger'
+                id='CancelOrderItemPopover'
+                size='sm'
+                text='Confirm Cancel'
+                role='menuitem'
+                className='cancel-order-btn'
+                onClick={() => updateOrderItemStatus(item._id, 'Cancelled')}
+              />
+            </div>
+          </DropdownConfirm>
+        );
+      } else {
+        return (
+          <DropdownConfirm
+            label={item.product && item.status}
+            className={isAdmin ? 'admin' : ''}
+          >
+            {renderPopoverContent(item)}
+          </DropdownConfirm>
+        );
+      }
     }
   };
 
@@ -74,15 +105,17 @@ const OrderItems = props => {
                       {item.product ? (
                         <>
                           <Link
-                            to={`/product/${item.product.slug}`}
+                            to={`/product/${item.product?.slug}`}
                             className='item-link'
                           >
                             <h4 className='d-block item-name one-line-ellipsis'>
-                              {item.product.name}
+                              {item.product?.name}
                             </h4>
                           </Link>
                           <div className='d-flex align-items-center justify-content-between'>
-                            <span className='price'>${item.product.price}</span>
+                            <span className='price'>
+                              ${item.purchasePrice || item.product.price}
+                            </span>
                           </div>
                         </>
                       ) : (
@@ -124,10 +157,11 @@ const OrderItems = props => {
                   </div>
                 </div>
               </div>
-
-              <div className='text-right mt-2 mt-md-0'>
-                {renderItemsAction(item)}
-              </div>
+              {item.product && (
+                <div className='text-right mt-2 mt-md-0'>
+                  {renderItemsAction(item)}
+                </div>
+              )}
             </div>
           </Col>
         ))}

@@ -13,10 +13,10 @@ import {
 } from 'reactstrap';
 
 const DropdownConfirm = props => {
-  const { label, children } = props;
+  const { className, label, children } = props;
 
   return (
-    <div className='dropdown-confirm'>
+    <div className={`dropdown-confirm ${className}`}>
       <UncontrolledButtonDropdown>
         <DropdownToggle nav>
           <div className='dropdown-action sm'>
@@ -24,7 +24,6 @@ const DropdownConfirm = props => {
             <span className='fa fa-chevron-down dropdown-caret'></span>
           </div>
         </DropdownToggle>
-
         <DropdownMenu right>{children}</DropdownMenu>
       </UncontrolledButtonDropdown>
     </div>

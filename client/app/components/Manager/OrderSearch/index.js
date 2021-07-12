@@ -1,6 +1,6 @@
 /**
  *
- * UserSearch
+ * OrderSearch
  *
  */
 
@@ -8,17 +8,18 @@ import React from 'react';
 
 import SearchBar from '../../Common/SearchBar';
 
-const UserSearch = props => {
+const OrderSearch = props => {
   return (
     <div className='mb-3'>
       <SearchBar
-        name='user'
-        placeholder='Type user name or email'
+        name='order'
+        placeholder='Type the complete order ID'
         btnText='Search'
+        onSearch={props.onSearch}
         onSearchSubmit={props.onSearchSubmit}
       />
     </div>
   );
 };
 
-export default UserSearch;
+export default OrderSearch;

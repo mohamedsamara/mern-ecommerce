@@ -7,7 +7,9 @@ class SearchBar extends React.Component {
     super(props);
 
     this.state = {
-      value: ''
+      value: '',
+      typing: false,
+      typingTimeout: 0
     };
   }
 
@@ -15,13 +17,19 @@ class SearchBar extends React.Component {
     const name = e.target.name;
     const value = e.target.value;
 
-    this.setState({
-      value
-    });
-
-    if (this.props.onSearch) {
-      this.props.onSearch({ name, value });
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout);
     }
+
+    this.setState({
+      value,
+      typing: false,
+      typingTimeout: setTimeout(() => {
+        if (this.props.onSearch) {
+          this.props.onSearch({ name, value });
+        }
+      }, 1000)
+    });
   }
 
   _handleSubmit(e) {
@@ -35,8 +43,25 @@ class SearchBar extends React.Component {
     }
   }
 
+  _onBlur(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    if (this.props.onBlur) {
+      this.props.onBlur({ name, value });
+    }
+  }
+
   render() {
-    const { id, name, placeholder, className, inlineBtn, btnText } = this.props;
+    const {
+      id,
+      name,
+      placeholder,
+      className,
+      inlineBtn,
+      btnText,
+      autoComplete
+    } = this.props;
     const { value } = this.state;
 
     const styles = `search-box${inlineBtn ? ` inline-btn-box` : ''}`;
@@ -49,6 +74,7 @@ class SearchBar extends React.Component {
         <div className={styles}>
           <div className='input-text-block'>
             <input
+              autoComplete={autoComplete}
               type='text'
               id={id}
               name={name}
@@ -58,6 +84,7 @@ class SearchBar extends React.Component {
               onChange={e => {
                 this._onChange(e);
               }}
+              onBlur={e => this._onBlur(e)}
               onKeyPress={this.props.onKeyPress || null}
             />
             <Button type='submit' variant='primary' text={btnText} />
@@ -74,7 +101,8 @@ SearchBar.defaultProps = {
   name: 'search',
   placeholder: 'Search',
   inlineBtn: true,
-  btnText: 'Search'
+  btnText: 'Search',
+  autoComplete: 'off'
 };
 
 export default SearchBar;

@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const Mongoose = require('mongoose');
 
 // Bring in Models & Helpers
 const Order = require('../../models/order');
 const Cart = require('../../models/cart');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
+const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
 const store = require('../../helpers/store');
 
@@ -22,8 +24,6 @@ router.post('/add', auth, async (req, res) => {
     });
 
     const orderDoc = await order.save();
-
-    await Order.findById(orderDoc._id).populate('cart user', '-password');
 
     const cartDoc = await Cart.findById(orderDoc.cart._id).populate({
       path: 'products.product',
@@ -54,46 +54,107 @@ router.post('/add', auth, async (req, res) => {
   }
 });
 
-// fetch all orders api
-router.get('/list', auth, async (req, res) => {
+// search orders api
+router.get('/search', auth, async (req, res) => {
   try {
-    const user = req.user._id;
+    const { search } = req.query;
 
-    const orders = await Order.find({ user }).populate({
-      path: 'cart'
-    });
+    if (!Mongoose.Types.ObjectId.isValid(search)) {
+      return res.status(200).json({
+        orders: []
+      });
+    }
 
-    const newOrders = orders.filter(order => order.cart);
+    let ordersDoc = null;
 
-    if (newOrders.length > 0) {
-      const newDataSet = [];
-
-      newOrders.map(async doc => {
-        const cartId = doc.cart._id;
-
-        const cart = await Cart.findById(cartId).populate({
+    if (req.user.role === role.ROLES.Admin) {
+      ordersDoc = await Order.find({
+        _id: Mongoose.Types.ObjectId(search)
+      }).populate({
+        path: 'cart',
+        populate: {
           path: 'products.product',
           populate: {
             path: 'brand'
           }
-        });
-
-        const order = {
-          _id: doc._id,
-          total: parseFloat(Number(doc.total.toFixed(2))),
-          created: doc.created,
-          products: cart.products
-        };
-
-        newDataSet.push(order);
-
-        if (newDataSet.length === newOrders.length) {
-          const ordersList = newDataSet.map(o => store.caculateTaxAmount(o));
-          ordersList.sort((a, b) => b.created - a.created);
-          res.status(200).json({
-            orders: ordersList
-          });
         }
+      });
+    } else {
+      const user = req.user._id;
+      ordersDoc = await Order.find({
+        _id: Mongoose.Types.ObjectId(search),
+        user
+      }).populate({
+        path: 'cart',
+        populate: {
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        }
+      });
+    }
+
+    ordersDoc = ordersDoc.filter(order => order.cart);
+
+    if (ordersDoc.length > 0) {
+      const newOrders = ordersDoc.map(o => {
+        return {
+          _id: o._id,
+          total: parseFloat(Number(o.total.toFixed(2))),
+          created: o.created,
+          products: o.cart?.products
+        };
+      });
+
+      let orders = newOrders.map(o => store.caculateTaxAmount(o));
+      orders.sort((a, b) => b.created - a.created);
+      res.status(200).json({
+        orders
+      });
+    } else {
+      res.status(200).json({
+        orders: []
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+// fetch orders api
+router.get('/', auth, async (req, res) => {
+  try {
+    const user = req.user._id;
+
+    let ordersDoc = await Order.find({ user }).populate({
+      path: 'cart',
+      populate: {
+        path: 'products.product',
+        populate: {
+          path: 'brand'
+        }
+      }
+    });
+
+    ordersDoc = ordersDoc.filter(order => order.cart);
+
+    if (ordersDoc.length > 0) {
+      const newOrders = ordersDoc.map(o => {
+        return {
+          _id: o._id,
+          total: parseFloat(Number(o.total.toFixed(2))),
+          created: o.created,
+          products: o.cart?.products
+        };
+      });
+
+      let orders = newOrders.map(o => store.caculateTaxAmount(o));
+      orders.sort((a, b) => b.created - a.created);
+      res.status(200).json({
+        orders
       });
     } else {
       res.status(200).json({
@@ -111,32 +172,45 @@ router.get('/list', auth, async (req, res) => {
 router.get('/:orderId', auth, async (req, res) => {
   try {
     const orderId = req.params.orderId;
-    const user = req.user._id;
 
-    const orderDoc = await Order.findOne({ _id: orderId, user }).populate({
-      path: 'cart'
-    });
+    let orderDoc = null;
 
-    if (!orderDoc) {
-      res.status(404).json({
+    if (req.user.role === role.ROLES.Admin) {
+      orderDoc = await Order.findOne({ _id: orderId }).populate({
+        path: 'cart',
+        populate: {
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        }
+      });
+    } else {
+      const user = req.user._id;
+      orderDoc = await Order.findOne({ _id: orderId, user }).populate({
+        path: 'cart',
+        populate: {
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        }
+      });
+    }
+
+    if (!orderDoc || !orderDoc.cart) {
+      return res.status(404).json({
         message: `Cannot find order with the id: ${orderId}.`
       });
     }
 
-    const cart = await Cart.findById(orderDoc.cart._id).populate({
-      path: 'products.product',
-      populate: {
-        path: 'brand'
-      }
-    });
-
     let order = {
       _id: orderDoc._id,
-      cartId: orderDoc.cart._id,
       total: orderDoc.total,
+      created: orderDoc.created,
       totalTax: 0,
-      created: cart.created,
-      products: cart.products
+      products: orderDoc?.cart?.products,
+      cartId: orderDoc.cart._id
     };
 
     order = store.caculateTaxAmount(order);
@@ -173,11 +247,12 @@ router.delete('/cancel/:orderId', auth, async (req, res) => {
   }
 });
 
-router.put('/cancel/item/:itemId', auth, async (req, res) => {
+router.put('/status/item/:itemId', auth, async (req, res) => {
   try {
     const itemId = req.params.itemId;
     const orderId = req.body.orderId;
     const cartId = req.body.cartId;
+    const status = req.body.status || 'Cancelled';
 
     const foundCart = await Cart.findOne({ 'products._id': itemId });
     const foundCartProduct = foundCart.products.find(p => p._id == itemId);
@@ -185,33 +260,41 @@ router.put('/cancel/item/:itemId', auth, async (req, res) => {
     await Cart.updateOne(
       { 'products._id': itemId },
       {
-        'products.$.status': 'Cancelled'
+        'products.$.status': status
       }
     );
 
-    await Product.updateOne(
-      { _id: foundCartProduct.product },
-      { $inc: { quantity: 1 } }
-    );
+    if (status === 'Cancelled') {
+      await Product.updateOne(
+        { _id: foundCartProduct.product },
+        { $inc: { quantity: foundCartProduct.quantity } }
+      );
 
-    const cart = await Cart.findOne({ _id: cartId });
-    const items = cart.products.filter(item => item.status === 'Cancelled');
+      const cart = await Cart.findOne({ _id: cartId });
+      const items = cart.products.filter(item => item.status === 'Cancelled');
 
-    // All items are cancelled => Cancel order
-    if (cart.products.length === items.length) {
-      await Order.deleteOne({ _id: orderId });
-      await Cart.deleteOne({ _id: cartId });
+      // All items are cancelled => Cancel order
+      if (cart.products.length === items.length) {
+        await Order.deleteOne({ _id: orderId });
+        await Cart.deleteOne({ _id: cartId });
+
+        return res.status(200).json({
+          success: true,
+          message: `${
+            req.user.role === role.ROLES.Admin ? 'Order' : 'Your order'
+          } has been cancelled successfully`
+        });
+      }
 
       return res.status(200).json({
         success: true,
-        orderCancelled: true,
-        message: 'You order has been cancelled successfully!'
+        message: 'Item has been cancelled successfully!'
       });
     }
 
     res.status(200).json({
       success: true,
-      message: 'Item has been cancelled successfully!'
+      message: 'Item status has been updated successfully!'
     });
   } catch (error) {
     res.status(400).json({
@@ -225,7 +308,7 @@ const increaseQuantity = products => {
     return {
       updateOne: {
         filter: { _id: item.product },
-        update: { $inc: { quantity: +item.quantity } }
+        update: { $inc: { quantity: item.quantity } }
       }
     };
   });

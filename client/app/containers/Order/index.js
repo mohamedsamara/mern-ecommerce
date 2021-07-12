@@ -7,33 +7,31 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
 import actions from '../../actions';
 
-import SubPage from '../../components/Manager/SubPage';
-import OrderList from '../../components/Manager/OrderList';
-import NotFound from '../../components/Common/NotFound';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import List from './List';
+import Customer from './Customer';
+import Page404 from '../../components/Common/Page404';
 
 class Order extends React.PureComponent {
-  componentDidMount() {
-    this.props.fetchOrders();
-  }
-
   render() {
-    const { orders, isLoading } = this.props;
+    const { user } = this.props;
 
     return (
-      <div className='order-dashboard'>
-        <SubPage title={'Your Orders'} isMenuOpen={null}>
-          {isLoading ? (
-            <LoadingIndicator inline />
-          ) : orders.length > 0 ? (
-            <OrderList orders={orders} />
-          ) : (
-            <NotFound message='you have no orders yet!' />
+      <div className='product-dashboard'>
+        <Switch>
+          <Route exact path='/dashboard/orders' component={List} />
+          {user.role === 'ROLE_ADMIN' && (
+            <Route
+              exact
+              path='/dashboard/orders/customers'
+              component={Customer}
+            />
           )}
-        </SubPage>
+          <Route path='*' component={Page404} />
+        </Switch>
       </div>
     );
   }
@@ -41,9 +39,7 @@ class Order extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    orders: state.order.orders,
-    isLoading: state.order.isLoading,
-    isOrderAddOpen: state.order.isOrderAddOpen
+    user: state.account.user
   };
 };
 

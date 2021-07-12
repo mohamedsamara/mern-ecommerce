@@ -9,7 +9,7 @@ const role = require('../../middleware/role');
 
 // search users api
 router.get(
-  '/list',
+  '/search',
   auth,
   role.checkRole(role.ROLES.Admin),
   async (req, res) => {

@@ -13,7 +13,7 @@ import handleError from '../../utils/error';
 export const fetchUsers = filter => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.get(`/api/user/list`, {
+      const response = await axios.get(`/api/user/search`, {
         params: {
           search: filter.value
         }

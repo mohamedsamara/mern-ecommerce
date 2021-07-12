@@ -10,18 +10,20 @@ import { success } from 'react-notification-system-redux';
 
 import {
   FETCH_ORDERS,
+  FETCH_SEARCHED_ORDERS,
   FETCH_ORDER,
-  UPDATE_ORDER,
+  UPDATE_ORDER_STATUS,
   SET_ORDERS_LOADING,
   CLEAR_ORDERS
 } from './constants';
+
 import { clearCart, getCartId } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
 
-export const updateOrder = value => {
+export const updateOrderStatus = value => {
   return {
-    type: UPDATE_ORDER,
+    type: UPDATE_ORDER_STATUS,
     payload: value
   };
 };
@@ -38,7 +40,7 @@ export const fetchOrders = () => {
     try {
       dispatch(setOrderLoading(true));
 
-      const response = await axios.get(`/api/order/list`);
+      const response = await axios.get(`/api/order`);
 
       if (response.data.orders) {
         dispatch({
@@ -51,6 +53,36 @@ export const fetchOrders = () => {
       handleError(error, dispatch);
     } finally {
       dispatch(setOrderLoading(false));
+    }
+  };
+};
+
+export const fetchSearchOrders = filter => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(setOrderLoading(true));
+
+      const response = await axios.get(`/api/order/search`, {
+        params: {
+          search: filter.value
+        }
+      });
+
+      dispatch({ type: FETCH_SEARCHED_ORDERS, payload: response.data.orders });
+    } catch (error) {
+      handleError(error, dispatch);
+    } finally {
+      dispatch(setOrderLoading(false));
+    }
+  };
+};
+
+export const searchOrders = filter => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(fetchSearchOrders(filter));
+    } catch (error) {
+      handleError(error, dispatch);
     }
   };
 };
@@ -88,14 +120,15 @@ export const cancelOrder = () => {
   };
 };
 
-export const cancelOrderItem = itemId => {
+export const updateOrderItemStatus = (itemId, status) => {
   return async (dispatch, getState) => {
     try {
       const order = getState().order.order;
 
-      const response = await axios.put(`/api/order/cancel/item/${itemId}`, {
+      const response = await axios.put(`/api/order/status/item/${itemId}`, {
         orderId: order._id,
-        cartId: order.cartId
+        cartId: order.cartId,
+        status
       });
 
       if (response.data.orderCancelled) {
@@ -109,7 +142,7 @@ export const cancelOrderItem = itemId => {
       };
 
       dispatch(success(successfulOptions));
-      dispatch(updateOrder({ itemId, status: 'Cancelled' }, 'cencelled'));
+      dispatch(updateOrderStatus({ itemId, status }));
     } catch (error) {
       handleError(error, dispatch);
     }
