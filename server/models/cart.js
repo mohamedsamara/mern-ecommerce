@@ -8,8 +8,13 @@ const CartItemSchema = new Schema({
     ref: 'Product'
   },
   quantity: Number,
+  purchasePrice: {
+    type: Number,
+    default: 0
+  },
   totalPrice: {
-    type: Number
+    type: Number,
+    default: 0
   },
   priceWithTax: {
     type: Number,

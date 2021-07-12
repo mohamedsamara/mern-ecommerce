@@ -22,6 +22,11 @@
     background-color: $secondary-bg;
   }
 
+  &.active {
+    background-color: $secondary-bg;
+    font-weight: $font-weight-bold-one !important;
+  }
+
   a {
     display: block;
     padding: 5px 15px;

@@ -7,7 +7,9 @@ class SearchBar extends React.Component {
     super(props);
 
     this.state = {
-      value: ''
+      value: '',
+      typing: false,
+      typingTimeout: 0
     };
   }
 
@@ -15,13 +17,19 @@ class SearchBar extends React.Component {
     const name = e.target.name;
     const value = e.target.value;
 
-    this.setState({
-      value
-    });
-
-    if (this.props.onSearch) {
-      this.props.onSearch({ name, value });
+    if (this.state.typingTimeout) {
+      clearTimeout(this.state.typingTimeout);
     }
+
+    this.setState({
+      value,
+      typing: false,
+      typingTimeout: setTimeout(() => {
+        if (this.props.onSearch) {
+          this.props.onSearch({ name, value });
+        }
+      }, 1000)
+    });
   }
 
   _handleSubmit(e) {

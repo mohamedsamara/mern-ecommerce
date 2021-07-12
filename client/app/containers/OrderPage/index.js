@@ -28,7 +28,14 @@ class OrderPage extends React.PureComponent {
   }
 
   render() {
-    const { order, isLoading, cancelOrder, cancelOrderItem } = this.props;
+    const {
+      history,
+      order,
+      user,
+      isLoading,
+      cancelOrder,
+      updateOrderItemStatus
+    } = this.props;
 
     return (
       <div className='order-page'>
@@ -37,8 +44,16 @@ class OrderPage extends React.PureComponent {
         ) : order._id ? (
           <OrderDetails
             order={order}
+            user={user}
             cancelOrder={cancelOrder}
-            cancelOrderItem={cancelOrderItem}
+            updateOrderItemStatus={updateOrderItemStatus}
+            onBack={() => {
+              if (window.location.toString().includes('success')) {
+                history.push('/dashboard/orders');
+              } else {
+                history.goBack();
+              }
+            }}
           />
         ) : (
           <NotFound message='no order found.' />
@@ -50,6 +65,7 @@ class OrderPage extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
+    user: state.account.user,
     order: state.order.order,
     isLoading: state.order.isLoading
   };

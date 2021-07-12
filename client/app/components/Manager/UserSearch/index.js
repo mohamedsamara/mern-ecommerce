@@ -14,7 +14,7 @@ const UserSearch = props => {
       <SearchBar
         name='user'
         placeholder='Type user name or email'
-        btnText='Search Users'
+        btnText='Search'
         onSearchSubmit={props.onSearchSubmit}
       />
     </div>

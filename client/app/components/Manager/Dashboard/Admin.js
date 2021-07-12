@@ -35,11 +35,7 @@ const Admin = props => {
           <div className='panel-body'>
             <Switch>
               <Route exact path='/dashboard' component={Account} />
-              <Route
-                exact
-                path='/dashboard/security'
-                component={AccountSecurity}
-              />
+              <Route path='/dashboard/security' component={AccountSecurity} />
               <Route path='/dashboard/address' component={Address} />
               <Route path='/dashboard/product' component={Product} />
               <Route path='/dashboard/category' component={Category} />
