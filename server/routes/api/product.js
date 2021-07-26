@@ -289,7 +289,7 @@ router.get('/item/:slug', async (req, res) => {
       }
     );
 
-    if (!productDoc || productDoc?.brand?.isActive === false) {
+    if (!productDoc || (productDoc && productDoc?.brand?.isActive === false)) {
       return res.status(404).json({
         message: 'No product found.'
       });

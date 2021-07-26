@@ -53,7 +53,7 @@ router.get('/:slug', async (req, res) => {
   try {
     const productDoc = await Product.findOne({ slug: req.params.slug });
 
-    if (!productDoc || productDoc?.brand?.isActive === false) {
+    if (!productDoc || (productDoc && productDoc?.brand?.isActive === false)) {
       return res.status(404).json({
         message: 'No reviews for this product.'
       });
