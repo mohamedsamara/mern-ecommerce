@@ -87,10 +87,12 @@ export const searchOrders = filter => {
   };
 };
 
-export const fetchOrder = id => {
+export const fetchOrder = (id, withLoading = true) => {
   return async (dispatch, getState) => {
     try {
-      dispatch(setOrderLoading(true));
+      if (withLoading) {
+        dispatch(setOrderLoading(true));
+      }
 
       const response = await axios.get(`/api/order/${id}`);
 
@@ -101,7 +103,9 @@ export const fetchOrder = id => {
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      dispatch(setOrderLoading(false));
+      if (withLoading) {
+        dispatch(setOrderLoading(false));
+      }
     }
   };
 };
@@ -133,6 +137,9 @@ export const updateOrderItemStatus = (itemId, status) => {
 
       if (response.data.orderCancelled) {
         dispatch(push(`/dashboard/orders`));
+      } else {
+        dispatch(updateOrderStatus({ itemId, status }));
+        dispatch(fetchOrder(order._id, false));
       }
 
       const successfulOptions = {
@@ -142,7 +149,6 @@ export const updateOrderItemStatus = (itemId, status) => {
       };
 
       dispatch(success(successfulOptions));
-      dispatch(updateOrderStatus({ itemId, status }));
     } catch (error) {
       handleError(error, dispatch);
     }
