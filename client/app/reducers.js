@@ -38,7 +38,7 @@ const createReducer = history =>
   combineReducers({
     router: connectRouter(history),
     notifications,
-    applicaiton: applicationReducer,
+    application: applicationReducer,
     homepage: homepageReducer,
     signup: signupReducer,
     login: loginReducer,
