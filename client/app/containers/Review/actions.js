@@ -183,7 +183,7 @@ export const addProductReview = () => {
   };
 };
 
-const getProductReviewsSummary = reviews => {
+export const getProductReviewsSummary = reviews => {
   let ratingSummary = [{ 5: 0 }, { 4: 0 }, { 3: 0 }, { 2: 0 }, { 1: 0 }];
   let totalRatings = 0;
   let totalReviews = 0;
