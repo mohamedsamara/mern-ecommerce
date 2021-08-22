@@ -110,6 +110,172 @@ router.post(
   }
 );
 
+// fetch store products by advancedFilters api
+router.post('/advancedFilters', async (req, res) => {
+
+  const pageSize = 8;
+  const page = Number(req.body.pageNumber) || 1;
+  const name = req.body.name || '';
+  const category = req.body.category || '';
+  const seller = req.body.seller || '';
+  const order = req.body.order || '';
+  const min =
+    req.body.min && Number(req.body.min) !== 0 ? Number(req.body.min) : 0;
+  const max =
+    req.body.max && Number(req.body.max) !== 0 ? Number(req.body.max) : 0;
+  const rating =
+    req.body.rating && Number(req.body.rating) !== 0
+      ? Number(req.body.rating)
+      : 0;
+
+  const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
+  const sellerFilter = seller ? { seller } : {};
+  const categoryFilter = category ? { category } : {};
+  const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
+  const ratingFilter = rating ? { rating: { $gte: rating } } : {rating: { $gte: rating }};
+  const sortOrder =
+    order === 'Price Low to High'
+      ? { price: 1 }
+      : order === 'Price High to Low'
+      ? { price: -1 }
+      : { _id: -1 };
+
+  const basicQuery = [
+    {
+      $lookup: {
+        from: 'brands',
+        localField: 'brand',
+        foreignField: '_id',
+        as: 'brands'
+      }
+    },
+    {
+      $unwind: '$brands'
+    },
+    {
+      $addFields: {
+        'brand.name': '$brands.name',
+        'brand._id': '$brands._id',
+        'brand.isActive': '$brands.isActive'
+      }
+    },
+    {
+      $lookup: {
+        from: 'reviews',
+        localField: '_id',
+        foreignField: 'product',
+        as: 'reviews'
+      }
+    },
+    {
+      $addFields: {
+        totalRatings : { $sum: '$reviews.rating' },
+        totalReviews : { $size:'$reviews' }
+      }
+    },
+    {
+      $addFields: {
+        averageRating: { $cond: [ { $eq: [ "$totalReviews", 0 ] }, 0, {$divide:["$totalRatings", "$totalReviews"]} ] }
+      }
+    },
+    {
+      $match: { isActive: true, price: priceFilter.price, averageRating: ratingFilter.rating }
+    },
+    { $project: { brands: 0, reviews:0 } }
+  ];
+
+  try {
+    const userDoc = await checkAuth(req);
+
+    if (userDoc) {
+      const productsCount = await Product.aggregate([
+        {
+          $lookup: {
+            from: 'wishlists',
+            let: { product: '$_id' },
+            pipeline: [
+              {
+                $match: {
+                  $and: [
+                    { $expr: { $eq: ['$$product', '$product'] } },
+                    { user: new Mongoose.Types.ObjectId(userDoc.id) }
+                  ]
+                }
+              }
+            ],
+            as: 'isLiked'
+          }
+        },
+        {
+          $addFields: {
+            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
+          }
+        }
+      ].concat(basicQuery));
+
+      const paginateQuery = [
+        { $sort: sortOrder },
+        { $skip: pageSize * (productsCount.length > 8 ? (page - 1):0) },
+        { $limit: pageSize }
+      ]
+
+      const products = await Product.aggregate([
+        {
+          $lookup: {
+            from: 'wishlists',
+            let: { product: '$_id' },
+            pipeline: [
+              {
+                $match: {
+                  $and: [
+                    { $expr: { $eq: ['$$product', '$product'] } },
+                    { user: new Mongoose.Types.ObjectId(userDoc.id) }
+                  ]
+                }
+              }
+            ],
+            as: 'isLiked'
+          }
+        },
+        {
+          $addFields: {
+            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
+          }
+        }
+      ].concat(basicQuery).concat(paginateQuery));
+
+      res.status(200).json({
+        products: products.filter(item => item?.brand?.isActive === true),
+        page:page,
+        pages: productsCount.length > 0 ? Math.ceil(productsCount.length / pageSize):0,
+        totalProducts:productsCount.length
+      });
+
+    } else {
+      const productsCount = await Product.aggregate(basicQuery);
+      const paginateQuery = [
+        { $sort: sortOrder },
+        { $skip: pageSize * (productsCount.length > 8 ? (page - 1):0) },
+        { $limit: pageSize }
+      ];
+      const products = await Product.aggregate(basicQuery.concat(paginateQuery));
+
+      res.status(200).json({
+        products: products.filter(item => item?.brand?.isActive === true),
+        page:page,
+        pages:  productsCount.length > 0 ? Math.ceil(productsCount.length / pageSize):0,
+        totalProducts:productsCount.length
+      });
+
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
 // fetch store products api
 router.get('/list', async (req, res) => {
   try {
@@ -138,16 +304,16 @@ router.get('/list', async (req, res) => {
           }
         },
         {
+          $addFields: {
+            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
+          }
+        },
+        {
           $lookup: {
             from: 'brands',
             localField: 'brand',
             foreignField: '_id',
             as: 'brands'
-          }
-        },
-        {
-          $addFields: {
-            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
           }
         },
         {
@@ -160,20 +326,84 @@ router.get('/list', async (req, res) => {
             'brand.isActive': '$brands.isActive'
           }
         },
-        { $project: { brands: 0 } }
+        {
+          $lookup: {
+            from: 'reviews',
+            localField: '_id',
+            foreignField: 'product',
+            as: 'reviews'
+          }
+        },
+        {
+          $addFields: {
+            totalRatings : { $sum: '$reviews.rating' },
+            totalReviews : { $size:'$reviews' }
+          }
+        },
+        {
+          $addFields: {
+            averageRating: { $cond: [ { $eq: [ "$totalReviews", 0 ] }, 0, {$divide:["$totalRatings", "$totalReviews"]} ] }
+          }
+        },
+        { $project: { brands: 0, reviews:0 } }
       ]);
 
       res.status(200).json({
-        products: products.filter(item => item?.brand?.isActive === true)
+        products: products.filter(item => item?.brand?.isActive === true).reverse().slice(0, 8),
+        page:1,
+        pages:  products.length > 0 ? Math.ceil(products.length / 8):0,
+        totalProducts:products.length
       });
     } else {
-      const products = await Product.find({ isActive: true }).populate({
-        path: 'brand',
-        select: 'name isActive'
-      });
+      const products = await Product.aggregate([
+        {
+          $match: { isActive: true }
+        },
+        {
+          $lookup: {
+            from: 'brands',
+            localField: 'brand',
+            foreignField: '_id',
+            as: 'brands'
+          }
+        },
+        {
+          $unwind: '$brands'
+        },
+        {
+          $addFields: {
+            'brand.name': '$brands.name',
+            'brand._id': '$brands._id',
+            'brand.isActive': '$brands.isActive'
+          }
+        },
+        {
+          $lookup: {
+            from: 'reviews',
+            localField: '_id',
+            foreignField: 'product',
+            as: 'reviews'
+          }
+        },
+        {
+          $addFields: {
+            totalRatings : { $sum: '$reviews.rating' },
+            totalReviews : { $size:'$reviews' }
+          }
+        },
+        {
+          $addFields: {
+            averageRating: { $cond: [ { $eq: [ "$totalReviews", 0 ] }, 0, {$divide:["$totalRatings", "$totalReviews"]} ] }
+          }
+        },
+        { $project: { brands: 0, reviews:0 } }
+      ]);
 
       res.status(200).json({
-        products: products.filter(item => item?.brand?.isActive === true)
+        products: products.filter(item => item?.brand?.isActive === true).reverse().slice(0, 8),
+        page:1,
+        pages:  products.length > 0 ? Math.ceil(products.length / 8):0,
+        totalProducts:products.length
       });
     }
   } catch (error) {
@@ -305,15 +535,14 @@ router.get('/item/:slug', async (req, res) => {
   }
 });
 
+
 // fetch  product name search api
 router.get('/list/search/:name', async (req, res) => {
   try {
     const name = req.params.name;
+    const userDoc = await checkAuth(req);
 
-    const productDoc = await Product.find(
-      { name: { $regex: new RegExp(name), $options: 'is' }, isActive: true },
-      { name: 1, slug: 1, imageUrl: 1, price: 1, _id: 0 }
-    );
+    const productDoc = await Product.find({ name:{$regex:new RegExp(name),$options: 'is'}, isActive: true},{name:1,slug:1,imageUrl:1,price:1,_id:0});
 
     if (productDoc.length < 0) {
       return res.status(404).json({
@@ -330,6 +559,7 @@ router.get('/list/search/:name', async (req, res) => {
     });
   }
 });
+
 
 // fetch all products by category api
 router.get('/list/category/:slug', async (req, res) => {

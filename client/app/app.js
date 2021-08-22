@@ -26,6 +26,9 @@ import 'simple-line-icons/css/simple-line-icons.css';
 // react-bootstrap-table2 styles
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 
+//rc-slider style
+import 'rc-slider/assets/index.css';
+
 // Authentication
 const token = localStorage.getItem('token');
 

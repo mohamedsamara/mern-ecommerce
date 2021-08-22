@@ -12,6 +12,7 @@ import AddToWishList from '../AddToWishList';
 
 const ProductList = props => {
   const { products, updateWishlist, authenticated } = props;
+  const isInt  = value => { return value % 1 === 0; }
   return (
     <div className='product-list'>
       {products.map((product, index) => (
@@ -42,7 +43,16 @@ const ProductList = props => {
                   </div>
                   <div className='item-body'>
                     <div className='item-details p-3'>
-                      <h1 className='item-name'>{product.name}</h1>
+                      <h1 className='item-name'>{product.name}
+                        {product.totalReviews?(<span style={{ float: 'right',
+                                          color: 'black',
+                                          fontSize: 'large',
+                                          fontWeight: '500'
+                                        }}>
+                          {isInt(product.averageRating)?(product.averageRating):parseFloat(product.averageRating).toFixed(1)}
+                          <span className={`fa fa-star ${ product.totalReviews !== 0?'checked':''}`} style={{color:'orange'}}></span>
+                        </span>):(<p>{''}</p>)}
+                      </h1>
                       {product.brand && (
                         <p className='by'>
                           By <span>{product.brand.name}</span>

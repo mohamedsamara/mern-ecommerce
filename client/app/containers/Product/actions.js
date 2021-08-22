@@ -22,7 +22,9 @@ import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   FETCH_PRODUCTS_SELECT,
-  SET_PRODUCTS_LOADING
+  SET_PRODUCTS_LOADING,
+  SET_ADVANCED_FILTERS,
+  RESET_ADVANCED_FILTERS
 } from './constants';
 
 import handleError from '../../utils/error';
@@ -67,6 +69,53 @@ export const resetProduct = () => {
   };
 };
 
+const advancedProductsSearchOrganizer = (n,v,s) => {
+
+  switch (n) {
+    case 'sorting':
+        return {name:'all',category:'all',min:s.min,max:s.max,rating:s.rating,order:v,pageNumber:s.pageNumber}
+      break;
+    case 'price':
+        return {name:'all',category:'all',min:v[0],max:v[1],rating:s.rating,order:s.order,pageNumber:s.pageNumber}
+      break;
+    case 'rating':
+        return {name:'all',category:'all',min:s.min,max:s.max,rating:v,order:s.order,pageNumber:s.pageNumber}
+      break;
+    case 'pagination':
+        return {name:'all',category:'all',min:s.min,max:s.max,rating:s.rating,order:s.order,pageNumber:v}
+      break;
+    default:
+      return {name:'all',category:'all',min:s.min,max:s.max,rating:s.rating,order:s.order,pageNumber:s.pageNumber}
+      break;
+  }
+}
+// fetch store products by advancedProductsSearch api
+export const advancedProductsSearch = (n,v) => {
+
+  return async (dispatch, getState) => {
+    try {
+      const s = getState().product.advancedFilters;
+      const payload = advancedProductsSearchOrganizer(n,v,s);
+      dispatch({ type: SET_ADVANCED_FILTERS, payload:payload})
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+      const response = await axios.post(`/api/product/advancedFilters`,payload);
+      dispatch({
+        type: SET_ADVANCED_FILTERS,
+        payload:Object.assign(payload, {pages:response.data.pages,pageNumber:response.data.page,totalProducts:response.data.totalProducts})
+      });
+      dispatch({
+        type: FETCH_STORE_PRODUCTS,
+        payload: response.data.products
+      });
+    } catch (error) {
+      handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+    }
+  };
+};
+
+
 // fetch products api
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -92,6 +141,11 @@ export const fetchStoreProducts = () => {
     try {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
       const response = await axios.get(`/api/product/list`);
+      const s = getState().product.advancedFilters;
+      dispatch({
+        type: SET_ADVANCED_FILTERS,
+        payload:Object.assign(s, {pages:response.data.pages,pageNumber:response.data.page,totalProducts:response.data.totalProducts})
+      });
       dispatch({
         type: FETCH_STORE_PRODUCTS,
         payload: response.data.products
