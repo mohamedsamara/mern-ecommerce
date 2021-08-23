@@ -57,6 +57,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth2": "^0.2.0",
     "passport-jwt": "^4.0.0",
+    "rc-slider": "^9.7.2",
     "react": "^16.8.6",
     "react-autosuggest": "^10.1.0",
     "react-bootstrap-table-next": "^3.1.5",
