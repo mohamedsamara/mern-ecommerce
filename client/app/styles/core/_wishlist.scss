@@ -333,3 +333,9 @@
 // .myShareCountWrapper:hover {
 //   color: blue;
 // }
+
+//  SelectOptions styple overwrite
+
+.select-option__menu {
+  z-index: 2 !important;
+}

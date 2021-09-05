@@ -72,12 +72,12 @@ router.get('/list/search/:name', async (req, res) => {
 });
 
 // fetch store products by advancedFilters api
-router.post('/advancedFilters', async (req, res) => {
+router.post('/list', async (req, res) => {
   const pageSize = 8;
   const page = Number(req.body.pageNumber) || 1;
   const name = req.body.name || '';
   const category = req.body.category || '';
-  const seller = req.body.seller || '';
+  const brand = req.body.brand || '';
   const order = req.body.order || '';
   const min =
     req.body.min && Number(req.body.min) !== 0 ? Number(req.body.min) : 0;
@@ -89,7 +89,7 @@ router.post('/advancedFilters', async (req, res) => {
       : 0;
 
   const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
-  const sellerFilter = seller ? { seller } : {};
+  const brandFilter = brand ? { brand } : {};
   const categoryFilter = category ? { category } : {};
   const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
   const ratingFilter = rating
@@ -101,6 +101,7 @@ router.post('/advancedFilters', async (req, res) => {
       : order === 'Price High to Low'
       ? { price: -1 }
       : { _id: -1 };
+
 
   const basicQuery = [
     {
@@ -158,7 +159,17 @@ router.post('/advancedFilters', async (req, res) => {
 
   try {
     const userDoc = await checkAuth(req);
-
+    const categoryDoc = await Category.findOne({ slug:categoryFilter.category, isActive: true },'products -_id')
+     if(categoryDoc && categoryFilter !== category){
+       basicQuery.push({
+         $match: {
+           isActive : true,
+           _id: {
+             $in: Array.from(categoryDoc.products)
+           }
+         }
+       })
+     }
     if (userDoc) {
       const productsCount = await Product.aggregate(
         [
@@ -260,231 +271,6 @@ router.post('/advancedFilters', async (req, res) => {
   }
 });
 
-// fetch store products api
-router.get('/list', async (req, res) => {
-  try {
-    const userDoc = await checkAuth(req);
-
-    if (userDoc) {
-      const products = await Product.aggregate([
-        {
-          $match: { isActive: true }
-        },
-        {
-          $lookup: {
-            from: 'wishlists',
-            let: { product: '$_id' },
-            pipeline: [
-              {
-                $match: {
-                  $and: [
-                    { $expr: { $eq: ['$$product', '$product'] } },
-                    { user: new Mongoose.Types.ObjectId(userDoc.id) }
-                  ]
-                }
-              }
-            ],
-            as: 'isLiked'
-          }
-        },
-        {
-          $addFields: {
-            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
-          }
-        },
-        {
-          $lookup: {
-            from: 'brands',
-            localField: 'brand',
-            foreignField: '_id',
-            as: 'brands'
-          }
-        },
-        {
-          $unwind: '$brands'
-        },
-        {
-          $addFields: {
-            'brand.name': '$brands.name',
-            'brand._id': '$brands._id',
-            'brand.isActive': '$brands.isActive'
-          }
-        },
-        {
-          $lookup: {
-            from: 'reviews',
-            localField: '_id',
-            foreignField: 'product',
-            as: 'reviews'
-          }
-        },
-        {
-          $addFields: {
-            totalRatings: { $sum: '$reviews.rating' },
-            totalReviews: { $size: '$reviews' }
-          }
-        },
-        {
-          $addFields: {
-            averageRating: {
-              $cond: [
-                { $eq: ['$totalReviews', 0] },
-                0,
-                { $divide: ['$totalRatings', '$totalReviews'] }
-              ]
-            }
-          }
-        },
-        { $project: { brands: 0, reviews: 0 } }
-      ]);
-
-      res.status(200).json({
-        products: products
-          .filter(item => item?.brand?.isActive === true)
-          .reverse()
-          .slice(0, 8),
-        page: 1,
-        pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
-        totalProducts: products.length
-      });
-    } else {
-      const products = await Product.aggregate([
-        {
-          $match: { isActive: true }
-        },
-        {
-          $lookup: {
-            from: 'brands',
-            localField: 'brand',
-            foreignField: '_id',
-            as: 'brands'
-          }
-        },
-        {
-          $unwind: '$brands'
-        },
-        {
-          $addFields: {
-            'brand.name': '$brands.name',
-            'brand._id': '$brands._id',
-            'brand.isActive': '$brands.isActive'
-          }
-        },
-        {
-          $lookup: {
-            from: 'reviews',
-            localField: '_id',
-            foreignField: 'product',
-            as: 'reviews'
-          }
-        },
-        {
-          $addFields: {
-            totalRatings: { $sum: '$reviews.rating' },
-            totalReviews: { $size: '$reviews' }
-          }
-        },
-        {
-          $addFields: {
-            averageRating: {
-              $cond: [
-                { $eq: ['$totalReviews', 0] },
-                0,
-                { $divide: ['$totalRatings', '$totalReviews'] }
-              ]
-            }
-          }
-        },
-        { $project: { brands: 0, reviews: 0 } }
-      ]);
-
-      res.status(200).json({
-        products: products
-          .filter(item => item?.brand?.isActive === true)
-          .reverse()
-          .slice(0, 8),
-        page: 1,
-        pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
-        totalProducts: products.length
-      });
-    }
-  } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
-    });
-  }
-});
-
-// fetch store products by category api
-router.get('/list/category/:slug', async (req, res) => {
-  try {
-    const slug = req.params.slug;
-
-    const userDoc = await checkAuth(req);
-
-    const categoryDoc = await Category.findOne(
-      { slug, isActive: true },
-      'products -_id'
-    ).populate({
-      path: 'products',
-      match: {
-        isActive: true
-      },
-      populate: {
-        path: 'brand',
-        model: 'Brand',
-        select: 'name isActive'
-      }
-    });
-
-    if (!categoryDoc) {
-      return res.status(404).json({
-        message: `Cannot find category with the slug: ${slug}.`
-      });
-    }
-
-    let products = [];
-
-    if (userDoc) {
-      const wishlist = await Wishlist.find({
-        user: userDoc.id,
-        isLiked: true
-      }).populate({
-        path: 'product',
-        select: '_id'
-      });
-
-      const ps = categoryDoc.products || [];
-
-      const newPs = [];
-      ps.map(p => {
-        let isLiked = false;
-
-        wishlist.map(w => {
-          if (String(w.product._id) === String(p._id)) {
-            isLiked = true;
-          }
-        });
-
-        const newProduct = { ...p.toObject(), isLiked };
-
-        newPs.push(newProduct);
-      });
-
-      products = newPs;
-    } else {
-      products = categoryDoc.products;
-    }
-
-    res.status(200).json({
-      products
-    });
-  } catch (error) {
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
-    });
-  }
-});
 
 // fetch store products by brand api
 router.get('/list/brand/:slug', async (req, res) => {
@@ -553,7 +339,12 @@ router.get('/list/brand/:slug', async (req, res) => {
       ]);
 
       res.status(200).json({
-        products
+        products: products
+          .reverse()
+          .slice(0, 8),
+        page: 1,
+        pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
+        totalProducts: products.length
       });
     } else {
       const products = await Product.find({
@@ -562,7 +353,12 @@ router.get('/list/brand/:slug', async (req, res) => {
       }).populate('brand', 'name');
 
       res.status(200).json({
-        products
+        products: products
+          .reverse()
+          .slice(0, 8),
+        page: 1,
+        pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
+        totalProducts: products.length
       });
     }
   } catch (error) {

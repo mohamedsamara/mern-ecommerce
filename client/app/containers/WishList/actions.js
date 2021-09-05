@@ -5,7 +5,7 @@
  */
 
 import { success, warning, info } from 'react-notification-system-redux';
-import { fetchStoreProducts } from '../Product/actions';
+import { filterProducts } from '../Product/actions';
 import axios from 'axios';
 
 import {
