@@ -57,10 +57,11 @@ const initialState = {
   advancedFilters:{
     name : 'all',
     category : 'all',
+    brand:'all',
     min : 1,
     max : 500,
     rating : 0,
-    order : 'newest',
+    order : 'Select...',
     pageNumber : 1,
     pages: 1,
     totalProducts:0
@@ -187,7 +188,10 @@ const productReducer = (state = initialState, action) => {
     case SET_ADVANCED_FILTERS:
       return {
         ...state,
-        advancedFilters: action.payload
+        advancedFilters: {
+          ...state.advancedFilters,
+          ...action.payload
+        }
       }
     default:
       return state;

@@ -49,7 +49,7 @@ class BrandsShop extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products,
+    products: state.product.storeProducts,
     isLoading: state.product.isLoading,
     authenticated: state.authentication.authenticated
   };

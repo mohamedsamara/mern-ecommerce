@@ -16,13 +16,13 @@ import LoadingIndicator from '../../components/Common/LoadingIndicator';
 class CategoryShop extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchCategoryProducts(slug);
+    this.props.filterProducts('category',slug);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.slug !== prevProps.match.params.slug) {
       const slug = this.props.match.params.slug;
-      this.props.fetchCategoryProducts(slug);
+      this.props.filterProducts('category',slug);
     }
   }
 
@@ -49,7 +49,7 @@ class CategoryShop extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products,
+    products: state.product.storeProducts,
     isLoading: state.product.isLoading,
     authenticated: state.authentication.authenticated
   };

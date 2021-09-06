@@ -15,26 +15,6 @@ const ProductFilter = props => {
 
   return (
     <div className='product-filter'>
-      <Card style={{ background: 'greenyellow' }}>
-        <CardHeader tag='h3'>
-          Showing:{' '}
-          <Badge color='dark' style={{ whiteSpace: 'break-spaces' }}>{`${
-            totalProducts < 8 ? 0 : 8 * pageNumber - 8
-          } – ${
-            totalProducts < 8 ? totalProducts : 8 * pageNumber
-          } products of ${totalProducts} products`}</Badge>
-        </CardHeader>
-      </Card>
-      <Card>
-        <CardHeader tag='h3'>Sort By:</CardHeader>
-        <CardBody className='radio'>
-          <Radio
-            handleChangeSubmit={(n, v) => {
-              filterProducts(n, v);
-            }}
-          />
-        </CardBody>
-      </Card>
       <Card>
         <CardHeader tag='h3'>Price Range:</CardHeader>
         <CardBody>
