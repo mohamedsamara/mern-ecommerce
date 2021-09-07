@@ -52,7 +52,7 @@ const ProductList = props => {
                       <p className='item-desc mb-0'>{product.description}</p>
                     </div>
                   </div>
-                  <div className='d-flex flex-row justify-content-between align-items-center px-3 mb-2 item-footer'>
+                  <div className='d-flex flex-row justify-content-between align-items-center px-4 mb-2 item-footer'>
                     <p className='price mb-0'>${product.price}</p>
                     {product.totalReviews && (
                       <p className='mb-0'>

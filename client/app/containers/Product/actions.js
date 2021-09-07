@@ -69,8 +69,6 @@ export const resetProduct = () => {
   };
 };
 
-
-
 // fetch products api
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -90,22 +88,22 @@ export const fetchProducts = () => {
   };
 };
 
-
 // fetch store products by filterProducts api
 export const filterProducts = (n, v) => {
-
   return async (dispatch, getState) => {
     try {
       const s = getState().product.advancedFilters;
-      const payload = productsFilterOrganizer(n, v, s);
+      let payload = productsFilterOrganizer(n, v, s);
 
-      dispatch({ type: SET_ADVANCED_FILTERS, payload: payload });
+      dispatch({ type: SET_ADVANCED_FILTERS, payload });
       dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
 
-      const response = await axios.post(
-        `/api/product/list`,
-        payload
-      );
+      const sortOrder = getSortOrder(payload.order);
+
+      payload = { ...payload, sortOrder };
+
+      const response = await axios.post(`/api/product/list`, payload);
+
       dispatch({
         type: SET_ADVANCED_FILTERS,
         payload: Object.assign(payload, {
@@ -201,7 +199,6 @@ export const fetchBrandProducts = slug => {
     }
   };
 };
-
 
 export const fetchProductsSelect = () => {
   return async (dispatch, getState) => {
@@ -424,8 +421,8 @@ export const deleteProduct = id => {
   };
 };
 
+// TODO: Need improvement
 const productsFilterOrganizer = (n, v, s) => {
-
   switch (n) {
     case 'category':
       return {
@@ -438,19 +435,17 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: s.pageNumber
       };
-      break;
     case 'brand':
       return {
         name: s.name,
         category: s.category,
-        brand:v,
+        brand: v,
         min: s.min,
         max: s.max,
         rating: s.rating,
         order: s.order,
         pageNumber: s.pageNumber
       };
-      break;
     case 'sorting':
       return {
         name: s.name,
@@ -462,7 +457,6 @@ const productsFilterOrganizer = (n, v, s) => {
         order: v,
         pageNumber: s.pageNumber
       };
-      break;
     case 'price':
       return {
         name: s.name,
@@ -474,7 +468,6 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: s.pageNumber
       };
-      break;
     case 'rating':
       return {
         name: s.name,
@@ -486,7 +479,6 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: s.pageNumber
       };
-      break;
     case 'pagination':
       return {
         name: s.name,
@@ -498,7 +490,6 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: v
       };
-      break;
     default:
       return {
         name: s.name,
@@ -510,6 +501,25 @@ const productsFilterOrganizer = (n, v, s) => {
         order: s.order,
         pageNumber: s.pageNumber
       };
+  }
+};
+
+const getSortOrder = value => {
+  let sortOrder = {};
+  switch (value) {
+    case 0:
+      sortOrder._id = -1;
+      break;
+    case 1:
+      sortOrder.price = -1;
+      break;
+    case 2:
+      sortOrder.price = 1;
+      break;
+
+    default:
       break;
   }
+
+  return sortOrder;
 };
