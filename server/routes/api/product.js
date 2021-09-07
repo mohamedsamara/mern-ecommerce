@@ -73,103 +73,92 @@ router.get('/list/search/:name', async (req, res) => {
 
 // fetch store products by advancedFilters api
 router.post('/list', async (req, res) => {
-  const pageSize = 8;
-  const page = Number(req.body.pageNumber) || 1;
-  const name = req.body.name || '';
-  const category = req.body.category || '';
-  const brand = req.body.brand || '';
-  const order = req.body.order || '';
-  const min =
-    req.body.min && Number(req.body.min) !== 0 ? Number(req.body.min) : 0;
-  const max =
-    req.body.max && Number(req.body.max) !== 0 ? Number(req.body.max) : 0;
-  const rating =
-    req.body.rating && Number(req.body.rating) !== 0
-      ? Number(req.body.rating)
-      : 0;
-
-  const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
-  const brandFilter = brand ? { brand } : {};
-  const categoryFilter = category ? { category } : {};
-  const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
-  const ratingFilter = rating
-    ? { rating: { $gte: rating } }
-    : { rating: { $gte: rating } };
-  const sortOrder =
-    order === 'Price Low to High'
-      ? { price: 1 }
-      : order === 'Price High to Low'
-      ? { price: -1 }
-      : { _id: -1 };
-
-
-  const basicQuery = [
-    {
-      $lookup: {
-        from: 'brands',
-        localField: 'brand',
-        foreignField: '_id',
-        as: 'brands'
-      }
-    },
-    {
-      $unwind: '$brands'
-    },
-    {
-      $addFields: {
-        'brand.name': '$brands.name',
-        'brand._id': '$brands._id',
-        'brand.isActive': '$brands.isActive'
-      }
-    },
-    {
-      $lookup: {
-        from: 'reviews',
-        localField: '_id',
-        foreignField: 'product',
-        as: 'reviews'
-      }
-    },
-    {
-      $addFields: {
-        totalRatings: { $sum: '$reviews.rating' },
-        totalReviews: { $size: '$reviews' }
-      }
-    },
-    {
-      $addFields: {
-        averageRating: {
-          $cond: [
-            { $eq: ['$totalReviews', 0] },
-            0,
-            { $divide: ['$totalRatings', '$totalReviews'] }
-          ]
-        }
-      }
-    },
-    {
-      $match: {
-        isActive: true,
-        price: priceFilter.price,
-        averageRating: ratingFilter.rating
-      }
-    },
-    { $project: { brands: 0, reviews: 0 } }
-  ];
-
   try {
+    let {
+      sortOrder,
+      rating,
+      max,
+      min,
+      category,
+      pageNumber: page = 1
+    } = req.body;
+
+    const pageSize = 8;
+    const categoryFilter = category ? { category } : {};
+    const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
+    const ratingFilter = rating
+      ? { rating: { $gte: rating } }
+      : { rating: { $gte: rating } };
+
+    const basicQuery = [
+      {
+        $lookup: {
+          from: 'brands',
+          localField: 'brand',
+          foreignField: '_id',
+          as: 'brands'
+        }
+      },
+      {
+        $unwind: '$brands'
+      },
+      {
+        $addFields: {
+          'brand.name': '$brands.name',
+          'brand._id': '$brands._id',
+          'brand.isActive': '$brands.isActive'
+        }
+      },
+      {
+        $lookup: {
+          from: 'reviews',
+          localField: '_id',
+          foreignField: 'product',
+          as: 'reviews'
+        }
+      },
+      {
+        $addFields: {
+          totalRatings: { $sum: '$reviews.rating' },
+          totalReviews: { $size: '$reviews' }
+        }
+      },
+      {
+        $addFields: {
+          averageRating: {
+            $cond: [
+              { $eq: ['$totalReviews', 0] },
+              0,
+              { $divide: ['$totalRatings', '$totalReviews'] }
+            ]
+          }
+        }
+      },
+      {
+        $match: {
+          isActive: true,
+          price: priceFilter.price,
+          averageRating: ratingFilter.rating
+        }
+      },
+      { $project: { brands: 0, reviews: 0 } }
+    ];
+
     const userDoc = await checkAuth(req);
-    const categoryDoc = await Category.findOne({ slug:categoryFilter.category, isActive: true },'products -_id')
-     if(categoryDoc && categoryFilter !== category){
-       basicQuery.push({
-         $match: {
-           isActive : true,
-           _id: {
-             $in: Array.from(categoryDoc.products)
-           }
-         }
-       })
-     }
+    const categoryDoc = await Category.findOne(
+      { slug: categoryFilter.category, isActive: true },
+      'products -_id'
+    );
+    if (categoryDoc && categoryFilter !== category) {
+      basicQuery.push({
+        $match: {
+          isActive: true,
+          _id: {
+            $in: Array.from(categoryDoc.products)
+          }
+        }
+      });
+    }
     if (userDoc) {
       const productsCount = await Product.aggregate(
         [
@@ -264,13 +253,11 @@ router.post('/list', async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
   }
 });
-
 
 // fetch store products by brand api
 router.get('/list/brand/:slug', async (req, res) => {
@@ -339,9 +326,7 @@ router.get('/list/brand/:slug', async (req, res) => {
       ]);
 
       res.status(200).json({
-        products: products
-          .reverse()
-          .slice(0, 8),
+        products: products.reverse().slice(0, 8),
         page: 1,
         pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
         totalProducts: products.length
@@ -353,9 +338,7 @@ router.get('/list/brand/:slug', async (req, res) => {
       }).populate('brand', 'name');
 
       res.status(200).json({
-        products: products
-          .reverse()
-          .slice(0, 8),
+        products: products.reverse().slice(0, 8),
         page: 1,
         pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
         totalProducts: products.length

@@ -55,3 +55,58 @@
   }
 }
 /* end dropdown confirm styles */
+
+/* start pagination styles */
+.pagination {
+  .page-item {
+    &.active {
+      .page-link {
+        color: $white !important;
+        background-color: $primary-bg;
+      }
+    }
+  }
+}
+/* end pagination styles */
+
+/* start slider styles */
+.slider {
+  .rc-slider-mark-text {
+    .fa {
+      color: $stars;
+    }
+  }
+
+  .rc-slider-mark-text-active {
+    .fa {
+      color: $stars-active;
+    }
+  }
+
+  .rc-slider-track {
+    background-color: $primary-bg;
+  }
+
+  .rc-slider-dot-active {
+    border-color: $primary-bg;
+  }
+  .rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+    box-shadow: none;
+    border-color: $primary-bg;
+  }
+
+  .rc-slider-handle-click-focused:focus {
+    border-color: $primary-bg;
+  }
+
+  .rc-slider-handle {
+    box-shadow: none;
+    border-color: $primary-bg;
+
+    &:active,
+    &:hover {
+      border-color: $primary-bg;
+    }
+  }
+}
+/* end slider styles */

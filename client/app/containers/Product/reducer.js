@@ -54,17 +54,17 @@ const initialState = {
   formErrors: {},
   editFormErrors: {},
   shopFormErrors: {},
-  advancedFilters:{
-    name : 'all',
-    category : 'all',
-    brand:'all',
-    min : 1,
-    max : 500,
-    rating : 0,
-    order : 'Select...',
-    pageNumber : 1,
+  advancedFilters: {
+    name: 'all',
+    category: 'all',
+    brand: 'all',
+    min: 1,
+    max: 500,
+    rating: 0,
+    order: 0,
+    pageNumber: 1,
     pages: 1,
-    totalProducts:0
+    totalProducts: 0
   }
 };
 
@@ -192,7 +192,7 @@ const productReducer = (state = initialState, action) => {
           ...state.advancedFilters,
           ...action.payload
         }
-      }
+      };
     default:
       return state;
   }
