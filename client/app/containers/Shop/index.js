@@ -88,9 +88,8 @@ class Shop extends React.PureComponent {
                 } products of ${totalProducts} products`}
               </Col>
               <Col
-                xs='2'
-                xs={{ size: 2, order: 2 }}
-                sm={{ size: 3, order: 2 }}
+                xs={{ size: 12, order: 2 }}
+                sm={{ size: 12, order: 2 }}
                 md={{ size: 2, order: 2 }}
                 lg={{ size: 2, order: 2 }}
                 className='text-right pr-0 d-none d-md-block'
@@ -99,7 +98,7 @@ class Shop extends React.PureComponent {
               </Col>
               <Col
                 xs='4'
-                xs={{ size: 10, order: 2 }}
+                xs={{ size: 12, order: 2 }}
                 sm={{ size: 12, order: 2 }}
                 md={{ size: 5, order: 2 }}
                 lg={{ size: 4, order: 2 }}
