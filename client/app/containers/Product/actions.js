@@ -69,6 +69,7 @@ export const resetProduct = () => {
   };
 };
 
+
 // fetch products api
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -90,12 +91,15 @@ export const fetchProducts = () => {
 
 // fetch store products by filterProducts api
 export const filterProducts = (n, v) => {
+
   return async (dispatch, getState) => {
     try {
+      n === undefined ? dispatch({ type: RESET_ADVANCED_FILTERS }):'';
+
       const s = getState().product.advancedFilters;
       let payload = productsFilterOrganizer(n, v, s);
 
-      dispatch({ type: SET_ADVANCED_FILTERS, payload });
+      dispatch({ type: SET_ADVANCED_FILTERS, payload })
       dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
 
       const sortOrder = getSortOrder(payload.order);
@@ -433,7 +437,7 @@ const productsFilterOrganizer = (n, v, s) => {
         max: s.max,
         rating: s.rating,
         order: s.order,
-        pageNumber: s.pageNumber
+        pageNumber: 1//s.pageNumber
       };
     case 'brand':
       return {

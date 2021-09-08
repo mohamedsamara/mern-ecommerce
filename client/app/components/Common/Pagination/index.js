@@ -35,7 +35,7 @@ class Pagination extends React.Component {
   }
 
   render() {
-    let { currentPage } = this.state;
+    let currentPage = this.props.page || this.state.currentPage;
 
     prev = currentPage > 0 ? currentPage - 1 : 0;
     last = this.props.pages;
