@@ -126,6 +126,7 @@ class Shop extends React.PureComponent {
                   handlePagenationChangeSubmit={filterProducts}
                   products={products}
                   pages={pages}
+                  page={pageNumber}
                 />
               </div>
             )}
