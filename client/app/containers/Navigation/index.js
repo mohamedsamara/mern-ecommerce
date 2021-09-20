@@ -38,6 +38,7 @@ import Cart from '../Cart';
 class Navigation extends React.PureComponent {
   componentDidMount() {
     this.props.fetchStoreBrands();
+    this.props.fetchStoreCategories();
   }
 
   toggleBrand() {
@@ -112,6 +113,7 @@ class Navigation extends React.PureComponent {
       user,
       cartItems,
       brands,
+      categories,
       signOut,
       isMenuOpen,
       isCartOpen,
@@ -166,14 +168,16 @@ class Navigation extends React.PureComponent {
               lg={{ size: 3, order: 1 }}
             >
               <div className='brand'>
-                <Button
-                  borderless
-                  variant='empty'
-                  className='d-none d-md-block'
-                  ariaLabel='open the menu'
-                  icon={<BarsIcon />}
-                  onClick={() => this.toggleMenu()}
-                />
+                {categories && categories.length > 0 && (
+                  <Button
+                    borderless
+                    variant='empty'
+                    className='d-none d-md-block'
+                    ariaLabel='open the menu'
+                    icon={<BarsIcon />}
+                    onClick={() => this.toggleMenu()}
+                  />
+                )}
                 <Link to='/'>
                   <h1 className='logo'>MERN Store</h1>
                 </Link>
@@ -230,25 +234,27 @@ class Navigation extends React.PureComponent {
                   onClick={toggleCart}
                 />
                 <Nav navbar>
-                  <Dropdown
-                    nav
-                    inNavbar
-                    toggle={() => this.toggleBrand()}
-                    isOpen={isBrandOpen}
-                  >
-                    <DropdownToggle nav>
-                      Brands
-                      <span className='fa fa-chevron-down dropdown-caret'></span>
-                    </DropdownToggle>
-                    <DropdownMenu right className='nav-brand-dropdown'>
-                      <div className='mini-brand'>
-                        <MiniBrand
-                          brands={brands}
-                          toggleBrand={() => this.toggleBrand()}
-                        />
-                      </div>
-                    </DropdownMenu>
-                  </Dropdown>
+                  {brands && brands.length > 0 && (
+                    <Dropdown
+                      nav
+                      inNavbar
+                      toggle={() => this.toggleBrand()}
+                      isOpen={isBrandOpen}
+                    >
+                      <DropdownToggle nav>
+                        Brands
+                        <span className='fa fa-chevron-down dropdown-caret'></span>
+                      </DropdownToggle>
+                      <DropdownMenu right className='nav-brand-dropdown'>
+                        <div className='mini-brand'>
+                          <MiniBrand
+                            brands={brands}
+                            toggleBrand={() => this.toggleBrand()}
+                          />
+                        </div>
+                      </DropdownMenu>
+                    </Dropdown>
+                  )}
                   <NavItem>
                     <NavLink
                       tag={ActiveLink}
@@ -338,6 +344,7 @@ const mapStateToProps = state => {
     isBrandOpen: state.navigation.isBrandOpen,
     cartItems: state.cart.cartItems,
     brands: state.brand.storeBrands,
+    categories: state.category.storeCategories,
     authenticated: state.authentication.authenticated,
     user: state.account.user,
     searchValue: state.navigation.searchValue,

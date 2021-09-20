@@ -100,13 +100,21 @@ router.post('/list', async (req, res) => {
         }
       },
       {
-        $unwind: '$brands'
+        $unwind: {
+          path: '$brands',
+          preserveNullAndEmptyArrays: true
+        }
       },
       {
         $addFields: {
           'brand.name': '$brands.name',
           'brand._id': '$brands._id',
           'brand.isActive': '$brands.isActive'
+        }
+      },
+      {
+        $match: {
+          'brand.isActive': true
         }
       },
       {
@@ -141,7 +149,12 @@ router.post('/list', async (req, res) => {
           averageRating: ratingFilter.rating
         }
       },
-      { $project: { brands: 0, reviews: 0 } }
+      {
+        $project: {
+          brands: 0,
+          reviews: 0
+        }
+      }
     ];
 
     const userDoc = await checkAuth(req);
@@ -149,6 +162,7 @@ router.post('/list', async (req, res) => {
       { slug: categoryFilter.category, isActive: true },
       'products -_id'
     );
+
     if (categoryDoc && categoryFilter !== category) {
       basicQuery.push({
         $match: {
@@ -159,8 +173,12 @@ router.post('/list', async (req, res) => {
         }
       });
     }
+
+    let products = null;
+    let productsCount = 0;
+
     if (userDoc) {
-      const productsCount = await Product.aggregate(
+      productsCount = await Product.aggregate(
         [
           {
             $lookup: {
@@ -186,14 +204,12 @@ router.post('/list', async (req, res) => {
           }
         ].concat(basicQuery)
       );
-
       const paginateQuery = [
         { $sort: sortOrder },
         { $skip: pageSize * (productsCount.length > 8 ? page - 1 : 0) },
         { $limit: pageSize }
       ];
-
-      const products = await Product.aggregate(
+      products = await Product.aggregate(
         [
           {
             $lookup: {
@@ -221,37 +237,25 @@ router.post('/list', async (req, res) => {
           .concat(basicQuery)
           .concat(paginateQuery)
       );
-
-      res.status(200).json({
-        products: products.filter(item => item?.brand?.isActive === true),
-        page: page,
-        pages:
-          productsCount.length > 0
-            ? Math.ceil(productsCount.length / pageSize)
-            : 0,
-        totalProducts: productsCount.length
-      });
     } else {
-      const productsCount = await Product.aggregate(basicQuery);
+      productsCount = await Product.aggregate(basicQuery);
       const paginateQuery = [
         { $sort: sortOrder },
         { $skip: pageSize * (productsCount.length > 8 ? page - 1 : 0) },
         { $limit: pageSize }
       ];
-      const products = await Product.aggregate(
-        basicQuery.concat(paginateQuery)
-      );
-
-      res.status(200).json({
-        products: products.filter(item => item?.brand?.isActive === true),
-        page: page,
-        pages:
-          productsCount.length > 0
-            ? Math.ceil(productsCount.length / pageSize)
-            : 0,
-        totalProducts: productsCount.length
-      });
+      products = await Product.aggregate(basicQuery.concat(paginateQuery));
     }
+
+    res.status(200).json({
+      products,
+      page,
+      pages:
+        productsCount.length > 0
+          ? Math.ceil(productsCount.length / pageSize)
+          : 0,
+      totalProducts: productsCount.length
+    });
   } catch (error) {
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
@@ -452,6 +456,7 @@ router.post(
         product: savedProduct
       });
     } catch (error) {
+      console.log('error', error);
       return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });

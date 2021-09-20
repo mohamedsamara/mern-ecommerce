@@ -44,7 +44,7 @@ const ProductList = props => {
                   <div className='item-body'>
                     <div className='item-details p-3'>
                       <h1 className='item-name'>{product.name}</h1>
-                      {product.brand && (
+                      {product.brand && Object.keys(product.brand).length > 0 && (
                         <p className='by'>
                           By <span>{product.brand.name}</span>
                         </p>
@@ -54,7 +54,7 @@ const ProductList = props => {
                   </div>
                   <div className='d-flex flex-row justify-content-between align-items-center px-4 mb-2 item-footer'>
                     <p className='price mb-0'>${product.price}</p>
-                    {product.totalReviews && (
+                    {product.totalReviews > 0 && (
                       <p className='mb-0'>
                         <span className='fs-16 fw-1 mr-1'>
                           {parseFloat(product?.averageRating).toFixed(1)}
