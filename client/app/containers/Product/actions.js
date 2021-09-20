@@ -69,7 +69,6 @@ export const resetProduct = () => {
   };
 };
 
-
 // fetch products api
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -91,15 +90,14 @@ export const fetchProducts = () => {
 
 // fetch store products by filterProducts api
 export const filterProducts = (n, v) => {
-
   return async (dispatch, getState) => {
     try {
-      n === undefined ? dispatch({ type: RESET_ADVANCED_FILTERS }):'';
+      n === undefined ? dispatch({ type: RESET_ADVANCED_FILTERS }) : '';
 
       const s = getState().product.advancedFilters;
       let payload = productsFilterOrganizer(n, v, s);
 
-      dispatch({ type: SET_ADVANCED_FILTERS, payload })
+      dispatch({ type: SET_ADVANCED_FILTERS, payload });
       dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
 
       const sortOrder = getSortOrder(payload.order);
@@ -135,11 +133,16 @@ export const fetchProduct = id => {
       const response = await axios.get(`/api/product/${id}`);
 
       const inventory = response.data.product.quantity;
-      if (response.data.product.brand) {
-        response.data.product.brand = formatSelectOptions([
-          response.data.product.brand
-        ])[0];
-      }
+
+      const brand = response.data.product.brand;
+      const isBrand = brand ? true : false;
+      const brandData = formatSelectOptions(
+        isBrand && [brand],
+        !isBrand,
+        'fetchProduct'
+      );
+
+      response.data.product.brand = brandData[0];
 
       const product = { ...response.data.product, inventory };
 
@@ -232,7 +235,6 @@ export const addProduct = () => {
         quantity: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
-        brand: 'required',
         image: 'required'
       };
 
@@ -268,7 +270,6 @@ export const addProduct = () => {
         'required.quantity': 'Quantity is required.',
         'required.price': 'Price is required.',
         'required.taxable': 'Taxable is required.',
-        'required.brand': 'Brand is required.',
         'required.image': 'Please upload files with jpg, jpeg, png format.'
       });
 
@@ -277,9 +278,13 @@ export const addProduct = () => {
       }
       const formData = new FormData();
       if (newProduct.image) {
-        for (var key in newProduct) {
+        for (const key in newProduct) {
           if (newProduct.hasOwnProperty(key)) {
-            formData.append(key, newProduct[key]);
+            if (key === 'brand' && newProduct[key] === null) {
+              continue;
+            } else {
+              formData.set(key, newProduct[key]);
+            }
           }
         }
       }
@@ -318,8 +323,7 @@ export const updateProduct = () => {
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required',
-        brand: 'required'
+        taxable: 'required'
       };
 
       const product = getState().product.product;
@@ -342,8 +346,7 @@ export const updateProduct = () => {
           'Description may not be greater than 200 characters.',
         'required.quantity': 'Quantity is required.',
         'required.price': 'Price is required.',
-        'required.taxable': 'Taxable is required.',
-        'required.brand': 'Brand is required.'
+        'required.taxable': 'Taxable is required.'
       });
 
       if (!isValid) {
@@ -437,7 +440,7 @@ const productsFilterOrganizer = (n, v, s) => {
         max: s.max,
         rating: s.rating,
         order: s.order,
-        pageNumber: 1//s.pageNumber
+        pageNumber: 1 //s.pageNumber
       };
     case 'brand':
       return {
