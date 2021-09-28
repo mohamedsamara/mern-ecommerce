@@ -69,7 +69,7 @@
     .review-box {
       height: 100%;
       border-radius: $border-radius-default;
-      box-shadow: $secondary-box-shadow;
+      box-shadow: $box-shadow-secondary;
       background-color: $white;
 
       .avatar {
@@ -94,7 +94,7 @@
   .r-list {
     .review-box {
       border-radius: $border-radius-default;
-      box-shadow: $secondary-box-shadow;
+      box-shadow: $box-shadow-secondary;
 
       .avatar {
         width: 30px;

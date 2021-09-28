@@ -5,7 +5,7 @@
       height: 120px;
       max-height: 120px;
       border-radius: $border-radius-default;
-      box-shadow: $secondary-box-shadow;
+      box-shadow: $box-shadow-secondary;
       @include transition();
 
       &:hover {
@@ -47,7 +47,7 @@
 
   .product-container {
     background-color: $white;
-    box-shadow: $primary-box-shadow;
+    box-shadow: $box-shadow-primary;
     border-radius: $border-radius-default;
     height: 100%;
 
@@ -152,7 +152,7 @@
   .product-container {
     background-color: $white;
     padding: 20px;
-    box-shadow: $primary-box-shadow;
+    box-shadow: $box-shadow-primary;
     border-radius: $border-radius-default;
     @include flex();
     flex-direction: column;
@@ -162,7 +162,7 @@
   .review-container {
     background-color: $white;
     padding: 20px;
-    box-shadow: $primary-box-shadow;
+    box-shadow: $box-shadow-primary;
     border-radius: $border-radius-default;
     @include flex();
     flex-direction: column;
