@@ -19,6 +19,7 @@ import Product from '../../../containers/Product';
 import Brand from '../../../containers/Brand';
 import Order from '../../../containers/Order';
 import Wishlist from '../../../containers/WishList';
+import Helpcenter from '../../../containers/Helpcenter';
 
 const Customer = props => {
   return (
@@ -37,6 +38,7 @@ const Customer = props => {
               <Route path='/dashboard/brand' component={Brand} />
               <Route path='/dashboard/orders' component={Order} />
               <Route path='/dashboard/wishlist' component={Wishlist} />
+              <Route path='/dashboard/helpcenter' component={Helpcenter} />
               <Route path='*' component={Page404} />
             </Switch>
           </div>
