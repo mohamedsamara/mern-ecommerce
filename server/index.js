@@ -14,88 +14,15 @@ const path = require('path');
 const keys = require('./config/keys');
 const webpackConfig = require('../webpack.config');
 const routes = require('./routes');
+const socket = require('./socket');
 
 const { database, port } = keys;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-//app.use(cors());
+app.use(cors());
 app.use(passport.initialize());
-
-var http = require('http').Server(app);
-var io = require('socket.io')(http,  { cors: { origin: '*' } });
-
-// Socket.io Operation start
-
-const users = [];
-
-io.on('connection', (socket) => {
-  socket.on('disconnect', () => {
-    const user = users.find((x) => x.socketId === socket.id);
-    if (user) {
-      user.online = false;
-      const admin = users.find((x) => x.isAdmin && x.online);
-      if (admin) {
-        io.to(admin.socketId).emit('updateUser', user);
-      }
-    }
-  });
-  socket.on('onLogin', (user) => {
-    const updatedUser = {
-      ...user,
-      online: true,
-      socketId: socket.id,
-      messages: [],
-    };
-    const existUser = users.find((x) => x._id === updatedUser._id);
-    if (existUser) {
-      existUser.socketId = socket.id;
-      existUser.online = true;
-    } else {
-      users.push(updatedUser);
-    }
-    const admin = users.find((x) => x.isAdmin && x.online);
-    if (admin) {
-      io.to(admin.socketId).emit('updateUser', updatedUser);
-    }
-    if (updatedUser.isAdmin) {
-      io.to(updatedUser.socketId).emit('listUsers', users);
-    }
-  });
-
-  socket.on('onUserSelected', (user) => {
-    const admin = users.find((x) => x.isAdmin && x.online);
-    if (admin) {
-      const existUser = users.find((x) => x._id === user._id);
-      io.to(admin.socketId).emit('selectUser', existUser);
-    }
-  });
-
-  socket.on('onMessage', (message) => {
-    if (message.isAdmin) {
-      const user = users.find((x) => x._id === message._id && x.online);
-      if (user) {
-        io.to(user.socketId).emit('message', message);
-        user.messages.push(message);
-      }
-    } else {
-      const admin = users.find((x) => x.isAdmin && x.online);
-      if (admin) {
-        io.to(admin.socketId).emit('message', message);
-        const user = users.find((x) => x._id === message._id && x.online);
-        user.messages.push(message);
-      } else {
-        io.to(socket.id).emit('message', {
-          name: 'Admin',
-          body: 'Sorry. I am not online right now',
-        });
-      }
-    }
-  });
-});
-
-// Socket.io Operation end
 
 // Connect to MongoDB
 mongoose.set('useCreateIndex', true);
@@ -148,10 +75,12 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-http.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(
     `${chalk.green('✓')} ${chalk.blue(
       `Listening on port ${port}. Visit http://localhost:${port}/ in your browser.`
     )}`
   );
 });
+
+socket(server);

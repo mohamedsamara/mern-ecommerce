@@ -19,7 +19,7 @@ class Helpcenter extends React.PureComponent {
   }
 
   render() {
-    const { user, accountChange, updateProfile } = this.props;
+    const { user } = this.props;
 
     return (
       <div className='account'>
@@ -27,14 +27,10 @@ class Helpcenter extends React.PureComponent {
           {user.role == 'ROLE_ADMIN'?
           (<SupportScreen
             user={user}
-            accountChange={accountChange}
-            updateProfile={updateProfile}
           />):(
-            <ChatBox
-              user={user}
-              accountChange={accountChange}
-              updateProfile={updateProfile}
-            />
+          <ChatBox
+            user={user}
+          />
           )}
         </SubPage>
       </div>

@@ -12,16 +12,14 @@ const ENDPOINT =
     ? 'http://127.0.0.1:5000'
     : window.location.host;
 
-export default function SupportScreen() {
+export default function SupportScreen(props) {
   const [selectedUser, setSelectedUser] = useState({});
   const [socket, setSocket] = useState(null);
   const uiMessagesRef = useRef(null);
   const [messageBody, setMessageBody] = useState('');
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
-  const userSignin = useSelector((state) => state.account.user);
-  const user = userSignin;
-  const userInfo = user;
+  const userInfo = props.user;
 
   useEffect(() => {
     if (uiMessagesRef.current) {
@@ -35,7 +33,7 @@ export default function SupportScreen() {
     if (!socket) {
       const sk = socketIOClient(ENDPOINT);
       setSocket(sk);
-      sk.emit('onLogin', {
+      sk.emit('connected', {
         _id: userInfo._id,
         name:  userInfo.role == 'ROLE_ADMIN' ? 'Admin' : userInfo.firstName + ' ' + userInfo.lastName,
         isAdmin: userInfo.role == 'ROLE_ADMIN' ? true : false,

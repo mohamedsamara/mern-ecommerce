@@ -8,8 +8,7 @@ const ENDPOINT =
     : window.location.host;
 
 export default function ChatBox(props) {
-  const user  = useSelector((state) => state.account.user);//props;
-  const [userInfo] = useState(user);
+  const [userInfo] = useState(props.user);
   const [socket, setSocket] = useState(null);
   const uiMessagesRef = useRef(null);
   const [messageBody, setMessageBody] = useState('');
@@ -26,7 +25,7 @@ export default function ChatBox(props) {
       });
     }
     if (socket) {
-      socket.emit('onLogin', {
+      socket.emit('connected', {
         _id: userInfo._id,
         name: userInfo.firstName + ' ' + userInfo.lastName,
         isAdmin: userInfo.role == 'ROLE_ADMIN' ? true : false,
