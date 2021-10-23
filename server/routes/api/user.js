@@ -42,9 +42,9 @@ router.get(
 
 router.get('/', auth, async (req, res) => {
   try {
+    
     const user = req.user._id;
-
-    const userDoc = await User.findById(user, { password: 0, _id: 0 });
+    const userDoc = await User.findById(user, { password: 0 });
 
     res.status(200).json({
       user: userDoc
