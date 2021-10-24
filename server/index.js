@@ -10,6 +10,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const path = require('path');
+const helmet = require('helmet');
 
 const keys = require('./config/keys');
 const webpackConfig = require('../webpack.config');
@@ -21,6 +22,12 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    frameguard: true
+  })
+);
 app.use(cors());
 app.use(passport.initialize());
 
