@@ -8,7 +8,6 @@ const historyApiFallback = require('connect-history-api-fallback');
 const compression = require('compression');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const passport = require('passport');
 const path = require('path');
 const helmet = require('helmet');
 
@@ -29,7 +28,6 @@ app.use(
   })
 );
 app.use(cors());
-app.use(passport.initialize());
 
 // Connect to MongoDB
 mongoose.set('useCreateIndex', true);
@@ -44,7 +42,7 @@ mongoose
   )
   .catch(err => console.log(err));
 
-require('./config/passport');
+require('./config/passport')(app);
 app.use(routes);
 
 // if development

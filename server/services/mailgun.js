@@ -1,21 +1,40 @@
-const mailgun = require('../config/mailgun');
+const Mailgun = require('mailgun-js');
+
 const template = require('../config/template');
+const keys = require('../config/keys');
+
+const { key, domain, sender } = keys.mailgun;
+
+class MailgunService {
+  init() {
+    try {
+      return new Mailgun({
+        apiKey: key,
+        domain: domain
+      });
+    } catch (error) {
+      console.warn('Missing mailgun keys');
+    }
+  }
+}
+
+const mailgun = new MailgunService().init();
 
 exports.sendEmail = async (email, type, host, data) => {
-  let result;
-  let response;
-
   try {
     const message = prepareTemplate(type, host, data);
 
-    response = await mailgun.sendEmail(email, message);
-  } catch (error) {}
+    const config = {
+      from: `MERN Store! <${sender}>`,
+      to: email,
+      subject: message.subject,
+      text: message.text
+    };
 
-  if (response) {
-    result = response;
+    return await mailgun.messages().send(config);
+  } catch (error) {
+    return error;
   }
-
-  return result;
 };
 
 const prepareTemplate = (type, host, data) => {
