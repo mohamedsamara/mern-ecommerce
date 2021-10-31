@@ -28,7 +28,10 @@ const ProductList = props => {
               </div>
 
               <div className='item-link'>
-                <Link to={`/product/${product.slug}`}>
+                <Link
+                  to={`/product/${product.slug}`}
+                  className='d-flex flex-column h-100'
+                >
                   <div className='item-image-container'>
                     <div className='item-image-box'>
                       <img
