@@ -19,12 +19,13 @@ const BrandList = props => {
       <Row className='flex-sm-row'>
         {brands.map((brand, index) => (
           <Col xs='6' md='4' lg='3' key={index} className='mb-3 px-2'>
-            <div className='brand-box'>
-              <Link to={`/shop/brand/${brand.slug}`} className='d-block'>
-                <h4>{brand.name}</h4>
-                <p className='brand-desc'>{brand.description}</p>
-              </Link>
-            </div>
+            <Link
+              to={`/shop/brand/${brand.slug}`}
+              className='d-block brand-box'
+            >
+              <h4>{brand.name}</h4>
+              <p className='brand-desc'>{brand.description}</p>
+            </Link>
           </Col>
         ))}
       </Row>
