@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const CURRENT_WORKING_DIR = process.cwd();
 
+const PORT = process.env.PORT;
+
 module.exports = {
   mode: 'development',
   entry: ['webpack-hot-middleware/client?reload=true'],
@@ -66,7 +68,7 @@ module.exports = {
     })
   ],
   devServer: {
-    port: 5000,
+    port: PORT,
     open: true,
     inline: true,
     compress: true,
@@ -75,7 +77,7 @@ module.exports = {
     disableHostCheck: false,
     historyApiFallback: true,
     proxy: {
-      '/api': 'http://localhost:5000'
+      '/api': `http://localhost:${PORT}`
     }
   },
   devtool: 'eval-source-map'
