@@ -15,13 +15,14 @@ const ResetPasswordForm = props => {
   const {
     resetFormData,
     formErrors,
+    isToken,
     resetPasswordChange,
-    resetPassowrd
+    resetPassword
   } = props;
 
   const handleSubmit = event => {
     event.preventDefault();
-    resetPassowrd();
+    resetPassword();
   };
 
   return (
@@ -34,7 +35,7 @@ const ResetPasswordForm = props => {
               error={formErrors['password']}
               label={'Password'}
               name={'password'}
-              placeholder={'Password'}
+              placeholder={isToken ? 'Password' : 'Old Password'}
               value={resetFormData.password}
               onInputChange={(name, value) => {
                 resetPasswordChange(name, value);

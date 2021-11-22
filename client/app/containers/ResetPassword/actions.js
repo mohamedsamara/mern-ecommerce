@@ -28,7 +28,7 @@ export const resetPasswordChange = (name, value) => {
   };
 };
 
-export const resetPassowrd = token => {
+export const resetPassword = token => {
   return async (dispatch, getState) => {
     try {
       const rules = {
@@ -79,7 +79,7 @@ export const resetAccountPassword = () => {
     try {
       const rules = {
         password: 'required|min:6',
-        confirmPassword: 'required|min:6|same:password'
+        confirmPassword: 'required|min:6'
       };
 
       const user = getState().resetPassword.resetFormData;
@@ -88,10 +88,7 @@ export const resetAccountPassword = () => {
         'required.password': 'Password is required.',
         'min.password': 'Password must be at least 6 characters.',
         'required.confirmPassword': 'Confirm password is required.',
-        'min.confirmPassword':
-          'Confirm password must be at least 6 characters.',
-        'same.confirmPassword':
-          'Confirm password and password fields must match.'
+        'min.confirmPassword': 'Confirm password must be at least 6 characters.'
       });
 
       if (!isValid) {

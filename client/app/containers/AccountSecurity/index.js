@@ -32,7 +32,7 @@ class AccountSecurity extends React.PureComponent {
               resetFormData={resetFormData}
               formErrors={formErrors}
               resetPasswordChange={resetPasswordChange}
-              resetPassowrd={resetAccountPassword}
+              resetPassword={resetAccountPassword}
             />
           </div>
         </SubPage>
