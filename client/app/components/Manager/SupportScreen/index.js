@@ -111,19 +111,22 @@ export default function SupportScreen(props) {
   };
 
   return (
-    <div className="card card-body">
-      <Row>
-          <Col  xs='3' md='3' xl='3' className="support-users">
-            {users.filter((x) => x._id !== userInfo._id).length === 0 && (
+    <div className="chatBody">
+      <Row  className="support-container">
+          <Col  xs='12' md='12' xl='3' className="chatlist">
+            {users.filter((x) => x._id !== userInfo._id).length === 0 ? (
               <MessageBox>No Online User Found</MessageBox>
-            )}
-            <ul style={{marginTop: '13px', marginBottom: '1rem'}}>
+            ):(<div className="chatlist-heading">
+                <h2> Select the User </h2>
+              </div>)
+            }
+            <ul className="chatlist-items">
               {users
                 .filter((x) => x._id !== userInfo._id)
                 .map((user) => (
-                  <li
+                  <li style={{ animationDelay: `0.2s` }}
                     key={user._id}
-                    className={user._id === selectedUser._id ? '  selected' : '  '}
+                    className={user._id === selectedUser._id ? `chatlist-item active ` : 'chatlist-item'}
                   >
                     <button
                       className="block"
@@ -132,40 +135,51 @@ export default function SupportScreen(props) {
                     >
                       {user.name}
                     </button>
-                    <span
-                      className={
-                        user.unread ? 'unread' : user.online ? 'online' : 'offline'
-                      }
-                    />
+                    <div className="support-users">
+                      <span
+                          className={
+                            user.unread ? 'unread' : user.online ? 'online' : 'offline'
+                          }
+                      />
+                    </div>
                   </li>
                 ))}
             </ul>
           </Col>
-          <Col  xs='9' md='9' xl='9' className="support-messages">
+          <Col  xs='12' md='12' xl='9' className="chatcontent">
             {!selectedUser._id ? (
               <MessageBox>Select a user to start chat</MessageBox>
             ) : (
               <div>
-                <div className="row">
-                  <strong><h3>Chat with {selectedUser.name}</h3></strong>
+                <div className="content-header">
+                  <strong className="current-chatting-user"><h3>Chat with {selectedUser.name}</h3></strong>
                 </div>
-                <ul ref={uiMessagesRef}>
+                <ul ref={uiMessagesRef} className="content-body">
                   {messages.length === 0 && <li>No message.</li>}
+                  <div className="chat-items">
                   {messages.map((msg, index) => (
                     <li key={index}>
-                      <strong>{`${msg.name}: `}</strong> {msg.body}
+                      <div style={{ animationDelay: `0.8s` }}
+                        className={`chat-item ${msg.name == 'Admin' ? "me" : "other"}`}>
+                        <div className="chat-item-content">
+                          <strong>{`${msg.name}: `}</strong>
+                          <div className="chat-msg"> {msg.body} </div>
+                        </div>
+                      </div>
                     </li>
-                  ))}
+                  ))}</div>
                 </ul>
-                <div>
-                  <form onSubmit={submitHandler} className="row">
+                <div className="content-footer">
+                  <form onSubmit={submitHandler} className="sendNewMessage">
                     <input
                       value={messageBody}
                       onChange={(e) => setMessageBody(e.target.value)}
                       type="text"
                       placeholder="type message"
                     />
-                    <button className='chatButton' type="submit">Send</button>
+                    <button className="btnSendMsg" id="sendMsgBtn" type="submit">
+                      <i className="fa fa-paper-plane">   Send </i>
+                    </button>
                   </form>
                 </div>
               </div>

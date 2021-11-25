@@ -60,27 +60,36 @@ export default function ChatBox(props) {
   };
 
   return (
-    <div className="chatbox">
-        <div className="card card-body">
-          <div className="row">
-            <strong><h3>Chat with Admin</h3></strong>
+    <div className="chatBody">
+        <div className="support-container">
+          <div className="content-header">
+            <strong className="current-chatting-user"><h3>Chat with Admin</h3></strong>
           </div>
-          <ul ref={uiMessagesRef}>
+          <ul ref={uiMessagesRef}  className="content-body"><div  className="chat-items">
             {messages.map((msg, index) => (
               <li key={index}>
-                <strong>{`${msg.name}: `}</strong> {msg.body}
+              <div style={{ animationDelay: `0.8s` }}
+                className={`chat-item ${msg.name !== 'Admin' ? "me" : "other"}`}>
+                <div className="chat-item-content">
+                  <strong>{`${msg.name}: `}</strong>
+                  <div className="chat-msg"> {msg.body} </div>
+                </div>
+              </div>
               </li>
             ))}
+            </div>
           </ul>
-          <div>
-            <form onSubmit={submitHandler}  onClick={supportHandler} className="row">
+          <div className="content-footer">
+            <form onSubmit={submitHandler}  onClick={supportHandler} className="sendNewMessage">
               <input
                 value={messageBody}
                 onChange={(e) => setMessageBody(e.target.value)}
                 type="text"
                 placeholder="type message"
               />
-              <button className='chatButton' type="submit">Send</button>
+              <button className="btnSendMsg" id="sendMsgBtn" type="submit">
+                <i className="fa fa-paper-plane">   Send </i>
+              </button>
             </form>
           </div>
         </div>
