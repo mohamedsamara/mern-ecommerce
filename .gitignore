@@ -6,7 +6,6 @@
 /dist
   
 # misc
-package-lock.json
 package.json.bak
 .DS_Store
 
