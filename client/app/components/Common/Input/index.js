@@ -9,6 +9,7 @@ import ReactStars from 'react-rating-stars-component';
 
 const Input = props => {
   const {
+    autoComplete,
     type,
     value,
     error,
@@ -65,7 +66,7 @@ const Input = props => {
       <div className={styles}>
         {label && <label>{label}</label>}
         <input
-          autoComplete='on'
+          autoComplete={autoComplete}
           step='step'
           min={min || 0}
           max={max || null}
@@ -120,7 +121,7 @@ const Input = props => {
         <div className='input-text-block'>
           <input
             className={'input-text'}
-            autoComplete='on'
+            autoComplete={autoComplete}
             type={type}
             onChange={e => {
               _onChange(e);
@@ -142,7 +143,8 @@ Input.defaultProps = {
   step: 1,
   decimals: true,
   rows: '4',
-  inlineElement: null
+  inlineElement: null,
+  autoComplete: 'on'
 };
 
 export default Input;

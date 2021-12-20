@@ -9,8 +9,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import SupportScreen from '../../components/Manager/SupportScreen';
-import ChatBox from '../../components/Manager/SupportScreen/ChatBox';
+import Support from '../../components/Manager/Support';
 import SubPage from '../../components/Manager/SubPage';
 
 class Helpcenter extends React.PureComponent {
@@ -22,16 +21,12 @@ class Helpcenter extends React.PureComponent {
     const { user } = this.props;
 
     return (
-      <div className='account'>
-        <SubPage title={user.role == 'ROLE_ADMIN'?'Admin Support':'Support'} isMenuOpen={null}>
-          {user.role == 'ROLE_ADMIN'?
-          (<SupportScreen
-            user={user}
-          />):(
-          <ChatBox
-            user={user}
-          />
-          )}
+      <div className='support-dashboard'>
+        <SubPage
+          title={user.role == 'ROLE_ADMIN' ? 'Admin Support' : 'Support'}
+          isMenuOpen={null}
+        >
+          <Support user={user} />
         </SubPage>
       </div>
     );
