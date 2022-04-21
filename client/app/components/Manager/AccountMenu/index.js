@@ -27,17 +27,20 @@ const AccountMenu = props => {
       <Navbar color='light' light expand='md'>
         <Collapse isOpen={isMenuOpen} navbar>
           <ul className='panel-links'>
-            {links.map((link, index) => (
-              <li key={index}>
-                <NavLink
-                  to={'/dashboard' + link.to}
-                  activeClassName='active-link'
-                  exact
-                >
-                  {link.name}
-                </NavLink>
-              </li>
-            ))}
+            {links.map((link, index) => {
+              const PREFIX = link.prefix ? link.prefix : '';
+              return (
+                <li key={index}>
+                  <NavLink
+                    to={PREFIX + link.to}
+                    activeClassName='active-link'
+                    exact
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              );
+            })}
           </ul>
         </Collapse>
       </Navbar>
