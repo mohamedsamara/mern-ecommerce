@@ -1,145 +1,93 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col } from 'reactstrap';
-import socketIOClient from 'socket.io-client';
 
-import { SOCKET_URL, ROLE_ADMIN } from '../../../constants';
-
+import { useSocket } from '../../../contexts/Socket';
 import AddMessage from './AddMessage';
 import MessageList from './MessageList';
-import UsersList from './UsersList';
+import UserList from './UserList';
+import NotFound from '../../Common/NotFound';
 
 const Support = props => {
   const { user } = props;
-  const initialMessages =
-    user.role === 'ROLE_ADMIIN'
-      ? [
-          {
-            name: 'Admin',
-            body: 'Hello there, Please ask your question.'
-          }
-        ]
-      : [];
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [socket, setSocket] = useState(null);
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
-
-  // const uiMessagesRef = useRef(null);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [chatMsgs, setChatMsgs] = useState([]);
+  const socket = useSocket();
 
   useEffect(() => {
-    // if (uiMessagesRef.current) {
-    //   uiMessagesRef.current.scrollBy({
-    //     top: uiMessagesRef.current.clientHeight,
-    //     left: 0,
-    //     behavior: 'smooth'
-    //   });
-    // }
-
-    if (!socket) {
-      const sk = socketIOClient(SOCKET_URL);
-      setSocket(sk);
-
-      sk.emit('connected', {
-        _id: user._id,
-        name:
-          user.role === ROLE_ADMIN
-            ? 'Admin'
-            : user.firstName + ' ' + user.lastName,
-        isAdmin: user.role === ROLE_ADMIN ? true : false
+    if (socket) {
+      socket.emit('connected');
+      socket.emit('getMessages');
+      socket.on('getUsers', users => {
+        setUsers(users);
       });
-
-      sk.on('message', message => {
-        const selectedUser = users.find(u => u._id === message._id);
-
-        if (selectedUser) {
-          setMessages([...messages, message]);
-        } else {
-          const existUser = users.find(user => user._id === data._id);
-          if (existUser) {
-            const newUsers = users.map(user =>
-              user._id === existUser._id ? { ...user, unread: true } : user
-            );
-            setUsers(newUsers);
-          }
-        }
+      socket.on('getMessages', msgs => {
+        msgs.map(m => onMessage(m));
       });
-
-      if (user.role === ROLE_ADMIN) {
-        sk.on('updateUser', updatedUser => {
-          const existUser = users.find(user => user._id === updatedUser._id);
-          if (existUser) {
-            const newUsers = users.map(user =>
-              user._id === existUser._id ? updatedUser : user
-            );
-            setUsers(newUsers);
-          } else {
-            setUsers([...users, updatedUser]);
-          }
-        });
-        sk.on('listUsers', users => {
-          console.log('users --- listUsers', users);
-          setUsers(users);
-        });
-        sk.on('selectUser', user => {
-          const { messages } = user;
-          setMessages(messages);
-        });
-      }
     }
-  }, [socket, messages, users]);
+  }, [socket]);
 
-  const handleSelectUser = user => {
-    setSelectedUser(user);
-
-    const existUser = users.find(x => x._id === user._id);
-
-    if (existUser) {
-      const newUsers = users.map(x =>
-        x._id === existUser._id ? { ...x, unread: false } : x
-      );
-      setUsers(newUsers);
+  useEffect(() => {
+    if (users && !selectedUser) {
+      const u = users[0];
+      setSelectedUser(u);
+      setUserMsgs(u);
+    } else if (users && messages.length > 0) {
+      setUserMsgs(selectedUser);
     }
+  }, [users, messages]);
 
-    socket.emit('onUserSelected', user);
+  useEffect(() => {
+    if (socket) {
+      socket.on('message', onMessage);
+    }
+  }, [socket]);
+
+  const onMessage = message => {
+    setMessages(prevState => [...prevState, message]);
   };
 
-  const onSubmit = message => {
-    setMessages([
-      ...messages,
-      {
-        body: message,
-        name:
-          user.role === ROLE_ADMIN
-            ? 'Admin'
-            : user.firstName + ' ' + user.lastName
-      }
-    ]);
-    setTimeout(() => {
-      socket.emit('onMessage', {
-        body: message,
-        name:
-          user.role == ROLE_ADMIN
-            ? 'Admin'
-            : user.firstName + ' ' + user.lastName,
-        isAdmin: user.role == ROLE_ADMIN ? true : false,
-        _id: user.role === ROLE_ADMIN ? selectedUser._id : user._id
-      });
-    }, 1000);
+  const handleSelectUser = u => {
+    setSelectedUser(u);
+    setUserMsgs(u);
+  };
+
+  const setUserMsgs = u => {
+    const foundUser = users.find(u => u.id === u.id);
+    if (foundUser && messages && messages.length) {
+      const sentMsgs = messages.filter(m => m.from === u.id);
+      const receivedMsgs = messages.filter(m => m.to === u.id);
+      setChatMsgs([...sentMsgs, ...receivedMsgs]);
+    }
+  };
+
+  const onMessageSubmit = message => {
+    socket.emit('message', {
+      text: message,
+      to: selectedUser?.id
+    });
   };
 
   return (
     <Row>
-      <Col xs='12' md='12' xl='3'>
-        <UsersList
+      <Col xs='12' md='4' xl='3'>
+        <UserList
           user={user}
           users={users}
           selectedUser={selectedUser}
           selectUser={handleSelectUser}
         />
       </Col>
-      <Col xs='12' md='12' xl='9'>
-        <MessageList messages={messages} />
-        <AddMessage onSubmit={onSubmit} />
+      <Col xs='12' md='8' xl='9'>
+        {socket ? (
+          <div>
+            <MessageList user={user} messages={chatMsgs} />
+            <AddMessage socket={socket} onSubmit={onMessageSubmit} />
+          </div>
+        ) : (
+          <NotFound message='Not Connected.' />
+        )}
       </Col>
     </Row>
   );

@@ -1,29 +1,44 @@
 import React from 'react';
 
-const MessageList = props => {
-  const { messages } = props;
+const MessagesList = props => {
+  const { user, messages } = props;
 
   return (
-    <ul>
-      {messages.length === 0 && <li>No message.</li>}
+    <div className='m-list'>
+      {messages &&
+        messages.length > 0 &&
+        messages
+          .sort((a, b) => a.time - b.time)
+          .map(message => {
+            const isMe = message.from === user._id;
 
-      <div>
-        {messages.map((msg, index) => (
-          <li key={index}>
-            <div
-              style={{ animationDelay: `0.8s` }}
-              //   className={`chat-item ${msg.name == 'Admin' ? 'me' : 'other'}`}
-            >
-              <div>
-                <strong>{`${msg.name}: `}</strong>
-                <div className='chat-msg'> {msg.body} </div>
+            return (
+              <div
+                key={message.id}
+                className='message-container'
+                title={`Sent at ${new Date(message.time).toLocaleTimeString()}`}
+                style={{ backgroundColor: isMe ? '#2962ff' : '#e4e6eb' }}
+              >
+                <span
+                  className='user'
+                  style={{ color: isMe ? 'white' : 'black' }}
+                >
+                  {isMe ? 'You' : message.user.name}:
+                </span>
+                <span
+                  className='message'
+                  style={{ color: isMe ? 'white' : 'black' }}
+                >
+                  {message.value}
+                </span>
+                {/* <span className='date'> */}
+                {/* {new Date(message.time).toLocaleTimeString()} */}
+                {/* </span> */}
               </div>
-            </div>
-          </li>
-        ))}
-      </div>
-    </ul>
+            );
+          })}
+    </div>
   );
 };
 
-export default MessageList;
+export default MessagesList;

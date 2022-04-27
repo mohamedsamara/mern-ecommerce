@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import Support from '../../components/Manager/Support';
-import SubPage from '../../components/Manager/SubPage';
 
 class Helpcenter extends React.PureComponent {
   componentDidMount() {
@@ -21,13 +20,12 @@ class Helpcenter extends React.PureComponent {
     const { user } = this.props;
 
     return (
-      <div className='support-dashboard'>
-        <SubPage
-          title={user.role == 'ROLE_ADMIN' ? 'Admin Support' : 'Support'}
-          isMenuOpen={null}
-        >
+      <div className='support'>
+        <h2>Support Information</h2>
+        <hr />
+        <div className='mt-5'>
           <Support user={user} />
-        </SubPage>
+        </div>
       </div>
     );
   }

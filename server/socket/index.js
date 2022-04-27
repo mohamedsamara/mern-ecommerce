@@ -1,74 +1,138 @@
-const Socket = require('socket.io');
+const uuidv4 = require('uuid').v4;
+const socketio = require('socket.io');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
-const socket = function (server) {
-  const io = Socket(server, { cors: { origin: '*' } });
+const keys = require('../config/keys');
+const User = mongoose.model('User');
 
-  const users = [];
-
-  io.on('connection', socket => {
-    socket.on('disconnect', () => {
-      const user = users.find(x => x.socketId === socket.id);
-      if (user) {
-        user.online = false;
-        const admin = users.find(x => x.isAdmin && x.online);
-        if (admin) {
-          io.to(admin.socketId).emit('updateUser', user);
-        }
-      }
-    });
-    socket.on('connected', user => {
-      const updatedUser = {
-        ...user,
-        online: true,
-        socketId: socket.id,
-        messages: []
-      };
-      const existUser = users.find(x => x._id === updatedUser._id);
-      if (existUser) {
-        existUser.socketId = socket.id;
-        existUser.online = true;
-      } else {
-        users.push(updatedUser);
-      }
-      const admin = users.find(x => x.isAdmin && x.online);
-      if (admin) {
-        io.to(admin.socketId).emit('updateUser', updatedUser);
-      }
-      if (updatedUser.isAdmin) {
-        io.to(updatedUser.socketId).emit('listUsers', users);
-      }
-    });
-
-    socket.on('onUserSelected', user => {
-      const admin = users.find(x => x.isAdmin && x.online);
-      if (admin) {
-        const existUser = users.find(x => x._id === user._id);
-        io.to(admin.socketId).emit('selectUser', existUser);
-      }
-    });
-
-    socket.on('onMessage', message => {
-      if (message.isAdmin) {
-        const user = users.find(x => x._id === message._id && x.online);
-        if (user) {
-          io.to(user.socketId).emit('message', message);
-          user.messages.push(message);
-        }
-      } else {
-        const admin = users.find(x => x.isAdmin && x.online);
-        if (admin) {
-          io.to(admin.socketId).emit('message', message);
-          const user = users.find(x => x._id === message._id && x.online);
-          user.messages.push(message);
-        } else {
-          io.to(socket.id).emit('message', {
-            name: 'Admin',
-            body: 'Sorry. I am not online right now'
-          });
-        }
-      }
-    });
-  });
+const users = [];
+const messages = [];
+const defaultUser = {
+  id: 'anon',
+  name: 'Anonymous'
 };
 
-module.exports = socket;
+const findUserById = id => users.find(x => x.id === id);
+const findUserBySocketId = socketId => users.find(x => x.socketId == socketId);
+
+const authHandler = async (socket, next) => {
+  const { token = null } = socket.handshake.query || {};
+  if (token) {
+    try {
+      const [authType, tokenValue] = token.trim().split(' ');
+      if (authType !== 'Bearer' || !tokenValue) {
+        throw new Error('Expected a Bearer token');
+      }
+
+      const { secret } = keys.jwt;
+      const payload = jwt.verify(tokenValue, secret);
+      const id = payload.id.toString();
+      const user = await User.findById(id);
+
+      const u = {
+        id,
+        role: user?.role,
+        isAdmin: user.role === 'ROLE_ADMIN',
+        name: `${user?.firstName} ${user?.lastName}`,
+        socketId: socket.id
+      };
+      const existingUser = findUserById(id);
+
+      if (!existingUser) {
+        users.push(u);
+      } else {
+        existingUser.socketId = socket.id;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  next();
+};
+
+class Connection {
+  constructor(io, socket) {
+    this.socket = socket;
+    this.io = io;
+
+    socket.on('connected', () => this.getUsers());
+    socket.on('getMessages', () => this.getMessages());
+    socket.on('message', body => this.handleMessage(body));
+    socket.on('disconnect', () => this.disconnect());
+    socket.on('connect_error', err => {
+      console.log(`connect_error due to ${err.message}`);
+    });
+  }
+
+  sendMessage(message) {
+    this.io.sockets.emit('message', message);
+  }
+
+  getMessages() {
+    const user = findUserBySocketId(this.socket.id);
+    const sentMsgs = messages.filter(m => m.from === user.id);
+    const receivedMsgs = messages.filter(m => m.to === user.id);
+
+    this.io
+      .to(this.socket.id)
+      .emit('getMessages', [...sentMsgs, ...receivedMsgs]);
+  }
+
+  getUsers() {
+    const user = findUserBySocketId(this.socket.id);
+
+    if (user) {
+      user.online = true;
+    }
+
+    const notMe = users.filter(x => x.socketId !== this.socket.id);
+    const adminUsers = users.filter(x => x.isAdmin === true);
+    this.io
+      .to(this.socket.id)
+      .emit('getUsers', user?.isAdmin ? notMe : adminUsers);
+  }
+
+  handleMessage(body) {
+    const { text, to } = body;
+    const user = findUserBySocketId(this.socket.id);
+    const user_to = findUserById(to);
+
+    const message = {
+      id: uuidv4(),
+      value: text,
+      time: Date.now(),
+      user: user || defaultUser,
+      from: user.id,
+      to: user_to.id
+    };
+    this.io.to(user_to.socketId).emit('message', message);
+    this.io.to(user.socketId).emit('message', message);
+    messages.push(message);
+  }
+
+  disconnect() {
+    const user = users.find(x => x.socketId === this.socket.id);
+    if (user) {
+      user.online = false;
+    }
+  }
+}
+
+function chat(server) {
+  const io = socketio(server, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST']
+    }
+  });
+
+  io.use(authHandler);
+  io.on('connection', socket => {
+    new Connection(io, socket);
+  });
+}
+
+module.exports = chat;

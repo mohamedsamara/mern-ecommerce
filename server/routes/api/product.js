@@ -3,13 +3,11 @@ const router = express.Router();
 const multer = require('multer');
 const AWS = require('aws-sdk');
 const Mongoose = require('mongoose');
-var jwt = require('jsonwebtoken');
 
 // Bring in Models & Helpers
 const Product = require('../../models/product');
 const Brand = require('../../models/brand');
 const Category = require('../../models/category');
-const Wishlist = require('../../models/wishlist');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../helpers/auth');
