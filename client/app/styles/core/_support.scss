@@ -1,218 +1,64 @@
-// // /* Chatbox */
-// .support-container {
-//   margin: auto;
-//   background-color: #f4f3f8;
-//   min-height: 70vh;
-//   width: 100%;
-//   border-radius: 10px;
-// }
+.support {
+  .u-list {
+    li {
+      &:not(:last-child) {
+        border-bottom: 1px solid $border-color-default;
+      }
 
-// .chatBody {
-//   flex-grow: 1;
-//   background-color: #f4f3f8;
-//   border-radius: 10px;
-//   padding: 15px 20px;
-//   display: flex;
-// }
+      .input-btn {
+        width: 100%;
+      }
 
-// .chatlist {
-//   border-right: 1px solid #ebe7fb;
-//   padding: 0 20px 0 0px;
-//   width: 30%;
-// }
-// .chatlist-heading {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-// }
+      &.selected {
+        .input-btn {
+          background-color: $secondary-bg;
+        }
+      }
+    }
+  }
 
-// .support-users span {
-//   width: 1rem;
-//   height: 1rem;
-//   border-radius: 50%;
-//   position: absolute;
-//   margin-right: 15px;
-//   margin-top: 3.5px;
-//   right: 0;
-// }
-// .support-users .offline {
-//   background-color: #808080;
-// }
-// .support-users .online {
-//   background-color: #20a020;
-// }
-// .support-users .unread {
-//   background-color: #f02020;
-// }
+  .m-list {
+    min-height: 30vh;
+    max-height: 70vh;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-right: 20px;
 
-// .chatlist-items {
-//   margin-top: 15px;
-//   overflow: auto;
-//   max-height: calc(100vh - calc(100vh / 2));
-// }
+    &.empty {
+      justify-content: center;
+      align-items: center;
+      @include flex();
+    }
 
-// .chatlist-item {
-//   display: flex;
-//   border-bottom: 1px solid #ebe7fb;
-//   padding-bottom: 10px;
-//   margin-top: 10px;
-//   cursor: pointer;
-//   padding: 10px 10px 10px 20px;
-//   transition: all 0.3s cubic-bezier(0.88, 0.19, 0.37, 1.11);
-//   transform: scale(0);
-//   animation-name: showIn;
-//   animation-duration: 0.2s; /* or: Xms */
-//   animation-iteration-count: 1;
-//   animation-direction: normal; /* or: normal */
-//   animation-timing-function: cubic-bezier(
-//     0.88,
-//     0.19,
-//     0.37,
-//     1.11
-//   ); /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
-//   animation-fill-mode: both; /* or: backwards, both, none */
-//   animation-delay: 0.1s; /* or: Xms */
-// }
-// @keyframes showIn {
-//   0% {
-//     transform: scale(0);
-//   }
-//   100% {
-//     transform: scale(1);
-//   }
-// }
-// .chatlist-item:first-child {
-//   margin-top: 0;
-// }
+    .avatar {
+      width: 32px;
+      height: 32px;
+    }
 
-// .chatlist-item .userMeta p {
-//   margin: 0;
-//   padding: 0;
-//   color: #000;
-//   font-weight: 600;
-//   font-size: 14px;
-// }
-// .chatlist-item .userMeta span {
-//   margin: 0;
-//   padding: 0;
-//   color: #ceccd3;
-//   font-weight: 400;
-//   font-size: 12px;
-//   display: block;
-// }
-// .chatlist-item:hover,
-// .chatlist-item.active {
-//   background: #fff;
+    .avatar-box {
+      width: 40px;
+    }
 
-//   border-radius: 10px;
-// }
+    .m-box {
+      background-color: $secondary-bg;
+      width: fit-content;
+      border-radius: $border-radius-primary;
+      color: $black;
+      padding: 0.5rem 0.875rem;
+      position: relative;
+      word-wrap: break-word;
+      line-height: 1.25;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+      @include flex();
 
-// .chatcontent {
-//   flex-grow: 1;
-//   width: 70%;
-// }
-// .content-header {
-//   padding-bottom: 15px;
-//   border-bottom: 1px solid #ebe7fb;
-// }
-// .current-chatting-user {
-//   display: flex;
-//   align-items: center;
-// }
-// .current-chatting-user p {
-//   margin: 0;
-//   font-weight: 600;
-// }
-// .content-header {
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-// }
-
-// .content-body {
-//   max-height: calc(100vh - calc(100vh / 2));
-//   overflow: auto;
-// }
-// .chat-item {
-//   display: flex;
-//   justify-content: flex-end;
-//   align-items: baseline;
-//   margin-bottom: 15px;
-//   transition: all 0.3s ease;
-//   transform: scale(0);
-//   transform-origin: right;
-//   animation-name: showIn;
-//   animation-duration: 0.2s; /* or: Xms */
-//   animation-iteration-count: 1;
-//   animation-direction: normal; /* or: normal */
-//   animation-timing-function: cubic-bezier(
-//     0.88,
-//     0.19,
-//     0.37,
-//     1.11
-//   ); /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
-//   animation-fill-mode: both; /* or: backwards, both, none */
-//   animation-delay: 0.2s; /* or: Xms */
-// }
-// @keyframes showIn {
-//   0% {
-//     transform: scale(0);
-//   }
-//   100% {
-//     transform: scale(1);
-//   }
-// }
-
-// .chat-item-content {
-//   background-color: #0b0b9d99;
-//   color: #fff;
-//   padding: 15px;
-//   border-radius: 10px 10px 0 10px;
-//   max-width: 50%;
-//   min-width: 215px;
-// }
-// .chat-item-content .chat-meta {
-//   justify-content: space-between;
-//   display: flex;
-//   margin-top: 10px;
-// }
-// .chat-item-content .chat-meta span {
-//   font-size: 14px;
-//   color: #8693d3;
-//   user-select: none;
-// }
-// .chat-msg {
-//   user-select: none;
-//   word-break: break-word;
-// }
-
-// .chat-item.other {
-//   flex-direction: row-reverse;
-//   transform-origin: left;
-// }
-// .chat-item.other .chat-item-content {
-//   background-color: #fff;
-//   color: #000;
-//   border-radius: 10px 10px 10px 0;
-//   max-width: 50%;
-// }
-
-// .chat-item.other .chat-item-content .chat-meta span {
-//   color: #d1d1d1;
-// }
-// .content-footer {
-//   padding-top: 0px;
-// }
-// .sendNewMessage {
-//   background-color: #fff;
-//   display: flex;
-//   justify-content: space-between;
-//   padding: 0px;
-//   border-radius: 5px;
-// }
-
-// // .sendNewMessage input {
-// //   flex-grow: 1;
-// //   padding: 0 15px;
-// //   background-color: transparent;
-// // }
+      &.me {
+        background-color: $primary-bg;
+        color: $white;
+        align-self: flex-end;
+        margin-left: auto;
+      }
+    }
+  }
+}

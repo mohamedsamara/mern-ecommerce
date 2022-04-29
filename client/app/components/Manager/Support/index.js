@@ -58,7 +58,26 @@ const Support = props => {
     if (foundUser && messages && messages.length) {
       const sentMsgs = messages.filter(m => m.from === u.id);
       const receivedMsgs = messages.filter(m => m.to === u.id);
-      setChatMsgs([...sentMsgs, ...receivedMsgs]);
+      const msgs = [...sentMsgs, ...receivedMsgs].sort(
+        (a, b) => a.time - b.time
+      );
+
+      const updatedMsgs = [];
+
+      for (let i = 0; i < msgs.length; i++) {
+        const previousMsg = msgs[i - 1];
+        const currentMsg = msgs[i];
+
+        if (previousMsg && previousMsg.from === currentMsg.from && i !== 0) {
+          currentMsg.noHeader = true;
+        } else {
+          currentMsg.noHeader = false;
+        }
+
+        updatedMsgs.push(currentMsg);
+      }
+
+      setChatMsgs(updatedMsgs);
     }
   };
 
@@ -82,6 +101,8 @@ const Support = props => {
       <Col xs='12' md='8' xl='9'>
         {socket ? (
           <div>
+            <h2>{selectedUser?.name}</h2>
+            <hr />
             <MessageList user={user} messages={chatMsgs} />
             <AddMessage socket={socket} onSubmit={onMessageSubmit} />
           </div>

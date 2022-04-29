@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../../Common/Button';
 
 import MessageBox from './MessageBox';
 
@@ -11,19 +12,18 @@ const UserList = props => {
   };
 
   return (
-    <ul>
+    <ul className='u-list'>
       {users.map((u, i) => {
         const isSelected = selectedUser?.id === u.id;
 
         return (
-          <li
-            style={{
-              backgroundColor: isSelected ? 'whitesmoke' : 'transparent'
-            }}
-            key={i}
-            onClick={() => _selectUser(u)}
-          >
-            {u.name}
+          <li className={isSelected ? 'selected' : 'not-selected'} key={i}>
+            <Button
+              variant='none'
+              borderless
+              text={u.name}
+              onClick={() => _selectUser(u)}
+            />
           </li>
         );
       })}
