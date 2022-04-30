@@ -23,6 +23,17 @@
     overflow: hidden;
     overflow-y: scroll;
     padding-right: 20px;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    position: relative;
+    background-image: $chat-bg;
+
+    &::-webkit-scrollbar-thumb {
+      background: $theme-light-white;
+    }
+    &::-webkit-scrollbar-track {
+      background: $white;
+    }
 
     &.empty {
       justify-content: center;
@@ -41,9 +52,10 @@
 
     .m-box {
       background-color: $secondary-bg;
-      width: fit-content;
       border-radius: $border-radius-primary;
+      box-shadow: $box-shadow-primary;
       color: $black;
+      width: fit-content;
       padding: 0.5rem 0.875rem;
       position: relative;
       word-wrap: break-word;

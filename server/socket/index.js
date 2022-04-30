@@ -106,7 +106,7 @@ class Connection {
       time: Date.now(),
       user: user || defaultUser,
       from: user.id,
-      to: user_to.id
+      to: user_to?.id
     };
     this.io.to(user_to.socketId).emit('message', message);
     this.io.to(user.socketId).emit('message', message);
