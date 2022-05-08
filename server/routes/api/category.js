@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 
-// Bring in Models & Helpers
+// Bring in Models & Utils
 const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
-const store = require('../../helpers/store');
+const store = require('../../utils/store');
 
 router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
   const name = req.body.name;

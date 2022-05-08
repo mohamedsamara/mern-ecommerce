@@ -24,7 +24,7 @@ import {
 } from './constants';
 
 import handleError from '../../utils/error';
-import { formatSelectOptions } from '../../helpers/select';
+import { formatSelectOptions } from '../../utils/select';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const brandChange = (name, value) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, memo } from 'react';
 
-import { getMemoizedRandomColors } from '../../../helpers';
-import { formatTime } from '../../../helpers/date';
+import { getMemoizedRandomColors } from '../../../utils';
+import { formatTime } from '../../../utils/date';
 import NotFound from '../../Common/NotFound';
 
 const MessagesList = props => {

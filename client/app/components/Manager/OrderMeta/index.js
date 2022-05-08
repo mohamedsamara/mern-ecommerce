@@ -8,7 +8,7 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
-import { formatDate } from '../../../helpers/date';
+import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { ArrowBackIcon } from '../../Common/Icon';
 

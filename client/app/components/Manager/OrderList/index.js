@@ -8,7 +8,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { formatDate } from '../../../helpers/date';
+import { formatDate } from '../../../utils/date';
 
 const OrderList = props => {
   const { orders } = props;

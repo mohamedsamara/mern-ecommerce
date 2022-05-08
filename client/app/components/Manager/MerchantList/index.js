@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import { formatDate } from '../../../helpers/date';
+import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { CheckIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
 

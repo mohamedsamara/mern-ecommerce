@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-// Bring in Models & Helpers
+// Bring in Models & Utils
 const Brand = require('../../models/brand');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
-const store = require('../../helpers/store');
+const store = require('../../utils/store');
 
 router.post(
   '/add',

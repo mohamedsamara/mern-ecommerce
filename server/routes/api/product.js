@@ -4,13 +4,13 @@ const multer = require('multer');
 const AWS = require('aws-sdk');
 const Mongoose = require('mongoose');
 
-// Bring in Models & Helpers
+// Bring in Models & Utils
 const Product = require('../../models/product');
 const Brand = require('../../models/brand');
 const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
-const checkAuth = require('../../helpers/auth');
+const checkAuth = require('../../utils/auth');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
