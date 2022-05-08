@@ -1,76 +1,62 @@
+const socketio = require('socket.io');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 
-const Socket = require('socket.io');
+const keys = require('../config/keys');
+const User = mongoose.model('User');
 
-var socket = function(server) {
-  const io = Socket(server,  { cors: { origin: '*' } });
+const support = require('./support');
 
-const users = [];
-
-io.on('connection', (socket) => {
-  socket.on('disconnect', () => {
-    const user = users.find((x) => x.socketId === socket.id);
-    if (user) {
-      user.online = false;
-      const admin = users.find((x) => x.isAdmin && x.online);
-      if (admin) {
-        io.to(admin.socketId).emit('updateUser', user);
-      }
+const authHandler = async (socket, next) => {
+  const { token = null } = socket.handshake.auth;
+  if (token) {
+    const [authType, tokenValue] = token.trim().split(' ');
+    if (authType !== 'Bearer' || !tokenValue) {
+      return next(new Error('no token'));
     }
-  });
-  socket.on('connected', (user) => {
-    const updatedUser = {
-      ...user,
-      online: true,
+
+    const { secret } = keys.jwt;
+    const payload = jwt.verify(tokenValue, secret);
+    const id = payload.id.toString();
+    const user = await User.findById(id);
+
+    const u = {
+      id,
+      role: user?.role,
+      isAdmin: user.role === 'ROLE_ADMIN',
+      name: `${user?.firstName} ${user?.lastName}`,
       socketId: socket.id,
-      messages: [],
+      messages: []
     };
-    const existUser = users.find((x) => x._id === updatedUser._id);
-    if (existUser) {
-      existUser.socketId = socket.id;
-      existUser.online = true;
+
+    const existingUser = support.findUserById(id);
+    if (!existingUser) {
+      support.users.push(u);
     } else {
-      users.push(updatedUser);
+      existingUser.socketId = socket.id;
     }
-    const admin = users.find((x) => x.isAdmin && x.online);
-    if (admin) {
-      io.to(admin.socketId).emit('updateUser', updatedUser);
-    }
-    if (updatedUser.isAdmin) {
-      io.to(updatedUser.socketId).emit('listUsers', users);
+  } else {
+    return next(new Error('no token'));
+  }
+
+  next();
+};
+
+const socket = server => {
+  const io = socketio(server, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST']
     }
   });
 
-  socket.on('onUserSelected', (user) => {
-    const admin = users.find((x) => x.isAdmin && x.online);
-    if (admin) {
-      const existUser = users.find((x) => x._id === user._id);
-      io.to(admin.socketId).emit('selectUser', existUser);
-    }
-  });
+  io.use(authHandler);
 
-  socket.on('onMessage', (message) => {
-    if (message.isAdmin) {
-      const user = users.find((x) => x._id === message._id && x.online);
-      if (user) {
-        io.to(user.socketId).emit('message', message);
-        user.messages.push(message);
-      }
-    } else {
-      const admin = users.find((x) => x.isAdmin && x.online);
-      if (admin) {
-        io.to(admin.socketId).emit('message', message);
-        const user = users.find((x) => x._id === message._id && x.online);
-        user.messages.push(message);
-      } else {
-        io.to(socket.id).emit('message', {
-          name: 'Admin',
-          body: 'Sorry. I am not online right now',
-        });
-      }
-    }
-  });
-});
+  const onConnection = socket => {
+    support.supportHandler(io, socket);
+  };
 
-}
+  io.on('connection', onConnection);
+};
 
 module.exports = socket;

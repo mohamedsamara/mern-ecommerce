@@ -8,7 +8,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { formatDate } from '../../../helpers/date';
+import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { XIcon } from '../../Common/Icon';
 

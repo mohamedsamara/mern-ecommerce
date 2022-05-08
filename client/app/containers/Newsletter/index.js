@@ -15,16 +15,8 @@ import Button from '../../components/Common/Button';
 
 class Newsletter extends React.PureComponent {
   render() {
-    const {
-      email,
-      newsletterChange,
-      subscribeToNewsletter,
-      formErrors
-    } = this.props;
-
-    const SubscribeButton = (
-      <Button type='submit' variant='primary' text='Subscribe' />
-    );
+    const { email, newsletterChange, subscribeToNewsletter, formErrors } =
+      this.props;
 
     const handleSubmit = event => {
       event.preventDefault();
@@ -53,6 +45,10 @@ class Newsletter extends React.PureComponent {
     );
   }
 }
+
+const SubscribeButton = (
+  <Button type='submit' variant='primary' text='Subscribe' />
+);
 
 const mapStateToProps = state => {
   return {

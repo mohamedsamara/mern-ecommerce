@@ -23,10 +23,7 @@ import {
 } from './constants';
 
 import handleError from '../../utils/error';
-import {
-  formatSelectOptions,
-  unformatSelectOptions
-} from '../../helpers/select';
+import { formatSelectOptions, unformatSelectOptions } from '../../utils/select';
 import { allFieldsValidation } from '../../utils/validation';
 
 export const categoryChange = (name, value) => {

@@ -9,8 +9,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component';
 
-import { formatDate } from '../../../helpers/date';
-import { getRandomColors } from '../../../helpers';
+import { formatDate } from '../../../utils/date';
+import { getRandomColors } from '../../../utils';
 import Button from '../../Common/Button';
 import { CheckIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
 

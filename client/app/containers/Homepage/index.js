@@ -12,7 +12,7 @@ import { Row, Col } from 'reactstrap';
 import actions from '../../actions';
 import banners from './banners.json';
 import CarouselSlider from '../../components/Common/CarouselSlider';
-import { responsiveOneItemCarousel } from '../../components/Common/CarouselSlider/helpers';
+import { responsiveOneItemCarousel } from '../../components/Common/CarouselSlider/utils';
 
 class Homepage extends React.PureComponent {
   render() {

@@ -38,7 +38,6 @@ const Button = props => {
 
   const v = variant ? variants[variant] : '';
 
-  // const btnVariant = icon && text ? v : icon && !text ? '' : v;
   const btnVariant = v;
 
   const btn =

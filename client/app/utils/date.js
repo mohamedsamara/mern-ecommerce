@@ -33,3 +33,8 @@ export const formatDate = date => {
 
   return newDate.toLocaleDateString('en-US', dateOptions);
 };
+
+export const formatTime = date => {
+  const newDate = new Date(date);
+  return newDate.toLocaleTimeString(undefined, timeOptions);
+};

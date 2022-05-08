@@ -8,8 +8,8 @@ import React from 'react';
 
 import ReactStars from 'react-rating-stars-component';
 
-import { formatDate } from '../../../helpers/date';
-import { getRandomColors } from '../../../helpers';
+import { formatDate } from '../../../utils/date';
+import { getRandomColors } from '../../../utils';
 
 const List = props => {
   const { reviews } = props;

@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import { formatDate } from '../../../helpers/date';
+import { formatDate } from '../../../utils/date';
 import UserRole from '../UserRole';
 
 const UserList = props => {

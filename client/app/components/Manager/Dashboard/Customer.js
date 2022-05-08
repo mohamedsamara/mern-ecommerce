@@ -17,7 +17,6 @@ import AccountSecurity from '../../../containers/AccountSecurity';
 import Address from '../../../containers/Address';
 import Order from '../../../containers/Order';
 import Wishlist from '../../../containers/WishList';
-import Support from '../../../containers/Support';
 
 const Customer = props => {
   return (
@@ -34,7 +33,6 @@ const Customer = props => {
               <Route path='/dashboard/address' component={Address} />
               <Route path='/dashboard/orders' component={Order} />
               <Route path='/dashboard/wishlist' component={Wishlist} />
-              <Route path='/dashboard/support' component={Support} />
               <Route path='*' component={Page404} />
             </Switch>
           </div>
