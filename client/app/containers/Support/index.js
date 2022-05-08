@@ -1,6 +1,6 @@
 /*
  *
- * Helpcenter
+ * Support
  *
  */
 
@@ -9,13 +9,9 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 
-import Support from '../../components/Manager/Support';
+import { default as SupportManager } from '../../components/Manager/Support';
 
-class Helpcenter extends React.PureComponent {
-  componentDidMount() {
-    // this.props.fetchProfile();
-  }
-
+class Support extends React.PureComponent {
   render() {
     const { user } = this.props;
 
@@ -24,7 +20,7 @@ class Helpcenter extends React.PureComponent {
         <h2>Support Information</h2>
         <hr />
         <div className='mt-5'>
-          <Support user={user} />
+          <SupportManager user={user} />
         </div>
       </div>
     );
@@ -39,4 +35,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, actions)(Helpcenter);
+export default connect(mapStateToProps, actions)(Support);

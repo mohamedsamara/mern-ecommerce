@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import io from 'socket.io-client';
 
@@ -8,16 +8,30 @@ import { SOCKET_URL } from '../../constants';
 const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
-  const token = localStorage.getItem('token');
+  const connect = () => {
+    const token = localStorage.getItem('token');
+    const sk = io(SOCKET_URL, {
+      autoConnect: false
+    });
 
-  useEffect(() => {
-    const sk = io(SOCKET_URL, token && { query: { token } });
-    setSocket(sk);
-    return () => sk.close();
-  }, [setSocket, token]);
+    if (token) {
+      sk.auth = { token };
+      sk.connect();
+      sk.auth;
+      setSocket(sk);
+    }
+  };
+
+  const disconnect = () => {
+    if (socket) {
+      socket.close();
+    }
+  };
 
   return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+    <SocketContext.Provider value={{ socket, connect, disconnect }}>
+      {children}
+    </SocketContext.Provider>
   );
 };
 

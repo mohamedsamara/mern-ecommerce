@@ -1,8 +1,6 @@
 import React from 'react';
 import Button from '../../Common/Button';
 
-import MessageBox from './MessageBox';
-
 const UserList = props => {
   const { users, selectedUser, selectUser } = props;
   if (!users) return null;
@@ -15,6 +13,7 @@ const UserList = props => {
     <ul className='u-list'>
       {users.map((u, i) => {
         const isSelected = selectedUser?.id === u.id;
+        const isOnline = u.online ? true : false;
 
         return (
           <li className={isSelected ? 'selected' : 'not-selected'} key={i}>
@@ -23,6 +22,13 @@ const UserList = props => {
               borderless
               text={u.name}
               onClick={() => _selectUser(u)}
+              // disabled={!isOnline}
+              iconDirection='right'
+              icon={
+                <span
+                  className={`circle ${isOnline ? 'online' : 'offline'}`}
+                ></span>
+              }
             />
           </li>
         );

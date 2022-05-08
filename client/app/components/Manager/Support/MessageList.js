@@ -7,15 +7,18 @@ import NotFound from '../../Common/NotFound';
 const MessagesList = props => {
   const { user, messages } = props;
   const messagesEndRef = useRef(null);
-  const msgsL = messages.length > 0 ? true : false;
+  const msgsLength = messages.length;
+  const emptyMsgs = msgsLength > 0 ? false : true;
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({
+      behavior: 'smooth'
+    });
   };
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [msgsLength]);
 
   const renderMessages = () =>
     messages.map(message => (
@@ -29,11 +32,10 @@ const MessagesList = props => {
 
   return (
     <>
-      {messages && msgsL ? (
-        <div className={`m-list ${msgsL ? '' : 'empty'}`}>
+      {messages && !emptyMsgs ? (
+        <div className={`m-list ${!emptyMsgs ? '' : 'empty'}`}>
           {renderMessages()}
           <div ref={messagesEndRef} />
-          <div className='chat-bg' />
         </div>
       ) : (
         <div className='my-4'>
@@ -70,7 +72,7 @@ const Message = memo(props => {
         }`}
       >
         {!isMe && (
-          <div className='mx-3 avatar-box'>
+          <div className='mr-2 avatar-box'>
             {!noHeader && <> {getAvatar(message)}</>}
           </div>
         )}

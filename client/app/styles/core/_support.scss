@@ -1,17 +1,46 @@
 .support {
   .u-list {
     li {
-      &:not(:last-child) {
+      position: relative;
+      border: 1px solid $border-color-default;
+      border-bottom: none;
+
+      &:last-child {
         border-bottom: 1px solid $border-color-default;
+      }
+
+      .circle {
+        width: 8px;
+        height: 8px;
+        border-radius: $border-radius-circle;
+
+        &.online {
+          background-color: $green;
+        }
+        &.offline {
+          background-color: $red;
+        }
       }
 
       .input-btn {
         width: 100%;
+
+        .btn-icon {
+          vertical-align: inherit;
+        }
+
+        &:disabled {
+          background-color: $disabled-bg;
+          border: none !important;
+          cursor: not-allowed;
+        }
       }
 
       &.selected {
         .input-btn {
-          background-color: $secondary-bg;
+          &:not([disabled]) {
+            background-color: $secondary-bg;
+          }
         }
       }
     }
@@ -20,13 +49,11 @@
   .m-list {
     min-height: 30vh;
     max-height: 70vh;
-    overflow: hidden;
+    overflow-x: hidden;
     overflow-y: scroll;
-    padding-right: 20px;
-    padding-top: 40px;
-    padding-bottom: 20px;
+    padding: 40px 20px 20px 0px;
     position: relative;
-    background-image: $chat-bg;
+    // background-color: $theme-gray;
 
     &::-webkit-scrollbar-thumb {
       background: $theme-light-white;
@@ -53,7 +80,7 @@
     .m-box {
       background-color: $secondary-bg;
       border-radius: $border-radius-primary;
-      box-shadow: $box-shadow-primary;
+      box-shadow: $box-shadow-secondary;
       color: $black;
       width: fit-content;
       padding: 0.5rem 0.875rem;
