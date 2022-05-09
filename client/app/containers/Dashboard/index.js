@@ -9,14 +9,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-
+import { ROLE_ADMIN, ROLE_MEMBER, ROLE_MERCHANT } from '../../constants';
+import dashboardLinks from './links.json';
 import Admin from '../../components/Manager/Dashboard/Admin';
 import Merchant from '../../components/Manager/Dashboard/Merchant';
 import Customer from '../../components/Manager/Dashboard/Customer';
-
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
-
-import dashboardLinks from './links.json';
 
 class Dashboard extends React.PureComponent {
   componentDidMount() {
@@ -30,22 +28,22 @@ class Dashboard extends React.PureComponent {
       <>
         {isLoading ? (
           <LoadingIndicator inline />
-        ) : user.role === 'ROLE_ADMIN' ? (
+        ) : user.role === ROLE_ADMIN ? (
           <Admin
             isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_ADMIN']}
+            links={dashboardLinks[ROLE_ADMIN]}
             toggleMenu={toggleDashboardMenu}
           />
-        ) : user.role === 'ROLE_MERCHANT' && user.merchant ? (
+        ) : user.role === ROLE_MERCHANT && user.merchant ? (
           <Merchant
             isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_MERCHANT']}
+            links={dashboardLinks[ROLE_MERCHANT]}
             toggleMenu={toggleDashboardMenu}
           />
         ) : (
           <Customer
             isMenuOpen={isMenuOpen}
-            links={dashboardLinks['ROLE_MEMBER']}
+            links={dashboardLinks[ROLE_MEMBER]}
             toggleMenu={toggleDashboardMenu}
           />
         )}

@@ -6,3 +6,5 @@ export const SOCKET_URL =
     : window.location.host;
 
 export const ROLE_ADMIN = 'ROLE_ADMIN';
+export const ROLE_MEMBER = 'ROLE_MEMBER';
+export const ROLE_MERCHANT = 'ROLE_MERCHANT';

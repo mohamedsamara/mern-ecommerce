@@ -10,6 +10,7 @@
     "start:production": "cross-env NODE_ENV=production node server",
     "production": "npm run build",
     "postinstall": "npm run build",
+    "seed:db": "node server/utils/seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
