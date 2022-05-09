@@ -2,6 +2,7 @@ const socketio = require('socket.io');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
+const { ROLE_ADMIN } = require('../constants');
 const keys = require('../config/keys');
 const User = mongoose.model('User');
 
@@ -20,10 +21,14 @@ const authHandler = async (socket, next) => {
     const id = payload.id.toString();
     const user = await User.findById(id);
 
+    if (!user) {
+      return next(new Error('no user found'));
+    }
+
     const u = {
       id,
       role: user?.role,
-      isAdmin: user.role === 'ROLE_ADMIN',
+      isAdmin: user.role === ROLE_ADMIN,
       name: `${user?.firstName} ${user?.lastName}`,
       socketId: socket.id,
       messages: []

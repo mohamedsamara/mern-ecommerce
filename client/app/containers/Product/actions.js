@@ -232,7 +232,8 @@ export const addProduct = () => {
         quantity: 'required|numeric',
         price: 'required|numeric',
         taxable: 'required',
-        image: 'required'
+        image: 'required',
+        brand: 'required'
       };
 
       const product = getState().product.productFormData;
@@ -267,7 +268,8 @@ export const addProduct = () => {
         'required.quantity': 'Quantity is required.',
         'required.price': 'Price is required.',
         'required.taxable': 'Taxable is required.',
-        'required.image': 'Please upload files with jpg, jpeg, png format.'
+        'required.image': 'Please upload files with jpg, jpeg, png format.',
+        'required.brand': 'Brand is required.'
       });
 
       if (!isValid) {
@@ -320,7 +322,8 @@ export const updateProduct = () => {
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
-        taxable: 'required'
+        taxable: 'required',
+        brand: 'required'
       };
 
       const product = getState().product.product;
@@ -343,7 +346,8 @@ export const updateProduct = () => {
           'Description may not be greater than 200 characters.',
         'required.quantity': 'Quantity is required.',
         'required.price': 'Price is required.',
-        'required.taxable': 'Taxable is required.'
+        'required.taxable': 'Taxable is required.',
+        'required.brand': 'Brand is required.'
       });
 
       if (!isValid) {

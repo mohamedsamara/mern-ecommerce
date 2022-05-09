@@ -9,7 +9,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-
+import { ROLE_ADMIN } from '../../constants';
 import SubPage from '../../components/Manager/SubPage';
 import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
@@ -53,9 +53,9 @@ class List extends React.PureComponent {
       <div className='order-dashboard'>
         <SubPage
           title='Your Orders'
-          actionTitle={user.role === 'ROLE_ADMIN' && 'Customer Orders'}
+          actionTitle={user.role === ROLE_ADMIN && 'Customer Orders'}
           handleAction={() =>
-            user.role === 'ROLE_ADMIN' &&
+            user.role === ROLE_ADMIN &&
             history.push('/dashboard/orders/customers')
           }
         >

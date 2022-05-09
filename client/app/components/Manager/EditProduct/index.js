@@ -8,6 +8,7 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
+import { ROLE_ADMIN } from '../../../constants';
 import Input from '../../Common/Input';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
@@ -106,7 +107,7 @@ const EditProduct = props => {
               }}
             />
           </Col>
-          {user.role === 'ROLE_ADMIN' && (
+          {user.role === ROLE_ADMIN && (
             <Col xs='12' md='12'>
               <SelectOption
                 error={formErrors['brand']}

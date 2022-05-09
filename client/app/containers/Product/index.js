@@ -11,6 +11,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import actions from '../../actions';
 
+// import { ROLE_ADMIN } from '../../constants';
 import List from './List';
 import Add from './Add';
 import Edit from './Edit';
@@ -25,7 +26,7 @@ class Product extends React.PureComponent {
         <Switch>
           <Route exact path='/dashboard/product' component={List} />
           <Route exact path='/dashboard/product/edit/:id' component={Edit} />
-          {/* {user.role === 'ROLE_ADMIN' && ( */}
+          {/* {user.role === ROLE_ADMIN && ( */}
           <Route exact path='/dashboard/product/add' component={Add} />
           {/* )} */}
           <Route path='*' component={Page404} />

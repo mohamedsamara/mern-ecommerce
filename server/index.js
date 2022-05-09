@@ -7,7 +7,6 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const historyApiFallback = require('connect-history-api-fallback');
 const compression = require('compression');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const path = require('path');
 const helmet = require('helmet');
 
@@ -15,8 +14,9 @@ const keys = require('./config/keys');
 const webpackConfig = require('../webpack.config');
 const routes = require('./routes');
 const socket = require('./socket');
+const setupDB = require('./utils/db');
 
-const { database, port } = keys;
+const { port } = keys;
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -29,19 +29,7 @@ app.use(
 );
 app.use(cors());
 
-// Connect to MongoDB
-mongoose.set('useCreateIndex', true);
-mongoose
-  .connect(database.url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
-  })
-  .then(() =>
-    console.log(`${chalk.green('✓')} ${chalk.blue('MongoDB Connected!')}`)
-  )
-  .catch(err => console.log(err));
-
+setupDB();
 require('./config/passport')(app);
 app.use(routes);
 

@@ -27,7 +27,10 @@ router.get('/item/:slug', async (req, res) => {
       }
     );
 
-    if (!productDoc || (productDoc && productDoc?.brand?.isActive === false)) {
+    const hasNoBrand =
+      productDoc?.brand === null || productDoc?.brand?.isActive === false;
+
+    if (!productDoc || hasNoBrand) {
       return res.status(404).json({
         message: 'No product found.'
       });
@@ -43,7 +46,7 @@ router.get('/item/:slug', async (req, res) => {
   }
 });
 
-// fetch  product name search api
+// fetch product name search api
 router.get('/list/search/:name', async (req, res) => {
   try {
     const name = req.params.name;
@@ -475,7 +478,7 @@ router.get(
           merchant: req.user.merchant
         }).populate('merchant', '_id');
 
-        const brandId = brands[0]['_id'];
+        const brandId = brands[0]?.['_id'];
 
         products = await Product.find({})
           .populate({
