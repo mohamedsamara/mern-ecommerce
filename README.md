@@ -54,24 +54,24 @@ $ npm install
 > Create a Procfile in the root directory of your application with the following command **web: npm run start:production**
 ```
 
+## Start development
+
+```
+$ npm run dev
+```
 
 ## Simple build for production
 
 ```
-$ npm run production
+$ npm run build
 ```
 
-## Run the application for development
+## Run build for production
 
 ```
 $ npm start
 ```
 
-## Run the application for production
-
-```
-$ npm run start:production
-```
 
 ## Languages & tools
 
