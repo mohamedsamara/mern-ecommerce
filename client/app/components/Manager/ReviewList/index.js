@@ -57,21 +57,30 @@ const ReviewList = props => {
             <div className='d-flex flex-row mx-0 mb-2 mb-lg-3 align-items-center justify-content-between'>
               <div className='review-content'>
                 <div className='d-flex flex-row mx-0 mb-2 align-items-center justify-content-between'>
-                  <p className='mb-0 fw-2 text-truncate'>{review.title}</p>
+                  <p className='mb-0 fw-2 fs-16 text-truncate'>
+                    {review.title}
+                  </p>
                   <div className='d-block d-lg-none'>{getAvatar(review)}</div>
                 </div>
-                <p className='mb-0 fw-2 word-break-all'>{review.review}</p>
+                <p className='mb-0 fw-1 fs-14 word-break-all'>
+                  {review.review}
+                </p>
               </div>
               <div className='d-none d-lg-block'>{getAvatar(review)}</div>
             </div>
             <div className='d-flex flex-column flex-lg-row mx-0 mb-3 align-items-start justify-content-between'>
               <div className='w-100 mb-3 mb-lg-0 review-product-box'>
-                <Link
-                  to={`/product/${review.product.slug}`}
-                  className='default-link'
-                >
-                  {review?.product.name}
-                </Link>
+                {review.product ? (
+                  <Link
+                    to={`/product/${review.product.slug}`}
+                    className='default-link'
+                  >
+                    {review?.product.name}
+                  </Link>
+                ) : (
+                  <p>Product is not available.</p>
+                )}
+
                 <ReactStars
                   classNames='mt-1 mt-lg-2'
                   size={16}
