@@ -5,12 +5,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const webpackMerge = require('webpack-merge');
+
+const common = require('./webpack.common');
 
 const CURRENT_WORKING_DIR = process.cwd();
 const NODE_ENV = process.env.NODE_ENV;
 const BASE_API_URL = process.env.BASE_API_URL;
 
-module.exports = {
+const config = {
   mode: 'production',
   output: {
     path: path.join(CURRENT_WORKING_DIR, '/dist'),
@@ -166,3 +169,5 @@ module.exports = {
     })
   ]
 };
+
+module.exports = webpackMerge(common, config);
