@@ -1,4 +1,15 @@
 {
+  "ignore": [
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "node_modules",
+    "client",
+    "build",
+    "dist"
+  ],
   "verbose": false,
-  "watch": ["./server"]
+  "watch": ["server"],
+  "env": {
+    "NODE_ENV": "development"
+  }
 }
