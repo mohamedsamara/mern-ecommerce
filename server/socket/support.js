@@ -18,9 +18,9 @@ exports.supportHandler = (io, socket) => {
     const user = findUserBySocketId(socket.id);
 
     /* 
-          if user connected is admin => notify everyone
-          if user connected is not admin => notify all admins
-        */
+      if user connected is admin => notify everyone
+      if user connected is not admin => notify all admins
+    */
     if (user) {
       user.online = true;
       if (user.isAdmin) {
