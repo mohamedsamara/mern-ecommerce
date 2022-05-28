@@ -2,4 +2,9 @@
   .main {
     background-color: $theme-white;
   }
+
+  .shop-toolbar {
+    border-radius: $border-radius-primary;
+    box-shadow: $box-shadow-primary;
+  }
 }

@@ -23,9 +23,7 @@ const Checkbox = props => {
         id={id}
         name={name}
         value={value}
-        onChange={e => {
-          _onChange(e);
-        }}
+        onChange={_onChange}
         checked={checked}
       />
       <label htmlFor={id}>{label}</label>

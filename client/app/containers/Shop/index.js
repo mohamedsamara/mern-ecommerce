@@ -44,7 +44,6 @@ class Shop extends React.PureComponent {
       <div className='shop'>
         <Row xs='12'>
           <Col
-            xs='3'
             xs={{ size: 12, order: 1 }}
             sm={{ size: 12, order: 1 }}
             md={{ size: 12, order: 1 }}
@@ -57,15 +56,13 @@ class Shop extends React.PureComponent {
             />
           </Col>
           <Col
-            xs='9'
             xs={{ size: 12, order: 2 }}
             sm={{ size: 12, order: 2 }}
             md={{ size: 12, order: 2 }}
             lg={{ size: 9, order: 2 }}
           >
-            <Row className='align-items-center'>
+            <Row className='align-items-center mx-0 mb-4 mt-4 mt-lg-0 py-3 py-lg-0 bg-white shop-toolbar'>
               <Col
-                xs='6'
                 xs={{ size: 12, order: 1 }}
                 sm={{ size: 12, order: 1 }}
                 md={{ size: 5, order: 1 }}
@@ -97,7 +94,6 @@ class Shop extends React.PureComponent {
                 <b>Sort by</b>
               </Col>
               <Col
-                xs='4'
                 xs={{ size: 12, order: 2 }}
                 sm={{ size: 12, order: 2 }}
                 md={{ size: 5, order: 2 }}
