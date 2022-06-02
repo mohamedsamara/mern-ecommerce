@@ -5,9 +5,15 @@ const setupDB = require('./db');
 const { ROLE_ADMIN } = require('../constants');
 const User = require('../models/user');
 
+const args = process.argv.slice(2);
+const email = args[0];
+const password = args[1];
+
 const seedDB = async () => {
   try {
     console.log(`${chalk.blue('✓')} ${chalk.blue('seed db started')}`);
+
+    if (!email || !password) throw new Error('missing arguments');
 
     const user = new User({
       email: 'admin@mern.com',
