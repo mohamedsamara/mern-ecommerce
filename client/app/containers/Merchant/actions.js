@@ -11,6 +11,7 @@ import axios from 'axios';
 import {
   FETCH_MERCHANTS,
   REMOVE_MERCHANT,
+  SET_ADVANCED_FILTERS,
   SELL_FORM_CHANGE,
   SET_SELL_FORM_ERRORS,
   SELL_FORM_RESET,
@@ -101,16 +102,28 @@ export const sellWithUs = () => {
   };
 };
 
-export const fetchMerchants = () => {
+export const fetchMerchants = (n, v) => {
   return async (dispatch, getState) => {
     try {
       dispatch({ type: SET_MERCHANTS_LOADING, payload: true });
 
-      const response = await axios.get(`/api/merchant/list`);
+      const response = await axios.get(`/api/merchant`, {
+        params: {
+          page: v ?? 1,
+          limit: 20
+        }
+      });
+
+      const { merchants, totalPages, currentPage } = response.data;
 
       dispatch({
         type: FETCH_MERCHANTS,
-        payload: response.data.merchants
+        payload: merchants
+      });
+
+      dispatch({
+        type: SET_ADVANCED_FILTERS,
+        payload: { totalPages, currentPage }
       });
     } catch (error) {
       handleError(error, dispatch);

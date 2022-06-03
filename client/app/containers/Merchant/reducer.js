@@ -7,6 +7,7 @@
 import {
   FETCH_MERCHANTS,
   REMOVE_MERCHANT,
+  SET_ADVANCED_FILTERS,
   SELL_FORM_CHANGE,
   SET_SELL_FORM_ERRORS,
   SELL_FORM_RESET,
@@ -20,6 +21,10 @@ import {
 
 const initialState = {
   merchants: [],
+  advancedFilters: {
+    totalPages: 1,
+    currentPage: 1
+  },
   sellFormData: {
     name: '',
     email: '',
@@ -55,6 +60,14 @@ const merchantReducer = (state = initialState, action) => {
           ...state.merchants.slice(0, index),
           ...state.merchants.slice(index + 1)
         ]
+      };
+    case SET_ADVANCED_FILTERS:
+      return {
+        ...state,
+        advancedFilters: {
+          ...state.advancedFilters,
+          ...action.payload
+        }
       };
     case SELL_FORM_CHANGE:
       return {
@@ -113,6 +126,7 @@ const merchantReducer = (state = initialState, action) => {
           password: ''
         }
       };
+
     default:
       return state;
   }

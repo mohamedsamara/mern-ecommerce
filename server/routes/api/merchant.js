@@ -70,24 +70,30 @@ router.post('/seller-request', async (req, res) => {
 });
 
 // fetch all merchants api
-router.get(
-  '/list',
-  auth,
-  role.checkRole(role.ROLES.Admin),
-  async (req, res) => {
-    try {
-      const merchants = await Merchant.find({}).sort('-created');
+router.get('/', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
 
-      res.status(200).json({
-        merchants
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    const merchants = await Merchant.find()
+      .sort('-created')
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Merchant.countDocuments();
+
+    console.log(Math.ceil(count / limit));
+    res.status(200).json({
+      merchants,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page)
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
   }
-);
+});
 
 // approve merchant
 router.put('/approve/:merchantId', auth, async (req, res) => {

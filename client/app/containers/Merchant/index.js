@@ -14,6 +14,7 @@ import SubPage from '../../components/Manager/SubPage';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
 import MerchantList from '../../components/Manager/MerchantList';
+import Pagination from '../../components/Common/Pagination';
 
 class Merchant extends React.PureComponent {
   componentDidMount() {
@@ -24,6 +25,8 @@ class Merchant extends React.PureComponent {
     const {
       merchants,
       isLoading,
+      advancedFilters,
+      fetchMerchants,
       approveMerchant,
       rejectMerchant,
       deleteMerchant
@@ -32,16 +35,23 @@ class Merchant extends React.PureComponent {
     return (
       <div className='merchant-dashboard'>
         <SubPage title={'Merchants'} isMenuOpen={null} />
-        {isLoading ? (
-          <LoadingIndicator inline />
-        ) : merchants.length > 0 ? (
-          <MerchantList
-            merchants={merchants}
-            approveMerchant={approveMerchant}
-            rejectMerchant={rejectMerchant}
-            deleteMerchant={deleteMerchant}
-          />
-        ) : (
+        {isLoading && <LoadingIndicator />}
+        {merchants && merchants.length > 0 && (
+          <>
+            <Pagination
+              totalPages={advancedFilters.totalPages}
+              onPagination={fetchMerchants}
+            />
+
+            <MerchantList
+              merchants={merchants}
+              approveMerchant={approveMerchant}
+              rejectMerchant={rejectMerchant}
+              deleteMerchant={deleteMerchant}
+            />
+          </>
+        )}
+        {!isLoading && merchants && merchants.length <= 0 && (
           <NotFound message='no merchants found.' />
         )}
       </div>
@@ -52,6 +62,7 @@ class Merchant extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     merchants: state.merchant.merchants,
+    advancedFilters: state.merchant.advancedFilters,
     isLoading: state.merchant.isLoading
   };
 };
