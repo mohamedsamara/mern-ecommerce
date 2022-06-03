@@ -15,6 +15,7 @@ import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
 import NotFound from '../../components/Common/NotFound';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import Pagination from '../../components/Common/Pagination';
 
 class List extends React.PureComponent {
   constructor(props) {
@@ -26,7 +27,7 @@ class List extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchOrders();
+    this.props.fetchOrders(1, true);
   }
 
   handleOrderSearch = e => {
@@ -41,13 +42,20 @@ class List extends React.PureComponent {
     }
   };
 
-  render() {
-    const { history, user, orders, isLoading, searchOrders } = this.props;
-    const { search } = this.state;
+  handleOnPagination = (n, v) => {
+    this.props.fetchOrders(v, true);
+  };
 
+  render() {
+    const { history, user, orders, isLoading, advancedFilters } = this.props;
+    const { search } = this.state;
+    const isSearch = search.length > 0;
     const filteredOrders = search
       ? orders.filter(o => o._id.includes(search))
       : orders;
+
+    const displayPagination = advancedFilters.totalPages > 1;
+    const displayOrders = filteredOrders && filteredOrders.length > 0;
 
     return (
       <div className='order-dashboard'>
@@ -64,11 +72,20 @@ class List extends React.PureComponent {
             onSearch={this.handleOrderSearch}
             onSearchSubmit={this.handleOrderSearch}
           />
-          {isLoading ? (
-            <LoadingIndicator inline />
-          ) : orders.length > 0 ? (
-            <OrderList orders={filteredOrders} />
-          ) : (
+
+          {isLoading && <LoadingIndicator />}
+          {displayOrders && (
+            <>
+              {!isSearch && displayPagination && (
+                <Pagination
+                  totalPages={advancedFilters.totalPages}
+                  onPagination={this.handleOnPagination}
+                />
+              )}
+              <OrderList orders={filteredOrders} />
+            </>
+          )}
+          {!isLoading && !displayOrders && (
             <NotFound message='you have no orders yet!' />
           )}
         </SubPage>
@@ -82,6 +99,7 @@ const mapStateToProps = state => {
     user: state.account.user,
     orders: state.order.orders,
     isLoading: state.order.isLoading,
+    advancedFilters: state.order.advancedFilters,
     isOrderAddOpen: state.order.isOrderAddOpen
   };
 };

@@ -10,6 +10,7 @@ import {
   FETCH_ORDER,
   UPDATE_ORDER_STATUS,
   SET_ORDERS_LOADING,
+  SET_ADVANCED_FILTERS,
   CLEAR_ORDERS
 } from './constants';
 
@@ -24,7 +25,11 @@ const initialState = {
     total: 0,
     status: ''
   },
-  isLoading: false
+  isLoading: false,
+  advancedFilters: {
+    totalPages: 1,
+    currentPage: 1
+  }
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -43,6 +48,14 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         order: action.payload
+      };
+    case SET_ADVANCED_FILTERS:
+      return {
+        ...state,
+        advancedFilters: {
+          ...state.advancedFilters,
+          ...action.payload
+        }
       };
     case UPDATE_ORDER_STATUS:
       const itemIndex = state.order.products.findIndex(

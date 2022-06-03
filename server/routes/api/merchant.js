@@ -82,7 +82,6 @@ router.get('/', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
 
     const count = await Merchant.countDocuments();
 
-    console.log(Math.ceil(count / limit));
     res.status(200).json({
       merchants,
       totalPages: Math.ceil(count / limit),
