@@ -14,6 +14,7 @@ import {
   FETCH_ORDER,
   UPDATE_ORDER_STATUS,
   SET_ORDERS_LOADING,
+  SET_ADVANCED_FILTERS,
   CLEAR_ORDERS
 } from './constants';
 
@@ -35,19 +36,30 @@ export const setOrderLoading = value => {
   };
 };
 
-export const fetchOrders = () => {
+export const fetchOrders = (page, isMe = false) => {
   return async (dispatch, getState) => {
     try {
       dispatch(setOrderLoading(true));
 
-      const response = await axios.get(`/api/order`);
+      const response = await axios.get(`/api/order`, {
+        params: {
+          page: page ?? 1,
+          limit: 20,
+          isMe: isMe ? 1 : 0
+        }
+      });
 
-      if (response.data.orders) {
-        dispatch({
-          type: FETCH_ORDERS,
-          payload: response.data.orders
-        });
-      }
+      const { orders, totalPages, currentPage } = response.data;
+
+      dispatch({
+        type: FETCH_ORDERS,
+        payload: orders
+      });
+
+      dispatch({
+        type: SET_ADVANCED_FILTERS,
+        payload: { totalPages, currentPage }
+      });
     } catch (error) {
       dispatch(clearOrders());
       handleError(error, dispatch);

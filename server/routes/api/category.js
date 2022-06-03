@@ -43,17 +43,17 @@ router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
 });
 
 // fetch store categories api
-router.get('/list', (req, res) => {
-  Category.find({ isActive: true }, (err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+router.get('/list', async (req, res) => {
+  try {
+    const categories = await Category.find({ isActive: true });
     res.status(200).json({
-      categories: data
+      categories
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 // fetch categories api

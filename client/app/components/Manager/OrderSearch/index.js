@@ -16,6 +16,7 @@ const OrderSearch = props => {
         placeholder='Type the complete order ID'
         btnText='Search'
         onSearch={props.onSearch}
+        onBlur={props.onBlur}
         onSearchSubmit={props.onSearchSubmit}
       />
     </div>

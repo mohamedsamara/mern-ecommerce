@@ -127,40 +127,33 @@ router.get('/search', auth, async (req, res) => {
 // fetch orders api
 router.get('/', auth, async (req, res) => {
   try {
+    const { page = 1, limit = 10, isMe } = req.query;
     const user = req.user._id;
+    const query = isMe === '1' ? { user } : {};
 
-    let ordersDoc = await Order.find({ user }).populate({
-      path: 'cart',
-      populate: {
-        path: 'products.product',
+    const ordersDoc = await Order.find(query)
+      .sort('-created')
+      .populate({
+        path: 'cart',
         populate: {
-          path: 'brand'
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
         }
-      }
+      })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Order.countDocuments(query);
+    const orders = store.formatOrders(ordersDoc);
+
+    res.status(200).json({
+      orders,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page)
     });
-
-    ordersDoc = ordersDoc.filter(order => order.cart);
-
-    if (ordersDoc.length > 0) {
-      const newOrders = ordersDoc.map(o => {
-        return {
-          _id: o._id,
-          total: parseFloat(Number(o.total.toFixed(2))),
-          created: o.created,
-          products: o.cart?.products
-        };
-      });
-
-      let orders = newOrders.map(o => store.caculateTaxAmount(o));
-      orders.sort((a, b) => b.created - a.created);
-      res.status(200).json({
-        orders
-      });
-    } else {
-      res.status(200).json({
-        orders: []
-      });
-    }
   } catch (error) {
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
