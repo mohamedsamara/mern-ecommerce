@@ -5,91 +5,39 @@
  */
 
 import React from 'react';
-import {
-  Pagination as RPagination,
-  PaginationItem,
-  PaginationLink
-} from 'reactstrap';
+import ReactPaginate from 'react-paginate';
 
-let prev = 0;
-let next = 0;
-let last = 0;
-let first = 0;
+const Pagination = props => {
+  const { totalPages, onPagination } = props;
 
-class Pagination extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: 1,
-      productsPerPage: 8
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
+  const handlePageClick = event => {
+    onPagination('pagination', event.selected + 1);
+  };
 
-  handleClick(event) {
-    event.preventDefault();
-    this.setState({
-      currentPage: Number(event.target.id)
-    });
-    this.props.handlePagenationChangeSubmit('pagination', event.target.id);
-  }
-
-  render() {
-    let currentPage = this.props.page || this.state.currentPage;
-
-    prev = currentPage > 0 ? currentPage - 1 : 0;
-    last = this.props.pages;
-    next = last === currentPage ? currentPage : currentPage + 1;
-
-    let pageNumbers = [];
-    for (let i = 1; i <= last; i++) {
-      pageNumbers.push(i);
-    }
-
-    return (
-      <RPagination className='pagination'>
-        <PaginationItem>
-          {prev === 0 ? (
-            <PaginationLink disabled>Prev</PaginationLink>
-          ) : (
-            <PaginationLink onClick={this.handleClick} id={prev} href={prev}>
-              Prev
-            </PaginationLink>
-          )}
-        </PaginationItem>
-        {pageNumbers.map((number, i) => (
-          <RPagination key={i}>
-            <PaginationItem
-              active={pageNumbers[currentPage - 1] === number ? true : false}
-            >
-              <PaginationLink
-                onClick={this.handleClick}
-                href={number}
-                key={number}
-                id={number}
-              >
-                {number}
-              </PaginationLink>
-            </PaginationItem>
-          </RPagination>
-        ))}
-
-        <PaginationItem>
-          {currentPage === last ? (
-            <PaginationLink disabled>Next</PaginationLink>
-          ) : (
-            <PaginationLink
-              onClick={this.handleClick}
-              id={pageNumbers[currentPage]}
-              href={pageNumbers[currentPage]}
-            >
-              Next
-            </PaginationLink>
-          )}
-        </PaginationItem>
-      </RPagination>
-    );
-  }
-}
+  return (
+    <div className='pagination-box'>
+      <ReactPaginate
+        nextLabel='next >'
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        pageCount={totalPages} // The total number of pages.
+        previousLabel='< previous'
+        pageClassName='page-item'
+        pageLinkClassName='page-link'
+        previousClassName='page-item'
+        previousLinkClassName='page-link'
+        nextClassName='page-item'
+        nextLinkClassName='page-link'
+        breakLabel='...'
+        breakClassName='page-item'
+        breakLinkClassName='page-link'
+        containerClassName='pagination'
+        activeClassName='active'
+        renderOnZeroPageCount={null}
+      />
+    </div>
+  );
+};
 
 export default Pagination;

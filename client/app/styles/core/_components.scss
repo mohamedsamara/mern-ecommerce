@@ -57,6 +57,17 @@
 /* end dropdown confirm styles */
 
 /* start pagination styles */
+.pagination-box {
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  @include hide-scrollbar();
+
+  .page-link {
+    white-space: nowrap;
+  }
+}
+
 .pagination {
   .page-item {
     &.active {

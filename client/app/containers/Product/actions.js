@@ -66,25 +66,6 @@ export const resetProduct = () => {
   };
 };
 
-// fetch products api
-export const fetchProducts = () => {
-  return async (dispatch, getState) => {
-    try {
-      dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
-      const response = await axios.get(`/api/product`);
-
-      dispatch({
-        type: FETCH_PRODUCTS,
-        payload: response.data.products
-      });
-    } catch (error) {
-      handleError(error, dispatch);
-    } finally {
-      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
-    }
-  };
-};
-
 // fetch store products by filterProducts api
 export const filterProducts = (n, v) => {
   return async (dispatch, getState) => {
@@ -119,36 +100,6 @@ export const filterProducts = (n, v) => {
       handleError(error, dispatch);
     } finally {
       dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
-    }
-  };
-};
-
-// fetch product api
-export const fetchProduct = id => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await axios.get(`/api/product/${id}`);
-
-      const inventory = response.data.product.quantity;
-
-      const brand = response.data.product.brand;
-      const isBrand = brand ? true : false;
-      const brandData = formatSelectOptions(
-        isBrand && [brand],
-        !isBrand,
-        'fetchProduct'
-      );
-
-      response.data.product.brand = brandData[0];
-
-      const product = { ...response.data.product, inventory };
-
-      dispatch({
-        type: FETCH_PRODUCT,
-        payload: product
-      });
-    } catch (error) {
-      handleError(error, dispatch);
     }
   };
 };
@@ -214,6 +165,55 @@ export const fetchProductsSelect = () => {
       dispatch({
         type: FETCH_PRODUCTS_SELECT,
         payload: formattedProducts
+      });
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
+// fetch products api
+export const fetchProducts = () => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+      const response = await axios.get(`/api/product`);
+
+      dispatch({
+        type: FETCH_PRODUCTS,
+        payload: response.data.products
+      });
+    } catch (error) {
+      handleError(error, dispatch);
+    } finally {
+      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+    }
+  };
+};
+
+// fetch product api
+export const fetchProduct = id => {
+  return async (dispatch, getState) => {
+    try {
+      const response = await axios.get(`/api/product/${id}`);
+
+      const inventory = response.data.product.quantity;
+
+      const brand = response.data.product.brand;
+      const isBrand = brand ? true : false;
+      const brandData = formatSelectOptions(
+        isBrand && [brand],
+        !isBrand,
+        'fetchProduct'
+      );
+
+      response.data.product.brand = brandData[0];
+
+      const product = { ...response.data.product, inventory };
+
+      dispatch({
+        type: FETCH_PRODUCT,
+        payload: product
       });
     } catch (error) {
       handleError(error, dispatch);

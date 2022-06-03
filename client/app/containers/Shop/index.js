@@ -31,7 +31,7 @@ class Shop extends React.PureComponent {
   }
 
   render() {
-    const { products, advancedFilters, filterProducts } = this.props;
+    const { advancedFilters, filterProducts } = this.props;
     const { totalProducts, pageNumber, pages, order } = advancedFilters;
 
     const sortOptions = [
@@ -118,12 +118,7 @@ class Shop extends React.PureComponent {
 
             {totalProducts >= 8 && (
               <div className='d-flex justify-content-center text-center mt-4'>
-                <Pagination
-                  handlePagenationChangeSubmit={filterProducts}
-                  products={products}
-                  pages={pages}
-                  page={pageNumber}
-                />
+                <Pagination totalPages={pages} onPagination={filterProducts} />
               </div>
             )}
           </Col>
