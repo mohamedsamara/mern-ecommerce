@@ -44,7 +44,7 @@ class ProductPage extends React.PureComponent {
       product,
       productShopData,
       shopFormErrors,
-      itemsInCart,
+      itemInCart,
       productShopChange,
       handleAddToCart,
       handleRemoveFromCart,
@@ -126,7 +126,7 @@ class ProductPage extends React.PureComponent {
                       <SocialShare product={product} />
                     </div>
                     <div className='item-actions'>
-                      {itemsInCart.includes(product._id) ? (
+                      {itemInCart ? (
                         <Button
                           variant='primary'
                           disabled={
@@ -173,6 +173,12 @@ class ProductPage extends React.PureComponent {
 }
 
 const mapStateToProps = state => {
+  const itemInCart = state.cart.cartItems.find(
+    item => item._id === state.product.storeProduct._id
+  )
+    ? true
+    : false;
+
   return {
     product: state.product.storeProduct,
     productShopData: state.product.productShopData,
@@ -182,7 +188,7 @@ const mapStateToProps = state => {
     reviewsSummary: state.review.reviewsSummary,
     reviewFormData: state.review.reviewFormData,
     reviewFormErrors: state.review.reviewFormErrors,
-    itemsInCart: state.cart.itemsInCart
+    itemInCart
   };
 };
 

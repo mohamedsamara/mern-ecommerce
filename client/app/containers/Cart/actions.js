@@ -22,6 +22,7 @@ import {
   RESET_PRODUCT_SHOP
 } from '../Product/constants';
 
+import { CART_ID, CART_ITEMS, CART_TOTAL } from '../../constants';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 import { toggleCart } from '../Navigation/actions';
@@ -57,6 +58,16 @@ export const handleAddToCart = product => {
       type: ADD_TO_CART,
       payload: product
     });
+
+    const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS));
+    let newCartItems = [];
+    if (cartItems) {
+      newCartItems = [...cartItems, product];
+    } else {
+      newCartItems.push(product);
+    }
+    localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
+
     dispatch(calculateCartTotal());
     dispatch(toggleCart());
   };
@@ -65,6 +76,10 @@ export const handleAddToCart = product => {
 // Handle Remove From Cart
 export const handleRemoveFromCart = product => {
   return (dispatch, getState) => {
+    const cartItems = JSON.parse(localStorage.getItem(CART_ITEMS));
+    const newCartItems = cartItems.filter(item => item._id !== product._id);
+    localStorage.setItem(CART_ITEMS, JSON.stringify(newCartItems));
+
     dispatch({
       type: REMOVE_FROM_CART,
       payload: product
@@ -85,7 +100,7 @@ export const calculateCartTotal = () => {
     });
 
     total = parseFloat(total.toFixed(2));
-
+    localStorage.setItem(CART_TOTAL, total);
     dispatch({
       type: HANDLE_CART_TOTAL,
       payload: total
@@ -93,21 +108,21 @@ export const calculateCartTotal = () => {
   };
 };
 
-// set cart store from cookie
+// set cart store from local storage
 export const handleCart = () => {
   const cart = {
-    cartItems: JSON.parse(localStorage.getItem('cart_items')),
-    itemsInCart: JSON.parse(localStorage.getItem('items_in_cart')),
-    cartTotal: localStorage.getItem('cart_total'),
-    cartId: localStorage.getItem('cart_id')
+    cartItems: JSON.parse(localStorage.getItem(CART_ITEMS)),
+    cartTotal: localStorage.getItem(CART_TOTAL),
+    cartId: localStorage.getItem(CART_ID)
   };
 
   return (dispatch, getState) => {
-    if (cart.cartItems != undefined || cart.itemsInCart != undefined) {
+    if (cart.cartItems != undefined) {
       dispatch({
         type: HANDLE_CART,
         payload: cart
       });
+      dispatch(calculateCartTotal());
     }
   };
 };
@@ -138,7 +153,7 @@ export const handleShopping = () => {
 export const getCartId = () => {
   return async (dispatch, getState) => {
     try {
-      const cartId = localStorage.getItem('cart_id');
+      const cartId = localStorage.getItem(CART_ID);
       const cartItems = getState().cart.cartItems;
       const products = getCartItems(cartItems);
 
@@ -156,6 +171,7 @@ export const getCartId = () => {
 
 export const setCartId = cartId => {
   return (dispatch, getState) => {
+    localStorage.setItem(CART_ID, cartId);
     dispatch({
       type: SET_CART_ID,
       payload: cartId
@@ -165,10 +181,9 @@ export const setCartId = cartId => {
 
 export const clearCart = () => {
   return (dispatch, getState) => {
-    localStorage.removeItem('cart_items');
-    localStorage.removeItem('items_in_cart');
-    localStorage.removeItem('cart_total');
-    localStorage.removeItem('cart_id');
+    localStorage.removeItem(CART_ITEMS);
+    localStorage.removeItem(CART_TOTAL);
+    localStorage.removeItem(CART_ID);
 
     dispatch({
       type: CLEAR_CART

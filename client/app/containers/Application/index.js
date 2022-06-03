@@ -35,8 +35,13 @@ import AuthSuccess from '../AuthSuccess';
 
 import Footer from '../../components/Common/Footer';
 import Page404 from '../../components/Common/Page404';
+import { CART_ITEMS } from '../../constants';
 
 class Application extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.handleStorage = this.handleStorage.bind(this);
+  }
   componentDidMount() {
     const token = localStorage.getItem('token');
 
@@ -48,6 +53,13 @@ class Application extends React.PureComponent {
 
     document.addEventListener('keydown', this.handleTabbing);
     document.addEventListener('mousedown', this.handleMouseDown);
+    window.addEventListener('storage', this.handleStorage);
+  }
+
+  handleStorage(e) {
+    if (e.key === CART_ITEMS) {
+      this.props.handleCart();
+    }
   }
 
   handleTabbing(e) {
