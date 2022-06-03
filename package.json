@@ -56,7 +56,7 @@
     "mongoose": "^5.5.11",
     "mongoose-slug-generator": "^1.0.4",
     "multer": "^1.4.2",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth2": "^0.2.0",
