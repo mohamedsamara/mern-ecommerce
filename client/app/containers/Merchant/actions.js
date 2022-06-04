@@ -114,7 +114,7 @@ export const fetchMerchants = (n, v) => {
         }
       });
 
-      const { merchants, totalPages, currentPage } = response.data;
+      const { merchants, totalPages, currentPage, count } = response.data;
 
       dispatch({
         type: FETCH_MERCHANTS,
@@ -123,7 +123,7 @@ export const fetchMerchants = (n, v) => {
 
       dispatch({
         type: SET_ADVANCED_FILTERS,
-        payload: { totalPages, currentPage }
+        payload: { totalPages, currentPage, count }
       });
     } catch (error) {
       handleError(error, dispatch);

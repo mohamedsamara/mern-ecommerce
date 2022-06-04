@@ -36,7 +36,7 @@ export const setOrderLoading = value => {
   };
 };
 
-export const fetchOrders = (page, isMe = false) => {
+export const fetchOrders = (page = 1, isMe = false) => {
   return async (dispatch, getState) => {
     try {
       dispatch(setOrderLoading(true));
@@ -49,7 +49,7 @@ export const fetchOrders = (page, isMe = false) => {
         }
       });
 
-      const { orders, totalPages, currentPage } = response.data;
+      const { orders, totalPages, currentPage, count } = response.data;
 
       dispatch({
         type: FETCH_ORDERS,
@@ -58,7 +58,7 @@ export const fetchOrders = (page, isMe = false) => {
 
       dispatch({
         type: SET_ADVANCED_FILTERS,
-        payload: { totalPages, currentPage }
+        payload: { totalPages, currentPage, count }
       });
     } catch (error) {
       dispatch(clearOrders());
@@ -69,7 +69,7 @@ export const fetchOrders = (page, isMe = false) => {
   };
 };
 
-export const fetchSearchOrders = filter => {
+export const searchOrders = filter => {
   return async (dispatch, getState) => {
     try {
       dispatch(setOrderLoading(true));
@@ -80,21 +80,14 @@ export const fetchSearchOrders = filter => {
         }
       });
 
-      dispatch({ type: FETCH_SEARCHED_ORDERS, payload: response.data.orders });
+      dispatch({
+        type: FETCH_SEARCHED_ORDERS,
+        payload: response.data.orders
+      });
     } catch (error) {
       handleError(error, dispatch);
     } finally {
       dispatch(setOrderLoading(false));
-    }
-  };
-};
-
-export const searchOrders = filter => {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(fetchSearchOrders(filter));
-    } catch (error) {
-      handleError(error, dispatch);
     }
   };
 };

@@ -11,9 +11,10 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import SubPage from '../../components/Manager/SubPage';
+import MerchantList from '../../components/Manager/MerchantList';
+import SearchResultMeta from '../../components/Manager/SearchResultMeta';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
-import MerchantList from '../../components/Manager/MerchantList';
 import Pagination from '../../components/Common/Pagination';
 
 class Merchant extends React.PureComponent {
@@ -43,6 +44,7 @@ class Merchant extends React.PureComponent {
               onPagination={fetchMerchants}
             />
 
+            <SearchResultMeta label='merchants' count={advancedFilters.count} />
             <MerchantList
               merchants={merchants}
               approveMerchant={approveMerchant}

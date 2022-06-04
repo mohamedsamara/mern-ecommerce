@@ -42,7 +42,7 @@ export const fetchProfile = () => {
   return async (dispatch, getState) => {
     try {
       dispatch(setProfileLoading(true));
-      const response = await axios.get(`/api/user`);
+      const response = await axios.get(`/api/user/me`);
 
       dispatch({ type: FETCH_PROFILE, payload: response.data.user });
     } catch (error) {
