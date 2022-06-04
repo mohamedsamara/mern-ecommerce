@@ -16,3 +16,4 @@ export const SET_MERCHANTS_LOADING = 'src/Merchant/SET_MERCHANTS_LOADING';
 export const SET_SELL_SUBMITTING = 'src/Merchant/SET_SELL_SUBMITTING';
 export const SET_SELL_LOADING = 'src/Merchant/SET_SELL_LOADING';
 export const SIGNUP_RESET = 'src/Merchant/SIGNUP_RESET';
+export const FETCH_SEARCHED_MERCHANTS = 'src/Merchant/FETCH_SEARCHED_MERCHANTS';

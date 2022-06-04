@@ -20,7 +20,8 @@ import {
   SET_MERCHANTS_LOADING,
   SET_SELL_SUBMITTING,
   SET_SELL_LOADING,
-  SIGNUP_RESET
+  SIGNUP_RESET,
+  FETCH_SEARCHED_MERCHANTS
 } from './constants';
 
 import handleError from '../../utils/error';
@@ -102,10 +103,17 @@ export const sellWithUs = () => {
   };
 };
 
+export const setMerchantLoading = value => {
+  return {
+    type: SET_MERCHANTS_LOADING,
+    payload: value
+  };
+};
+
 export const fetchMerchants = (n, v) => {
   return async (dispatch, getState) => {
     try {
-      dispatch({ type: SET_MERCHANTS_LOADING, payload: true });
+      dispatch(setMerchantLoading(true));
 
       const response = await axios.get(`/api/merchant`, {
         params: {
@@ -128,7 +136,30 @@ export const fetchMerchants = (n, v) => {
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      dispatch({ type: SET_MERCHANTS_LOADING, payload: false });
+      dispatch(setMerchantLoading(false));
+    }
+  };
+};
+
+export const searchMerchants = filter => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(setMerchantLoading(true));
+
+      const response = await axios.get(`/api/merchant/search`, {
+        params: {
+          search: filter.value
+        }
+      });
+
+      dispatch({
+        type: FETCH_SEARCHED_MERCHANTS,
+        payload: response.data.merchants
+      });
+    } catch (error) {
+      handleError(error, dispatch);
+    } finally {
+      dispatch(setMerchantLoading(false));
     }
   };
 };

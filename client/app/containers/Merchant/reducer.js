@@ -16,11 +16,13 @@ import {
   SET_MERCHANTS_LOADING,
   SET_SELL_SUBMITTING,
   SET_SELL_LOADING,
-  SIGNUP_RESET
+  SIGNUP_RESET,
+  FETCH_SEARCHED_MERCHANTS
 } from './constants';
 
 const initialState = {
   merchants: [],
+  searchedMerchants: [],
   advancedFilters: {
     totalPages: 1,
     currentPage: 1,
@@ -52,6 +54,11 @@ const merchantReducer = (state = initialState, action) => {
       return {
         ...state,
         merchants: action.payload
+      };
+    case FETCH_SEARCHED_MERCHANTS:
+      return {
+        ...state,
+        searchedMerchants: action.payload
       };
     case REMOVE_MERCHANT:
       const index = state.merchants.findIndex(b => b._id === action.payload);
