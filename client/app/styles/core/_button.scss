@@ -46,6 +46,21 @@ button {
   &.icon-only {
     padding: 0 !important;
     min-width: auto !important;
+
+    &.sm {
+      width: 22px;
+      height: 22px;
+    }
+
+    &.md {
+      width: 30px;
+      height: 30px;
+    }
+
+    &.lg {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   &.sm {

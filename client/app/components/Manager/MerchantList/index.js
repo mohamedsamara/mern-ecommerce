@@ -8,10 +8,17 @@ import React from 'react';
 
 import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
-import { CheckIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
+import { CheckIcon, XIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
+import Switch from '../../Common/Switch';
 
 const MerchantList = props => {
-  const { merchants, approveMerchant, rejectMerchant, deleteMerchant } = props;
+  const {
+    merchants,
+    approveMerchant,
+    rejectMerchant,
+    deleteMerchant,
+    disableMerchant
+  } = props;
 
   return (
     <div className='merchant-list'>
@@ -36,65 +43,127 @@ const MerchantList = props => {
             <hr />
 
             {merchant.status === 'Approved' ? (
-              <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
+              <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
                 <div className='d-flex flex-row mx-0'>
                   <CheckIcon className='text-green' />
                   <p className='ml-2 mb-0'>Approved</p>
                 </div>
 
-                <Button
-                  className='mt-3 mt-lg-0'
-                  text='Delete'
-                  icon={<TrashIcon width={15} />}
-                  onClick={() => deleteMerchant(merchant._id)}
-                />
+                <div className='d-flex flex-row align-items-center mx-0'>
+                  <Switch
+                    tooltip={true}
+                    tooltipContent={
+                      merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
+                    }
+                    id={`merchant-${merchant._id}`}
+                    name={'isActive'}
+                    label={'Active?'}
+                    checked={merchant.isActive}
+                    toggleCheckboxChange={value =>
+                      disableMerchant(merchant, value)
+                    }
+                  />
+                  <Button
+                    className='ml-3'
+                    size='lg'
+                    round={20}
+                    icon={<TrashIcon width={20} />}
+                    tooltip={true}
+                    tooltipContent='Delete'
+                    id={`delete-${merchant._id}`}
+                    onClick={() => deleteMerchant(merchant)}
+                  />
+                </div>
               </div>
             ) : merchant.status === 'Rejected' ? (
               <>
-                <div className='d-flex align-items-center mb-3'>
-                  <RefreshIcon className='text-primary' />
-                  <p className='fw-2 ml-3 mb-0'>Re Approve Merchant</p>
-                </div>
-                <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
+                <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
                   <Button
-                    className='text-uppercase'
-                    variant='primary'
-                    size='md'
-                    text='Approve'
+                    size='lg'
+                    round={20}
+                    icon={<RefreshIcon width={18} className='text-primary' />}
+                    tooltip={true}
+                    tooltipContent='Re-Approve'
+                    id={`re-approve-${merchant._id}`}
                     onClick={() => approveMerchant(merchant)}
                   />
-                  <Button
-                    className='mt-3 mt-lg-0'
-                    text='Delete'
-                    icon={<TrashIcon width={15} />}
-                    onClick={() => deleteMerchant(merchant._id)}
-                  />
+                  <div className='d-flex flex-row align-items-center mx-0'>
+                    <Switch
+                      tooltip={true}
+                      tooltipContent={
+                        merchant.isActive
+                          ? 'Disable Merchant'
+                          : 'Enable Merchant'
+                      }
+                      id={`merchant-${merchant._id}`}
+                      name={'isActive'}
+                      label={'Active?'}
+                      checked={merchant.isActive}
+                      toggleCheckboxChange={value =>
+                        disableMerchant(merchant, value)
+                      }
+                    />
+                    <Button
+                      className='ml-3'
+                      size='lg'
+                      round={20}
+                      icon={<TrashIcon width={20} />}
+                      tooltip={true}
+                      tooltipContent='Delete'
+                      id={`delete-${merchant._id}`}
+                      onClick={() => deleteMerchant(merchant)}
+                    />
+                  </div>
                 </div>
               </>
             ) : merchant.email ? (
-              <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
-                <div className='d-flex flex-column flex-lg-row mx-0'>
+              <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
+                <div className='d-flex flex-row mx-0'>
                   <Button
-                    variant='dark'
-                    className='text-uppercase'
-                    size='md'
-                    text='Approve'
+                    size='lg'
+                    round={20}
+                    icon={<CheckIcon width={18} className='text-green' />}
+                    tooltip={true}
+                    tooltipContent='Approve'
+                    id={`approve-${merchant._id}`}
                     onClick={() => approveMerchant(merchant)}
                   />
                   <Button
-                    variant='danger'
-                    className='mt-3 mt-lg-0 ml-lg-2 text-uppercase'
-                    size='md'
-                    text='Reject'
+                    className='ml-2'
+                    size='lg'
+                    round={20}
+                    icon={<XIcon width={20} />}
+                    tooltip={true}
+                    tooltipContent='Reject'
+                    id={`reject-${merchant._id}`}
                     onClick={() => rejectMerchant(merchant)}
                   />
                 </div>
-                <Button
-                  className='mt-3 mt-lg-0'
-                  text='Delete'
-                  icon={<TrashIcon width={15} />}
-                  onClick={() => deleteMerchant(merchant._id)}
-                />
+                <div className='d-flex flex-row align-items-center mx-0'>
+                  <Switch
+                    tooltip={true}
+                    tooltipContent={
+                      merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
+                    }
+                    id={`merchant-${merchant._id}`}
+                    name={'isActive'}
+                    label={'Active?'}
+                    checked={merchant.isActive}
+                    toggleCheckboxChange={value =>
+                      disableMerchant(merchant, value)
+                    }
+                  />
+                  <Button
+                    className='ml-3'
+                    size='lg'
+                    round={20}
+                    icon={<TrashIcon width={20} />}
+                    tooltip={true}
+                    tooltipContent='Delete'
+                    id={`delete-${merchant._id}`}
+                    onClick={() => deleteMerchant(merchant)}
+                  />
+                </div>
               </div>
             ) : (
               <>
@@ -109,10 +178,13 @@ const MerchantList = props => {
                   </a>
                 </p>
                 <Button
-                  className='w-100 w-lg-auto'
-                  text='Delete'
-                  icon={<TrashIcon width={15} />}
-                  onClick={() => deleteMerchant(merchant._id)}
+                  size='lg'
+                  round={20}
+                  icon={<TrashIcon width={20} />}
+                  tooltip={true}
+                  tooltipContent='Delete'
+                  id={`delete-${merchant._id}`}
+                  onClick={() => deleteMerchant(merchant)}
                 />
               </>
             )}

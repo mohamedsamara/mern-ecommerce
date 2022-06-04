@@ -6,6 +6,8 @@
 
 import React from 'react';
 
+import Tooltip from '../Tooltip';
+
 const variants = {
   primary: 'custom-btn-primary',
   secondary: 'custom-btn-secondary',
@@ -33,7 +35,10 @@ const Button = props => {
     iconDirection,
     iconClassName,
     borderless,
-    onClick
+    round,
+    onClick,
+    tooltip,
+    tooltipContent
   } = props;
 
   const v = variant ? variants[variant] : '';
@@ -51,9 +56,11 @@ const Button = props => {
 
   const iconClassNames = `btn-icon${`${iconClassName && ` ${iconClassName}`}`}`;
 
+  const tooltipId = `tooltip-${id}`;
+
   return (
     <button
-      id={id}
+      id={tooltipId}
       tabIndex={tabIndex}
       aria-label={ariaLabel}
       aria-expanded={ariaExpanded}
@@ -62,7 +69,11 @@ const Button = props => {
       className={classNames}
       type={type}
       onClick={onClick}
+      style={{
+        borderRadius: round
+      }}
     >
+      {tooltip && <Tooltip target={tooltipId}>{tooltipContent}</Tooltip>}
       {iconDirection === 'left' ? (
         <>
           {icon && <div className={iconClassNames}>{icon}</div>}
@@ -79,13 +90,15 @@ const Button = props => {
 };
 
 Button.defaultProps = {
+  id: '',
   type: 'button',
   variant: 'secondary',
   size: 'md',
   className: '',
   iconDirection: 'left',
   iconClassName: '',
-  borderless: false
+  borderless: false,
+  round: 0
 };
 
 export default Button;
