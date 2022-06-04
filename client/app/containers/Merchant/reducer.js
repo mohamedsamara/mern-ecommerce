@@ -23,7 +23,8 @@ const initialState = {
   merchants: [],
   advancedFilters: {
     totalPages: 1,
-    currentPage: 1
+    currentPage: 1,
+    count: 0
   },
   sellFormData: {
     name: '',

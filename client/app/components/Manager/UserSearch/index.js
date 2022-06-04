@@ -15,6 +15,8 @@ const UserSearch = props => {
         name='user'
         placeholder='Type user name or email'
         btnText='Search'
+        onSearch={props.onSearch}
+        onBlur={props.onBlur}
         onSearchSubmit={props.onSearchSubmit}
       />
     </div>

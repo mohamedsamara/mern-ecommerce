@@ -85,7 +85,8 @@ router.get('/', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
     res.status(200).json({
       merchants,
       totalPages: Math.ceil(count / limit),
-      currentPage: Number(page)
+      currentPage: Number(page),
+      count
     });
   } catch (error) {
     res.status(400).json({

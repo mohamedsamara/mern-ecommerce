@@ -152,7 +152,8 @@ router.get('/', auth, async (req, res) => {
     res.status(200).json({
       orders,
       totalPages: Math.ceil(count / limit),
-      currentPage: Number(page)
+      currentPage: Number(page),
+      count
     });
   } catch (error) {
     res.status(400).json({

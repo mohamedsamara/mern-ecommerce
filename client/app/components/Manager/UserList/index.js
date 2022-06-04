@@ -14,7 +14,6 @@ const UserList = props => {
 
   return (
     <div className='u-list'>
-      <p className='fw-1'>{users.length} results</p>
       {users.map((user, index) => (
         <div key={index} className='mt-3 px-4 py-3 user-box'>
           <label className='text-black'>Name</label>

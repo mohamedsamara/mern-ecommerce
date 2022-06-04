@@ -13,6 +13,7 @@ import { ROLE_ADMIN } from '../../constants';
 import SubPage from '../../components/Manager/SubPage';
 import OrderList from '../../components/Manager/OrderList';
 import OrderSearch from '../../components/Manager/OrderSearch';
+import SearchResultMeta from '../../components/Manager/SearchResultMeta';
 import NotFound from '../../components/Common/NotFound';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import Pagination from '../../components/Common/Pagination';
@@ -82,6 +83,11 @@ class List extends React.PureComponent {
                   onPagination={this.handleOnPagination}
                 />
               )}
+
+              <SearchResultMeta
+                label='orders'
+                count={isSearch ? filteredOrders.length : advancedFilters.count}
+              />
               <OrderList orders={filteredOrders} />
             </>
           )}
