@@ -36,7 +36,7 @@ export const setOrderLoading = value => {
   };
 };
 
-export const fetchOrders = (page = 1, isMe = false) => {
+export const fetchOrders = (page = 1) => {
   return async (dispatch, getState) => {
     try {
       dispatch(setOrderLoading(true));
@@ -44,8 +44,39 @@ export const fetchOrders = (page = 1, isMe = false) => {
       const response = await axios.get(`/api/order`, {
         params: {
           page: page ?? 1,
-          limit: 20,
-          isMe: isMe ? 1 : 0
+          limit: 20
+        }
+      });
+
+      const { orders, totalPages, currentPage, count } = response.data;
+
+      dispatch({
+        type: FETCH_ORDERS,
+        payload: orders
+      });
+
+      dispatch({
+        type: SET_ADVANCED_FILTERS,
+        payload: { totalPages, currentPage, count }
+      });
+    } catch (error) {
+      dispatch(clearOrders());
+      handleError(error, dispatch);
+    } finally {
+      dispatch(setOrderLoading(false));
+    }
+  };
+};
+
+export const fetchAccountOrders = (page = 1) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(setOrderLoading(true));
+
+      const response = await axios.get(`/api/order/me`, {
+        params: {
+          page: page ?? 1,
+          limit: 20
         }
       });
 

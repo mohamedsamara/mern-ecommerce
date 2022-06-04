@@ -56,9 +56,9 @@ const WishList = props => {
           </Link>
           <div className='remove-wishlist-box'>
             <Button
-              borderless
               variant='danger'
               icon={<XIcon className='text-white' width={15} />}
+              round={20}
               onClick={e => {
                 e.target.name = item.product._id;
                 e.target.checked = !item.isLiked;

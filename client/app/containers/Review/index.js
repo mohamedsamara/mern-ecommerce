@@ -10,9 +10,11 @@ import { connect } from 'react-redux';
 import actions from '../../actions';
 
 import SubPage from '../../components/Manager/SubPage';
+import ReviewList from '../../components/Manager/ReviewList';
+import SearchResultMeta from '../../components/Manager/SearchResultMeta';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
-import ReviewList from '../../components/Manager/ReviewList';
+import Pagination from '../../components/Common/Pagination';
 
 class Review extends React.PureComponent {
   componentDidMount() {
@@ -23,24 +25,40 @@ class Review extends React.PureComponent {
     const {
       reviews,
       isLoading,
+      advancedFilters,
+      fetchReviews,
       approveReview,
       rejectReview,
       deleteReview
     } = this.props;
 
+    const displayPagination = advancedFilters.totalPages > 1;
+    const displayReviews = reviews && reviews.length > 0;
+
     return (
       <div className='review-dashboard'>
         <SubPage title={'Reviews'} isMenuOpen={null}>
-          {isLoading ? (
-            <LoadingIndicator inline />
-          ) : reviews.length > 0 ? (
-            <ReviewList
-              reviews={reviews}
-              approveReview={approveReview}
-              rejectReview={rejectReview}
-              deleteReview={deleteReview}
+          {isLoading && <LoadingIndicator />}
+
+          {displayPagination && (
+            <Pagination
+              totalPages={advancedFilters.totalPages}
+              onPagination={fetchReviews}
             />
-          ) : (
+          )}
+          {displayReviews && (
+            <>
+              <SearchResultMeta label='reviews' count={advancedFilters.count} />
+              <ReviewList
+                reviews={reviews}
+                approveReview={approveReview}
+                rejectReview={rejectReview}
+                deleteReview={deleteReview}
+              />
+            </>
+          )}
+
+          {!isLoading && !displayReviews && (
             <NotFound message='no reviews found.' />
           )}
         </SubPage>
@@ -52,7 +70,8 @@ class Review extends React.PureComponent {
 const mapStateToProps = state => {
   return {
     reviews: state.review.reviews,
-    isLoading: state.review.isLoading
+    isLoading: state.review.isLoading,
+    advancedFilters: state.review.advancedFilters
   };
 };
 

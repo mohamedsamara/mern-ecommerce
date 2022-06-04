@@ -166,6 +166,7 @@ class Navigation extends React.PureComponent {
               sm={{ size: 12, order: 1 }}
               md={{ size: 3, order: 1 }}
               lg={{ size: 3, order: 1 }}
+              className='pr-0'
             >
               <div className='brand'>
                 {categories && categories.length > 0 && (

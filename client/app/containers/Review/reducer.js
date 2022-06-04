@@ -12,12 +12,18 @@ import {
   REVIEW_CHANGE,
   SET_REVIEWS_LOADING,
   RESET_REVIEW,
-  SET_REVIEW_FORM_ERRORS
+  SET_REVIEW_FORM_ERRORS,
+  SET_ADVANCED_FILTERS
 } from './constants';
 
 const initialState = {
   reviews: [],
   isLoading: false,
+  advancedFilters: {
+    totalPages: 1,
+    currentPage: 1,
+    count: 0
+  },
   productReviews: [],
   reviewsSummary: {
     ratingSummary: [],
@@ -43,6 +49,14 @@ const reviewReducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload
+      };
+    case SET_ADVANCED_FILTERS:
+      return {
+        ...state,
+        advancedFilters: {
+          ...state.advancedFilters,
+          ...action.payload
+        }
       };
     case FETCH_PRODUCT_REVIEWS:
       return {

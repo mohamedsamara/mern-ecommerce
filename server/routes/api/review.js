@@ -26,9 +26,13 @@ router.post('/add', auth, (req, res) => {
   });
 });
 
+// fetch all reviews api
 router.get('/', async (req, res) => {
   try {
-    const reviews = await Review.find({})
+    const { page = 1, limit = 10 } = req.query;
+
+    const reviews = await Review.find()
+      .sort('-created')
       .populate({
         path: 'user',
         select: 'firstName'
@@ -37,10 +41,17 @@ router.get('/', async (req, res) => {
         path: 'product',
         select: 'name slug imageUrl'
       })
-      .sort('-created');
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Review.countDocuments();
 
     res.status(200).json({
-      reviews
+      reviews,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      count
     });
   } catch (error) {
     res.status(400).json({

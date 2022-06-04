@@ -83,7 +83,6 @@ button {
   &.custom-btn-primary {
     position: relative;
     border: $border-default;
-    border-radius: $border-radius-default;
     background-color: $btn-bg;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
@@ -110,7 +109,6 @@ button {
   &.custom-btn-secondary {
     position: relative;
     border: $border-default;
-    border-radius: $border-radius-default;
     background-color: $btn-bg;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
@@ -142,7 +140,6 @@ body.user-is-tabbing button:focus {
   &.custom-btn-danger {
     position: relative;
     border: $border-default;
-    border-radius: $border-radius-default;
     background-color: $danger-bg;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
@@ -171,7 +168,6 @@ body.user-is-tabbing button:focus {
     position: relative;
     min-width: auto;
     border: $border-default;
-    border-radius: $border-radius-default;
 
     &:hover {
       color: $font-custom-color !important;
@@ -207,7 +203,6 @@ body.user-is-tabbing button:focus {
   &.custom-btn-dark {
     position: relative;
     border: $border-default;
-    border-radius: $border-radius-default;
     background-color: $dark-bg;
     -webkit-transition: $layout-transition-speed;
     transition: $layout-transition-speed;
@@ -234,7 +229,6 @@ body.user-is-tabbing button:focus {
 .btn-link {
   padding: 10px;
   border: $border-default;
-  border-radius: $border-radius-default;
   display: inline-block;
   min-width: 150px;
   font-weight: $font-weight-bold-one;

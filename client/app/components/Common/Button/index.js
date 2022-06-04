@@ -56,7 +56,7 @@ const Button = props => {
 
   const iconClassNames = `btn-icon${`${iconClassName && ` ${iconClassName}`}`}`;
 
-  const tooltipId = `tooltip-${id}`;
+  const tooltipId = tooltip ? `tooltip-${id}` : id;
 
   return (
     <button
@@ -90,7 +90,7 @@ const Button = props => {
 };
 
 Button.defaultProps = {
-  id: '',
+  id: 'button',
   type: 'button',
   variant: 'secondary',
   size: 'md',
@@ -98,7 +98,7 @@ Button.defaultProps = {
   iconDirection: 'left',
   iconClassName: '',
   borderless: false,
-  round: 0
+  round: 3
 };
 
 export default Button;
