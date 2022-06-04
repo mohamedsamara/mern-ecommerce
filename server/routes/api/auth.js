@@ -36,14 +36,14 @@ router.post('/login', async (req, res) => {
         .send({ error: 'No user found for this email address.' });
     }
 
-    // const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
-    // if (!isMatch) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     error: 'Password Incorrect'
-    //   });
-    // }
+    if (!isMatch) {
+      return res.status(400).json({
+        success: false,
+        error: 'Password Incorrect'
+      });
+    }
 
     const payload = {
       id: user.id

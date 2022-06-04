@@ -127,9 +127,44 @@ router.get('/search', auth, async (req, res) => {
 // fetch orders api
 router.get('/', auth, async (req, res) => {
   try {
-    const { page = 1, limit = 10, isMe } = req.query;
+    const { page = 1, limit = 10 } = req.query;
+    const ordersDoc = await Order.find()
+      .sort('-created')
+      .populate({
+        path: 'cart',
+        populate: {
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        }
+      })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Order.countDocuments();
+    const orders = store.formatOrders(ordersDoc);
+
+    res.status(200).json({
+      orders,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      count
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+// fetch my orders api
+router.get('/me', auth, async (req, res) => {
+  try {
+    const { page = 1, limit = 10 } = req.query;
     const user = req.user._id;
-    const query = isMe === '1' ? { user } : {};
+    const query = { user };
 
     const ordersDoc = await Order.find(query)
       .sort('-created')

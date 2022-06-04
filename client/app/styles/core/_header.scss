@@ -136,7 +136,7 @@
   .brand {
     @include flex();
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: center;
     @include media-breakpoint-down(sm) {
       margin-top: 10px;
       justify-content: center;

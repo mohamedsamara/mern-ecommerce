@@ -28,7 +28,7 @@ class List extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.fetchOrders(1, true);
+    this.props.fetchAccountOrders();
   }
 
   handleOrderSearch = e => {
@@ -44,7 +44,7 @@ class List extends React.PureComponent {
   };
 
   handleOnPagination = (n, v) => {
-    this.props.fetchOrders(v, true);
+    this.props.fetchAccountOrders(v);
   };
 
   render() {

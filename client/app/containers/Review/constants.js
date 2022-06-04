@@ -12,3 +12,4 @@ export const REVIEW_CHANGE = 'src/Review/REVIEW_CHANGE';
 export const SET_REVIEWS_LOADING = 'src/Review/SET_REVIEWS_LOADING';
 export const RESET_REVIEW = 'src/Review/RESET_REVIEW';
 export const SET_REVIEW_FORM_ERRORS = 'src/Review/SET_REVIEW_FORM_ERRORS';
+export const SET_ADVANCED_FILTERS = 'src/Review/SET_ADVANCED_FILTERS';

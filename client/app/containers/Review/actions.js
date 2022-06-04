@@ -15,7 +15,8 @@ import {
   FETCH_PRODUCT_REVIEWS,
   REVIEW_CHANGE,
   RESET_REVIEW,
-  SET_REVIEW_FORM_ERRORS
+  SET_REVIEW_FORM_ERRORS,
+  SET_ADVANCED_FILTERS
 } from './constants';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
@@ -30,14 +31,25 @@ export const reviewChange = (name, value) => {
 };
 
 // fetch reviews api
-export const fetchReviews = () => {
+export const fetchReviews = (n, v) => {
   return async (dispatch, getState) => {
     try {
       dispatch({ type: SET_REVIEWS_LOADING, payload: true });
 
-      const response = await axios.get(`/api/review`);
+      const response = await axios.get(`/api/review`, {
+        params: {
+          page: v ?? 1,
+          limit: 20
+        }
+      });
 
-      dispatch({ type: FETCH_REVIEWS, payload: response.data.reviews });
+      const { reviews, totalPages, currentPage, count } = response.data;
+
+      dispatch({ type: FETCH_REVIEWS, payload: reviews });
+      dispatch({
+        type: SET_ADVANCED_FILTERS,
+        payload: { totalPages, currentPage, count }
+      });
     } catch (error) {
       handleError(error, dispatch);
     } finally {
@@ -101,12 +113,8 @@ export const fetchProductReviews = slug => {
     try {
       const response = await axios.get(`/api/review/${slug}`);
 
-      const {
-        ratingSummary,
-        totalRatings,
-        totalReviews,
-        totalSummary
-      } = getProductReviewsSummary(response.data.reviews);
+      const { ratingSummary, totalRatings, totalReviews, totalSummary } =
+        getProductReviewsSummary(response.data.reviews);
 
       dispatch({
         type: FETCH_PRODUCT_REVIEWS,
