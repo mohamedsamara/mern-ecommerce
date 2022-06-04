@@ -69,6 +69,41 @@ router.post('/seller-request', async (req, res) => {
   }
 });
 
+// search merchants api
+router.get(
+  '/search',
+  auth,
+  role.checkRole(role.ROLES.Admin),
+  async (req, res) => {
+    try {
+      const { search } = req.query;
+
+      const regex = new RegExp(search, 'i');
+
+      const merchants = await Merchant.find(
+        {
+          $or: [
+            { phoneNumber: { $regex: regex } },
+            { email: { $regex: regex } },
+            { name: { $regex: regex } },
+            { brand: { $regex: regex } },
+            { status: { $regex: regex } }
+          ]
+        },
+        { _id: 0 }
+      );
+
+      res.status(200).json({
+        merchants
+      });
+    } catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
 // fetch all merchants api
 router.get('/', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
   try {
