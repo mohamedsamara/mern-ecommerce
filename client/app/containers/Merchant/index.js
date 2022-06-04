@@ -33,7 +33,7 @@ class Merchant extends React.PureComponent {
 
   handleMerchantSearch = e => {
     if (e.value.length >= 2) {
-      this.props.searchMerchants({ name: 'user', value: e.value });
+      this.props.searchMerchants({ name: 'merchant', value: e.value });
       this.setState({
         search: e.value
       });
@@ -58,6 +58,7 @@ class Merchant extends React.PureComponent {
       approveMerchant,
       rejectMerchant,
       deleteMerchant,
+      disableMerchant,
       searchMerchants
     } = this.props;
 
@@ -91,9 +92,10 @@ class Merchant extends React.PureComponent {
             />
             <MerchantList
               merchants={filteredMerchants}
-              approveMerchant={approveMerchant}
-              rejectMerchant={rejectMerchant}
-              deleteMerchant={deleteMerchant}
+              approveMerchant={m => approveMerchant(m, search)}
+              rejectMerchant={m => rejectMerchant(m, search)}
+              deleteMerchant={m => deleteMerchant(m, search)}
+              disableMerchant={(m, v) => disableMerchant(m, v, search)}
             />
           </>
         )}

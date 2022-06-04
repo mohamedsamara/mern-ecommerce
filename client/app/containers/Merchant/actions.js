@@ -164,11 +164,17 @@ export const searchMerchants = filter => {
   };
 };
 
-export const approveMerchant = merchant => {
+export const disableMerchant = (merchant, value, search) => {
   return async (dispatch, getState) => {
     try {
-      await axios.put(`/api/merchant/approve/${merchant._id}`);
+      await axios.put(`/api/merchant/${merchant._id}/active`, {
+        merchant: {
+          isActive: value
+        }
+      });
 
+      if (search)
+        return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
       dispatch(fetchMerchants());
     } catch (error) {
       handleError(error, dispatch);
@@ -176,11 +182,27 @@ export const approveMerchant = merchant => {
   };
 };
 
-export const rejectMerchant = merchant => {
+export const approveMerchant = (merchant, search) => {
+  return async (dispatch, getState) => {
+    try {
+      await axios.put(`/api/merchant/approve/${merchant._id}`);
+
+      if (search)
+        return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
+      dispatch(fetchMerchants());
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  };
+};
+
+export const rejectMerchant = (merchant, search) => {
   return async (dispatch, getState) => {
     try {
       await axios.put(`/api/merchant/reject/${merchant._id}`);
 
+      if (search)
+        return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
       dispatch(fetchMerchants());
     } catch (error) {
       handleError(error, dispatch);
@@ -231,10 +253,12 @@ export const merchantSignUp = token => {
 };
 
 // delete merchant api
-export const deleteMerchant = id => {
+export const deleteMerchant = (merchant, search) => {
   return async (dispatch, getState) => {
     try {
-      const response = await axios.delete(`/api/merchant/delete/${id}`);
+      const response = await axios.delete(
+        `/api/merchant/delete/${merchant._id}`
+      );
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -242,8 +266,12 @@ export const deleteMerchant = id => {
         autoDismiss: 1
       };
 
-      if (response.data.success == true) {
+      if (response.data.success === true) {
         dispatch(success(successfulOptions));
+
+        if (search)
+          return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
+
         dispatch({
           type: REMOVE_MERCHANT,
           payload: id

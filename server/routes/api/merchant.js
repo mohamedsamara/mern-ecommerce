@@ -80,18 +80,15 @@ router.get(
 
       const regex = new RegExp(search, 'i');
 
-      const merchants = await Merchant.find(
-        {
-          $or: [
-            { phoneNumber: { $regex: regex } },
-            { email: { $regex: regex } },
-            { name: { $regex: regex } },
-            { brand: { $regex: regex } },
-            { status: { $regex: regex } }
-          ]
-        },
-        { _id: 0 }
-      );
+      const merchants = await Merchant.find({
+        $or: [
+          { phoneNumber: { $regex: regex } },
+          { email: { $regex: regex } },
+          { name: { $regex: regex } },
+          { brand: { $regex: regex } },
+          { status: { $regex: regex } }
+        ]
+      });
 
       res.status(200).json({
         merchants
@@ -130,11 +127,31 @@ router.get('/', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
   }
 });
 
-// approve merchant
-router.put('/approve/:merchantId', auth, async (req, res) => {
+// disable merchant account
+router.put('/:id/active', auth, async (req, res) => {
   try {
-    const merchantId = req.params.merchantId;
+    const merchantId = req.params.id;
+    const update = req.body.merchant;
+    const query = { _id: merchantId };
 
+    await Merchant.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+// approve merchant
+router.put('/approve/:id', auth, async (req, res) => {
+  try {
+    const merchantId = req.params.id;
     const query = { _id: merchantId };
     const update = {
       status: 'Approved',
@@ -163,9 +180,9 @@ router.put('/approve/:merchantId', auth, async (req, res) => {
 });
 
 // reject merchant
-router.put('/reject/:merchantId', auth, async (req, res) => {
+router.put('/reject/:id', auth, async (req, res) => {
   try {
-    const merchantId = req.params.merchantId;
+    const merchantId = req.params.id;
 
     const query = { _id: merchantId };
     const update = {
