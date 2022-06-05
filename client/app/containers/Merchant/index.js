@@ -92,10 +92,18 @@ class Merchant extends React.PureComponent {
             />
             <MerchantList
               merchants={filteredMerchants}
-              approveMerchant={m => approveMerchant(m, search)}
-              rejectMerchant={m => rejectMerchant(m, search)}
-              deleteMerchant={m => deleteMerchant(m, search)}
-              disableMerchant={(m, v) => disableMerchant(m, v, search)}
+              approveMerchant={m =>
+                approveMerchant(m, search, advancedFilters.currentPage)
+              }
+              rejectMerchant={m =>
+                rejectMerchant(m, search, advancedFilters.currentPage)
+              }
+              deleteMerchant={m =>
+                deleteMerchant(m, search, advancedFilters.currentPage)
+              }
+              disableMerchant={(m, v) =>
+                disableMerchant(m, v, search, advancedFilters.currentPage)
+              }
             />
           </>
         )}

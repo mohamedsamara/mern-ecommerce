@@ -90,7 +90,6 @@ const Button = props => {
 };
 
 Button.defaultProps = {
-  id: 'button',
   type: 'button',
   variant: 'secondary',
   size: 'md',

@@ -164,7 +164,7 @@ export const searchMerchants = filter => {
   };
 };
 
-export const disableMerchant = (merchant, value, search) => {
+export const disableMerchant = (merchant, value, search, page) => {
   return async (dispatch, getState) => {
     try {
       await axios.put(`/api/merchant/${merchant._id}/active`, {
@@ -175,35 +175,35 @@ export const disableMerchant = (merchant, value, search) => {
 
       if (search)
         return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
-      dispatch(fetchMerchants());
+      dispatch(fetchMerchants('merchant', page));
     } catch (error) {
       handleError(error, dispatch);
     }
   };
 };
 
-export const approveMerchant = (merchant, search) => {
+export const approveMerchant = (merchant, search, page) => {
   return async (dispatch, getState) => {
     try {
       await axios.put(`/api/merchant/approve/${merchant._id}`);
 
       if (search)
         return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
-      dispatch(fetchMerchants());
+      dispatch(fetchMerchants('merchant', page));
     } catch (error) {
       handleError(error, dispatch);
     }
   };
 };
 
-export const rejectMerchant = (merchant, search) => {
+export const rejectMerchant = (merchant, search, page) => {
   return async (dispatch, getState) => {
     try {
       await axios.put(`/api/merchant/reject/${merchant._id}`);
 
       if (search)
         return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
-      dispatch(fetchMerchants());
+      dispatch(fetchMerchants('merchant', page));
     } catch (error) {
       handleError(error, dispatch);
     }
@@ -253,7 +253,7 @@ export const merchantSignUp = token => {
 };
 
 // delete merchant api
-export const deleteMerchant = (merchant, search) => {
+export const deleteMerchant = (merchant, search, page) => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.delete(
@@ -274,7 +274,7 @@ export const deleteMerchant = (merchant, search) => {
 
         dispatch({
           type: REMOVE_MERCHANT,
-          payload: id
+          payload: merchant._id
         });
       }
     } catch (error) {
