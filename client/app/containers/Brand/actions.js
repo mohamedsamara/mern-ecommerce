@@ -168,6 +168,7 @@ export const updateBrand = () => {
     try {
       const rules = {
         name: 'required',
+        slug: 'required|alpha_dash',
         description: 'required|max:200'
       };
 
@@ -175,11 +176,15 @@ export const updateBrand = () => {
 
       const newBrand = {
         name: brand.name,
+        slug: brand.slug,
         description: brand.description
       };
 
       const { isValid, errors } = allFieldsValidation(newBrand, rules, {
         'required.name': 'Name is required.',
+        'required.slug': 'Slug is required.',
+        'alpha_dash.slug':
+          'Slug may have alpha-numeric characters, as well as dashes and underscores only.',
         'required.description': 'Description is required.',
         'max.description': 'Description may not be greater than 200 characters.'
       });
