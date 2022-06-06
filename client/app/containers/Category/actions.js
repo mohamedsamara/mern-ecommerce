@@ -173,6 +173,7 @@ export const updateCategory = () => {
     try {
       const rules = {
         name: 'required',
+        slug: 'required|alpha_dash',
         description: 'required|max:200',
         products: 'required'
       };
@@ -181,12 +182,16 @@ export const updateCategory = () => {
 
       const newCategory = {
         name: category.name,
+        slug: category.slug,
         description: category.description,
         products: category.products && unformatSelectOptions(category.products)
       };
 
       const { isValid, errors } = allFieldsValidation(newCategory, rules, {
         'required.name': 'Name is required.',
+        'required.slug': 'Slug is required.',
+        'alpha_dash.slug':
+          'Slug may have alpha-numeric characters, as well as dashes and underscores only.',
         'required.description': 'Description is required.',
         'max.description':
           'Description may not be greater than 200 characters.',
