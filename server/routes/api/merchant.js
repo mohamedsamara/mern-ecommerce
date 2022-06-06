@@ -107,7 +107,7 @@ router.get('/', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
 
     const merchants = await Merchant.find()
-      // .sort('-created')
+      .sort('-created')
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .exec();

@@ -66,6 +66,19 @@ const EditProduct = props => {
               }}
             />
           </Col>
+          <Col xs='12'>
+            <Input
+              type={'text'}
+              error={formErrors['sku']}
+              label={'Sku'}
+              name={'sku'}
+              placeholder={'Product Sku'}
+              value={product.sku}
+              onInputChange={(name, value) => {
+                productChange(name, value);
+              }}
+            />
+          </Col>
           <Col xs='12' lg='6'>
             <Input
               type={'number'}

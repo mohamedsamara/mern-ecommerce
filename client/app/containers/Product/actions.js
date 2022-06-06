@@ -226,7 +226,7 @@ export const addProduct = () => {
   return async (dispatch, getState) => {
     try {
       const rules = {
-        sku: 'required',
+        sku: 'required|alpha_dash',
         name: 'required',
         description: 'required|max:200',
         quantity: 'required|numeric',
@@ -261,6 +261,8 @@ export const addProduct = () => {
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
         'required.sku': 'Sku is required.',
+        'alpha_dash.sku':
+          'Sku may have alpha-numeric characters, as well as dashes and underscores only.',
         'required.name': 'Name is required.',
         'required.description': 'Description is required.',
         'max.description':
@@ -319,6 +321,7 @@ export const updateProduct = () => {
     try {
       const rules = {
         name: 'required',
+        sku: 'required|alpha_dash',
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
@@ -332,6 +335,7 @@ export const updateProduct = () => {
 
       const newProduct = {
         name: product.name,
+        sku: product.sku,
         description: product.description,
         quantity: product.quantity,
         price: product.price,
@@ -341,6 +345,9 @@ export const updateProduct = () => {
 
       const { isValid, errors } = allFieldsValidation(newProduct, rules, {
         'required.name': 'Name is required.',
+        'required.sku': 'Sku is required.',
+        'alpha_dash.sku':
+          'Sku may have alpha-numeric characters, as well as dashes and underscores only.',
         'required.description': 'Description is required.',
         'max.description':
           'Description may not be greater than 200 characters.',
