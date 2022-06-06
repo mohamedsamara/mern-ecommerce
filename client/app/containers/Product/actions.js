@@ -322,6 +322,7 @@ export const updateProduct = () => {
       const rules = {
         name: 'required',
         sku: 'required|alpha_dash',
+        slug: 'required|alpha_dash',
         description: 'required|max:200',
         quantity: 'required|numeric',
         price: 'required|numeric',
@@ -336,6 +337,7 @@ export const updateProduct = () => {
       const newProduct = {
         name: product.name,
         sku: product.sku,
+        slug: product.slug,
         description: product.description,
         quantity: product.quantity,
         price: product.price,
@@ -348,6 +350,9 @@ export const updateProduct = () => {
         'required.sku': 'Sku is required.',
         'alpha_dash.sku':
           'Sku may have alpha-numeric characters, as well as dashes and underscores only.',
+        'required.slug': 'Slug is required.',
+        'alpha_dash.slug':
+          'Slug may have alpha-numeric characters, as well as dashes and underscores only.',
         'required.description': 'Description is required.',
         'max.description':
           'Description may not be greater than 200 characters.',

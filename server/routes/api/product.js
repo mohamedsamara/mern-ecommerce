@@ -567,12 +567,16 @@ router.put(
       const productId = req.params.id;
       const update = req.body.product;
       const query = { _id: productId };
-      const { sku } = req.body.product;
+      const { sku, slug } = req.body.product;
 
-      const foundProduct = await Product.findOne({ sku });
+      const foundProduct = await Product.findOne({
+        $or: [{ slug }, { sku }]
+      });
 
       if (foundProduct && foundProduct._id != productId) {
-        return res.status(400).json({ error: 'This sku is already in use.' });
+        return res
+          .status(400)
+          .json({ error: 'Sku or slug is already in use.' });
       }
 
       await Product.findOneAndUpdate(query, update, {
