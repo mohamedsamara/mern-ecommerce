@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const AWS = require('aws-sdk');
 const Mongoose = require('mongoose');
 
 // Bring in Models & Utils
@@ -11,6 +10,7 @@ const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../utils/auth');
+const { s3Upload } = require('../../utils/storage');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -412,29 +412,7 @@ router.post(
         return res.status(400).json({ error: 'This sku is already in use.' });
       }
 
-      let imageUrl = '';
-      let imageKey = '';
-
-      if (image) {
-        const s3bucket = new AWS.S3({
-          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-          region: process.env.AWS_REGION
-        });
-
-        const params = {
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: image.originalname,
-          Body: image.buffer,
-          ContentType: image.mimetype,
-          ACL: 'public-read'
-        };
-
-        const s3Upload = await s3bucket.upload(params).promise();
-
-        imageUrl = s3Upload.Location;
-        imageKey = s3Upload.key;
-      }
+      const { imageUrl, imageKey } = await s3Upload(image);
 
       const product = new Product({
         sku,
