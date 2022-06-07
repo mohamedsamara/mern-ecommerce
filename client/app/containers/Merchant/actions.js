@@ -4,7 +4,7 @@
  *
  */
 
-import { push } from 'connected-react-router';
+import { push, goBack } from 'connected-react-router';
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
 
@@ -12,28 +12,27 @@ import {
   FETCH_MERCHANTS,
   REMOVE_MERCHANT,
   SET_ADVANCED_FILTERS,
-  SELL_FORM_CHANGE,
-  SET_SELL_FORM_ERRORS,
-  SELL_FORM_RESET,
+  FETCH_SEARCHED_MERCHANTS,
+  MERCHANT_CHANGE,
+  SET_MERCHANT_FORM_ERRORS,
+  SET_MERCHANTS_LOADING,
+  SET_MERCHANTS_SUBMITTING,
+  RESET_MERCHANT,
   SIGNUP_CHANGE,
   SET_SIGNUP_FORM_ERRORS,
-  SET_MERCHANTS_LOADING,
-  SET_SELL_SUBMITTING,
-  SET_SELL_LOADING,
-  SIGNUP_RESET,
-  FETCH_SEARCHED_MERCHANTS
+  SIGNUP_RESET
 } from './constants';
 
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 import { signOut } from '../Login/actions';
 
-export const sellFormChange = (name, value) => {
+export const merchantChange = (name, value) => {
   let formData = {};
   formData[name] = value;
 
   return {
-    type: SELL_FORM_CHANGE,
+    type: MERCHANT_CHANGE,
     payload: formData
   };
 };
@@ -48,7 +47,22 @@ export const merchantSignupChange = (name, value) => {
   };
 };
 
-export const sellWithUs = () => {
+export const setMerchantLoading = value => {
+  return {
+    type: SET_MERCHANTS_LOADING,
+    payload: value
+  };
+};
+
+export const setMerchantSubmitting = value => {
+  return {
+    type: SET_MERCHANTS_SUBMITTING,
+    payload: value
+  };
+};
+
+// add merchant api
+export const addMerchant = (isBack = false) => {
   return async (dispatch, getState) => {
     try {
       const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -61,7 +75,7 @@ export const sellWithUs = () => {
         business: 'required|min:10'
       };
 
-      const merchant = getState().merchant.sellFormData;
+      const merchant = getState().merchant.merchantFormData;
 
       const { isValid, errors } = allFieldsValidation(merchant, rules, {
         'required.name': 'Name is required.',
@@ -75,16 +89,13 @@ export const sellWithUs = () => {
       });
 
       if (!isValid) {
-        return dispatch({ type: SET_SELL_FORM_ERRORS, payload: errors });
+        return dispatch({ type: SET_MERCHANT_FORM_ERRORS, payload: errors });
       }
 
-      dispatch({ type: SET_SELL_SUBMITTING, payload: true });
-      dispatch({ type: SET_SELL_LOADING, payload: true });
+      dispatch(setMerchantLoading(true));
+      dispatch(setMerchantSubmitting(true));
 
-      const response = await axios.post(
-        '/api/merchant/seller-request',
-        merchant
-      );
+      const response = await axios.post('/api/merchant/add', merchant);
 
       const successfulOptions = {
         title: `${response.data.message}`,
@@ -92,21 +103,17 @@ export const sellWithUs = () => {
         autoDismiss: 1
       };
 
-      dispatch({ type: SELL_FORM_RESET });
-      dispatch(success(successfulOptions));
+      if (response.data.success === true) {
+        dispatch(success(successfulOptions));
+        dispatch({ type: RESET_MERCHANT });
+        if (isBack) dispatch(goBack());
+      }
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      dispatch({ type: SET_SELL_SUBMITTING, payload: false });
-      dispatch({ type: SET_SELL_LOADING, payload: false });
+      dispatch(setMerchantSubmitting(false));
+      dispatch(setMerchantLoading(false));
     }
-  };
-};
-
-export const setMerchantLoading = value => {
-  return {
-    type: SET_MERCHANTS_LOADING,
-    payload: value
   };
 };
 

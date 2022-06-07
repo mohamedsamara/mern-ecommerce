@@ -7,7 +7,7 @@
     { "to": "/category", "name": "Categories", "prefix": "/dashboard" },
     { "to": "/brand", "name": "Brand", "prefix": "/dashboard" },
     { "to": "/users", "name": "Users", "prefix": "/dashboard" },
-    { "to": "/merchants", "name": "Merchants", "prefix": "/dashboard" },
+    { "to": "/merchant", "name": "Merchants", "prefix": "/dashboard" },
     { "to": "/orders", "name": "Orders", "prefix": "/dashboard" },
     { "to": "/review", "name": "Reviews", "prefix": "/dashboard" },
     { "to": "/wishlist", "name": "WishList", "prefix": "/dashboard" },

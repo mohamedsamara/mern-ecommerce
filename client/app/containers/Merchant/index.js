@@ -7,109 +7,27 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 
 import actions from '../../actions';
-
-import SubPage from '../../components/Manager/SubPage';
-import MerchantList from '../../components/Manager/MerchantList';
-import MerchantSearch from '../../components/Manager/MerchantSearch';
-import SearchResultMeta from '../../components/Manager/SearchResultMeta';
-import LoadingIndicator from '../../components/Common/LoadingIndicator';
-import NotFound from '../../components/Common/NotFound';
-import Pagination from '../../components/Common/Pagination';
+import { ROLE_ADMIN } from '../../constants';
+import List from './List';
+import Add from './Add';
+import Page404 from '../../components/Common/Page404';
 
 class Merchant extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      search: ''
-    };
-  }
-
-  componentDidMount() {
-    this.props.fetchMerchants();
-  }
-
-  handleMerchantSearch = e => {
-    if (e.value.length >= 2) {
-      this.props.searchMerchants({ name: 'merchant', value: e.value });
-      this.setState({
-        search: e.value
-      });
-    } else {
-      this.setState({
-        search: ''
-      });
-    }
-  };
-
-  handleOnPagination = (n, v) => {
-    this.props.fetchUsers(v);
-  };
-
   render() {
-    const {
-      merchants,
-      isLoading,
-      searchedMerchants,
-      advancedFilters,
-      fetchMerchants,
-      approveMerchant,
-      rejectMerchant,
-      deleteMerchant,
-      disableMerchant,
-      searchMerchants
-    } = this.props;
-
-    const { search } = this.state;
-    const isSearch = search.length > 0;
-    const filteredMerchants = search ? searchedMerchants : merchants;
-    const displayPagination = advancedFilters.totalPages > 1;
-    const displayMerchants = filteredMerchants && filteredMerchants.length > 0;
+    const { user } = this.props;
 
     return (
       <div className='merchant-dashboard'>
-        <SubPage title={'Merchants'} isMenuOpen={null} />
-        <MerchantSearch
-          onSearch={this.handleMerchantSearch}
-          onSearchSubmit={searchMerchants}
-        />
-        {isLoading && <LoadingIndicator />}
-        {displayMerchants && (
-          <>
-            {!isSearch && displayPagination && (
-              <Pagination
-                totalPages={advancedFilters.totalPages}
-                onPagination={fetchMerchants}
-              />
-            )}
-            <SearchResultMeta
-              label='merchants'
-              count={
-                isSearch ? filteredMerchants.length : advancedFilters.count
-              }
-            />
-            <MerchantList
-              merchants={filteredMerchants}
-              approveMerchant={m =>
-                approveMerchant(m, search, advancedFilters.currentPage)
-              }
-              rejectMerchant={m =>
-                rejectMerchant(m, search, advancedFilters.currentPage)
-              }
-              deleteMerchant={m =>
-                deleteMerchant(m, search, advancedFilters.currentPage)
-              }
-              disableMerchant={(m, v) =>
-                disableMerchant(m, v, search, advancedFilters.currentPage)
-              }
-            />
-          </>
-        )}
-        {!isLoading && !displayMerchants && (
-          <NotFound message='no merchants found.' />
-        )}
+        <Switch>
+          <Route exact path='/dashboard/merchant' component={List} />
+          {user.role === ROLE_ADMIN && (
+            <Route exact path='/dashboard/merchant/add' component={Add} />
+          )}
+          <Route path='*' component={Page404} />
+        </Switch>
       </div>
     );
   }
@@ -117,10 +35,7 @@ class Merchant extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    merchants: state.merchant.merchants,
-    advancedFilters: state.merchant.advancedFilters,
-    isLoading: state.merchant.isLoading,
-    searchedMerchants: state.merchant.searchedMerchants
+    user: state.account.user
   };
 };
 

@@ -8,16 +8,15 @@ import {
   FETCH_MERCHANTS,
   REMOVE_MERCHANT,
   SET_ADVANCED_FILTERS,
-  SELL_FORM_CHANGE,
-  SET_SELL_FORM_ERRORS,
-  SELL_FORM_RESET,
+  FETCH_SEARCHED_MERCHANTS,
+  MERCHANT_CHANGE,
+  SET_MERCHANT_FORM_ERRORS,
+  SET_MERCHANTS_LOADING,
+  SET_MERCHANTS_SUBMITTING,
+  RESET_MERCHANT,
   SIGNUP_CHANGE,
   SET_SIGNUP_FORM_ERRORS,
-  SET_MERCHANTS_LOADING,
-  SET_SELL_SUBMITTING,
-  SET_SELL_LOADING,
-  SIGNUP_RESET,
-  FETCH_SEARCHED_MERCHANTS
+  SIGNUP_RESET
 } from './constants';
 
 const initialState = {
@@ -28,7 +27,7 @@ const initialState = {
     currentPage: 1,
     count: 0
   },
-  sellFormData: {
+  merchantFormData: {
     name: '',
     email: '',
     phoneNumber: '',
@@ -44,99 +43,100 @@ const initialState = {
   },
   signupFormErrors: {},
   isLoading: false,
-  isSellSubmitting: false,
-  isSellLoading: false
+  isSubmitting: false
 };
 
 const merchantReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case FETCH_MERCHANTS:
-      return {
-        ...state,
-        merchants: action.payload
-      };
-    case FETCH_SEARCHED_MERCHANTS:
-      return {
-        ...state,
-        searchedMerchants: action.payload
-      };
-    case REMOVE_MERCHANT:
-      const index = state.merchants.findIndex(b => b._id === action.payload);
-      return {
-        ...state,
-        merchants: [
-          ...state.merchants.slice(0, index),
-          ...state.merchants.slice(index + 1)
-        ]
-      };
-    case SET_ADVANCED_FILTERS:
-      return {
-        ...state,
-        advancedFilters: {
-          ...state.advancedFilters,
-          ...action.payload
-        }
-      };
-    case SELL_FORM_CHANGE:
-      return {
-        ...state,
-        sellFormData: { ...state.sellFormData, ...action.payload }
-      };
-    case SET_SELL_FORM_ERRORS:
-      return {
-        ...state,
-        formErrors: action.payload
-      };
-    case SELL_FORM_RESET:
-      return {
-        ...state,
-        sellFormData: {
-          name: '',
-          email: '',
-          phoneNumber: '',
-          brand: '',
-          business: ''
-        },
-        formErrors: {}
-      };
-    case SIGNUP_CHANGE:
-      return {
-        ...state,
-        signupFormData: { ...state.signupFormData, ...action.payload }
-      };
-    case SET_SIGNUP_FORM_ERRORS:
-      return {
-        ...state,
-        signupFormErrors: action.payload
-      };
-    case SET_MERCHANTS_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload
-      };
-    case SET_SELL_SUBMITTING:
-      return {
-        ...state,
-        isSellSubmitting: action.payload
-      };
-    case SET_SELL_LOADING:
-      return {
-        ...state,
-        isSellLoading: action.payload
-      };
-    case SIGNUP_RESET:
-      return {
-        ...state,
-        signupFormData: {
-          email: '',
-          firstName: '',
-          lastName: '',
-          password: ''
-        }
-      };
+  try {
+    switch (action.type) {
+      case FETCH_MERCHANTS:
+        return {
+          ...state,
+          merchants: action.payload
+        };
+      case FETCH_SEARCHED_MERCHANTS:
+        return {
+          ...state,
+          searchedMerchants: action.payload
+        };
+      case REMOVE_MERCHANT:
+        const index = state.merchants.findIndex(b => b._id === action.payload);
+        return {
+          ...state,
+          merchants: [
+            ...state.merchants.slice(0, index),
+            ...state.merchants.slice(index + 1)
+          ]
+        };
+      case SET_ADVANCED_FILTERS:
+        return {
+          ...state,
+          advancedFilters: {
+            ...state.advancedFilters,
+            ...action.payload
+          }
+        };
+      case MERCHANT_CHANGE:
+        return {
+          ...state,
+          merchantFormData: {
+            ...state.merchantFormData,
+            ...action.payload
+          }
+        };
+      case SET_MERCHANT_FORM_ERRORS:
+        return {
+          ...state,
+          formErrors: action.payload
+        };
+      case SET_MERCHANTS_LOADING:
+        return {
+          ...state,
+          isLoading: action.payload
+        };
+      case SET_MERCHANTS_SUBMITTING:
+        return {
+          ...state,
+          isSubmitting: action.payload
+        };
+      case RESET_MERCHANT:
+        return {
+          ...state,
+          merchantFormData: {
+            name: '',
+            email: '',
+            phoneNumber: '',
+            brand: '',
+            business: ''
+          },
+          formErrors: {}
+        };
+      case SIGNUP_CHANGE:
+        return {
+          ...state,
+          signupFormData: { ...state.signupFormData, ...action.payload }
+        };
+      case SET_SIGNUP_FORM_ERRORS:
+        return {
+          ...state,
+          signupFormErrors: action.payload
+        };
+      case SIGNUP_RESET:
+        return {
+          ...state,
+          signupFormData: {
+            email: '',
+            firstName: '',
+            lastName: '',
+            password: ''
+          }
+        };
 
-    default:
-      return state;
+      default:
+        return state;
+    }
+  } catch (error) {
+    console.log('error', error);
   }
 };
 

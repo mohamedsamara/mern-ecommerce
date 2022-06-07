@@ -41,7 +41,7 @@ const Admin = props => {
               <Route path='/dashboard/category' component={Category} />
               <Route path='/dashboard/brand' component={Brand} />
               <Route path='/dashboard/users' component={Users} />
-              <Route path='/dashboard/merchants' component={Merchant} />
+              <Route path='/dashboard/merchant' component={Merchant} />
               <Route path='/dashboard/orders' component={Order} />
               <Route path='/dashboard/review' component={Review} />
               <Route path='/dashboard/wishlist' component={Wishlist} />
