@@ -66,40 +66,52 @@ export const resetProduct = () => {
   };
 };
 
+export const setProductLoading = value => {
+  return {
+    type: SET_PRODUCTS_LOADING,
+    payload: value
+  };
+};
+
 // fetch store products by filterProducts api
 export const filterProducts = (n, v) => {
   return async (dispatch, getState) => {
     try {
-      n === undefined ? dispatch({ type: RESET_ADVANCED_FILTERS }) : '';
+      n ?? dispatch({ type: RESET_ADVANCED_FILTERS });
 
-      const s = getState().product.advancedFilters;
-      let payload = productsFilterOrganizer(n, v, s);
-
+      dispatch(setProductLoading(true));
+      const advancedFilters = getState().product.advancedFilters;
+      let payload = productsFilterOrganizer(n, v, advancedFilters);
       dispatch({ type: SET_ADVANCED_FILTERS, payload });
-      dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
-
       const sortOrder = getSortOrder(payload.order);
-
       payload = { ...payload, sortOrder };
 
-      const response = await axios.post(`/api/product/list`, payload);
+      const response = await axios.get(`/api/product/list`, {
+        params: {
+          ...payload
+        }
+      });
+      const { products, totalPages, currentPage, count } = response.data;
 
       dispatch({
-        type: SET_ADVANCED_FILTERS,
-        payload: Object.assign(payload, {
-          pages: response.data.pages,
-          pageNumber: response.data.page,
-          totalProducts: response.data.totalProducts
-        })
-      });
-      dispatch({
         type: FETCH_STORE_PRODUCTS,
-        payload: response.data.products
+        payload: products
+      });
+
+      const newPayload = {
+        ...payload,
+        totalPages,
+        currentPage,
+        count
+      };
+      dispatch({
+        type: SET_ADVANCED_FILTERS,
+        payload: newPayload
       });
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+      dispatch(setProductLoading(false));
     }
   };
 };
@@ -107,7 +119,7 @@ export const filterProducts = (n, v) => {
 // fetch store product api
 export const fetchStoreProduct = slug => {
   return async (dispatch, getState) => {
-    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+    dispatch(setProductLoading(true));
 
     try {
       const response = await axios.get(`/api/product/item/${slug}`);
@@ -122,16 +134,16 @@ export const fetchStoreProduct = slug => {
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+      dispatch(setProductLoading(false));
     }
   };
 };
 
 export const fetchBrandProducts = slug => {
   return async (dispatch, getState) => {
-    dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
-
     try {
+      dispatch(setProductLoading(true));
+
       const response = await axios.get(`/api/product/list/brand/${slug}`);
 
       const s = getState().product.advancedFilters;
@@ -150,7 +162,7 @@ export const fetchBrandProducts = slug => {
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+      dispatch(setProductLoading(false));
     }
   };
 };
@@ -176,7 +188,8 @@ export const fetchProductsSelect = () => {
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
     try {
-      dispatch({ type: SET_PRODUCTS_LOADING, payload: true });
+      dispatch(setProductLoading(true));
+
       const response = await axios.get(`/api/product`);
 
       dispatch({
@@ -186,7 +199,7 @@ export const fetchProducts = () => {
     } catch (error) {
       handleError(error, dispatch);
     } finally {
-      dispatch({ type: SET_PRODUCTS_LOADING, payload: false });
+      dispatch(setProductLoading(false));
     }
   };
 };
@@ -441,7 +454,6 @@ export const deleteProduct = id => {
   };
 };
 
-// TODO: Need improvement
 const productsFilterOrganizer = (n, v, s) => {
   switch (n) {
     case 'category':
@@ -453,7 +465,8 @@ const productsFilterOrganizer = (n, v, s) => {
         max: s.max,
         rating: s.rating,
         order: s.order,
-        pageNumber: 1 //s.pageNumber
+        page: s.currentPage,
+        limit: s.limit
       };
     case 'brand':
       return {
@@ -464,7 +477,8 @@ const productsFilterOrganizer = (n, v, s) => {
         max: s.max,
         rating: s.rating,
         order: s.order,
-        pageNumber: s.pageNumber
+        page: s.currentPage,
+        limit: s.limit
       };
     case 'sorting':
       return {
@@ -475,7 +489,8 @@ const productsFilterOrganizer = (n, v, s) => {
         max: s.max,
         rating: s.rating,
         order: v,
-        pageNumber: s.pageNumber
+        page: s.currentPage,
+        limit: s.limit
       };
     case 'price':
       return {
@@ -486,7 +501,8 @@ const productsFilterOrganizer = (n, v, s) => {
         max: v[1],
         rating: s.rating,
         order: s.order,
-        pageNumber: s.pageNumber
+        page: s.currentPage,
+        limit: s.limit
       };
     case 'rating':
       return {
@@ -497,7 +513,8 @@ const productsFilterOrganizer = (n, v, s) => {
         max: s.max,
         rating: v,
         order: s.order,
-        pageNumber: s.pageNumber
+        page: s.currentPage,
+        limit: s.limit
       };
     case 'pagination':
       return {
@@ -508,7 +525,8 @@ const productsFilterOrganizer = (n, v, s) => {
         max: s.max,
         rating: s.rating,
         order: s.order,
-        pageNumber: v
+        page: v ?? s.currentPage,
+        limit: s.limit
       };
     default:
       return {
@@ -519,7 +537,8 @@ const productsFilterOrganizer = (n, v, s) => {
         max: s.max,
         rating: s.rating,
         order: s.order,
-        pageNumber: s.pageNumber
+        page: s.currentPage,
+        limit: s.limit
       };
   }
 };

@@ -6,61 +6,26 @@
 
 import React from 'react';
 
+import Checkbox from '../../Common/Checkbox';
 import { HeartIcon } from '../../Common/Icon';
 
-class AddToWishList extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      width: 0,
-      height: 0
-    };
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-  }
+const AddToWishList = props => {
+  const { id, liked, enabled, updateWishlist } = props;
 
-  componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
-  }
-
-  render() {
-    const { product, updateWishlist, authenticated } = this.props;
-
-    return (
-      <div className='add-to-wishlist'>
-        {authenticated === true ? (
-          <input
-            type='checkbox'
-            id={`checkbox_${product.sku}`}
-            name={product._id}
-            className='checkbox'
-            onChange={e => updateWishlist(e)}
-            defaultChecked={product.isLiked ? product.isLiked : false}
-          />
-        ) : (
-          <input
-            type='checkbox'
-            id={`checkbox_${this.props.product.sku}`}
-            name={product._id}
-            className='disabled-checkbox'
-            onChange={e => updateWishlist(e)}
-            defaultChecked={product.isLiked ? product.isLiked : false}
-          />
-        )}
-        <label htmlFor={`checkbox_${product.sku}`} type='submit'>
-          <HeartIcon className='heart-svg' />
-        </label>
-      </div>
-    );
-  }
-}
+  return (
+    <div className='add-to-wishlist'>
+      <Checkbox
+        id={`checkbox_${id}`}
+        name={'wishlist'}
+        disabled={!enabled}
+        checked={liked}
+        label={<HeartIcon />}
+        onChange={(_, value) => {
+          updateWishlist(value, id);
+        }}
+      />
+    </div>
+  );
+};
 
 export default AddToWishList;

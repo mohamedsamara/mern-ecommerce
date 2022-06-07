@@ -41,189 +41,179 @@
 
 /* start add to wishlist styles */
 .add-to-wishlist {
-  .heart-svg {
+  .heart-icon {
     cursor: pointer;
     overflow: visible;
     width: 40px;
     height: 40px;
+
+    #heart {
+      transform-origin: center;
+      animation: animateHeartOut 0.3s linear forwards;
+    }
+    #main-circ {
+      transform-origin: 29.5px 29.5px;
+    }
   }
 
-  .heart-svg #heart {
-    transform-origin: center;
-    animation: animateHeartOut 0.3s linear forwards;
-  }
+  .input-checkbox {
+    &:checked + label .heart-icon {
+      #heart {
+        transform: scale(0.2);
+        fill: red;
+        animation: animateHeart 0.3s linear forwards 0.25s;
+      }
+      #main-circ {
+        transition: all 2s;
+        animation: animateCircle 0.3s linear forwards;
+        opacity: 1;
+      }
+      #grp1 {
+        opacity: 1;
+        transition: 0.1s all 0.3s;
+      }
 
-  .heart-svg #main-circ {
-    transform-origin: 29.5px 29.5px;
-  }
+      #grp1 #oval1 {
+        transform: scale(0) translate(0, -30px);
+        transform-origin: 0 0 0;
+        transition: 0.5s transform 0.3s;
+      }
 
-  .checkbox {
-    @include sr-only();
-  }
+      #grp1 #oval2 {
+        transform: scale(0) translate(10px, -50px);
+        transform-origin: 0 0 0;
+        transition: 1.5s transform 0.3s;
+      }
+      #grp2 {
+        opacity: 1;
+        transition: 0.1s all 0.3s;
+      }
+      #grp2 #oval1 {
+        transform: scale(0) translate(30px, -15px);
+        transform-origin: 0 0 0;
+        transition: 0.5s transform 0.3s;
+      }
 
-  .disabled-checkbox {
-    @include sr-only();
-  }
+      #grp2 #oval2 {
+        transform: scale(0) translate(60px, -15px);
+        transform-origin: 0 0 0;
+        transition: 1.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #heart {
-    transform: scale(0.2);
-    fill: red;
-    animation: animateHeart 0.3s linear forwards 0.25s;
-  }
+      #grp3 {
+        opacity: 1;
+        transition: 0.1s all 0.3s;
+      }
 
-  .checkbox:checked + label svg #main-circ {
-    transition: all 2s;
-    animation: animateCircle 0.3s linear forwards;
-    opacity: 1;
-  }
+      #grp3 #oval1 {
+        transform: scale(0) translate(30px, 0px);
+        transform-origin: 0 0 0;
+        transition: 0.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp1 {
-    opacity: 1;
-    transition: 0.1s all 0.3s;
-  }
+      #grp3 #oval2 {
+        transform: scale(0) translate(60px, 10px);
+        transform-origin: 0 0 0;
+        transition: 1.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp1 #oval1 {
-    transform: scale(0) translate(0, -30px);
-    transform-origin: 0 0 0;
-    transition: 0.5s transform 0.3s;
-  }
+      #grp4 {
+        opacity: 1;
+        transition: 0.1s all 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp1 #oval2 {
-    transform: scale(0) translate(10px, -50px);
-    transform-origin: 0 0 0;
-    transition: 1.5s transform 0.3s;
-  }
+      #grp4 #oval1 {
+        transform: scale(0) translate(30px, 15px);
+        transform-origin: 0 0 0;
+        transition: 0.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp2 {
-    opacity: 1;
-    transition: 0.1s all 0.3s;
-  }
+      #grp4 #oval2 {
+        transform: scale(0) translate(40px, 50px);
+        transform-origin: 0 0 0;
+        transition: 1.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp2 #oval1 {
-    transform: scale(0) translate(30px, -15px);
-    transform-origin: 0 0 0;
-    transition: 0.5s transform 0.3s;
-  }
+      #grp5 {
+        opacity: 1;
+        transition: 0.1s all 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp2 #oval2 {
-    transform: scale(0) translate(60px, -15px);
-    transform-origin: 0 0 0;
-    transition: 1.5s transform 0.3s;
-  }
+      #grp5 #oval1 {
+        transform: scale(0) translate(-10px, 20px);
+        transform-origin: 0 0 0;
+        transition: 0.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp3 {
-    opacity: 1;
-    transition: 0.1s all 0.3s;
-  }
+      #grp5 #oval2 {
+        transform: scale(0) translate(-60px, 30px);
+        transform-origin: 0 0 0;
+        transition: 1.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp3 #oval1 {
-    transform: scale(0) translate(30px, 0px);
-    transform-origin: 0 0 0;
-    transition: 0.5s transform 0.3s;
-  }
+      #grp6 {
+        opacity: 1;
+        transition: 0.1s all 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp3 #oval2 {
-    transform: scale(0) translate(60px, 10px);
-    transform-origin: 0 0 0;
-    transition: 1.5s transform 0.3s;
-  }
+      #grp6 #oval1 {
+        transform: scale(0) translate(-30px, 0px);
+        transform-origin: 0 0 0;
+        transition: 0.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp4 {
-    opacity: 1;
-    transition: 0.1s all 0.3s;
-  }
+      #grp6 #oval2 {
+        transform: scale(0) translate(-60px, -5px);
+        transform-origin: 0 0 0;
+        transition: 1.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp4 #oval1 {
-    transform: scale(0) translate(30px, 15px);
-    transform-origin: 0 0 0;
-    transition: 0.5s transform 0.3s;
-  }
+      #grp7 {
+        opacity: 1;
+        transition: 0.1s all 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp4 #oval2 {
-    transform: scale(0) translate(40px, 50px);
-    transform-origin: 0 0 0;
-    transition: 1.5s transform 0.3s;
-  }
+      #grp7 #oval1 {
+        transform: scale(0) translate(-30px, -15px);
+        transform-origin: 0 0 0;
+        transition: 0.5s transform 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp5 {
-    opacity: 1;
-    transition: 0.1s all 0.3s;
-  }
+      #grp7 #oval2 {
+        transform: scale(0) translate(-55px, -30px);
+        transform-origin: 0 0 0;
+        transition: 1.5s transform 0.3s;
+      }
+      #grp2 {
+        opacity: 1;
+        transition: 0.1s opacity 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp5 #oval1 {
-    transform: scale(0) translate(-10px, 20px);
-    transform-origin: 0 0 0;
-    transition: 0.5s transform 0.3s;
-  }
+      #grp3 {
+        opacity: 1;
+        transition: 0.1s opacity 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp5 #oval2 {
-    transform: scale(0) translate(-60px, 30px);
-    transform-origin: 0 0 0;
-    transition: 1.5s transform 0.3s;
-  }
+      #grp4 {
+        opacity: 1;
+        transition: 0.1s opacity 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp6 {
-    opacity: 1;
-    transition: 0.1s all 0.3s;
-  }
+      #grp5 {
+        opacity: 1;
+        transition: 0.1s opacity 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp6 #oval1 {
-    transform: scale(0) translate(-30px, 0px);
-    transform-origin: 0 0 0;
-    transition: 0.5s transform 0.3s;
-  }
+      #grp6 {
+        opacity: 1;
+        transition: 0.1s opacity 0.3s;
+      }
 
-  .checkbox:checked + label svg #grp6 #oval2 {
-    transform: scale(0) translate(-60px, -5px);
-    transform-origin: 0 0 0;
-    transition: 1.5s transform 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp7 {
-    opacity: 1;
-    transition: 0.1s all 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp7 #oval1 {
-    transform: scale(0) translate(-30px, -15px);
-    transform-origin: 0 0 0;
-    transition: 0.5s transform 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp7 #oval2 {
-    transform: scale(0) translate(-55px, -30px);
-    transform-origin: 0 0 0;
-    transition: 1.5s transform 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp2 {
-    opacity: 1;
-    transition: 0.1s opacity 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp3 {
-    opacity: 1;
-    transition: 0.1s opacity 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp4 {
-    opacity: 1;
-    transition: 0.1s opacity 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp5 {
-    opacity: 1;
-    transition: 0.1s opacity 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp6 {
-    opacity: 1;
-    transition: 0.1s opacity 0.3s;
-  }
-
-  .checkbox:checked + label svg #grp7 {
-    opacity: 1;
-    transition: 0.1s opacity 0.3s;
+      #grp7 {
+        opacity: 1;
+        transition: 0.1s opacity 0.3s;
+      }
+    }
   }
 
   @keyframes animateCircle {
@@ -294,42 +284,3 @@
   }
 }
 /* end add to wishlist styles */
-
-// .share-header {
-//   float: left;
-//   margin-left: 0px !important;
-//   margin-right: auto;
-//   z-index: 1;
-// }
-
-// .share-wrapper {
-//   font: 1em verdana, sans-serif;
-//   position: sticky;
-//   margin-top: 7px;
-//   margin-bottom: 7px;
-// }
-
-// .share-cirle {
-//   background: white;
-//   width: 40px;
-//   height: 40px;
-//   border-radius: 50%;
-//   display: flex; /* or inline-flex */
-//   align-items: center;
-//   justify-content: center;
-// }
-
-// .myShareCountWrapper {
-//   font-size: 1.5em;
-//   color: lightblue;
-// }
-
-// .myShareCountWrapper:hover {
-//   color: blue;
-// }
-
-//  SelectOptions styple overwrite
-
-.select-option__menu {
-  z-index: 2 !important;
-}

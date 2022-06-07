@@ -13,14 +13,8 @@ import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 
 const EditAddress = props => {
-  const {
-    address,
-    addressChange,
-    defaultChange,
-    formErrors,
-    updateAddress,
-    deleteAddress
-  } = props;
+  const { address, addressChange, formErrors, updateAddress, deleteAddress } =
+    props;
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -102,8 +96,7 @@ const EditAddress = props => {
               label={'As the Default'}
               name={'isDefault'}
               checked={address.isDefault}
-              value={address.isDefault}
-              toggleCheckboxChange={(name, value) => {
+              onChange={(name, value) => {
                 addressChange(name, value);
               }}
             />

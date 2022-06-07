@@ -117,7 +117,7 @@ class Signup extends React.PureComponent {
             id={'subscribe'}
             label={'Subscribe to newsletter'}
             checked={isSubscribed}
-            toggleCheckboxChange={subscribeChange}
+            onChange={subscribeChange}
           />
           <div className='d-flex flex-column flex-md-row align-items-md-center justify-content-between'>
             <Button

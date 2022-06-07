@@ -24,7 +24,8 @@ const initialState = {
     city: '',
     state: '',
     country: '',
-    zipCode: ''
+    zipCode: '',
+    isDefault: false
   },
   address: {
     _id: '',

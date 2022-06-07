@@ -19,8 +19,7 @@ import {
   ADD_ADDRESS,
   REMOVE_ADDRESS,
   SET_ADDRESS_LOADING,
-  ADDRESS_SELECT,
-  FETCH_ADDRESSES_SELECT
+  ADDRESS_SELECT
 } from './constants';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';

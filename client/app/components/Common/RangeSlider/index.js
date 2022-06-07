@@ -31,7 +31,7 @@ class RangeSlider extends React.Component {
     super(props);
     this.state = {
       sliderValue: 50,
-      rangeValue: [1, 500]
+      rangeValue: this.props.defaultValue
     };
   }
 
@@ -56,7 +56,7 @@ class RangeSlider extends React.Component {
   };
 
   render() {
-    const { type, marks, step, defaultValue } = this.props;
+    const { type, marks, step, defaultValue, max, allowCross } = this.props;
     const { sliderValue, rangeValue } = this.state;
 
     return (
@@ -66,6 +66,7 @@ class RangeSlider extends React.Component {
             className='slider'
             dots
             reverse
+            allowCross={allowCross}
             step={step}
             defaultValue={defaultValue}
             marks={marks}
@@ -76,13 +77,15 @@ class RangeSlider extends React.Component {
         ) : (
           <Range
             className='slider'
-            pushable={100}
+            pushable={10}
+            allowCross={allowCross}
             min={1}
-            max={500}
+            max={max}
+            step={step}
+            defaultValue={defaultValue}
             marks={marks}
             handle={handle}
             tipFormatter={value => `$${value}`}
-            defaultValue={defaultValue}
             value={rangeValue}
             onChange={this.onRangeChange}
             onAfterChange={this.onAfterRangeChange}
@@ -94,7 +97,8 @@ class RangeSlider extends React.Component {
 }
 
 RangeSlider.defaultProps = {
-  type: 'range'
+  type: 'range',
+  allowCross: true
 };
 
 export default RangeSlider;

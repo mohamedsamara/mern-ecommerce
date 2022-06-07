@@ -59,12 +59,13 @@ const initialState = {
     category: 'all',
     brand: 'all',
     min: 1,
-    max: 500,
+    max: 2500,
     rating: 0,
     order: 0,
-    pageNumber: 1,
-    pages: 1,
-    totalProducts: 0
+    totalPages: 1,
+    currentPage: 1,
+    count: 0,
+    limit: 10
   }
 };
 
@@ -201,12 +202,13 @@ const productReducer = (state = initialState, action) => {
           category: 'all',
           brand: 'all',
           min: 1,
-          max: 500,
+          max: 2500,
           rating: 0,
           order: 0,
-          pageNumber: 1,
-          pages: 1,
-          totalProducts: 0
+          totalPages: 1,
+          currentPage: 1,
+          count: 0,
+          limit: 10
         }
       };
     default:

@@ -274,7 +274,7 @@ const XIcon = ({ className = '', width = '20', height = '20' }) => {
 const HeartIcon = ({ className = '' }) => {
   return (
     <svg
-      className={`${className}`}
+      className={`${className} heart-icon`}
       enableBackground='new 467 392 58 57'
       viewBox='467 392 58 57'
       xmlns='http://www.w3.org/2000/svg'

@@ -11,6 +11,10 @@ const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../utils/auth');
 const { s3Upload } = require('../../utils/storage');
+const {
+  getStoreProductsQuery,
+  getStoreProductsWishListQuery
+} = require('../../utils/queries');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -72,8 +76,8 @@ router.get('/list/search/:name', async (req, res) => {
   }
 });
 
-// fetch store products by advancedFilters api
-router.post('/list', async (req, res) => {
+// fetch store products by advanced filters api
+router.get('/list', async (req, res) => {
   try {
     let {
       sortOrder,
@@ -81,82 +85,13 @@ router.post('/list', async (req, res) => {
       max,
       min,
       category,
-      pageNumber: page = 1
-    } = req.body;
+      page = 1,
+      limit = 10
+    } = req.query;
+    sortOrder = JSON.parse(sortOrder);
 
-    const pageSize = 8;
     const categoryFilter = category ? { category } : {};
-    const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
-    const ratingFilter = rating
-      ? { rating: { $gte: rating } }
-      : { rating: { $gte: rating } };
-
-    const basicQuery = [
-      {
-        $lookup: {
-          from: 'brands',
-          localField: 'brand',
-          foreignField: '_id',
-          as: 'brands'
-        }
-      },
-      {
-        $unwind: {
-          path: '$brands',
-          preserveNullAndEmptyArrays: true
-        }
-      },
-      {
-        $addFields: {
-          'brand.name': '$brands.name',
-          'brand._id': '$brands._id',
-          'brand.isActive': '$brands.isActive'
-        }
-      },
-      {
-        $match: {
-          'brand.isActive': true
-        }
-      },
-      {
-        $lookup: {
-          from: 'reviews',
-          localField: '_id',
-          foreignField: 'product',
-          as: 'reviews'
-        }
-      },
-      {
-        $addFields: {
-          totalRatings: { $sum: '$reviews.rating' },
-          totalReviews: { $size: '$reviews' }
-        }
-      },
-      {
-        $addFields: {
-          averageRating: {
-            $cond: [
-              { $eq: ['$totalReviews', 0] },
-              0,
-              { $divide: ['$totalRatings', '$totalReviews'] }
-            ]
-          }
-        }
-      },
-      {
-        $match: {
-          isActive: true,
-          price: priceFilter.price,
-          averageRating: ratingFilter.rating
-        }
-      },
-      {
-        $project: {
-          brands: 0,
-          reviews: 0
-        }
-      }
-    ];
+    const basicQuery = getStoreProductsQuery(min, max, rating);
 
     const userDoc = await checkAuth(req);
     const categoryDoc = await Category.findOne(
@@ -176,88 +111,35 @@ router.post('/list', async (req, res) => {
     }
 
     let products = null;
-    let productsCount = 0;
+    const productsCount = await Product.aggregate(basicQuery);
+    const count = productsCount.length;
+    const size = count > limit ? page - 1 : 0;
+    const currentPage = count > limit ? Number(page) : 1;
+
+    // paginate query
+    const paginateQuery = [
+      { $sort: sortOrder },
+      { $skip: size * limit },
+      { $limit: limit * 1 }
+    ];
 
     if (userDoc) {
-      productsCount = await Product.aggregate(
-        [
-          {
-            $lookup: {
-              from: 'wishlists',
-              let: { product: '$_id' },
-              pipeline: [
-                {
-                  $match: {
-                    $and: [
-                      { $expr: { $eq: ['$$product', '$product'] } },
-                      { user: new Mongoose.Types.ObjectId(userDoc.id) }
-                    ]
-                  }
-                }
-              ],
-              as: 'isLiked'
-            }
-          },
-          {
-            $addFields: {
-              isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
-            }
-          }
-        ].concat(basicQuery)
+      const wishListQuery = getStoreProductsWishListQuery(userDoc.id).concat(
+        basicQuery
       );
-      const paginateQuery = [
-        { $sort: sortOrder },
-        { $skip: pageSize * (productsCount.length > 8 ? page - 1 : 0) },
-        { $limit: pageSize }
-      ];
-      products = await Product.aggregate(
-        [
-          {
-            $lookup: {
-              from: 'wishlists',
-              let: { product: '$_id' },
-              pipeline: [
-                {
-                  $match: {
-                    $and: [
-                      { $expr: { $eq: ['$$product', '$product'] } },
-                      { user: new Mongoose.Types.ObjectId(userDoc.id) }
-                    ]
-                  }
-                }
-              ],
-              as: 'isLiked'
-            }
-          },
-          {
-            $addFields: {
-              isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
-            }
-          }
-        ]
-          .concat(basicQuery)
-          .concat(paginateQuery)
-      );
+      products = await Product.aggregate(wishListQuery.concat(paginateQuery));
     } else {
-      productsCount = await Product.aggregate(basicQuery);
-      const paginateQuery = [
-        { $sort: sortOrder },
-        { $skip: pageSize * (productsCount.length > 8 ? page - 1 : 0) },
-        { $limit: pageSize }
-      ];
       products = await Product.aggregate(basicQuery.concat(paginateQuery));
     }
 
     res.status(200).json({
       products,
-      page,
-      pages:
-        productsCount.length > 0
-          ? Math.ceil(productsCount.length / pageSize)
-          : 0,
-      totalProducts: productsCount.length
+      totalPages: Math.ceil(count / limit),
+      currentPage,
+      count
     });
   } catch (error) {
+    console.log('error', error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });

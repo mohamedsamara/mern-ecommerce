@@ -4,31 +4,48 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Checkbox = props => {
-  const { id, label, name, checked, value, toggleCheckboxChange } = props;
+  const { className, id, name, label, disabled, checked, onChange } = props;
+  const [isChecked, setIsChecked] = useState(checked);
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
 
   const _onChange = e => {
+    setIsChecked(!isChecked);
+
     const value = e.target.checked;
     const name = e.target.name;
-    toggleCheckboxChange(name, value);
+    onChange(name, value);
   };
 
+  const isLabelText = label && typeof label === 'string';
+  const extraClassName = isLabelText
+    ? ` default-icon ${className}`
+    : ` custom-icon ${className}`;
+
   return (
-    <div className='checkbox'>
+    <div className={`checkbox${extraClassName}`}>
       <input
         className={'input-checkbox'}
         type={'checkbox'}
         id={id}
         name={name}
-        value={value}
+        checked={!disabled ? isChecked : false}
         onChange={_onChange}
-        checked={checked}
       />
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} type='submit'>
+        {isLabelText ? label : label}
+      </label>
     </div>
   );
 };
 
 export default Checkbox;
+
+Checkbox.defaultProps = {
+  className: ''
+};

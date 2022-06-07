@@ -23,17 +23,19 @@ class ProductsShop extends React.PureComponent {
   render() {
     const { products, isLoading, authenticated, updateWishlist } = this.props;
 
+    const displayProducts = products && products.length > 0;
+
     return (
       <div className='products-shop'>
         {isLoading && <LoadingIndicator />}
-        {products && products.length > 0 && (
+        {displayProducts && (
           <ProductList
             products={products}
             authenticated={authenticated}
             updateWishlist={updateWishlist}
           />
         )}
-        {!isLoading && products && products.length <= 0 && (
+        {!isLoading && !displayProducts && (
           <NotFound message='no products found.' />
         )}
       </div>
