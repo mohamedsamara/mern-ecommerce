@@ -279,10 +279,12 @@ export const deleteMerchant = (merchant, search, page) => {
         if (search)
           return dispatch(searchMerchants({ name: 'merchant', value: search })); // update search list if this is a search result
 
-        dispatch({
-          type: REMOVE_MERCHANT,
-          payload: merchant._id
-        });
+        dispatch(fetchMerchants('merchant', page));
+
+        // dispatch({
+        //   type: REMOVE_MERCHANT,
+        //   payload: merchant._id
+        // });
       }
     } catch (error) {
       handleError(error, dispatch);
