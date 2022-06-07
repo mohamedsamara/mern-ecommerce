@@ -11,8 +11,6 @@ import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
 
-import Input from '../../components/Common/Input';
-import Button from '../../components/Common/Button';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import AddMerchant from '../../components/Manager/AddMerchant';
 
