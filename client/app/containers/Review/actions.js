@@ -6,6 +6,7 @@
 
 import { success } from 'react-notification-system-redux';
 import axios from 'axios';
+import DOMPurify from 'dompurify';
 
 import {
   FETCH_REVIEWS,
@@ -19,7 +20,7 @@ import {
   SET_ADVANCED_FILTERS
 } from './constants';
 import handleError from '../../utils/error';
-import { allFieldsValidation } from '../../utils/validation';
+import { allFieldsValidation, santizeFields } from '../../utils/validation';
 
 export const reviewChange = (name, value) => {
   let formData = {};
@@ -167,7 +168,8 @@ export const addProductReview = () => {
         return dispatch({ type: SET_REVIEW_FORM_ERRORS, payload: errors });
       }
 
-      const response = await axios.post(`/api/review/add`, newReview);
+      const santizedReview = santizeFields(newReview);
+      const response = await axios.post(`/api/review/add`, santizedReview);
 
       const successfulOptions = {
         title: `${response.data.message}`,
