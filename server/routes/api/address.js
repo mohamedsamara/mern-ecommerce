@@ -5,39 +5,42 @@ const router = express.Router();
 const Address = require('../../models/address');
 const auth = require('../../middleware/auth');
 
-router.post('/add', auth, (req, res) => {
-  const user = req.user;
+// add address api
+router.post('/add', auth, async (req, res) => {
+  try {
+    const user = req.user;
 
-  const address = new Address(Object.assign(req.body, { user: user._id }));
-
-  address.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    const address = new Address({
+      ...req.body,
+      user: user._id
+    });
+    const addressDoc = await address.save();
 
     res.status(200).json({
       success: true,
       message: `Address has been added successfully!`,
-      address: data
+      address: addressDoc
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 // fetch all addresses api
-router.get('/', auth, (req, res) => {
-  Address.find({ user: req.user._id }, (err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+router.get('/', auth, async (req, res) => {
+  try {
+    const addresses = await Address.find({ user: req.user._id });
 
     res.status(200).json({
-      addresses: data
+      addresses
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 router.get('/:id', async (req, res) => {
@@ -83,20 +86,20 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-router.delete('/delete/:id', (req, res) => {
-  Address.deleteOne({ _id: req.params.id }, (err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+router.delete('/delete/:id', async (req, res) => {
+  try {
+    const address = await Address.deleteOne({ _id: req.params.id });
 
     res.status(200).json({
       success: true,
       message: `Address has been deleted successfully!`,
-      address: data
+      address
     });
-  });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 module.exports = router;

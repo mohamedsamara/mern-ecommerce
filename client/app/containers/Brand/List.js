@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 
 import actions from '../../actions';
 import { ROLE_ADMIN } from '../../constants';
+
 import BrandList from '../../components/Manager/BrandList';
 import SubPage from '../../components/Manager/SubPage';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';

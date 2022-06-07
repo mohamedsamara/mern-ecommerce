@@ -4,36 +4,20 @@
  *
  */
 
-import { success, warning, info } from 'react-notification-system-redux';
-import { filterProducts } from '../Product/actions';
+import { success, warning } from 'react-notification-system-redux';
 import axios from 'axios';
 
-import {
-  FETCH_WISHLIST,
-  SET_WISHLIST_LOADING,
-  WISHLIST_CHANGE
-} from './constants';
+import { FETCH_WISHLIST, SET_WISHLIST_LOADING } from './constants';
 import handleError from '../../utils/error';
 
-export const updateWishlist = e => {
+export const updateWishlist = (isLiked, productId) => {
   return async (dispatch, getState) => {
     try {
-      if (getState().authentication.authenticated == true) {
-        const wishlistForm = {
-          value: e.target.checked,
-          name: e.target.name,
-          id: e.target.id
-        };
-
-        dispatch({ type: WISHLIST_CHANGE, payload: wishlistForm });
-        const wishlist = await getState().wishlist.wishlistForm;
-
-        const newWishlist = {
-          isLiked: wishlist.value,
-          product: wishlist.name
-        };
-
-        const response = await axios.post(`/api/wishlist`, newWishlist);
+      if (getState().authentication.authenticated === true) {
+        const response = await axios.post(`/api/wishlist`, {
+          isLiked,
+          product: productId
+        });
 
         const successfulOptions = {
           title: `${response.data.message}`,

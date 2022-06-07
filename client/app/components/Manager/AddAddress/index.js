@@ -94,8 +94,8 @@ const AddAddress = props => {
               id={'default'}
               label={'As the Default'}
               name={'isDefault'}
-              value={addressFormData.isDefault}
-              toggleCheckboxChange={(name, value) => {
+              checked={addressFormData.isDefault}
+              onChange={(name, value) => {
                 addressChange(name, value);
               }}
             />

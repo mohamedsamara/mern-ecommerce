@@ -11,6 +11,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
 import actions from '../../actions';
+import { sortOptions } from '../../utils/store';
 
 import ProductsShop from '../ProductsShop';
 import BrandsShop from '../BrandsShop';
@@ -31,14 +32,12 @@ class Shop extends React.PureComponent {
   }
 
   render() {
-    const { advancedFilters, filterProducts } = this.props;
-    const { totalProducts, pageNumber, pages, order } = advancedFilters;
-
-    const sortOptions = [
-      { value: 0, label: 'Newest First' },
-      { value: 1, label: 'Price High to Low' },
-      { value: 2, label: 'Price Low to High' }
-    ];
+    const { products, advancedFilters, filterProducts } = this.props;
+    const { totalPages, currentPage, count, limit, order } = advancedFilters;
+    const displayPagination = totalPages > 1;
+    const totalProducts = products.length;
+    const left = limit * (currentPage - 1) + 1;
+    const right = totalProducts + left - 1;
 
     return (
       <div className='shop'>
@@ -49,11 +48,7 @@ class Shop extends React.PureComponent {
             md={{ size: 12, order: 1 }}
             lg={{ size: 3, order: 1 }}
           >
-            <ProductFilter
-              totalProducts={totalProducts}
-              pageNumber={pageNumber}
-              filterProducts={filterProducts}
-            />
+            <ProductFilter filterProducts={filterProducts} />
           </Col>
           <Col
             xs={{ size: 12, order: 2 }}
@@ -70,19 +65,9 @@ class Shop extends React.PureComponent {
                 className='text-center text-md-left mt-3 mt-md-0 mb-1 mb-md-0'
               >
                 <b>Showing: </b>
-                {`${
-                  totalProducts < 8
-                    ? totalProducts
-                    : 8 * pageNumber - 8 == 0
-                    ? 1
-                    : 8 * pageNumber - 8 + 1
-                } – ${
-                  totalProducts < 8
-                    ? totalProducts
-                    : 8 * pageNumber < totalProducts
-                    ? 8 * pageNumber
-                    : totalProducts
-                } products of ${totalProducts} products`}
+                {totalProducts > 0
+                  ? `${left}-${right} products of ${count} products`
+                  : `${count} products`}
               </Col>
               <Col
                 xs={{ size: 12, order: 2 }}
@@ -116,9 +101,12 @@ class Shop extends React.PureComponent {
               <Route path='*' component={Page404} />
             </Switch>
 
-            {totalProducts >= 8 && (
+            {displayPagination && (
               <div className='d-flex justify-content-center text-center mt-4'>
-                <Pagination totalPages={pages} onPagination={filterProducts} />
+                <Pagination
+                  totalPages={totalPages}
+                  onPagination={filterProducts}
+                />
               </div>
             )}
           </Col>
@@ -130,7 +118,8 @@ class Shop extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    advancedFilters: state.product.advancedFilters
+    advancedFilters: state.product.advancedFilters,
+    products: state.product.storeProducts
   };
 };
 

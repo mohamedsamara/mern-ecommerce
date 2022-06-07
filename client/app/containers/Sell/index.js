@@ -14,22 +14,18 @@ import actions from '../../actions';
 import Input from '../../components/Common/Input';
 import Button from '../../components/Common/Button';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
+import AddMerchant from '../../components/Manager/AddMerchant';
 
 class Sell extends React.PureComponent {
   render() {
     const {
-      sellFormData,
+      merchantFormData,
       formErrors,
-      sellFormChange,
-      sellWithUs,
+      merchantChange,
+      addMerchant,
       isSubmitting,
       isLoading
     } = this.props;
-
-    const handleSubmit = event => {
-      event.preventDefault();
-      sellWithUs();
-    };
 
     return (
       <div className='sell'>
@@ -38,79 +34,14 @@ class Sell extends React.PureComponent {
         <hr />
         <Row>
           <Col xs='12' md='6' className='order-2 order-md-1'>
-            <form onSubmit={handleSubmit}>
-              <Row>
-                <Col xs='12'>
-                  <Input
-                    type={'text'}
-                    error={formErrors['name']}
-                    label={'Name'}
-                    name={'name'}
-                    placeholder={'You Full Name'}
-                    value={sellFormData.name}
-                    onInputChange={(name, value) => {
-                      sellFormChange(name, value);
-                    }}
-                  />
-                </Col>
-                <Col xs='12'>
-                  <Input
-                    type={'text'}
-                    error={formErrors['email']}
-                    label={'Email Address'}
-                    name={'email'}
-                    placeholder={'Your Email Address'}
-                    value={sellFormData.email}
-                    onInputChange={(name, value) => {
-                      sellFormChange(name, value);
-                    }}
-                  />
-                </Col>
-                <Col xs='12'>
-                  <Input
-                    type={'text'}
-                    error={formErrors['phoneNumber']}
-                    label={'Phone Number'}
-                    name={'phoneNumber'}
-                    placeholder={'Your Phone Number'}
-                    value={sellFormData.phoneNumber}
-                    onInputChange={(name, value) => {
-                      sellFormChange(name, value);
-                    }}
-                  />
-                </Col>
-                <Col xs='12'>
-                  <Input
-                    type={'text'}
-                    error={formErrors['brand']}
-                    label={'Brand'}
-                    name={'brand'}
-                    placeholder={'Your Business Brand'}
-                    value={sellFormData.brand}
-                    onInputChange={(name, value) => {
-                      sellFormChange(name, value);
-                    }}
-                  />
-                </Col>
-                <Col xs='12'>
-                  <Input
-                    type={'textarea'}
-                    error={formErrors['business']}
-                    label={'Business'}
-                    name={'business'}
-                    placeholder={'Please Describe Your Business'}
-                    value={sellFormData.business}
-                    onInputChange={(name, value) => {
-                      sellFormChange(name, value);
-                    }}
-                  />
-                </Col>
-              </Row>
-              <hr />
-              <div className='sell-actions'>
-                <Button type='submit' text='Submit' disabled={isSubmitting} />
-              </div>
-            </form>
+            <AddMerchant
+              merchantFormData={merchantFormData}
+              formErrors={formErrors}
+              isSubmitting={isSubmitting}
+              submitTitle='Submit'
+              merchantChange={merchantChange}
+              addMerchant={addMerchant}
+            />
           </Col>
           <Col xs='12' md='6' className='order-1 order-md-2'>
             <Row>
@@ -142,10 +73,10 @@ class Sell extends React.PureComponent {
 
 const mapStateToProps = state => {
   return {
-    sellFormData: state.merchant.sellFormData,
+    merchantFormData: state.merchant.merchantFormData,
     formErrors: state.merchant.formErrors,
-    isSubmitting: state.merchant.isSellSubmitting,
-    isLoading: state.merchant.isSellLoading
+    isSubmitting: state.merchant.isSubmitting,
+    isLoading: state.merchant.isLoading
   };
 };
 

@@ -16,4 +16,3 @@ export const ADD_ADDRESS = 'src/Address/ADD_ADDRESS';
 export const REMOVE_ADDRESS = 'src/Address/REMOVE_ADDRESS';
 export const SET_ADDRESS_LOADING = 'src/Address/SET_ADDRESS_LOADING';
 export const ADDRESS_SELECT = 'src/Brand/BRAND_SELECT';
-export const FETCH_ADDRESSES_SELECT = 'src/Brand/FETCH_BRANDS_SELECT';

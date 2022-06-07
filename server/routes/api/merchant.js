@@ -11,13 +11,10 @@ const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
 
-router.post('/seller-request', async (req, res) => {
+// add merchant api
+router.post('/add', async (req, res) => {
   try {
-    const name = req.body.name;
-    const business = req.body.business;
-    const phoneNumber = req.body.phoneNumber;
-    const email = req.body.email;
-    const brand = req.body.brand;
+    const { name, business, phoneNumber, email, brand } = req.body;
 
     if (!name || !email) {
       return res
@@ -52,7 +49,6 @@ router.post('/seller-request', async (req, res) => {
       phoneNumber,
       brand
     });
-
     const merchantDoc = await merchant.save();
 
     await mailgun.sendEmail(email, 'merchant-application');
@@ -107,7 +103,7 @@ router.get('/', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
 
     const merchants = await Merchant.find()
-      // .sort('-created')
+      .sort('-created')
       .limit(limit * 1)
       .skip((page - 1) * limit)
       .exec();

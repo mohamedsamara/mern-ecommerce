@@ -6,6 +6,7 @@
 
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
@@ -29,6 +30,12 @@ const EditBrand = props => {
 
   return (
     <div className='edit-brand'>
+      <div className='d-flex flex-row mx-0 mb-3'>
+        <label className='mr-1'>Brand link </label>
+        <Link to={`/shop/brand/${brand.slug}`} className='default-link'>
+          {brand.slug}
+        </Link>
+      </div>
       <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12'>
@@ -39,6 +46,19 @@ const EditBrand = props => {
               name={'name'}
               placeholder={'Brand Name'}
               value={brand.name}
+              onInputChange={(name, value) => {
+                brandChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12'>
+            <Input
+              type={'text'}
+              error={formErrors['slug']}
+              label={'Slug'}
+              name={'slug'}
+              placeholder={'Brand Slug'}
+              value={brand.slug}
               onInputChange={(name, value) => {
                 brandChange(name, value);
               }}

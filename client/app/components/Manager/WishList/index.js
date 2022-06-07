@@ -60,9 +60,7 @@ const WishList = props => {
               icon={<XIcon className='text-white' width={15} />}
               round={20}
               onClick={e => {
-                e.target.name = item.product._id;
-                e.target.checked = !item.isLiked;
-                updateWishlist(e);
+                updateWishlist(!item.isLiked, item.product._id);
               }}
             />
           </div>

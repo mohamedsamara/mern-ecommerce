@@ -6,6 +6,7 @@
 
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
 import { ROLE_ADMIN } from '../../../constants';
@@ -38,6 +39,13 @@ const EditProduct = props => {
 
   return (
     <div className='edit-product'>
+      <div className='d-flex flex-row mx-0 mb-3'>
+        <label className='mr-1'>Product link </label>
+        <Link to={`/product/${product.slug}`} className='default-link'>
+          {product.slug}
+        </Link>
+      </div>
+
       <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12'>
@@ -48,6 +56,32 @@ const EditProduct = props => {
               name={'name'}
               placeholder={'Product Name'}
               value={product.name}
+              onInputChange={(name, value) => {
+                productChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12'>
+            <Input
+              type={'text'}
+              error={formErrors['sku']}
+              label={'Sku'}
+              name={'sku'}
+              placeholder={'Product Sku'}
+              value={product.sku}
+              onInputChange={(name, value) => {
+                productChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12'>
+            <Input
+              type={'text'}
+              error={formErrors['slug']}
+              label={'Slug'}
+              name={'slug'}
+              placeholder={'Product Slug'}
+              value={product.slug}
               onInputChange={(name, value) => {
                 productChange(name, value);
               }}

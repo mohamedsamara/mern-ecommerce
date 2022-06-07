@@ -151,6 +151,15 @@ router.put(
       const brandId = req.params.id;
       const update = req.body.brand;
       const query = { _id: brandId };
+      const { slug } = req.body.brand;
+
+      const foundBrand = await Brand.findOne({
+        $or: [{ slug }]
+      });
+
+      if (foundBrand && foundBrand._id != brandId) {
+        return res.status(400).json({ error: 'Slug is already in use.' });
+      }
 
       await Brand.findOneAndUpdate(query, update, {
         new: true

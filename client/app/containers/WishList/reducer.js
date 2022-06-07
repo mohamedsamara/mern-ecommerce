@@ -4,11 +4,7 @@
  *
  */
 
-import {
-  FETCH_WISHLIST,
-  SET_WISHLIST_LOADING,
-  WISHLIST_CHANGE
-} from './constants';
+import { FETCH_WISHLIST, SET_WISHLIST_LOADING } from './constants';
 
 const initialState = {
   wishlist: [],
@@ -27,14 +23,6 @@ const wishListReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.payload
-      };
-    case WISHLIST_CHANGE:
-      return {
-        ...state,
-        wishlistForm: {
-          ...state.wishlistForm,
-          ...action.payload
-        }
       };
     default:
       return state;

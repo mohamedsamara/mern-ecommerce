@@ -1,52 +1,54 @@
 .checkbox {
-  margin: 10px 0px;
-  display: inline-block;
-
   input[type='checkbox'] {
     @include sr-only();
   }
 
-  input[type='checkbox'] + label {
-    display: block;
-    position: relative;
-    padding: 5px 5px 5px 30px;
-    color: $font-custom-color;
-    cursor: pointer;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-  }
+  &.default-icon {
+    margin: 10px 0px;
+    display: inline-block;
 
-  input[type='checkbox'] + label:last-child {
-    margin-bottom: 0;
-  }
+    input[type='checkbox'] + label {
+      display: block;
+      position: relative;
+      padding: 5px 5px 5px 30px;
+      color: $font-custom-color;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
 
-  input[type='checkbox'] + label:before {
-    content: '';
-    display: block;
-    width: 18px;
-    height: 16px;
-    border: $border-default;
-    border-color: $primary-color;
-    position: absolute;
-    left: 4px;
-    top: 7px;
-    opacity: 0.6;
-    -webkit-transition: all 0.12s, border-color 0.08s;
-    transition: all 0.12s, border-color 0.08s;
-  }
+    input[type='checkbox'] + label:last-child {
+      margin-bottom: 0;
+    }
 
-  input[type='checkbox']:checked + label:before {
-    width: 8px;
-    left: 12px;
-    top: 5px;
-    border-radius: 0;
-    opacity: 1;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
+    input[type='checkbox'] + label:before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 16px;
+      border: $border-default;
+      border-color: $primary-color;
+      position: absolute;
+      left: 4px;
+      top: 7px;
+      opacity: 0.6;
+      -webkit-transition: all 0.12s, border-color 0.08s;
+      transition: all 0.12s, border-color 0.08s;
+    }
+
+    input[type='checkbox']:checked + label:before {
+      width: 8px;
+      left: 12px;
+      top: 5px;
+      border-radius: 0;
+      opacity: 1;
+      border-top-color: transparent;
+      border-left-color: transparent;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
   }
 }
 

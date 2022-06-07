@@ -6,6 +6,7 @@
 
 import React from 'react';
 
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'reactstrap';
 
 import Input from '../../Common/Input';
@@ -31,6 +32,12 @@ const EditCategory = props => {
 
   return (
     <div className='edit-category'>
+      <div className='d-flex flex-row mx-0 mb-3'>
+        <label className='mr-1'>Category link </label>
+        <Link to={`/shop/category/${category.slug}`} className='default-link'>
+          {category.slug}
+        </Link>
+      </div>
       <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12'>
@@ -41,6 +48,19 @@ const EditCategory = props => {
               name={'name'}
               placeholder={'Category Name'}
               value={category.name}
+              onInputChange={(name, value) => {
+                categoryChange(name, value);
+              }}
+            />
+          </Col>
+          <Col xs='12'>
+            <Input
+              type={'text'}
+              error={formErrors['slug']}
+              label={'Slug'}
+              name={'slug'}
+              placeholder={'Category Slug'}
+              value={category.slug}
               onInputChange={(name, value) => {
                 categoryChange(name, value);
               }}
