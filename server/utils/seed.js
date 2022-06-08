@@ -16,8 +16,8 @@ const seedDB = async () => {
     if (!email || !password) throw new Error('missing arguments');
 
     const user = new User({
-      email: 'admin@mern.com',
-      password: 'testtest',
+      email,
+      password,
       firstName: 'admin',
       lastName: 'admin',
       role: ROLE_ADMIN
