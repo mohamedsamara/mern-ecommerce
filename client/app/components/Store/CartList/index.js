@@ -41,9 +41,9 @@ const CartList = props => {
                       className='item-link one-line-ellipsis'
                       onClick={handleProductClick}
                     >
-                      <h1 className='item-name one-line-ellipsis'>
+                      <h2 className='item-name one-line-ellipsis'>
                         {item.name}
-                      </h1>
+                      </h2>
                     </Link>
                   </div>
                 </Col>

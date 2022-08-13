@@ -17,7 +17,7 @@
   border-bottom: $border-primary;
 
   .logo {
-    font-size: $font-size-heading-medium !important;
+    font-size: $font-size-heading-large !important;
   }
 }
 
@@ -142,7 +142,7 @@
       justify-content: center;
     }
 
-    h1 {
+    .logo {
       margin: 0px;
       color: $font-custom-color !important;
       @include media-breakpoint-up(md) {

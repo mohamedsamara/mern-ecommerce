@@ -36,7 +36,6 @@ const AddProduct = props => {
 
   return (
     <div className='add-product'>
-      <h1 />
       <form onSubmit={handleSubmit} noValidate>
         <Row>
           <Col xs='12' lg='6'>
