@@ -60,7 +60,7 @@
       .menu-item {
         a {
           color: $font-custom-color !important;
-          font-weight: $font-weight-bold-one;
+          font-weight: $font-weight-normal;
           text-transform: capitalize;
           display: block;
           padding: 10px 30px 10px 30px;
@@ -82,7 +82,7 @@
           }
 
           &.active-line {
-            font-weight: $font-weight-bold-two;
+            font-weight: $font-weight-medium;
             background-color: $white;
             color: $primary-color !important;
             border-color: $primary-color;

@@ -50,7 +50,7 @@
 
     .btn-text {
       font-size: $font-size-heading-xsmall !important;
-      font-weight: $font-weight-bold-one;
+      font-weight: $font-weight-normal;
     }
   }
 
@@ -79,10 +79,10 @@
         padding: 10px 0px;
         text-transform: capitalize;
         color: $font-custom-color !important;
-        font-weight: $font-weight-bold-one;
+        font-weight: $font-weight-normal;
 
         &.active-link {
-          font-weight: $font-weight-bold-two;
+          font-weight: $font-weight-medium;
           background-color: $white;
         }
       }

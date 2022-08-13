@@ -7,7 +7,7 @@
   span {
     color: $white;
     font-size: $font-size-medium !important;
-    font-weight: $font-weight-bold-one;
+    font-weight: $font-weight-normal;
     margin: 0px 5px;
   }
 }
@@ -212,7 +212,7 @@
         position: relative;
         color: $font-custom-color !important;
         font-size: $font-size-large;
-        font-weight: $font-weight-bold-one;
+        font-weight: $font-weight-normal;
 
         &:hover {
           &:after {

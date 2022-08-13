@@ -122,7 +122,7 @@
             color: $font-custom-color !important;
 
             span {
-              font-weight: $font-weight-bold-one;
+              font-weight: $font-weight-normal;
             }
           }
         }
@@ -212,19 +212,19 @@
 
   .item-label {
     color: $font-custom-color;
-    font-weight: $font-weight-bold-one;
+    font-weight: $font-weight-normal;
     text-transform: capitalize;
   }
 
   .item-value {
     color: $font-custom-color;
-    font-weight: $font-weight-bold-two;
+    font-weight: $font-weight-medium;
     font-size: $font-size-large;
   }
 
   .price {
     color: $font-custom-color;
-    font-weight: $font-weight-bold-one;
+    font-weight: $font-weight-normal;
     font-size: $font-size-huge;
   }
 
@@ -234,7 +234,7 @@
 }
 
 .stock {
-  font-weight: $font-weight-bold-one;
+  font-weight: $font-weight-normal;
 }
 
 .in-stock {

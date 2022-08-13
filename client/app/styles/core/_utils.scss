@@ -4,7 +4,7 @@
 .not-found {
   text-align: center;
   text-transform: capitalize;
-  font-weight: $font-weight-bold-two;
+  font-weight: $font-weight-medium;
   color: $font-custom-color;
 }
 /* end not found styles */
@@ -41,15 +41,15 @@
 }
 
 .fw-1 {
-  font-weight: $font-weight-bold-one;
+  font-weight: $font-weight-normal;
 }
 
 .fw-2 {
-  font-weight: $font-weight-bold-two;
+  font-weight: $font-weight-medium;
 }
 
 .fw-3 {
-  font-weight: $font-weight-bold-three;
+  font-weight: $font-weight-bold;
 }
 
 .fs-12 {
@@ -137,7 +137,7 @@
 // default link
 .default-link {
   color: $font-custom-color !important;
-  font-weight: $font-weight-bold-one;
+  font-weight: $font-weight-normal;
 
   &:hover {
     text-decoration: underline !important;
@@ -146,7 +146,7 @@
 
 .redirect-link {
   color: $primary-color !important;
-  font-weight: $font-weight-bold-one;
+  font-weight: $font-weight-normal;
   text-transform: capitalize;
 }
 

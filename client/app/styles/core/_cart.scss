@@ -106,7 +106,7 @@
     }
 
     p {
-      font-weight: $font-weight-bold-one;
+      font-weight: $font-weight-normal;
       margin-top: 12px;
     }
   }
@@ -130,13 +130,13 @@
 .summary-item {
   .summary-label {
     color: $font-custom-color;
-    font-weight: $font-weight-bold-one;
+    font-weight: $font-weight-normal;
     text-transform: capitalize;
   }
 
   .summary-value {
     color: $font-custom-color;
-    font-weight: $font-weight-bold-two;
+    font-weight: $font-weight-medium;
   }
 }
 /* end cart common styles */

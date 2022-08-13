@@ -10,7 +10,7 @@ button {
   background: transparent;
   color: $font-custom-color !important;
   font-size: $font-size-small;
-  font-weight: $font-weight-bold-two;
+  font-weight: $font-weight-medium;
   text-decoration: none;
   text-transform: capitalize;
   cursor: pointer;
@@ -36,7 +36,7 @@ button {
   padding: 0;
 
   .btn-text {
-    font-weight: $font-weight-bold-two;
+    font-weight: $font-weight-medium;
     font-size: $font-size-small;
   }
 }
@@ -231,7 +231,7 @@ body.user-is-tabbing button:focus {
   border: $border-default;
   display: inline-block;
   min-width: 150px;
-  font-weight: $font-weight-bold-one;
+  font-weight: $font-weight-normal;
   color: $font-custom-color !important;
   background-color: $btn-bg;
   -webkit-transition: $layout-transition-speed;
