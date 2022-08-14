@@ -52,7 +52,7 @@ const SelectOption = props => {
 export default SelectOption;
 
 const dropdownStyles = {
-  control: (styles, { isFocused, isDisabled }) => {
+  control: (styles, { isFocused }) => {
     return {
       ...styles,
       color: '#323232',
@@ -69,13 +69,13 @@ const dropdownStyles = {
       }
     };
   },
-  menu: (styles, { data, isDisabled, isFocused, isSelected }) => {
+  menu: styles => {
     return {
       ...styles,
       zIndex: 2
     };
   },
-  option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+  option: (styles, { isDisabled, isFocused, isSelected }) => {
     return {
       ...styles,
       color: '#323232',
@@ -116,7 +116,7 @@ const dropdownStyles = {
     ...styles,
     color: '#323232'
   }),
-  singleValue: (styles, { data }) => ({
+  singleValue: styles => ({
     ...styles,
     color: '#323232',
     fontFamily: 'Poppins'
