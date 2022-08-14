@@ -46,7 +46,7 @@ class Sell extends React.PureComponent {
               <Col xs='12' className='order-2 order-md-1 text-md-center mb-3'>
                 <div className='agreement-banner-text'>
                   <h3>Would you like to sell your products on MERN Store!</h3>
-                  <h4>Grow your business with MERN Store</h4>
+                  <h5>Grow your business with MERN Store</h5>
                   <b>Apply Today</b>
                 </div>
               </Col>

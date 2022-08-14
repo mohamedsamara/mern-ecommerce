@@ -60,6 +60,7 @@ label,
 a,
 p {
   font-size: $font-size-medium;
+  color: $font-custom-color;
 }
 
 label {
@@ -134,19 +135,19 @@ h3,
 
 h4,
 .h4 {
-  font-size: 1.12em !important;
+  font-size: 1.18em !important;
   font-weight: $font-weight-medium;
 }
 
 h5,
 .h5 {
-  font-size: 0.83em !important;
+  font-size: 1.12em !important;
   font-weight: $font-weight-normal;
 }
 
 h6,
 .h6 {
-  font-size: 0.75em !important;
+  font-size: 1em !important;
   font-weight: $font-weight-normal;
 }
 

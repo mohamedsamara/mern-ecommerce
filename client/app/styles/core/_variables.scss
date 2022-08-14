@@ -3,6 +3,7 @@
 // Theme colors
 $theme-green: #00acac;
 $theme-gray: #f8f9fa;
+$theme-bright-gray: #eceef3;
 $theme-dark-gray: #cccccc;
 $theme-blue: #2979ff;
 $theme-purple: #727cb6;
@@ -84,7 +85,7 @@ $font-hover-color: $black;
 $font-focus-color: $black;
 $font-heading-color: #262626;
 $border-color-default: #e4e6eb;
-$border-color-primary: #eceef3;
+$border-color-primary: $theme-bright-gray;
 $border-hover-color: #ced9de;
 $border-focus-color: #bdcbd2;
 $separator-color: #e6e5ea;
