@@ -69,6 +69,12 @@ const dropdownStyles = {
       }
     };
   },
+  menu: (styles, { data, isDisabled, isFocused, isSelected }) => {
+    return {
+      ...styles,
+      zIndex: 2
+    };
+  },
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
     return {
       ...styles,
