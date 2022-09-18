@@ -14,7 +14,7 @@ const SubPage = props => {
   return (
     <div className='sub-page'>
       <div className='subpage-header'>
-        <h2>{title}</h2>
+        <h3 className='mb-0'>{title}</h3>
         {actionTitle && (
           <div className='action'>
             <Button

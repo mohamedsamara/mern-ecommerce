@@ -17,7 +17,7 @@ const UserList = props => {
       {users.map((user, index) => (
         <div key={index} className='mt-3 px-4 py-3 user-box'>
           <label className='text-black'>Name</label>
-          <p className='fw-2'>
+          <p className='fw-medium'>
             {user?.firstName ? `${user?.firstName} ${user?.lastName}` : 'N/A'}
           </p>
           <label className='text-black'>Email</label>

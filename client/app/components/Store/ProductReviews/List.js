@@ -19,7 +19,7 @@ const List = props => {
     if (review.user.firstName) {
       return (
         <div
-          className='d-flex flex-column justify-content-center align-items-center fw-1 text-white avatar'
+          className='d-flex flex-column justify-content-center align-items-center fw-normal text-white avatar'
           style={{ backgroundColor: color ? color : 'red' }}
         >
           {review.user.firstName.charAt(0)}

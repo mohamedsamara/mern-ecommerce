@@ -119,7 +119,7 @@
 
           .by {
             margin-bottom: 5px;
-            color: $font-custom-color !important;
+            color: $font-subtext-color !important;
 
             span {
               font-weight: $font-weight-normal;
@@ -171,7 +171,7 @@
 
   .item-box {
     .item-name {
-      font-size: $font-size-x-huge !important;
+      font-size: $font-size-huge !important;
     }
 
     .item-details {
@@ -207,6 +207,7 @@
   .item-name {
     color: $primary-color !important;
     font-size: $font-size-heading-small !important;
+    font-weight: $font-weight-medium;
     margin: 0px;
   }
 

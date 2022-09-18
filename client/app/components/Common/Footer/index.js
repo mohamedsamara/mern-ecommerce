@@ -43,7 +43,7 @@ const Footer = () => {
         <div className='footer-content'>
           <div className='footer-block'>
             <div className='block-title'>
-              <h2>Customer Service</h2>
+              <h3 className='text-uppercase'>Customer Service</h3>
             </div>
             <div className='block-content'>
               <ul>{footerLinks}</ul>
@@ -51,7 +51,7 @@ const Footer = () => {
           </div>
           <div className='footer-block'>
             <div className='block-title'>
-              <h2>Links</h2>
+              <h3 className='text-uppercase'>Links</h3>
             </div>
             <div className='block-content'>
               <ul>{footerLinks}</ul>
@@ -59,7 +59,7 @@ const Footer = () => {
           </div>
           <div className='footer-block'>
             <div className='block-title'>
-              <h2>Newsletter</h2>
+              <h3 className='text-uppercase'>Newsletter</h3>
               <Newsletter />
             </div>
           </div>

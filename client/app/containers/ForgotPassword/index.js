@@ -34,7 +34,7 @@ class ForgotPassword extends React.PureComponent {
 
     return (
       <div className='forgot-password-form'>
-        <h2>Forgot Password</h2>
+        <h3>Forgot Password</h3>
         <hr />
         <form onSubmit={handleSubmit}>
           <Row>

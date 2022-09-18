@@ -17,7 +17,7 @@ class Support extends React.PureComponent {
 
     return (
       <div className='support'>
-        <h2>Support Information</h2>
+        <h3>Support</h3>
         <hr />
         <div className='mt-5'>
           <SupportManager user={user} />

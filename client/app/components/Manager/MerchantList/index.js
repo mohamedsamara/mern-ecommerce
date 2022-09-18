@@ -26,7 +26,7 @@ const MerchantList = props => {
         <div key={index} className='merchant-box'>
           <div className='mb-3 p-4'>
             <label className='text-black'>Business</label>
-            <p className='fw-2 text-truncate'>{merchant.business}</p>
+            <p className='fw-medium text-truncate'>{merchant.business}</p>
             <label className='text-black'>Brand</label>
             <p className='text-truncate'>{merchant.brand}</p>
             <label className='text-black'>Name</label>

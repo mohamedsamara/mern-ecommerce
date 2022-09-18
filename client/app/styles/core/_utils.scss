@@ -36,19 +36,23 @@
   flex: 1;
 }
 
-.fw-0 {
+.fw-light {
+  font-weight: $font-weight-light;
+}
+
+.fw-normal {
   font-weight: $font-weight-normal;
 }
 
-.fw-1 {
-  font-weight: $font-weight-normal;
-}
-
-.fw-2 {
+.fw-medium {
   font-weight: $font-weight-medium;
 }
 
-.fw-3 {
+.fw-semi-bold {
+  font-weight: $font-weight-semibold;
+}
+
+.fw-bold {
   font-weight: $font-weight-bold;
 }
 
@@ -62,6 +66,10 @@
 
 .fs-16 {
   font-size: 16px;
+}
+
+.text-gray {
+  color: $gray;
 }
 
 .text-black {
@@ -78,6 +86,10 @@
 
 .text-secondary {
   color: $secondary-color !important;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
 }
 
 .word-break-all {

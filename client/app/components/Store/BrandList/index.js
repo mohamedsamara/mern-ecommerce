@@ -14,7 +14,7 @@ const BrandList = props => {
 
   return (
     <div className='brand-list'>
-      <h2>Shop By Brand</h2>
+      <h3 className='text-uppercase'>Shop By Brand</h3>
       <hr />
       <Row className='flex-sm-row'>
         {brands.map((brand, index) => (
@@ -23,7 +23,7 @@ const BrandList = props => {
               to={`/shop/brand/${brand.slug}`}
               className='d-block brand-box'
             >
-              <h4>{brand.name}</h4>
+              <h5>{brand.name}</h5>
               <p className='brand-desc'>{brand.description}</p>
             </Link>
           </Col>

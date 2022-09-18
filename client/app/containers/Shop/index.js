@@ -64,7 +64,7 @@ class Shop extends React.PureComponent {
                 lg={{ size: 6, order: 1 }}
                 className='text-center text-md-left mt-3 mt-md-0 mb-1 mb-md-0'
               >
-                <b>Showing: </b>
+                <span>Showing: </span>
                 {totalProducts > 0
                   ? `${left}-${right} products of ${count} products`
                   : `${count} products`}
@@ -76,7 +76,7 @@ class Shop extends React.PureComponent {
                 lg={{ size: 2, order: 2 }}
                 className='text-right pr-0 d-none d-md-block'
               >
-                <b>Sort by</b>
+                <span>Sort by</span>
               </Col>
               <Col
                 xs={{ size: 12, order: 2 }}

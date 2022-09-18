@@ -16,12 +16,8 @@ import Button from '../../components/Common/Button';
 
 class Contact extends React.PureComponent {
   render() {
-    const {
-      contactFormData,
-      contactFormChange,
-      contactUs,
-      formErrors
-    } = this.props;
+    const { contactFormData, contactFormChange, contactUs, formErrors } =
+      this.props;
 
     const handleSubmit = event => {
       event.preventDefault();
@@ -30,7 +26,7 @@ class Contact extends React.PureComponent {
 
     return (
       <div className='contact'>
-        <h2>Contact Information</h2>
+        <h3 className='text-uppercase'>Contact Information</h3>
         <hr />
         <form onSubmit={handleSubmit}>
           <Row>

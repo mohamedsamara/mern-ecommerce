@@ -65,7 +65,7 @@ const Summary = props => {
               </div>
             </div>
             <div className='ml-2 right'>
-              <span className='fw-2'>
+              <span className='fw-medium'>
                 {getRatingPercentage(parseInt(r[Object.keys(r)[0]]))}%
               </span>
             </div>

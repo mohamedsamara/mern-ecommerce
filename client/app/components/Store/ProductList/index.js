@@ -61,7 +61,7 @@ const ProductList = props => {
                     <p className='price mb-0'>${product.price}</p>
                     {product.totalReviews > 0 && (
                       <p className='mb-0'>
-                        <span className='fs-16 fw-1 mr-1'>
+                        <span className='fs-16 fw-normal mr-1'>
                           {parseFloat(product?.averageRating).toFixed(1)}
                         </span>
                         <span

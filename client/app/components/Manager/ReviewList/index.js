@@ -22,7 +22,7 @@ const ReviewList = props => {
     if (review.user.firstName) {
       return (
         <div
-          className='d-flex flex-column justify-content-center align-items-center fw-1 text-white avatar'
+          className='d-flex flex-column justify-content-center align-items-center fw-normal text-white avatar'
           style={{ backgroundColor: color ? color : 'red' }}
         >
           {review.user.firstName.charAt(0)}
@@ -57,12 +57,12 @@ const ReviewList = props => {
             <div className='d-flex flex-row mx-0 mb-2 mb-lg-3 align-items-center justify-content-between'>
               <div className='review-content'>
                 <div className='d-flex flex-row mx-0 mb-2 align-items-center justify-content-between'>
-                  <p className='mb-0 fw-2 fs-16 text-truncate'>
+                  <p className='mb-0 fw-medium fs-16 text-truncate'>
                     {review.title}
                   </p>
                   <div className='d-block d-lg-none'>{getAvatar(review)}</div>
                 </div>
-                <p className='mb-0 fw-1 fs-14 word-break-all'>
+                <p className='mb-0 fw-normal fs-14 word-break-all'>
                   {review.review}
                 </p>
               </div>
@@ -118,7 +118,7 @@ const ReviewList = props => {
               <>
                 <div className='d-flex align-items-center mb-3'>
                   <RefreshIcon className='text-primary' />
-                  <p className='fw-2 ml-3 mb-0'>Re Approve Review</p>
+                  <p className='fw-medium ml-3 mb-0'>Re Approve Review</p>
                 </div>
                 <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
                   <Button

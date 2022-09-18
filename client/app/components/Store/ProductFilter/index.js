@@ -10,52 +10,56 @@ import { Card, CardBody, CardHeader } from 'reactstrap';
 import RangeSlider from '../../Common/RangeSlider';
 
 const priceMarks = {
-  1: { label: <p className='fw-1 text-black'>$1</p> },
-  5000: { label: <p className='fw-1 text-black'>$5000</p> }
+  1: { label: <p className='fw-normal text-black'>$1</p> },
+  5000: { label: <p className='fw-normal text-black'>$5000</p> }
 };
 
 const rateMarks = {
   0: {
     label: (
-      <strong>
-        5
+      <span>
+        <span className='mr-1'>5</span>
         <i
           className='fa fa-star fa-1x'
           style={{ display: 'contents' }}
           aria-hidden='true'
         ></i>
-      </strong>
+      </span>
     )
   },
   20: {
     label: (
-      <strong>
-        4<i className='fa fa-star fa-1x' aria-hidden='true'></i>
-      </strong>
+      <span>
+        <span className='mr-1'>4</span>
+        <i className='fa fa-star fa-1x' aria-hidden='true'></i>
+      </span>
     )
   },
   40: {
     label: (
-      <strong>
-        3<i className='fa fa-star fa-1x' aria-hidden='true'></i>
-      </strong>
+      <span>
+        <span className='mr-1'>3</span>
+        <i className='fa fa-star fa-1x' aria-hidden='true'></i>
+      </span>
     )
   },
   60: {
     label: (
-      <strong>
-        2<i className='fa fa-star fa-1x' aria-hidden='true'></i>
-      </strong>
+      <span>
+        <span className='mr-1'>2</span>
+        <i className='fa fa-star fa-1x' aria-hidden='true'></i>
+      </span>
     )
   },
   80: {
     label: (
-      <strong>
-        1<i className='fa fa-star fa-1x' aria-hidden='true'></i>
-      </strong>
+      <span>
+        <span className='mr-1'>1</span>
+        <i className='fa fa-star fa-1x' aria-hidden='true'></i>
+      </span>
     )
   },
-  100: { label: <strong>Any</strong> }
+  100: { label: <span>Any</span> }
 };
 
 const rating = v => {

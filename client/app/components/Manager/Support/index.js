@@ -130,9 +130,9 @@ const Support = props => {
               <Col xs='12' md='8' xl='9'>
                 {selectedUser ? (
                   <div>
-                    <h2 className='text-center text-md-left mt-3 mt-md-0'>
+                    <h4 className='text-center text-md-left mt-3 mt-md-0'>
                       {selectedUser?.name}
-                    </h2>
+                    </h4>
                     <MessageList user={me} messages={activeChat} />
                     <AddMessage socket={socket} onSubmit={onMessageSubmit} />
                   </div>

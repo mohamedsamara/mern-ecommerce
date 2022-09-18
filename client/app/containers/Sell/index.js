@@ -28,7 +28,7 @@ class Sell extends React.PureComponent {
     return (
       <div className='sell'>
         {isLoading && <LoadingIndicator />}
-        <h2>Become A MERN Store Seller!</h2>
+        <h3 className='text-uppercase'>Become A MERN Store Seller!</h3>
         <hr />
         <Row>
           <Col xs='12' md='6' className='order-2 order-md-1'>

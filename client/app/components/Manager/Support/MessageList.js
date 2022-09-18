@@ -55,7 +55,7 @@ const Message = memo(props => {
     if (m.user.name) {
       return (
         <div
-          className='d-flex flex-column justify-content-center align-items-center fw-1 text-white avatar '
+          className='d-flex flex-column justify-content-center align-items-center fw-normal text-white avatar '
           style={{ backgroundColor: color ? color : 'red' }}
         >
           {m.user.name.charAt(0)}
@@ -86,7 +86,9 @@ const Message = memo(props => {
             <div className={`d-flex mb-2 text-right`}>
               {!noHeader && (
                 <>
-                  <p className={`mb-0 fw-1 text-black`}>{message.user.name}</p>
+                  <p className={`mb-0 fw-normal text-black`}>
+                    {message.user.name}
+                  </p>
                   <div className='ml-2 text-black'>
                     {formatTime(message.time)}
                   </div>

@@ -10,7 +10,7 @@ const SearchResultMeta = props => {
   const { count, label } = props;
 
   return (
-    <p className='fw-1'>
+    <p className='fw-normal'>
       {count} {label}
     </p>
   );
