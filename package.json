@@ -47,7 +47,7 @@
     "crypto": "^1.0.1",
     "dompurify": "^2.3.8",
     "dotenv": "^8.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "font-awesome": "^4.7.0",
     "helmet": "^4.6.0",
     "history": "^4.9.0",
