@@ -31,7 +31,7 @@ npm run seed:db [email-***@****.com] [password-******] // This is just an exampl
 
 ## Demo
 
-This application is deployed on Heroku. Please check it out :smile: [here](https://mern-store-80202.herokuapp.com/).
+This application is deployed on Render Please check it out :smile: [here](https://mern-store.onrender.com).
 
 See admin dashboard [demo](https://mernstore-bucket.s3.us-east-2.amazonaws.com/admin.mp4)
 
@@ -57,12 +57,6 @@ $ npm install
   * GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET & GOOGLE_CALLBACK_URL => Google Auth configuration
   * FACEBOOK_CLIENT_ID & FACEBOOK_CLIENT_SECRET & FACEBOOK_CALLBACK_URL => Facebook Auth configuration
   * AWS_ACCESS_KEY_ID & AWS_SECRET_ACCESS_KEY & AWS_REGION & AWS_BUCKET_NAME => AWS configuration
-```
-
-## Heroku Deployment
-
-```
-> Create a Procfile in the root directory of your application with the following command **web: npm run start:production**
 ```
 
 ## Start development

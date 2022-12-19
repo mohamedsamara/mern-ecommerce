@@ -10,7 +10,6 @@
     "dev:server": "nodemon",
     "dev": "npm-run-all --parallel dev:*",
     "start": "cross-env NODE_ENV=production node server/index.js",
-    "heroku-postbuild": "npm run build",
     "postinstall": "npm run build",
     "seed:db": "node server/utils/seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
