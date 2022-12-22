@@ -50,7 +50,7 @@
     "font-awesome": "^4.7.0",
     "helmet": "^4.6.0",
     "history": "^4.9.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mailchimp-api-v3": "^1.14.0",
     "mailgun-js": "^0.22.0",
     "mobile-detect": "^1.4.4",
