@@ -7,43 +7,39 @@ const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const store = require('../../utils/store');
+const { ROLES } = require('../../constants');
 
-router.post(
-  '/add',
-  auth,
-  role.checkRole(role.ROLES.Admin),
-  async (req, res) => {
-    try {
-      const name = req.body.name;
-      const description = req.body.description;
-      const isActive = req.body.isActive;
+router.post('/add', auth, role.check(ROLES.Admin), async (req, res) => {
+  try {
+    const name = req.body.name;
+    const description = req.body.description;
+    const isActive = req.body.isActive;
 
-      if (!description || !name) {
-        return res
-          .status(400)
-          .json({ error: 'You must enter description & name.' });
-      }
-
-      const brand = new Brand({
-        name,
-        description,
-        isActive
-      });
-
-      const brandDoc = await brand.save();
-
-      res.status(200).json({
-        success: true,
-        message: `Brand has been added successfully!`,
-        brand: brandDoc
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
+    if (!description || !name) {
+      return res
+        .status(400)
+        .json({ error: 'You must enter description & name.' });
     }
+
+    const brand = new Brand({
+      name,
+      description,
+      isActive
+    });
+
+    const brandDoc = await brand.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Brand has been added successfully!`,
+      brand: brandDoc
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
   }
-);
+});
 
 // fetch store brands api
 router.get('/list', async (req, res) => {
@@ -66,7 +62,7 @@ router.get('/list', async (req, res) => {
 router.get(
   '/',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.check(ROLES.Admin, ROLES.Merchant),
   async (req, res) => {
     try {
       let brands = null;
@@ -115,7 +111,7 @@ router.get('/:id', async (req, res) => {
 router.get(
   '/list/select',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.check(ROLES.Admin, ROLES.Merchant),
   async (req, res) => {
     try {
       let brands = null;
@@ -145,7 +141,7 @@ router.get(
 router.put(
   '/:id',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.check(ROLES.Admin, ROLES.Merchant),
   async (req, res) => {
     try {
       const brandId = req.params.id;
@@ -180,7 +176,7 @@ router.put(
 router.put(
   '/:id/active',
   auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  role.check(ROLES.Admin, ROLES.Merchant),
   async (req, res) => {
     try {
       const brandId = req.params.id;
@@ -212,7 +208,7 @@ router.put(
 router.delete(
   '/delete/:id',
   auth,
-  role.checkRole(role.ROLES.Admin),
+  role.check(ROLES.Admin),
   async (req, res) => {
     try {
       const brand = await Brand.deleteOne({ _id: req.params.id });

@@ -9,7 +9,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, DropdownItem } from 'reactstrap';
 
-import { ROLE_ADMIN } from '../../../constants';
+import { ROLES } from '../../../constants';
 import Button from '../../Common/Button';
 import DropdownConfirm from '../../Common/DropdownConfirm';
 
@@ -41,7 +41,7 @@ const OrderItems = props => {
   };
 
   const renderItemsAction = item => {
-    const isAdmin = user.role === ROLE_ADMIN;
+    const isAdmin = user.role === ROLES.Admin;
 
     if (item.status === 'Delivered') {
       return (

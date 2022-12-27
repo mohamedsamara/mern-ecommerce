@@ -7,8 +7,9 @@ const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const store = require('../../utils/store');
+const { ROLES } = require('../../constants');
 
-router.post('/add', auth, role.checkRole(role.ROLES.Admin), (req, res) => {
+router.post('/add', auth, role.check(ROLES.Admin), (req, res) => {
   const name = req.body.name;
   const description = req.body.description;
   const products = req.body.products;
@@ -96,7 +97,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.put('/:id', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
+router.put('/:id', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
     const categoryId = req.params.id;
     const update = req.body.category;
@@ -126,46 +127,41 @@ router.put('/:id', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
   }
 });
 
-router.put(
-  '/:id/active',
-  auth,
-  role.checkRole(role.ROLES.Admin),
-  async (req, res) => {
-    try {
-      const categoryId = req.params.id;
-      const update = req.body.category;
-      const query = { _id: categoryId };
+router.put('/:id/active', auth, role.check(ROLES.Admin), async (req, res) => {
+  try {
+    const categoryId = req.params.id;
+    const update = req.body.category;
+    const query = { _id: categoryId };
 
-      // disable category(categoryId) products
-      if (!update.isActive) {
-        const categoryDoc = await Category.findOne(
-          { _id: categoryId, isActive: true },
-          'products -_id'
-        ).populate('products');
+    // disable category(categoryId) products
+    if (!update.isActive) {
+      const categoryDoc = await Category.findOne(
+        { _id: categoryId, isActive: true },
+        'products -_id'
+      ).populate('products');
 
-        store.disableProducts(categoryDoc.products);
-      }
-
-      await Category.findOneAndUpdate(query, update, {
-        new: true
-      });
-
-      res.status(200).json({
-        success: true,
-        message: 'Category has been updated successfully!'
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
+      store.disableProducts(categoryDoc.products);
     }
+
+    await Category.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Category has been updated successfully!'
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
   }
-);
+});
 
 router.delete(
   '/delete/:id',
   auth,
-  role.checkRole(role.ROLES.Admin),
+  role.check(ROLES.Admin),
   async (req, res) => {
     try {
       const product = await Category.deleteOne({ _id: req.params.id });

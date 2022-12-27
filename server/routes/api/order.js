@@ -10,6 +10,7 @@ const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
 const store = require('../../utils/store');
+const { ROLES } = require('../../constants');
 
 router.post('/add', auth, async (req, res) => {
   try {
@@ -67,7 +68,7 @@ router.get('/search', auth, async (req, res) => {
 
     let ordersDoc = null;
 
-    if (req.user.role === role.ROLES.Admin) {
+    if (req.user.role === ROLES.Admin) {
       ordersDoc = await Order.find({
         _id: Mongoose.Types.ObjectId(search)
       }).populate({
@@ -204,7 +205,7 @@ router.get('/:orderId', auth, async (req, res) => {
 
     let orderDoc = null;
 
-    if (req.user.role === role.ROLES.Admin) {
+    if (req.user.role === ROLES.Admin) {
       orderDoc = await Order.findOne({ _id: orderId }).populate({
         path: 'cart',
         populate: {
@@ -311,7 +312,7 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
           success: true,
           orderCancelled: true,
           message: `${
-            req.user.role === role.ROLES.Admin ? 'Order' : 'Your order'
+            req.user.role === ROLES.Admin ? 'Order' : 'Your order'
           } has been cancelled successfully`
         });
       }

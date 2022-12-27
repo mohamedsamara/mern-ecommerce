@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
 // Bring in Models & Helpers
+const { MERCHANT_STATUS, ROLES } = require('../../constants');
 const Merchant = require('../../models/merchant');
 const User = require('../../models/user');
 const Brand = require('../../models/brand');
@@ -66,39 +67,34 @@ router.post('/add', async (req, res) => {
 });
 
 // search merchants api
-router.get(
-  '/search',
-  auth,
-  role.checkRole(role.ROLES.Admin),
-  async (req, res) => {
-    try {
-      const { search } = req.query;
+router.get('/search', auth, role.check(ROLES.Admin), async (req, res) => {
+  try {
+    const { search } = req.query;
 
-      const regex = new RegExp(search, 'i');
+    const regex = new RegExp(search, 'i');
 
-      const merchants = await Merchant.find({
-        $or: [
-          { phoneNumber: { $regex: regex } },
-          { email: { $regex: regex } },
-          { name: { $regex: regex } },
-          { brand: { $regex: regex } },
-          { status: { $regex: regex } }
-        ]
-      });
+    const merchants = await Merchant.find({
+      $or: [
+        { phoneNumber: { $regex: regex } },
+        { email: { $regex: regex } },
+        { name: { $regex: regex } },
+        { brand: { $regex: regex } },
+        { status: { $regex: regex } }
+      ]
+    });
 
-      res.status(200).json({
-        merchants
-      });
-    } catch (error) {
-      res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    res.status(200).json({
+      merchants
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
   }
-);
+});
 
 // fetch all merchants api
-router.get('/', auth, role.checkRole(role.ROLES.Admin), async (req, res) => {
+router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
 
@@ -150,7 +146,7 @@ router.put('/approve/:id', auth, async (req, res) => {
     const merchantId = req.params.id;
     const query = { _id: merchantId };
     const update = {
-      status: 'Approved',
+      status: MERCHANT_STATUS.Approved,
       isActive: true
     };
 
@@ -182,7 +178,7 @@ router.put('/reject/:id', auth, async (req, res) => {
 
     const query = { _id: merchantId };
     const update = {
-      status: 'Rejected'
+      status: MERCHANT_STATUS.Rejected
     };
 
     await Merchant.findOneAndUpdate(query, update, {
@@ -257,7 +253,7 @@ router.post('/signup/:token', async (req, res) => {
 router.delete(
   '/delete/:id',
   auth,
-  role.checkRole(role.ROLES.Admin),
+  role.check(ROLES.Admin),
   async (req, res) => {
     try {
       const merchant = await Merchant.deleteOne({ _id: req.params.id });
@@ -296,7 +292,7 @@ const createMerchantUser = async (email, name, merchant, host) => {
     const query = { _id: existingUser._id };
     const update = {
       merchant,
-      role: role.ROLES.Merchant
+      role: ROLES.Merchant
     };
 
     const merchantDoc = await Merchant.findOne({
@@ -321,7 +317,7 @@ const createMerchantUser = async (email, name, merchant, host) => {
       lastName,
       resetPasswordToken,
       merchant,
-      role: role.ROLES.Merchant
+      role: ROLES.Merchant
     });
 
     await mailgun.sendEmail(email, 'merchant-signup', host, {

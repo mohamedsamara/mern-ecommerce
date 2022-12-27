@@ -9,7 +9,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-import { ROLE_ADMIN } from '../../constants';
+import { ROLES } from '../../constants';
 
 import BrandList from '../../components/Manager/BrandList';
 import SubPage from '../../components/Manager/SubPage';
@@ -27,8 +27,8 @@ class List extends React.PureComponent {
     return (
       <>
         <SubPage
-          title={user.role === ROLE_ADMIN ? 'Brands' : 'Brand'}
-          actionTitle={user.role === ROLE_ADMIN && 'Add'}
+          title={user.role === ROLES.Admin ? 'Brands' : 'Brand'}
+          actionTitle={user.role === ROLES.Admin && 'Add'}
           handleAction={() => history.push('/dashboard/brand/add')}
         >
           {isLoading ? (

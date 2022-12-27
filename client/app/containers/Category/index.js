@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
 import actions from '../../actions';
-// import { ROLE_ADMIN } from '../../constants';
+// import { ROLES } from '../../constants';
 import List from './List';
 import Add from './Add';
 import Edit from './Edit';
@@ -25,7 +25,7 @@ class Category extends React.PureComponent {
         <Switch>
           <Route exact path='/dashboard/category' component={List} />
           <Route exact path='/dashboard/category/edit/:id' component={Edit} />
-          {/* {user.role === ROLE_ADMIN && ( */}
+          {/* {user.role === ROLES.Admin && ( */}
           <Route exact path='/dashboard/category/add' component={Add} />
           {/* )} */}
           <Route path='*' component={Page404} />
