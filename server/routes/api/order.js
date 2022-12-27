@@ -7,10 +7,9 @@ const Order = require('../../models/order');
 const Cart = require('../../models/cart');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
-const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
 const store = require('../../utils/store');
-const { ROLES } = require('../../constants');
+const { ROLES, CART_ITEM_STATUS } = require('../../constants');
 
 router.post('/add', auth, async (req, res) => {
   try {
@@ -282,7 +281,7 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
     const itemId = req.params.itemId;
     const orderId = req.body.orderId;
     const cartId = req.body.cartId;
-    const status = req.body.status || 'Cancelled';
+    const status = req.body.status || CART_ITEM_STATUS.Cancelled;
 
     const foundCart = await Cart.findOne({ 'products._id': itemId });
     const foundCartProduct = foundCart.products.find(p => p._id == itemId);
@@ -294,14 +293,16 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
       }
     );
 
-    if (status === 'Cancelled') {
+    if (status === CART_ITEM_STATUS.Cancelled) {
       await Product.updateOne(
         { _id: foundCartProduct.product },
         { $inc: { quantity: foundCartProduct.quantity } }
       );
 
       const cart = await Cart.findOne({ _id: cartId });
-      const items = cart.products.filter(item => item.status === 'Cancelled');
+      const items = cart.products.filter(
+        item => item.status === CART_ITEM_STATUS.Cancelled
+      );
 
       // All items are cancelled => Cancel order
       if (cart.products.length === items.length) {

@@ -1,4 +1,5 @@
 const Mongoose = require('mongoose');
+
 const { ROLES } = require('../constants');
 
 const { Schema } = Mongoose;

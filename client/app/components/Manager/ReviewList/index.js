@@ -9,6 +9,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ReactStars from 'react-rating-stars-component';
 
+import { REVIEW_STATUS } from '../../../constants';
 import { formatDate } from '../../../utils/date';
 import { getRandomColors } from '../../../utils';
 import Button from '../../Common/Button';
@@ -80,7 +81,6 @@ const ReviewList = props => {
                 ) : (
                   <p>Product is not available.</p>
                 )}
-
                 <ReactStars
                   classNames='mt-1 mt-lg-2'
                   size={16}
@@ -101,7 +101,7 @@ const ReviewList = props => {
               review.created
             )}`}</label>
             <hr />
-            {review.status === 'Approved' ? (
+            {review.status === REVIEW_STATUS.Approved ? (
               <div className='d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mx-0'>
                 <div className='d-flex flex-row mx-0'>
                   <CheckIcon className='text-green' />
@@ -114,7 +114,7 @@ const ReviewList = props => {
                   onClick={() => deleteReview(review._id)}
                 />
               </div>
-            ) : review.status === 'Rejected' ? (
+            ) : review.status === REVIEW_STATUS.Rejected ? (
               <>
                 <div className='d-flex align-items-center mb-3'>
                   <RefreshIcon className='text-primary' />

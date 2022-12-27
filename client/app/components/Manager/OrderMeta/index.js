@@ -8,6 +8,7 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
+import { CART_ITEM_STATUS } from '../../../constants';
 import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { ArrowBackIcon } from '../../Common/Icon';
@@ -17,7 +18,8 @@ const OrderMeta = props => {
 
   const renderMetaAction = () => {
     const isNotDelivered =
-      order.products.filter(i => i.status === 'Delivered').length < 1;
+      order.products.filter(i => i.status === CART_ITEM_STATUS.Delivered)
+        .length < 1;
 
     if (isNotDelivered) {
       return <Button size='sm' text='Cancel Order' onClick={cancelOrder} />;

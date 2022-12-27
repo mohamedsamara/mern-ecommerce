@@ -6,6 +6,7 @@
 
 import React from 'react';
 
+import { MERCHANT_STATUS } from '../../../constants';
 import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { CheckIcon, XIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
@@ -42,7 +43,7 @@ const MerchantList = props => {
 
             <hr />
 
-            {merchant.status === 'Approved' ? (
+            {merchant.status === MERCHANT_STATUS.Approved ? (
               <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
                 <div className='d-flex flex-row mx-0'>
                   <CheckIcon className='text-green' />
@@ -75,7 +76,7 @@ const MerchantList = props => {
                   />
                 </div>
               </div>
-            ) : merchant.status === 'Rejected' ? (
+            ) : merchant.status === MERCHANT_STATUS.Rejected ? (
               <>
                 <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
                   <Button

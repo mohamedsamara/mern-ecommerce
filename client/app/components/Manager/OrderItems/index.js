@@ -9,7 +9,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Row, Col, DropdownItem } from 'reactstrap';
 
-import { ROLES } from '../../../constants';
+import { ROLES, CART_ITEM_STATUS } from '../../../constants';
 import Button from '../../Common/Button';
 import DropdownConfirm from '../../Common/DropdownConfirm';
 
@@ -17,13 +17,7 @@ const OrderItems = props => {
   const { order, user, updateOrderItemStatus } = props;
 
   const renderPopoverContent = item => {
-    const statuses = [
-      'Not processed',
-      'Processing',
-      'Shipped',
-      'Delivered',
-      'Cancelled'
-    ];
+    const statuses = Object.values(CART_ITEM_STATUS);
 
     return (
       <div className='d-flex flex-column align-items-center justify-content-center'>
@@ -43,7 +37,7 @@ const OrderItems = props => {
   const renderItemsAction = item => {
     const isAdmin = user.role === ROLES.Admin;
 
-    if (item.status === 'Delivered') {
+    if (item.status === CART_ITEM_STATUS.Delivered) {
       return (
         <Link
           to={`/product/${item.product.slug}`}

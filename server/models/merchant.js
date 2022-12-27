@@ -1,4 +1,7 @@
 const Mongoose = require('mongoose');
+
+const { MERCHANT_STATUS } = require('../constants');
+
 const { Schema } = Mongoose;
 
 // Merchant Schema
@@ -26,8 +29,12 @@ const MerchantSchema = new Schema({
   },
   status: {
     type: String,
-    default: 'Waiting Approval',
-    enum: ['Waiting Approval', 'Rejected', 'Approved']
+    default: MERCHANT_STATUS.Waiting_Approval,
+    enum: [
+      MERCHANT_STATUS.Waiting_Approval,
+      MERCHANT_STATUS.Rejected,
+      MERCHANT_STATUS.Approved
+    ]
   },
   updated: Date,
   created: {
