@@ -85,14 +85,17 @@ const dropdownStyles = {
         : isSelected
         ? '#eceef3'
         : isFocused
-        ? '#eceef3'
+        ? '#f8f9fa'
         : undefined,
 
       ':hover': {
         ...styles[':hover'],
-        backgroundColor: !isDisabled ? '#eceef3' : undefined
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? undefined
+          : '#f8f9fa'
       },
-
       ':active': {
         ...styles[':active'],
         backgroundColor: !isDisabled ? '#eceef3' : undefined
