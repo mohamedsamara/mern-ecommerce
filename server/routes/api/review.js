@@ -5,25 +5,29 @@ const router = express.Router();
 const Review = require('../../models/review');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
+const { REVIEW_STATUS } = require('../../constants');
 
-router.post('/add', auth, (req, res) => {
-  const user = req.user;
+router.post('/add', auth, async (req, res) => {
+  try {
+    const user = req.user;
 
-  const review = new Review(Object.assign(req.body, { user: user._id }));
+    const review = new Review({
+      ...req.body,
+      user: user._id
+    });
 
-  review.save((err, data) => {
-    if (err) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    const reviewDoc = await review.save();
 
     res.status(200).json({
       success: true,
       message: `Your review has been added successfully and will appear when approved!`,
-      review: data
+      review: reviewDoc
     });
-  });
+  } catch (error) {
+    return res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
 });
 
 // fetch all reviews api
@@ -75,7 +79,7 @@ router.get('/:slug', async (req, res) => {
 
     const reviews = await Review.find({
       product: productDoc._id,
-      status: 'Approved'
+      status: REVIEW_STATUS.Approved
     })
       .populate({
         path: 'user',
@@ -121,7 +125,7 @@ router.put('/approve/:reviewId', auth, async (req, res) => {
 
     const query = { _id: reviewId };
     const update = {
-      status: 'Approved',
+      status: REVIEW_STATUS.Approved,
       isActive: true
     };
 
@@ -146,7 +150,7 @@ router.put('/reject/:reviewId', auth, async (req, res) => {
 
     const query = { _id: reviewId };
     const update = {
-      status: 'Rejected'
+      status: REVIEW_STATUS.Rejected
     };
 
     await Review.findOneAndUpdate(query, update, {

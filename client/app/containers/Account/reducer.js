@@ -14,7 +14,9 @@ import {
 const initialState = {
   user: {
     firstName: '',
-    lastName: ''
+    lastName: '',
+    provider: '',
+    role: ''
   },
   isLoading: false
 };

@@ -12,6 +12,7 @@ const User = require('../../models/user');
 const mailchimp = require('../../services/mailchimp');
 const mailgun = require('../../services/mailgun');
 const keys = require('../../config/keys');
+const { EMAIL_PROVIDER } = require('../../constants');
 
 const { secret, tokenLife } = keys.jwt;
 
@@ -34,6 +35,12 @@ router.post('/login', async (req, res) => {
       return res
         .status(400)
         .send({ error: 'No user found for this email address.' });
+    }
+
+    if (user && user.provider !== EMAIL_PROVIDER.Email) {
+      return res.status(400).send({
+        error: `That email address is already in use using ${user.provider} provider.`
+      });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -309,15 +316,12 @@ router.get(
     };
 
     jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
-      const jwt = `Bearer ${token}`;
-      // TODO duplicate variable name. variable name conflict with module instance
+      const jwtToken = `Bearer ${token}`;
 
       const htmlWithEmbeddedJWT = `
     <html>
       <script>
-        // Save JWT to localStorage
-        window.localStorage.setItem('token', '${jwt}');
-        // Redirect browser to root of application
+        window.localStorage.setItem('token', '${jwtToken}');
         window.location.href = '/auth/success';
       </script>
     </html>       
@@ -348,14 +352,12 @@ router.get(
     };
 
     jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
-      const jwt = `Bearer ${token}`;
+      const jwtToken = `Bearer ${token}`;
 
       const htmlWithEmbeddedJWT = `
     <html>
       <script>
-        // Save JWT to localStorage
-        window.localStorage.setItem('token', '${jwt}');
-        // Redirect browser to root of application
+        window.localStorage.setItem('token', '${jwtToken}');
         window.location.href = '/auth/success';
       </script>
     </html>       

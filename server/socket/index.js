@@ -2,7 +2,7 @@ const socketio = require('socket.io');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
-const { ROLE_ADMIN } = require('../constants');
+const { ROLES } = require('../constants');
 const keys = require('../config/keys');
 const User = mongoose.model('User');
 
@@ -28,7 +28,7 @@ const authHandler = async (socket, next) => {
     const u = {
       id,
       role: user?.role,
-      isAdmin: user.role === ROLE_ADMIN,
+      isAdmin: user.role === ROLES.Admin,
       name: `${user?.firstName} ${user?.lastName}`,
       socketId: socket.id,
       messages: []

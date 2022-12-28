@@ -9,7 +9,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import actions from '../../actions';
-import { ROLE_ADMIN } from '../../constants';
+import { ROLES } from '../../constants';
 
 import SubPage from '../../components/Manager/SubPage';
 import MerchantList from '../../components/Manager/MerchantList';
@@ -75,7 +75,7 @@ class List extends React.PureComponent {
       <div className='merchant-dashboard'>
         <SubPage
           title={'Merchants'}
-          actionTitle={user.role === ROLE_ADMIN && 'Add'}
+          actionTitle={user.role === ROLES.Admin && 'Add'}
           handleAction={() => history.push('/dashboard/merchant/add')}
         />
         <MerchantSearch

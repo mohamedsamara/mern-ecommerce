@@ -1,4 +1,7 @@
 const Mongoose = require('mongoose');
+
+const { REVIEW_STATUS } = require('../constants');
+
 const { Schema } = Mongoose;
 
 // Review Schema
@@ -31,8 +34,12 @@ const ReviewSchema = new Schema({
   },
   status: {
     type: String,
-    default: 'Waiting Approval',
-    enum: ['Waiting Approval', 'Rejected', 'Approved']
+    default: REVIEW_STATUS.Waiting_Approval,
+    enum: [
+      REVIEW_STATUS.Waiting_Approval,
+      REVIEW_STATUS.Rejected,
+      REVIEW_STATUS.Approved
+    ]
   },
   updated: Date,
   created: {

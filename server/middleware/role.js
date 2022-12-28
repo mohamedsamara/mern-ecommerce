@@ -1,12 +1,4 @@
-const { ROLE_ADMIN, ROLE_MEMBER, ROLE_MERCHANT } = require('../constants');
-
-const ROLES = {
-  Admin: ROLE_ADMIN,
-  Customer: ROLE_MEMBER,
-  Merchant: ROLE_MERCHANT
-};
-
-const checkRole =
+const check =
   (...roles) =>
   (req, res, next) => {
     if (!req.user) {
@@ -21,6 +13,5 @@ const checkRole =
     return next();
   };
 
-const role = { ROLES, checkRole };
-
+const role = { check };
 module.exports = role;

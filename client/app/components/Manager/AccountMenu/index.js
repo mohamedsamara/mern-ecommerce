@@ -12,7 +12,16 @@ import { Collapse, Navbar } from 'reactstrap';
 import Button from '../../Common/Button';
 
 const AccountMenu = props => {
-  const { isMenuOpen, links, toggleMenu } = props;
+  const { user, isMenuOpen, links, toggleMenu } = props;
+
+  const getAllowedProvider = link => {
+    if (!link.provider) return true;
+
+    const userProvider = user.provider ?? '';
+    if (!userProvider) return true;
+
+    return link.provider.includes(userProvider);
+  };
 
   return (
     <div className='panel-sidebar'>
@@ -29,6 +38,8 @@ const AccountMenu = props => {
           <ul className='panel-links'>
             {links.map((link, index) => {
               const PREFIX = link.prefix ? link.prefix : '';
+              const isProviderAllowed = getAllowedProvider(link);
+              if (!isProviderAllowed) return;
               return (
                 <li key={index}>
                   <NavLink

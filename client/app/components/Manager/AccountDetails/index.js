@@ -8,6 +8,7 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
+import { EMAIL_PROVIDER } from '../../../constants';
 import UserRole from '../UserRole';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
@@ -25,7 +26,7 @@ const AccountDetails = props => {
       <div className='info'>
         <div className='desc'>
           <p className='one-line-ellipsis mr-3'>
-            {user.provider === 'email' ? (
+            {user.provider === EMAIL_PROVIDER.Email ? (
               user.email
             ) : (
               <span className='provider-email'>

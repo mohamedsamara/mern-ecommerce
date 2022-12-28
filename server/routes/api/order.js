@@ -7,9 +7,9 @@ const Order = require('../../models/order');
 const Cart = require('../../models/cart');
 const Product = require('../../models/product');
 const auth = require('../../middleware/auth');
-const role = require('../../middleware/role');
 const mailgun = require('../../services/mailgun');
 const store = require('../../utils/store');
+const { ROLES, CART_ITEM_STATUS } = require('../../constants');
 
 router.post('/add', auth, async (req, res) => {
   try {
@@ -67,7 +67,7 @@ router.get('/search', auth, async (req, res) => {
 
     let ordersDoc = null;
 
-    if (req.user.role === role.ROLES.Admin) {
+    if (req.user.role === ROLES.Admin) {
       ordersDoc = await Order.find({
         _id: Mongoose.Types.ObjectId(search)
       }).populate({
@@ -204,7 +204,7 @@ router.get('/:orderId', auth, async (req, res) => {
 
     let orderDoc = null;
 
-    if (req.user.role === role.ROLES.Admin) {
+    if (req.user.role === ROLES.Admin) {
       orderDoc = await Order.findOne({ _id: orderId }).populate({
         path: 'cart',
         populate: {
@@ -281,7 +281,7 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
     const itemId = req.params.itemId;
     const orderId = req.body.orderId;
     const cartId = req.body.cartId;
-    const status = req.body.status || 'Cancelled';
+    const status = req.body.status || CART_ITEM_STATUS.Cancelled;
 
     const foundCart = await Cart.findOne({ 'products._id': itemId });
     const foundCartProduct = foundCart.products.find(p => p._id == itemId);
@@ -293,14 +293,16 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
       }
     );
 
-    if (status === 'Cancelled') {
+    if (status === CART_ITEM_STATUS.Cancelled) {
       await Product.updateOne(
         { _id: foundCartProduct.product },
         { $inc: { quantity: foundCartProduct.quantity } }
       );
 
       const cart = await Cart.findOne({ _id: cartId });
-      const items = cart.products.filter(item => item.status === 'Cancelled');
+      const items = cart.products.filter(
+        item => item.status === CART_ITEM_STATUS.Cancelled
+      );
 
       // All items are cancelled => Cancel order
       if (cart.products.length === items.length) {
@@ -311,7 +313,7 @@ router.put('/status/item/:itemId', auth, async (req, res) => {
           success: true,
           orderCancelled: true,
           message: `${
-            req.user.role === role.ROLES.Admin ? 'Order' : 'Your order'
+            req.user.role === ROLES.Admin ? 'Order' : 'Your order'
           } has been cancelled successfully`
         });
       }

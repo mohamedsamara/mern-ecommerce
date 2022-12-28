@@ -1,5 +1,6 @@
 const Mongoose = require('mongoose');
-const { ROLE_ADMIN, ROLE_MEMBER, ROLE_MERCHANT } = require('../constants');
+
+const { ROLES, EMAIL_PROVIDER } = require('../constants');
 
 const { Schema } = Mongoose;
 
@@ -31,7 +32,7 @@ const UserSchema = new Schema({
   provider: {
     type: String,
     required: true,
-    default: 'email'
+    default: EMAIL_PROVIDER.Email
   },
   googleId: {
     type: String
@@ -44,8 +45,8 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    default: ROLE_MEMBER,
-    enum: [ROLE_ADMIN, ROLE_MEMBER, ROLE_MERCHANT]
+    default: ROLES.Member,
+    enum: [ROLES.Admin, ROLES.Member, ROLES.Merchant]
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },

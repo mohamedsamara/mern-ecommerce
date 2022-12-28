@@ -27,6 +27,7 @@ import {
   RESET_ADVANCED_FILTERS
 } from './constants';
 
+import { ROLES } from '../../constants';
 import handleError from '../../utils/error';
 import { formatSelectOptions, unformatSelectOptions } from '../../utils/select';
 import { allFieldsValidation } from '../../utils/validation';
@@ -265,7 +266,7 @@ export const addProduct = () => {
         isActive: product.isActive,
         taxable: product.taxable.value,
         brand:
-          user.role !== 'ROLE_MERCHANT'
+          user.role !== ROLES.Merchant
             ? brand != 0
               ? brand
               : null

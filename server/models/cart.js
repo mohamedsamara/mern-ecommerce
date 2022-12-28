@@ -1,4 +1,7 @@
 const Mongoose = require('mongoose');
+
+const { CART_ITEM_STATUS } = require('../constants');
+
 const { Schema } = Mongoose;
 
 // Cart Item Schema
@@ -26,8 +29,14 @@ const CartItemSchema = new Schema({
   },
   status: {
     type: String,
-    default: 'Not processed',
-    enum: ['Not processed', 'Processing', 'Shipped', 'Delivered', 'Cancelled']
+    default: CART_ITEM_STATUS.Not_processed,
+    enum: [
+      CART_ITEM_STATUS.Not_processed,
+      CART_ITEM_STATUS.Processing,
+      CART_ITEM_STATUS.Shipped,
+      CART_ITEM_STATUS.Delivered,
+      CART_ITEM_STATUS.Cancelled
+    ]
   }
 });
 

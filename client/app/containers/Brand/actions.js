@@ -232,6 +232,9 @@ export const activateBrand = (id, value) => {
 
       if (response.data.success === true) {
         dispatch(success(successfulOptions));
+
+        const brand = getState().brand.brand;
+        dispatch(fetchBrand(brand._id));
       }
     } catch (error) {
       handleError(error, dispatch);

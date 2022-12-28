@@ -2,7 +2,7 @@ const chalk = require('chalk');
 const bcrypt = require('bcryptjs');
 
 const setupDB = require('./db');
-const { ROLE_ADMIN } = require('../constants');
+const { ROLES } = require('../constants');
 const User = require('../models/user');
 
 const args = process.argv.slice(2);
@@ -20,7 +20,7 @@ const seedDB = async () => {
       password,
       firstName: 'admin',
       lastName: 'admin',
-      role: ROLE_ADMIN
+      role: ROLES.Admin
     });
 
     const existingUser = await User.findOne({ email: user.email });

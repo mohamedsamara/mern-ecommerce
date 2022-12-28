@@ -1,7 +1,12 @@
 {
-  "ROLE_ADMIN": [
+  "ROLE ADMIN": [
     { "to": "", "name": "Account Details", "prefix": "/dashboard" },
-    { "to": "/security", "name": "Account Security", "prefix": "/dashboard" },
+    {
+      "to": "/security",
+      "name": "Account Security",
+      "prefix": "/dashboard",
+      "provider": ["Email"]
+    },
     { "to": "/address", "name": "Address", "prefix": "/dashboard" },
     { "to": "/product", "name": "Products", "prefix": "/dashboard" },
     { "to": "/category", "name": "Categories", "prefix": "/dashboard" },
@@ -13,9 +18,14 @@
     { "to": "/wishlist", "name": "WishList", "prefix": "/dashboard" },
     { "to": "/support", "name": "Support" }
   ],
-  "ROLE_MERCHANT": [
+  "ROLE MERCHANT": [
     { "to": "", "name": "Account Details", "prefix": "/dashboard" },
-    { "to": "/security", "name": "Account Security", "prefix": "/dashboard" },
+    {
+      "to": "/security",
+      "name": "Account Security",
+      "prefix": "/dashboard",
+      "provider": ["Email"]
+    },
     { "to": "/address", "name": "Address", "prefix": "/dashboard" },
     { "to": "/brand", "name": "Brand", "prefix": "/dashboard" },
     { "to": "/product", "name": "Products", "prefix": "/dashboard" },
@@ -23,9 +33,14 @@
     { "to": "/wishlist", "name": "WishList", "prefix": "/dashboard" },
     { "to": "/support", "name": "Support" }
   ],
-  "ROLE_MEMBER": [
+  "ROLE MEMBER": [
     { "to": "", "name": "Account Details", "prefix": "/dashboard" },
-    { "to": "/security", "name": "Account Security", "prefix": "/dashboard" },
+    {
+      "to": "/security",
+      "name": "Account Security",
+      "prefix": "/dashboard",
+      "provider": ["Email"]
+    },
     { "to": "/address", "name": "Address", "prefix": "/dashboard" },
     { "to": "/orders", "name": "Orders", "prefix": "/dashboard" },
     { "to": "/wishlist", "name": "WishList", "prefix": "/dashboard" },

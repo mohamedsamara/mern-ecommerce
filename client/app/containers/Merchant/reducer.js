@@ -31,7 +31,7 @@ const initialState = {
     name: '',
     email: '',
     phoneNumber: '',
-    brand: '',
+    brandName: '',
     business: ''
   },
   formErrors: {},
@@ -47,96 +47,92 @@ const initialState = {
 };
 
 const merchantReducer = (state = initialState, action) => {
-  try {
-    switch (action.type) {
-      case FETCH_MERCHANTS:
-        return {
-          ...state,
-          merchants: action.payload
-        };
-      case FETCH_SEARCHED_MERCHANTS:
-        return {
-          ...state,
-          searchedMerchants: action.payload
-        };
-      case REMOVE_MERCHANT:
-        const index = state.merchants.findIndex(b => b._id === action.payload);
-        return {
-          ...state,
-          merchants: [
-            ...state.merchants.slice(0, index),
-            ...state.merchants.slice(index + 1)
-          ]
-        };
-      case SET_ADVANCED_FILTERS:
-        return {
-          ...state,
-          advancedFilters: {
-            ...state.advancedFilters,
-            ...action.payload
-          }
-        };
-      case MERCHANT_CHANGE:
-        return {
-          ...state,
-          merchantFormData: {
-            ...state.merchantFormData,
-            ...action.payload
-          }
-        };
-      case SET_MERCHANT_FORM_ERRORS:
-        return {
-          ...state,
-          formErrors: action.payload
-        };
-      case SET_MERCHANTS_LOADING:
-        return {
-          ...state,
-          isLoading: action.payload
-        };
-      case SET_MERCHANTS_SUBMITTING:
-        return {
-          ...state,
-          isSubmitting: action.payload
-        };
-      case RESET_MERCHANT:
-        return {
-          ...state,
-          merchantFormData: {
-            name: '',
-            email: '',
-            phoneNumber: '',
-            brand: '',
-            business: ''
-          },
-          formErrors: {}
-        };
-      case SIGNUP_CHANGE:
-        return {
-          ...state,
-          signupFormData: { ...state.signupFormData, ...action.payload }
-        };
-      case SET_SIGNUP_FORM_ERRORS:
-        return {
-          ...state,
-          signupFormErrors: action.payload
-        };
-      case SIGNUP_RESET:
-        return {
-          ...state,
-          signupFormData: {
-            email: '',
-            firstName: '',
-            lastName: '',
-            password: ''
-          }
-        };
+  switch (action.type) {
+    case FETCH_MERCHANTS:
+      return {
+        ...state,
+        merchants: action.payload
+      };
+    case FETCH_SEARCHED_MERCHANTS:
+      return {
+        ...state,
+        searchedMerchants: action.payload
+      };
+    case REMOVE_MERCHANT:
+      const index = state.merchants.findIndex(b => b._id === action.payload);
+      return {
+        ...state,
+        merchants: [
+          ...state.merchants.slice(0, index),
+          ...state.merchants.slice(index + 1)
+        ]
+      };
+    case SET_ADVANCED_FILTERS:
+      return {
+        ...state,
+        advancedFilters: {
+          ...state.advancedFilters,
+          ...action.payload
+        }
+      };
+    case MERCHANT_CHANGE:
+      return {
+        ...state,
+        merchantFormData: {
+          ...state.merchantFormData,
+          ...action.payload
+        }
+      };
+    case SET_MERCHANT_FORM_ERRORS:
+      return {
+        ...state,
+        formErrors: action.payload
+      };
+    case SET_MERCHANTS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
+      };
+    case SET_MERCHANTS_SUBMITTING:
+      return {
+        ...state,
+        isSubmitting: action.payload
+      };
+    case RESET_MERCHANT:
+      return {
+        ...state,
+        merchantFormData: {
+          name: '',
+          email: '',
+          phoneNumber: '',
+          brandName: '',
+          business: ''
+        },
+        formErrors: {}
+      };
+    case SIGNUP_CHANGE:
+      return {
+        ...state,
+        signupFormData: { ...state.signupFormData, ...action.payload }
+      };
+    case SET_SIGNUP_FORM_ERRORS:
+      return {
+        ...state,
+        signupFormErrors: action.payload
+      };
+    case SIGNUP_RESET:
+      return {
+        ...state,
+        signupFormData: {
+          email: '',
+          firstName: '',
+          lastName: '',
+          password: ''
+        }
+      };
 
-      default:
-        return state;
-    }
-  } catch (error) {
-    console.log('error', error);
+    default:
+      return state;
   }
 };
 
