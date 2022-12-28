@@ -1,11 +1,7 @@
-const ROLE_ADMIN = 'ROLE_ADMIN';
-const ROLE_MEMBER = 'ROLE_MEMBER';
-const ROLE_MERCHANT = 'ROLE_MERCHANT';
-
 exports.ROLES = {
-  Admin: ROLE_ADMIN,
-  Member: ROLE_MEMBER,
-  Merchant: ROLE_MERCHANT
+  Admin: 'ROLE ADMIN',
+  Member: 'ROLE MEMBER',
+  Merchant: 'ROLE MERCHANT'
 };
 
 exports.MERCHANT_STATUS = {

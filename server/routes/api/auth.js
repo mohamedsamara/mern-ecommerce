@@ -38,9 +38,9 @@ router.post('/login', async (req, res) => {
     }
 
     if (user && user.provider !== EMAIL_PROVIDER.Email) {
-      return res
-        .status(400)
-        .send({ error: 'That email address is already in use.' });
+      return res.status(400).send({
+        error: `That email address is already in use using ${user.provider} provider.`
+      });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);

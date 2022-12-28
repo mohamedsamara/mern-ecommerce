@@ -8,6 +8,7 @@ import React from 'react';
 
 import { Row, Col } from 'reactstrap';
 
+import { ROLES } from '../../../constants';
 import Input from '../../Common/Input';
 import Switch from '../../Common/Switch';
 import Button from '../../Common/Button';
@@ -119,14 +120,12 @@ const AddProduct = props => {
           </Col>
           <Col xs='12' md='12'>
             <SelectOption
-              disabled={user.role === 'ROLE_MERCHANT'}
+              disabled={user.role === ROLES.Merchant}
               error={formErrors['brand']}
               name={'brand'}
               label={'Select Brand'}
               value={
-                user.role === 'ROLE_MERCHANT'
-                  ? brands[1]
-                  : productFormData.brand
+                user.role === ROLES.Merchant ? brands[1] : productFormData.brand
               }
               options={brands}
               handleSelectChange={value => {
