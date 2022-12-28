@@ -12,9 +12,11 @@ import { Row, Col } from 'reactstrap';
 import Input from '../../Common/Input';
 import Button from '../../Common/Button';
 import Switch from '../../Common/Switch';
+import { ROLES } from '../../../constants';
 
 const EditBrand = props => {
   const {
+    user,
     brand,
     brandChange,
     formErrors,
@@ -100,6 +102,7 @@ const EditBrand = props => {
           <Button
             variant='danger'
             text='Delete'
+            disabled={user.role === ROLES.Merchant}
             onClick={() => deleteBrand(brand._id)}
           />
         </div>

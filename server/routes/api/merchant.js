@@ -15,7 +15,7 @@ const mailgun = require('../../services/mailgun');
 // add merchant api
 router.post('/add', async (req, res) => {
   try {
-    const { name, business, phoneNumber, email, brand } = req.body;
+    const { name, business, phoneNumber, email, brandName } = req.body;
 
     if (!name || !email) {
       return res
@@ -48,7 +48,7 @@ router.post('/add', async (req, res) => {
       email,
       business,
       phoneNumber,
-      brand
+      brandName
     });
     const merchantDoc = await merchant.save();
 
@@ -78,10 +78,10 @@ router.get('/search', auth, role.check(ROLES.Admin), async (req, res) => {
         { phoneNumber: { $regex: regex } },
         { email: { $regex: regex } },
         { name: { $regex: regex } },
-        { brand: { $regex: regex } },
+        { brandName: { $regex: regex } },
         { status: { $regex: regex } }
       ]
-    });
+    }).populate('brand', 'name');
 
     res.status(200).json({
       merchants
@@ -99,6 +99,7 @@ router.get('/', auth, role.check(ROLES.Admin), async (req, res) => {
     const { page = 1, limit = 10 } = req.query;
 
     const merchants = await Merchant.find()
+      .populate('brand')
       .sort('-created')
       .limit(limit * 1)
       .skip((page - 1) * limit)
@@ -256,7 +257,9 @@ router.delete(
   role.check(ROLES.Admin),
   async (req, res) => {
     try {
-      const merchant = await Merchant.deleteOne({ _id: req.params.id });
+      const merchantId = req.params.id;
+      await deactivateBrand(merchantId);
+      const merchant = await Merchant.deleteOne({ _id: merchantId });
 
       res.status(200).json({
         success: true,
@@ -271,15 +274,36 @@ router.delete(
   }
 );
 
-const createMerchantBrand = async ({ _id, brand, business }) => {
+const deactivateBrand = async merchantId => {
+  const merchantDoc = await Merchant.findOne({ _id: merchantId }).populate(
+    'brand',
+    '_id'
+  );
+  if (!merchantDoc || !merchantDoc.brand) return;
+  const brandId = merchantDoc.brand._id;
+  const query = { _id: brandId };
+  const update = {
+    isActive: false
+  };
+  return await Brand.findOneAndUpdate(query, update, {
+    new: true
+  });
+};
+
+const createMerchantBrand = async ({ _id, brandName, business }) => {
   const newBrand = new Brand({
-    name: brand,
+    name: brandName,
     description: business,
     merchant: _id,
     isActive: false
   });
 
-  return await newBrand.save();
+  const brandDoc = await newBrand.save();
+
+  const update = {
+    brand: brandDoc._id
+  };
+  await Merchant.findOneAndUpdate({ _id }, update);
 };
 
 const createMerchantUser = async (email, name, merchant, host) => {

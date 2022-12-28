@@ -31,7 +31,7 @@ const initialState = {
     name: '',
     email: '',
     phoneNumber: '',
-    brand: '',
+    brandName: '',
     business: ''
   },
   formErrors: {},
@@ -106,7 +106,7 @@ const merchantReducer = (state = initialState, action) => {
             name: '',
             email: '',
             phoneNumber: '',
-            brand: '',
+            brandName: '',
             business: ''
           },
           formErrors: {}

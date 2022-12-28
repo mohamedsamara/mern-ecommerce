@@ -4,10 +4,11 @@ const router = express.Router();
 // Bring in Models & Utils
 const Brand = require('../../models/brand');
 const Product = require('../../models/product');
+const Merchant = require('../../models/merchant');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const store = require('../../utils/store');
-const { ROLES } = require('../../constants');
+const { ROLES, MERCHANT_STATUS } = require('../../constants');
 
 router.post('/add', auth, role.check(ROLES.Admin), async (req, res) => {
   try {
@@ -90,10 +91,13 @@ router.get('/:id', async (req, res) => {
   try {
     const brandId = req.params.id;
 
-    const brandDoc = await Brand.findOne({ _id: brandId });
+    const brandDoc = await Brand.findOne({ _id: brandId }).populate(
+      'merchant',
+      '_id'
+    );
 
     if (!brandDoc) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `Cannot find brand with the id: ${brandId}.`
       });
     }
@@ -211,7 +215,9 @@ router.delete(
   role.check(ROLES.Admin),
   async (req, res) => {
     try {
-      const brand = await Brand.deleteOne({ _id: req.params.id });
+      const brandId = req.params.id;
+      await deactivateMerchant(brandId);
+      const brand = await Brand.deleteOne({ _id: brandId });
 
       res.status(200).json({
         success: true,
@@ -225,5 +231,21 @@ router.delete(
     }
   }
 );
+
+const deactivateMerchant = async brandId => {
+  const brandDoc = await Brand.findOne({ _id: brandId }).populate(
+    'merchant',
+    '_id'
+  );
+  if (!brandDoc || !brandDoc.merchant) return;
+  const merchantId = brandDoc.merchant._id;
+  const query = { _id: merchantId };
+  const update = {
+    status: MERCHANT_STATUS.Waiting_Approval
+  };
+  return await Merchant.findOneAndUpdate(query, update, {
+    new: true
+  });
+};
 
 module.exports = router;

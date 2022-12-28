@@ -16,7 +16,7 @@ const MerchantSchema = new Schema({
   phoneNumber: {
     type: String
   },
-  brand: {
+  brandName: {
     type: String
   },
   business: {
@@ -26,6 +26,11 @@ const MerchantSchema = new Schema({
   isActive: {
     type: Boolean,
     default: false
+  },
+  brand: {
+    type: Schema.Types.ObjectId,
+    ref: 'Brand',
+    default: null
   },
   status: {
     type: String,

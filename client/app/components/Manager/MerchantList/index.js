@@ -10,7 +10,7 @@ import { MERCHANT_STATUS } from '../../../constants';
 import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { CheckIcon, XIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
-import Switch from '../../Common/Switch';
+// import Switch from '../../Common/Switch';
 
 const MerchantList = props => {
   const {
@@ -29,7 +29,7 @@ const MerchantList = props => {
             <label className='text-black'>Business</label>
             <p className='fw-medium text-truncate'>{merchant.business}</p>
             <label className='text-black'>Brand</label>
-            <p className='text-truncate'>{merchant.brand}</p>
+            <p className='text-truncate'>{merchant.brandName}</p>
             <label className='text-black'>Name</label>
             <p className='text-truncate'>{merchant.name}</p>
             <label className='text-black'>Email</label>
@@ -51,7 +51,7 @@ const MerchantList = props => {
                 </div>
 
                 <div className='d-flex flex-row align-items-center mx-0'>
-                  <Switch
+                  {/* <Switch
                     tooltip={true}
                     tooltipContent={
                       merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
@@ -63,7 +63,7 @@ const MerchantList = props => {
                     toggleCheckboxChange={value =>
                       disableMerchant(merchant, value)
                     }
-                  />
+                  /> */}
                   <Button
                     className='ml-3'
                     size='lg'
@@ -89,7 +89,7 @@ const MerchantList = props => {
                     onClick={() => approveMerchant(merchant)}
                   />
                   <div className='d-flex flex-row align-items-center mx-0'>
-                    <Switch
+                    {/* <Switch
                       tooltip={true}
                       tooltipContent={
                         merchant.isActive
@@ -103,7 +103,7 @@ const MerchantList = props => {
                       toggleCheckboxChange={value =>
                         disableMerchant(merchant, value)
                       }
-                    />
+                    /> */}
                     <Button
                       className='ml-3'
                       size='lg'
@@ -141,7 +141,7 @@ const MerchantList = props => {
                   />
                 </div>
                 <div className='d-flex flex-row align-items-center mx-0'>
-                  <Switch
+                  {/* <Switch
                     tooltip={true}
                     tooltipContent={
                       merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
@@ -153,7 +153,7 @@ const MerchantList = props => {
                     toggleCheckboxChange={value =>
                       disableMerchant(merchant, value)
                     }
-                  />
+                  /> */}
                   <Button
                     className='ml-3'
                     size='lg'
