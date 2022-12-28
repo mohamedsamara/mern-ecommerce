@@ -27,3 +27,9 @@ exports.REVIEW_STATUS = {
   Approved: 'Approved',
   Waiting_Approval: 'Waiting Approval'
 };
+
+exports.EMAIL_PROVIDER = {
+  Email: 'Email',
+  Google: 'Google',
+  Facebook: 'Facebook'
+};

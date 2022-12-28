@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 
-const { ROLES } = require('../constants');
+const { ROLES, EMAIL_PROVIDER } = require('../constants');
 
 const { Schema } = Mongoose;
 
@@ -32,7 +32,7 @@ const UserSchema = new Schema({
   provider: {
     type: String,
     required: true,
-    default: 'email'
+    default: EMAIL_PROVIDER.Email
   },
   googleId: {
     type: String

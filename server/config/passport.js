@@ -6,9 +6,10 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const mongoose = require('mongoose');
 
 const keys = require('./keys');
+const { EMAIL_PROVIDER } = require('../constants');
 
 const { google, facebook } = keys;
-const { serverURL, apiURL } = keys.app;
+const { clientURL, apiURL } = keys.app;
 
 const User = mongoose.model('User');
 const secret = keys.jwt.secret;
@@ -47,7 +48,7 @@ const googleAuth = async () => {
         {
           clientID: google.clientID,
           clientSecret: google.clientSecret,
-          callbackURL: `${serverURL}/${apiURL}/${google.callbackURL}`
+          callbackURL: `${clientURL}/${apiURL}/${google.callbackURL}`
         },
         (accessToken, refreshToken, profile, done) => {
           User.findOne({ email: profile.email })
@@ -59,7 +60,7 @@ const googleAuth = async () => {
               const name = profile.displayName.split(' ');
 
               const newUser = new User({
-                provider: 'google',
+                provider: EMAIL_PROVIDER.Google,
                 googleId: profile.id,
                 email: profile.email,
                 firstName: name[0],
@@ -94,7 +95,7 @@ const facebookAuth = async () => {
         {
           clientID: facebook.clientID,
           clientSecret: facebook.clientSecret,
-          callbackURL: `${serverURL}/${apiURL}/${facebook.callbackURL}`,
+          callbackURL: `${clientURL}/${apiURL}/${facebook.callbackURL}`,
           profileFields: [
             'id',
             'displayName',
@@ -111,7 +112,7 @@ const facebookAuth = async () => {
               }
 
               const newUser = new User({
-                provider: 'facebook',
+                provider: EMAIL_PROVIDER.Facebook,
                 facebookId: profile.id,
                 email: profile.emails ? profile.emails[0].value : null,
                 firstName: profile.name.givenName,

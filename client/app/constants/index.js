@@ -38,3 +38,9 @@ export const REVIEW_STATUS = {
   Approved: 'Approved',
   Waiting_Approval: 'Waiting Approval'
 };
+
+export const EMAIL_PROVIDER = {
+  Email: 'Email',
+  Google: 'Google',
+  Facebook: 'Facebook'
+};
