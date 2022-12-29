@@ -1,0 +1,24 @@
+.custom-badge {
+  padding: 8px 10px;
+  //   border-radius: $border-radius-default;
+  font-weight: $font-weight-normal;
+}
+
+.custom-badge-primary {
+  background-color: $primary-bg;
+  color: $white;
+}
+
+.custom-badge-secondary {
+  background-color: $secondary-bg;
+}
+
+.custom-badge-dark {
+  background-color: $dark-bg;
+  color: $white;
+}
+
+.custom-badge-danger {
+  background-color: $danger-bg;
+  color: $white;
+}
