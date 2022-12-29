@@ -10,7 +10,7 @@ import { MERCHANT_STATUS } from '../../../constants';
 import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { CheckIcon, XIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
-// import Switch from '../../Common/Switch';
+import Switch from '../../Common/Switch';
 
 const MerchantList = props => {
   const {
@@ -51,7 +51,7 @@ const MerchantList = props => {
                 </div>
 
                 <div className='d-flex flex-row align-items-center mx-0'>
-                  {/* <Switch
+                  <Switch
                     tooltip={true}
                     tooltipContent={
                       merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
@@ -63,7 +63,7 @@ const MerchantList = props => {
                     toggleCheckboxChange={value =>
                       disableMerchant(merchant, value)
                     }
-                  /> */}
+                  />
                   <Button
                     className='ml-3'
                     size='lg'
