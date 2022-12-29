@@ -7,6 +7,7 @@
 import React from 'react';
 
 import { ROLES } from '../../../constants';
+import Badge from '../../Common/Badge';
 
 const UserRole = props => {
   const { className, user } = props;
@@ -14,11 +15,15 @@ const UserRole = props => {
   return (
     <>
       {user.role === ROLES.Admin ? (
-        <span className={`role admin ${className}`}>Admin</span>
+        <Badge variant='primary' className={className}>
+          Admin
+        </Badge>
       ) : user.role === ROLES.Merchant ? (
-        <span className={`role merchant ${className}`}>Merchant</span>
+        <Badge variant='dark' className={className}>
+          Merchant
+        </Badge>
       ) : (
-        <span className={`role member ${className}`}>Member</span>
+        <Badge className={className}>Member</Badge>
       )}
     </>
   );

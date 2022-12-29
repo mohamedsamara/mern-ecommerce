@@ -21,7 +21,7 @@ const UserList = props => {
             {user?.firstName ? `${user?.firstName} ${user?.lastName}` : 'N/A'}
           </p>
           <label className='text-black'>Email</label>
-          <p>{user?.email}</p>
+          <p>{user?.email ?? '-'}</p>
           <label className='text-black'>Provider</label>
           <p>{user?.provider}</p>
           <label className='text-black'>Account Created</label>
