@@ -73,6 +73,10 @@ const prepareTemplate = (type, host, data) => {
       message = template.merchantApplicationEmail();
       break;
 
+    case 'merchant-deactivate-account':
+      message = template.merchantDeactivateAccount();
+      break;
+
     case 'order-confirmation':
       message = template.orderConfirmationEmail(data);
       break;
