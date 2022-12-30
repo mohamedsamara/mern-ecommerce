@@ -127,9 +127,14 @@ router.put('/:id/active', auth, async (req, res) => {
     const update = req.body.merchant;
     const query = { _id: merchantId };
 
-    await Merchant.findOneAndUpdate(query, update, {
+    const merchantDoc = await Merchant.findOneAndUpdate(query, update, {
       new: true
     });
+
+    if (!update.isActive) {
+      await deactivateBrand(merchantId);
+      await mailgun.sendEmail(merchantDoc.email, 'merchant-deactivate-account');
+    }
 
     res.status(200).json({
       success: true

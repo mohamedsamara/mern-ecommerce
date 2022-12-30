@@ -115,7 +115,7 @@ class List extends React.PureComponent {
           </>
         )}
         {!isLoading && !displayMerchants && (
-          <NotFound message='no merchants found.' />
+          <NotFound message='No merchants found.' />
         )}
       </div>
     );

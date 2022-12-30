@@ -20,7 +20,7 @@ import Brand from '../../../containers/Brand';
 import Order from '../../../containers/Order';
 import Wishlist from '../../../containers/WishList';
 
-const Customer = props => {
+const Merchant = props => {
   return (
     <div className='merchant'>
       <Row>
@@ -46,4 +46,4 @@ const Customer = props => {
   );
 };
 
-export default Customer;
+export default Merchant;

@@ -3,7 +3,7 @@
 /* start not found styles */
 .not-found {
   text-align: center;
-  text-transform: capitalize;
+  // text-transform: capitalize;
   font-weight: $font-weight-medium;
   color: $font-custom-color;
 }
@@ -86,6 +86,10 @@
 
 .text-secondary {
   color: $secondary-color !important;
+}
+
+.bg-secondary {
+  background-color: $secondary-bg !important;
 }
 
 .text-uppercase {

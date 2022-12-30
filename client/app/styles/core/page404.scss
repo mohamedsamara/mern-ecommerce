@@ -3,4 +3,6 @@
   color: $font-custom-color;
   font-size: $font-size-large;
   font-weight: $font-weight-normal;
+  min-height: 250px;
+  @include center();
 }

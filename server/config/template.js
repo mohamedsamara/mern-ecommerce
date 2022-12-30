@@ -86,6 +86,17 @@ exports.merchantApplicationEmail = () => {
   return message;
 };
 
+exports.merchantDeactivateAccount = () => {
+  const message = {
+    subject: 'Merchant account on MERN Store',
+    text:
+      `Your merchant account has been disabled. \n\n` +
+      `Please contact admin to request access again.`
+  };
+
+  return message;
+};
+
 exports.orderConfirmationEmail = order => {
   const message = {
     subject: `Order Confirmation ${order._id}`,

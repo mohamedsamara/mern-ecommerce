@@ -92,7 +92,7 @@ class List extends React.PureComponent {
             </>
           )}
           {!isLoading && !displayOrders && (
-            <NotFound message='you have no orders yet!' />
+            <NotFound message='You have no orders yet.' />
           )}
         </SubPage>
       </div>

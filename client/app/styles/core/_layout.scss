@@ -65,7 +65,7 @@ p {
 
 label {
   cursor: default;
-  text-transform: capitalize;
+  // text-transform: capitalize;
   margin: 0;
   font-weight: $font-weight-normal;
 }
@@ -112,7 +112,7 @@ h6,
   font-family: $font-family-heading;
   font-size: $font-size-heading-medium !important;
   line-height: $line-height !important;
-  text-transform: capitalize;
+  // text-transform: capitalize;
 }
 
 h1,

@@ -35,7 +35,7 @@ class List extends React.PureComponent {
           ) : categories.length > 0 ? (
             <CategoryList categories={categories} />
           ) : (
-            <NotFound message='no categories found.' />
+            <NotFound message='No categories found.' />
           )}
         </SubPage>
       </>

@@ -56,7 +56,7 @@ class Edit extends React.PureComponent {
             activateBrand={activateBrand}
           />
         ) : (
-          <NotFound message='no brand found.' />
+          <NotFound message='No brand found.' />
         )}
       </SubPage>
     );

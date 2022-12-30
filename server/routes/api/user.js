@@ -65,7 +65,14 @@ router.get('/', auth, async (req, res) => {
 router.get('/me', auth, async (req, res) => {
   try {
     const user = req.user._id;
-    const userDoc = await User.findById(user, { password: 0 });
+    const userDoc = await User.findById(user, { password: 0 }).populate({
+      path: 'merchant',
+      model: 'Merchant',
+      populate: {
+        path: 'brand',
+        model: 'Brand'
+      }
+    });
 
     res.status(200).json({
       user: userDoc

@@ -116,3 +116,15 @@ hr {
 }
 
 // end carousel styles
+
+// start popover styles
+.popover {
+  border-color: $border-color-default;
+  font-family: $font-family;
+}
+
+.popover-header {
+  font-size: $font-size-medium !important;
+  background-color: $secondary-bg;
+}
+// end popover styles

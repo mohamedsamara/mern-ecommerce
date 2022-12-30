@@ -144,11 +144,11 @@ const Support = props => {
               </Col>
             </Row>
           ) : (
-            <NotFound message='Not users connected.' />
+            <NotFound message='No users connected.' />
           )}
         </>
       ) : (
-        <NotFound message='Not Connected.' />
+        <NotFound message='Not connected.' />
       )}
     </>
   );

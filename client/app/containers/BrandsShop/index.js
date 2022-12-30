@@ -40,7 +40,7 @@ class BrandsShop extends React.PureComponent {
             updateWishlist={updateWishlist}
           />
         ) : (
-          <NotFound message='no products found.' />
+          <NotFound message='No products found.' />
         )}
       </div>
     );

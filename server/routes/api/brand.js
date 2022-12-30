@@ -241,7 +241,9 @@ const deactivateMerchant = async brandId => {
   const merchantId = brandDoc.merchant._id;
   const query = { _id: merchantId };
   const update = {
-    status: MERCHANT_STATUS.Waiting_Approval
+    status: MERCHANT_STATUS.Waiting_Approval,
+    isActive: false,
+    brand: null
   };
   return await Merchant.findOneAndUpdate(query, update, {
     new: true

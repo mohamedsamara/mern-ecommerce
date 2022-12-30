@@ -81,7 +81,7 @@ class Users extends React.PureComponent {
             <UserList users={filteredUsers} />
           </>
         )}
-        {!isLoading && !displayUsers && <NotFound message='No Users Found!' />}
+        {!isLoading && !displayUsers && <NotFound message='No users found.' />}
       </div>
     );
   }
