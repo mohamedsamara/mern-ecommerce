@@ -10,7 +10,6 @@ import { MERCHANT_STATUS } from '../../../constants';
 import { formatDate } from '../../../utils/date';
 import Button from '../../Common/Button';
 import { CheckIcon, XIcon, RefreshIcon, TrashIcon } from '../../Common/Icon';
-import Switch from '../../Common/Switch';
 
 const MerchantList = props => {
   const {
@@ -20,6 +19,23 @@ const MerchantList = props => {
     deleteMerchant,
     disableMerchant
   } = props;
+
+  const renderMerchantPopover = merchant => (
+    <div className='p-2'>
+      <p className='text-gray text-14'>
+        {merchant.isActive
+          ? "Disabling merchant account will disable merchant's brand and account access."
+          : 'Enabling merchant account will restore merchant account access.'}
+      </p>
+      <Button
+        variant='dark'
+        size='sm'
+        className='w-100'
+        text={merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'}
+        onClick={() => disableMerchant(merchant, !merchant.isActive)}
+      />
+    </div>
+  );
 
   return (
     <div className='merchant-list'>
@@ -44,38 +60,39 @@ const MerchantList = props => {
             <hr />
 
             {merchant.status === MERCHANT_STATUS.Approved ? (
-              <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
-                <div className='d-flex flex-row mx-0'>
-                  <CheckIcon className='text-green' />
-                  <p className='ml-2 mb-0'>Approved</p>
-                </div>
+              <>
+                <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
+                  <div className='d-flex flex-row mx-0'>
+                    <CheckIcon className='text-green' />
+                    <p className='ml-2 mb-0'>Approved</p>
+                  </div>
 
-                <div className='d-flex flex-row align-items-center mx-0'>
-                  <Switch
-                    tooltip={true}
-                    tooltipContent={
-                      merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
-                    }
-                    id={`merchant-${merchant._id}`}
-                    name={'isActive'}
-                    label={'Active?'}
-                    checked={merchant.isActive}
-                    toggleCheckboxChange={value =>
-                      disableMerchant(merchant, value)
-                    }
-                  />
-                  <Button
-                    className='ml-3'
-                    size='lg'
-                    round={20}
-                    icon={<TrashIcon width={20} />}
-                    tooltip={true}
-                    tooltipContent='Delete'
-                    id={`delete-${merchant._id}`}
-                    onClick={() => deleteMerchant(merchant)}
-                  />
+                  <div className='d-flex flex-row align-items-center mx-0'>
+                    <Button
+                      className='ml-3'
+                      size='lg'
+                      round={20}
+                      icon={<TrashIcon width={20} />}
+                      tooltip={true}
+                      tooltipContent='Delete'
+                      id={`delete-${merchant._id}`}
+                      onClick={() => deleteMerchant(merchant)}
+                    />
+                  </div>
                 </div>
-              </div>
+                <Button
+                  className='w-100 mt-3'
+                  size='sm'
+                  text={
+                    merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
+                  }
+                  popover={true}
+                  popoverTitle={`Are you sure you want to ${
+                    merchant.isActive ? 'disable' : 'enable'
+                  } ${merchant.name}'s merchant account?`}
+                  popoverContent={renderMerchantPopover(merchant)}
+                />
+              </>
             ) : merchant.status === MERCHANT_STATUS.Rejected ? (
               <>
                 <div className='d-flex flex-row justify-content-between align-items-center mx-0'>
@@ -89,21 +106,6 @@ const MerchantList = props => {
                     onClick={() => approveMerchant(merchant)}
                   />
                   <div className='d-flex flex-row align-items-center mx-0'>
-                    {/* <Switch
-                      tooltip={true}
-                      tooltipContent={
-                        merchant.isActive
-                          ? 'Disable Merchant'
-                          : 'Enable Merchant'
-                      }
-                      id={`merchant-${merchant._id}`}
-                      name={'isActive'}
-                      label={'Active?'}
-                      checked={merchant.isActive}
-                      toggleCheckboxChange={value =>
-                        disableMerchant(merchant, value)
-                      }
-                    /> */}
                     <Button
                       className='ml-3'
                       size='lg'
@@ -141,19 +143,6 @@ const MerchantList = props => {
                   />
                 </div>
                 <div className='d-flex flex-row align-items-center mx-0'>
-                  {/* <Switch
-                    tooltip={true}
-                    tooltipContent={
-                      merchant.isActive ? 'Disable Merchant' : 'Enable Merchant'
-                    }
-                    id={`merchant-${merchant._id}`}
-                    name={'isActive'}
-                    label={'Active?'}
-                    checked={merchant.isActive}
-                    toggleCheckboxChange={value =>
-                      disableMerchant(merchant, value)
-                    }
-                  /> */}
                   <Button
                     className='ml-3'
                     size='lg'

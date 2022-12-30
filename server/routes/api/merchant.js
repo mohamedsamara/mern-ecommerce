@@ -131,6 +131,10 @@ router.put('/:id/active', auth, async (req, res) => {
       new: true
     });
 
+    if (!update.isActive) {
+      await deactivateBrand(merchantId);
+    }
+
     res.status(200).json({
       success: true
     });
