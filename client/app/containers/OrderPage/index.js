@@ -56,7 +56,7 @@ class OrderPage extends React.PureComponent {
             }}
           />
         ) : (
-          <NotFound message='no order found.' />
+          <NotFound message='No order found.' />
         )}
       </div>
     );

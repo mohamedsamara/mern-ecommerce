@@ -35,7 +35,7 @@ class List extends React.PureComponent {
           ) : products.length > 0 ? (
             <ProductList products={products} />
           ) : (
-            <NotFound message='no products found.' />
+            <NotFound message='No products found.' />
           )}
         </SubPage>
       </>

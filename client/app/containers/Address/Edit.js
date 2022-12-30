@@ -54,7 +54,7 @@ class Edit extends React.PureComponent {
             defaultChange={defaultChange}
           />
         ) : (
-          <NotFound message='no Address found.' />
+          <NotFound message='No address found.' />
         )}
       </SubPage>
     );

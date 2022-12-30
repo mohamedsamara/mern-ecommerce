@@ -39,7 +39,7 @@ const MessagesList = props => {
         </div>
       ) : (
         <div className='my-4'>
-          <NotFound message='No messages found' />
+          <NotFound message='No messages found.' />
         </div>
       )}
     </>

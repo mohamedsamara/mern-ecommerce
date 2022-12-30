@@ -61,7 +61,7 @@ class Edit extends React.PureComponent {
             activateProduct={activateProduct}
           />
         ) : (
-          <NotFound message='no product found.' />
+          <NotFound message='No product found.' />
         )}
       </SubPage>
     );

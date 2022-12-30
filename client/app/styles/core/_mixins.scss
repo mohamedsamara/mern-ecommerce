@@ -29,6 +29,12 @@
   flex-wrap: $value;
 }
 
+@mixin center() {
+  @include flex();
+  justify-content: center;
+  align-items: center;
+}
+
 // width fit
 @mixin width-fit() {
   width: intrinsic; /* Safari/WebKit uses a non-standard name */
