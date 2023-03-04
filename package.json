@@ -113,6 +113,6 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^4.2.1",
-    "webpack-pwa-manifest": "^4.0.0"
+    "webpack-pwa-manifest": "^4.3.0"
   }
 }
