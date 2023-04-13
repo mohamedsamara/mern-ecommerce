@@ -13,7 +13,7 @@ router.post('/add', auth, async (req, res) => {
 
     const review = new Review({
       ...req.body,
-      user: user._id
+      user: user._id,
     });
 
     const reviewDoc = await review.save();
@@ -21,11 +21,11 @@ router.post('/add', auth, async (req, res) => {
     res.status(200).json({
       success: true,
       message: `Your review has been added successfully and will appear when approved!`,
-      review: reviewDoc
+      review: reviewDoc,
     });
   } catch (error) {
     return res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -39,11 +39,11 @@ router.get('/', async (req, res) => {
       .sort('-created')
       .populate({
         path: 'user',
-        select: 'firstName'
+        select: 'firstName',
       })
       .populate({
         path: 'product',
-        select: 'name slug imageUrl'
+        select: 'name slug imageUrl',
       })
       .limit(limit * 1)
       .skip((page - 1) * limit)
@@ -55,11 +55,11 @@ router.get('/', async (req, res) => {
       reviews,
       totalPages: Math.ceil(count / limit),
       currentPage: Number(page),
-      count
+      count,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -73,26 +73,26 @@ router.get('/:slug', async (req, res) => {
 
     if (!productDoc || hasNoBrand) {
       return res.status(404).json({
-        message: 'No product found.'
+        message: 'No product found.',
       });
     }
 
     const reviews = await Review.find({
       product: productDoc._id,
-      status: REVIEW_STATUS.Approved
+      status: REVIEW_STATUS.Approved,
     })
       .populate({
         path: 'user',
-        select: 'firstName'
+        select: 'firstName',
       })
       .sort('-created');
 
     res.status(200).json({
-      reviews
+      reviews,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -104,16 +104,16 @@ router.put('/:id', async (req, res) => {
     const query = { _id: reviewId };
 
     await Review.findOneAndUpdate(query, update, {
-      new: true
+      new: true,
     });
 
     res.status(200).json({
       success: true,
-      message: 'review has been updated successfully!'
+      message: 'review has been updated successfully!',
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -126,19 +126,19 @@ router.put('/approve/:reviewId', auth, async (req, res) => {
     const query = { _id: reviewId };
     const update = {
       status: REVIEW_STATUS.Approved,
-      isActive: true
+      isActive: true,
     };
 
     await Review.findOneAndUpdate(query, update, {
-      new: true
+      new: true,
     });
 
     res.status(200).json({
-      success: true
+      success: true,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -150,19 +150,19 @@ router.put('/reject/:reviewId', auth, async (req, res) => {
 
     const query = { _id: reviewId };
     const update = {
-      status: REVIEW_STATUS.Rejected
+      status: REVIEW_STATUS.Rejected,
     };
 
     await Review.findOneAndUpdate(query, update, {
-      new: true
+      new: true,
     });
 
     res.status(200).json({
-      success: true
+      success: true,
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
@@ -174,13 +174,14 @@ router.delete('/delete/:id', async (req, res) => {
     res.status(200).json({
       success: true,
       message: `review has been deleted successfully!`,
-      review
+      review,
     });
   } catch (error) {
     return res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: 'Your request could not be processed. Please try again.',
     });
   }
 });
 
 module.exports = router;
+
