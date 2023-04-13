@@ -13,7 +13,7 @@ const checkAuth = require('../../utils/auth');
 const { s3Upload } = require('../../utils/storage');
 const {
   getStoreProductsQuery,
-  getStoreProductsWishListQuery,
+  getStoreProductsWishListQuery
 } = require('../../utils/queries');
 const { ROLES } = require('../../constants');
 
@@ -28,7 +28,7 @@ router.get('/item/:slug', async (req, res) => {
     const productDoc = await Product.findOne({ slug, isActive: true }).populate(
       {
         path: 'brand',
-        select: 'name isActive slug',
+        select: 'name isActive slug'
       }
     );
 
@@ -37,16 +37,16 @@ router.get('/item/:slug', async (req, res) => {
 
     if (!productDoc || hasNoBrand) {
       return res.status(404).json({
-        message: 'No product found.',
+        message: 'No product found.'
       });
     }
 
     res.status(200).json({
-      product: productDoc,
+      product: productDoc
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -63,16 +63,16 @@ router.get('/list/search/:name', async (req, res) => {
 
     if (productDoc.length < 0) {
       return res.status(404).json({
-        message: 'No product found.',
+        message: 'No product found.'
       });
     }
 
     res.status(200).json({
-      products: productDoc,
+      products: productDoc
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -87,7 +87,7 @@ router.get('/list', async (req, res) => {
       min,
       category,
       page = 1,
-      limit = 10,
+      limit = 10
     } = req.query;
     sortOrder = JSON.parse(sortOrder);
 
@@ -105,9 +105,9 @@ router.get('/list', async (req, res) => {
         $match: {
           isActive: true,
           _id: {
-            $in: Array.from(categoryDoc.products),
-          },
-        },
+            $in: Array.from(categoryDoc.products)
+          }
+        }
       });
     }
 
@@ -121,7 +121,7 @@ router.get('/list', async (req, res) => {
     const paginateQuery = [
       { $sort: sortOrder },
       { $skip: size * limit },
-      { $limit: limit * 1 },
+      { $limit: limit * 1 }
     ];
 
     if (userDoc) {
@@ -137,12 +137,12 @@ router.get('/list', async (req, res) => {
       products,
       totalPages: Math.ceil(count / limit),
       currentPage,
-      count,
+      count
     });
   } catch (error) {
     console.log('error', error);
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -156,7 +156,7 @@ router.get('/list/brand/:slug', async (req, res) => {
 
     if (!brand) {
       return res.status(404).json({
-        message: `Cannot find brand with the slug: ${slug}.`,
+        message: `Cannot find brand with the slug: ${slug}.`
       });
     }
 
@@ -167,8 +167,8 @@ router.get('/list/brand/:slug', async (req, res) => {
         {
           $match: {
             isActive: true,
-            brand: brand._id,
-          },
+            brand: brand._id
+          }
         },
         {
           $lookup: {
@@ -179,62 +179,62 @@ router.get('/list/brand/:slug', async (req, res) => {
                 $match: {
                   $and: [
                     { $expr: { $eq: ['$$product', '$product'] } },
-                    { user: new Mongoose.Types.ObjectId(userDoc.id) },
-                  ],
-                },
-              },
+                    { user: new Mongoose.Types.ObjectId(userDoc.id) }
+                  ]
+                }
+              }
             ],
-            as: 'isLiked',
-          },
+            as: 'isLiked'
+          }
         },
         {
           $lookup: {
             from: 'brands',
             localField: 'brand',
             foreignField: '_id',
-            as: 'brands',
-          },
+            as: 'brands'
+          }
         },
         {
           $addFields: {
-            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] },
-          },
+            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
+          }
         },
         {
-          $unwind: '$brands',
+          $unwind: '$brands'
         },
         {
           $addFields: {
             'brand.name': '$brands.name',
             'brand._id': '$brands._id',
-            'brand.isActive': '$brands.isActive',
-          },
+            'brand.isActive': '$brands.isActive'
+          }
         },
-        { $project: { brands: 0 } },
+        { $project: { brands: 0 } }
       ]);
 
       res.status(200).json({
         products: products.reverse().slice(0, 8),
         page: 1,
         pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
-        totalProducts: products.length,
+        totalProducts: products.length
       });
     } else {
       const products = await Product.find({
         brand: brand._id,
-        isActive: true,
+        isActive: true
       }).populate('brand', 'name');
 
       res.status(200).json({
         products: products.reverse().slice(0, 8),
         page: 1,
         pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
-        totalProducts: products.length,
+        totalProducts: products.length
       });
     }
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -244,11 +244,11 @@ router.get('/list/select', auth, async (req, res) => {
     const products = await Product.find({}, 'name');
 
     res.status(200).json({
-      products,
+      products
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -295,8 +295,8 @@ router.post(
         return res.status(400).json({ error: 'This sku is already in use.' });
       }
 
-      // const { imageUrl, imageKey } = await s3Upload(image);
-      const imageUrl = 'https://i.imgur.com/X4dH3zn.jpg';
+      const { imageUrl, imageKey } = await s3Upload(image);
+
       const product = new Product({
         sku,
         name,
@@ -307,6 +307,7 @@ router.post(
         isActive,
         brand,
         imageUrl,
+        imageKey
       });
 
       const savedProduct = await product.save();
@@ -314,12 +315,11 @@ router.post(
       res.status(200).json({
         success: true,
         message: `Product has been added successfully!`,
-        product: savedProduct,
+        product: savedProduct
       });
     } catch (error) {
-      console.log('Error', error);
       return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'Your request could not be processed. Please try again.'
       });
     }
   }
@@ -336,7 +336,7 @@ router.get(
 
       if (req.user.merchant) {
         const brands = await Brand.find({
-          merchant: req.user.merchant,
+          merchant: req.user.merchant
         }).populate('merchant', '_id');
 
         const brandId = brands[0]?.['_id'];
@@ -346,8 +346,8 @@ router.get(
             path: 'brand',
             populate: {
               path: 'merchant',
-              model: 'Merchant',
-            },
+              model: 'Merchant'
+            }
           })
           .where('brand', brandId);
       } else {
@@ -355,17 +355,17 @@ router.get(
           path: 'brand',
           populate: {
             path: 'merchant',
-            model: 'Merchant',
-          },
+            model: 'Merchant'
+          }
         });
       }
 
       res.status(200).json({
-        products,
+        products
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'Your request could not be processed. Please try again.'
       });
     }
   }
@@ -384,7 +384,7 @@ router.get(
 
       if (req.user.merchant) {
         const brands = await Brand.find({
-          merchant: req.user.merchant,
+          merchant: req.user.merchant
         }).populate('merchant', '_id');
 
         const brandId = brands[0]['_id'];
@@ -392,28 +392,28 @@ router.get(
         productDoc = await Product.findOne({ _id: productId })
           .populate({
             path: 'brand',
-            select: 'name',
+            select: 'name'
           })
           .where('brand', brandId);
       } else {
         productDoc = await Product.findOne({ _id: productId }).populate({
           path: 'brand',
-          select: 'name',
+          select: 'name'
         });
       }
 
       if (!productDoc) {
         return res.status(404).json({
-          message: 'No product found.',
+          message: 'No product found.'
         });
       }
 
       res.status(200).json({
-        product: productDoc,
+        product: productDoc
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'Your request could not be processed. Please try again.'
       });
     }
   }
@@ -431,7 +431,7 @@ router.put(
       const { sku, slug } = req.body.product;
 
       const foundProduct = await Product.findOne({
-        $or: [{ slug }, { sku }],
+        $or: [{ slug }, { sku }]
       });
 
       if (foundProduct && foundProduct._id != productId) {
@@ -441,16 +441,16 @@ router.put(
       }
 
       await Product.findOneAndUpdate(query, update, {
-        new: true,
+        new: true
       });
 
       res.status(200).json({
         success: true,
-        message: 'Product has been updated successfully!',
+        message: 'Product has been updated successfully!'
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'Your request could not be processed. Please try again.'
       });
     }
   }
@@ -467,16 +467,16 @@ router.put(
       const query = { _id: productId };
 
       await Product.findOneAndUpdate(query, update, {
-        new: true,
+        new: true
       });
 
       res.status(200).json({
         success: true,
-        message: 'Product has been updated successfully!',
+        message: 'Product has been updated successfully!'
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'Your request could not be processed. Please try again.'
       });
     }
   }
@@ -493,15 +493,14 @@ router.delete(
       res.status(200).json({
         success: true,
         message: `Product has been deleted successfully!`,
-        product,
+        product
       });
     } catch (error) {
       res.status(400).json({
-        error: 'Your request could not be processed. Please try again.',
+        error: 'Your request could not be processed. Please try again.'
       });
     }
   }
 );
 
 module.exports = router;
-

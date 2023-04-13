@@ -39,22 +39,21 @@ router.post('/login', async (req, res) => {
 
     if (user && user.provider !== EMAIL_PROVIDER.Email) {
       return res.status(400).send({
-        error: `That email address is already in use using ${user.provider} provider.`,
+        error: `That email address is already in use using ${user.provider} provider.`
       });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      console.log('Incorrect Password!!!');
       return res.status(400).json({
         success: false,
-        error: 'Password Incorrect',
+        error: 'Password Incorrect'
       });
     }
 
     const payload = {
-      id: user.id,
+      id: user.id
     };
 
     const token = jwt.sign(payload, secret, { expiresIn: tokenLife });
@@ -63,7 +62,6 @@ router.post('/login', async (req, res) => {
       throw new Error();
     }
 
-    console.log('Successful login!!!');
     res.status(200).json({
       success: true,
       token: `Bearer ${token}`,
@@ -72,19 +70,18 @@ router.post('/login', async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        role: user.role,
-      },
+        role: user.role
+      }
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
 
 router.post('/register', async (req, res) => {
   try {
-    console.log('The user wants to Register!!!');
     const { email, firstName, lastName, password, isSubscribed } = req.body;
 
     if (!email) {
@@ -122,7 +119,7 @@ router.post('/register', async (req, res) => {
       email,
       password,
       firstName,
-      lastName,
+      lastName
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -132,7 +129,7 @@ router.post('/register', async (req, res) => {
     const registeredUser = await user.save();
 
     const payload = {
-      id: registeredUser.id,
+      id: registeredUser.id
     };
 
     await mailgun.sendEmail(
@@ -153,12 +150,12 @@ router.post('/register', async (req, res) => {
         firstName: registeredUser.firstName,
         lastName: registeredUser.lastName,
         email: registeredUser.email,
-        role: registeredUser.role,
-      },
+        role: registeredUser.role
+      }
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -198,11 +195,11 @@ router.post('/forgot', async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Please check your email for the link to reset your password.',
+      message: 'Please check your email for the link to reset your password.'
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -217,13 +214,13 @@ router.post('/reset/:token', async (req, res) => {
 
     const resetUser = await User.findOne({
       resetPasswordToken: req.params.token,
-      resetPasswordExpires: { $gt: Date.now() },
+      resetPasswordExpires: { $gt: Date.now() }
     });
 
     if (!resetUser) {
       return res.status(400).json({
         error:
-          'Your token has expired. Please attempt to reset your password again.',
+          'Your token has expired. Please attempt to reset your password again.'
       });
     }
 
@@ -241,11 +238,11 @@ router.post('/reset/:token', async (req, res) => {
     res.status(200).json({
       success: true,
       message:
-        'Password changed successfully. Please login with your new password.',
+        'Password changed successfully. Please login with your new password.'
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -288,11 +285,11 @@ router.post('/reset', auth, async (req, res) => {
     res.status(200).json({
       success: true,
       message:
-        'Password changed successfully. Please login with your new password.',
+        'Password changed successfully. Please login with your new password.'
     });
   } catch (error) {
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.',
+      error: 'Your request could not be processed. Please try again.'
     });
   }
 });
@@ -303,7 +300,7 @@ router.get(
     session: false,
     scope: ['profile', 'email'],
     accessType: 'offline',
-    approvalPrompt: 'force',
+    approvalPrompt: 'force'
   })
 );
 
@@ -311,11 +308,11 @@ router.get(
   '/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/login',
-    session: false,
+    session: false
   }),
   (req, res) => {
     const payload = {
-      id: req.user.id,
+      id: req.user.id
     };
 
     jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
@@ -339,7 +336,7 @@ router.get(
   '/facebook',
   passport.authenticate('facebook', {
     session: false,
-    scope: ['public_profile', 'email'],
+    scope: ['public_profile', 'email']
   })
 );
 
@@ -347,11 +344,11 @@ router.get(
   '/facebook/callback',
   passport.authenticate('facebook', {
     failureRedirect: '/',
-    session: false,
+    session: false
   }),
   (req, res) => {
     const payload = {
-      id: req.user.id,
+      id: req.user.id
     };
 
     jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
@@ -372,4 +369,3 @@ router.get(
 );
 
 module.exports = router;
-
