@@ -10,7 +10,7 @@ const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../utils/auth');
-const { s3Upload } = require('../../utils/storage');
+const { s3Upload, getObjectSignedUrl } = require('../../utils/storage');
 const {
   getStoreProductsQuery,
   getStoreProductsWishListQuery
@@ -41,6 +41,8 @@ router.get('/item/:slug', async (req, res) => {
       });
     }
 
+    productDoc.imageUrl = await getObjectSignedUrl(productDoc.imageKey)
+
     res.status(200).json({
       product: productDoc
     });
@@ -67,6 +69,10 @@ router.get('/list/search/:name', async (req, res) => {
       });
     }
 
+    for (let product of productDoc) {
+      product.imageUrl = await getObjectSignedUrl(product.imageKey)
+    }
+
     res.status(200).json({
       products: productDoc
     });
@@ -79,6 +85,7 @@ router.get('/list/search/:name', async (req, res) => {
 
 // fetch store products by advanced filters api
 router.get('/list', async (req, res) => {
+  // console.log('am the one')
   try {
     let {
       sortOrder,
@@ -131,6 +138,11 @@ router.get('/list', async (req, res) => {
       products = await Product.aggregate(wishListQuery.concat(paginateQuery));
     } else {
       products = await Product.aggregate(basicQuery.concat(paginateQuery));
+    }
+
+    for (let product of products) {
+      console.log(product, 'am using the loop')
+      product.imageUrl = await getObjectSignedUrl(product.imageKey)
     }
 
     res.status(200).json({
@@ -213,6 +225,10 @@ router.get('/list/brand/:slug', async (req, res) => {
         { $project: { brands: 0 } }
       ]);
 
+      for (let product of products) {
+        product.imageUrl = await getObjectSignedUrl(product.imageKey)
+      }
+
       res.status(200).json({
         products: products.reverse().slice(0, 8),
         page: 1,
@@ -242,6 +258,10 @@ router.get('/list/brand/:slug', async (req, res) => {
 router.get('/list/select', auth, async (req, res) => {
   try {
     const products = await Product.find({}, 'name');
+
+    for (let product of products) {
+      product.imageUrl = await getObjectSignedUrl(product.imageKey)
+    }
 
     res.status(200).json({
       products
@@ -360,10 +380,15 @@ router.get(
         });
       }
 
+      for (let product of products) {
+        product.imageUrl = await getObjectSignedUrl(product.imageKey)
+      }
+
       res.status(200).json({
         products
       });
     } catch (error) {
+      next(new Error("This is an error and it should be logged to the console:"`${error}`));
       res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });

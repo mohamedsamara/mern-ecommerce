@@ -5,6 +5,9 @@ const compression = require('compression');
 const cors = require('cors');
 const path = require('path');
 const helmet = require('helmet');
+var expressWinston = require('express-winston');
+var winston = require('winston'); // for transports.Console
+const morgan = require('morgan')
 
 const keys = require('./config/keys');
 const routes = require('./routes');
@@ -27,7 +30,29 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 setupDB();
 require('./config/passport')(app);
+app.use(morgan('common'))
+
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console()
+  ],
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.json()
+  )
+}));
+
 app.use(routes);
+
+// app.use(expressWinston.errorLogger({
+//   transports: [
+//     new winston.transports.Console()
+//   ],
+//   format: winston.format.combine(
+//     winston.format.colorize(),
+//     winston.format.json()
+//   )
+// }));
 
 console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
