@@ -25,27 +25,37 @@ async function getObjectSignedUrl(key) {
 	return url;
 }
 
-const s3Upload = async (image) => {
-	let imageUrl = "";
-	let imageKey = "";
+const s3Upload = async (images) => {
+	let imageKeys= []
+	
 
-	if (image) {
-		const params = {
-			Bucket: keys.aws.bucketName,
-			Key: image.originalname,
-			Body: image.buffer,
-			ContentType: image.mimetype,
-			// ACL: 'public-read'
-		};
+	
+	// console.log(images, "image")
+	// return
+	
+	
+	if (images.length > 0) {
+		for(let i=0; i < images.length; i++){
+			const params = {
+				Bucket: keys.aws.bucketName,
+				Key: images[i].name,
+				Body: Buffer.from(images[i].thumbUrl.split(",")[1], "base64"),
+				ContentType: images[i].type,
+				// ACL: 'public-read'
+			};
+			const upload = await s3Client.send(new PutObjectCommand(params));
+			console.log(images[i].name, 'name')
+			// i == images.length - 1 ? imageKey = images[i].name : 
+			imageKeys.push(images[i].name);
+			// console.log(imageKeys, 'image keys')
+		}
+		
 
-		const s3Upload = await s3Client.send(new PutObjectCommand(params));
-
-		console.log(s3Upload, 'upload')
-		imageUrl = await getObjectSignedUrl(params.Key);
-		console.log(imageUrl, "am the url");
-		imageKey = params.Key;
+		// const s3Upload = await s3Client.send(new PutObjectCommand(params));
+		// imageUrl = await getObjectSignedUrl(params.Key);
+		// imageKey = params.Key;
 	}
-
-	return { imageUrl, imageKey };
+	const imageKey = imageKeys[0]
+	return { imageKeys, imageKey };
 };
 module.exports = {getObjectSignedUrl, s3Upload}

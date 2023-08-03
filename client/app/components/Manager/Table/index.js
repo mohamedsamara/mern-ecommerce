@@ -15,7 +15,7 @@ const columns = [{
 }];
 
 const Table = props => {
-    const { history, data, isLoading } = props;
+    const { history, products, isLoading } = props;
 
     const columns = [{
       dataField: 'id',
@@ -46,7 +46,7 @@ const Table = props => {
     }];
     
     return (
-<BootstrapTable bootstrap4 keyField='id' data={ data } columns={ columns } />
+<BootstrapTable bootstrap4 keyField='id' data={ products } columns={ columns } />
 
     )
 }  
