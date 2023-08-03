@@ -30,17 +30,17 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 
 setupDB();
 require('./config/passport')(app);
-app.use(morgan('common'))
+app.use(morgan('dev'))
 
-app.use(expressWinston.logger({
-  transports: [
-    new winston.transports.Console()
-  ],
-  format: winston.format.combine(
-    winston.format.colorize(),
-    winston.format.json()
-  )
-}));
+// app.use(expressWinston.logger({
+//   transports: [
+//     new winston.transports.Console()
+//   ],
+//   format: winston.format.combine(
+//     winston.format.colorize(),
+//     winston.format.json()
+//   )
+// }));
 
 app.use(routes);
 
@@ -55,12 +55,7 @@ app.use(routes);
 // }));
 
 console.log('process.env.NODE_ENV ', process.env.NODE_ENV);
-if (process.env.NODE_ENV === 'production') {
-  app.use(compression());
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../dist/index.html'));
-  });
-}
+
 
 const server = app.listen(port, () => {
   console.log(

@@ -70,6 +70,7 @@
     "react": "^16.8.6",
     "react-autosuggest": "^10.1.0",
     "react-bootstrap-table-next": "^3.1.5",
+    "react-bootstrap-table2-paginator": "^2.1.2",
     "react-bootstrap-table2-toolkit": "^2.0.1",
     "react-dom": "^16.8.6",
     "react-multi-carousel": "^2.5.5",

@@ -14,6 +14,8 @@ import ProductList from '../../components/Manager/ProductList';
 import SubPage from '../../components/Manager/SubPage';
 import LoadingIndicator from '../../components/Common/LoadingIndicator';
 import NotFound from '../../components/Common/NotFound';
+import Table from '../../components/Manager/Table';
+
 
 class List extends React.PureComponent {
   componentDidMount() {
@@ -34,6 +36,8 @@ class List extends React.PureComponent {
             <LoadingIndicator inline />
           ) : products.length > 0 ? (
             <ProductList products={products} />
+            // <Table products={products}/>
+            
           ) : (
             <NotFound message='No products found.' />
           )}
