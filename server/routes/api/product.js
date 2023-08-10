@@ -10,7 +10,7 @@ const Category = require('../../models/category');
 const auth = require('../../middleware/auth');
 const role = require('../../middleware/role');
 const checkAuth = require('../../utils/auth');
-const { s3Upload } = require('../../utils/storage');
+const { s3Upload, getObjectSignedUrl } = require('../../utils/storage');
 const {
   getStoreProductsQuery,
   getStoreProductsWishListQuery
@@ -41,6 +41,8 @@ router.get('/item/:slug', async (req, res) => {
       });
     }
 
+    productDoc.imageUrl = await getObjectSignedUrl(productDoc.imageKey)
+
     res.status(200).json({
       product: productDoc
     });
@@ -67,6 +69,10 @@ router.get('/list/search/:name', async (req, res) => {
       });
     }
 
+    for (let i=0; i < productDoc.length; i++) {
+      productDoc[i].imageUrl = await getObjectSignedUrl(productDoc[i].imageKey)
+    }
+
     res.status(200).json({
       products: productDoc
     });
@@ -79,6 +85,7 @@ router.get('/list/search/:name', async (req, res) => {
 
 // fetch store products by advanced filters api
 router.get('/list', async (req, res) => {
+  // console.log('am the one')
   try {
     let {
       sortOrder,
@@ -132,6 +139,10 @@ router.get('/list', async (req, res) => {
     } else {
       products = await Product.aggregate(basicQuery.concat(paginateQuery));
     }
+
+    for (let i=0; i < products.length; i++) {
+        products[i].imageUrl = await getObjectSignedUrl(products[i].imageKey)
+      }
 
     res.status(200).json({
       products,
@@ -213,6 +224,11 @@ router.get('/list/brand/:slug', async (req, res) => {
         { $project: { brands: 0 } }
       ]);
 
+      for (let i=0; i < products.length; i++) {
+        console.log(i, 'inde')
+        products[i].imageUrl = await getObjectSignedUrl(products[i].imageKey)
+      }
+
       res.status(200).json({
         products: products.reverse().slice(0, 8),
         page: 1,
@@ -243,6 +259,10 @@ router.get('/list/select', auth, async (req, res) => {
   try {
     const products = await Product.find({}, 'name');
 
+    for (let i=0; i < products.length; i++) {
+      products[i].imageUrl = await getObjectSignedUrl(products[i].imageKey)
+    }
+
     res.status(200).json({
       products
     });
@@ -259,7 +279,7 @@ router.post(
   auth,
   role.check(ROLES.Admin, ROLES.Merchant),
   upload.single('image'),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const sku = req.body.sku;
       const name = req.body.name;
@@ -269,8 +289,8 @@ router.post(
       const taxable = req.body.taxable;
       const isActive = req.body.isActive;
       const brand = req.body.brand;
-      const image = req.file;
-
+      const images = req.body.images;
+      
       if (!sku) {
         return res.status(400).json({ error: 'You must enter sku.' });
       }
@@ -295,7 +315,10 @@ router.post(
         return res.status(400).json({ error: 'This sku is already in use.' });
       }
 
-      const { imageUrl, imageKey } = await s3Upload(image);
+    //  console.log(req.body)
+
+    //  return
+      const { imageKey, imageKeys } = await s3Upload(images);
 
       const product = new Product({
         sku,
@@ -306,8 +329,9 @@ router.post(
         taxable,
         isActive,
         brand,
-        imageUrl,
-        imageKey
+        // imageUrl,
+        imageKey,
+        imgIds: imageKeys
       });
 
       const savedProduct = await product.save();
@@ -318,6 +342,7 @@ router.post(
         product: savedProduct
       });
     } catch (error) {
+      next(new Error(`Error: ${error.message, error.stack}`));
       return res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
@@ -330,7 +355,7 @@ router.get(
   '/',
   auth,
   role.check(ROLES.Admin, ROLES.Merchant),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       let products = [];
 
@@ -360,10 +385,15 @@ router.get(
         });
       }
 
+      for (let i=0; i < products.length; i++) {
+        products[i].imageUrl = await getObjectSignedUrl(products[i].imageKey)
+      }
+
       res.status(200).json({
         products
       });
     } catch (error) {
+      next(new Error(`Error: ${error.message, error.stack}`));
       res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });

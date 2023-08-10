@@ -65,12 +65,13 @@ router.post('/login', async (req, res) => {
     res.status(200).json({
       success: true,
       token: `Bearer ${token}`,
+      isAdmin: true, //everyone that logins in is admin remove this line when pushing to prod
       user: {
         id: user.id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        role: user.role
+        role: user.role,
       }
     });
   } catch (error) {

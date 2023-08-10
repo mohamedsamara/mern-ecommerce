@@ -34,6 +34,8 @@
   },
   "homepage": "https://github.com/mohamedsamara/mern-ecommerce#readme",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.379.1",
+    "@aws-sdk/s3-request-presigner": "^3.379.1",
     "@fontsource/poppins": "^4.5.9",
     "autosuggest-highlight": "^3.1.1",
     "aws-sdk": "^2.799.0",
@@ -47,6 +49,7 @@
     "dompurify": "^2.3.8",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "express-winston": "^4.2.0",
     "font-awesome": "^4.7.0",
     "helmet": "^4.6.0",
     "history": "^4.9.0",
@@ -56,6 +59,7 @@
     "mobile-detect": "^1.4.4",
     "mongoose": "^5.5.11",
     "mongoose-slug-generator": "^1.0.4",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "node-sass": "^6.0.1",
     "passport": "^0.4.0",
@@ -66,6 +70,7 @@
     "react": "^16.8.6",
     "react-autosuggest": "^10.1.0",
     "react-bootstrap-table-next": "^3.1.5",
+    "react-bootstrap-table2-paginator": "^2.1.2",
     "react-bootstrap-table2-toolkit": "^2.0.1",
     "react-dom": "^16.8.6",
     "react-multi-carousel": "^2.5.5",
@@ -82,7 +87,8 @@
     "simple-line-icons": "^2.4.1",
     "socket.io": "^4.2.0",
     "socket.io-client": "^4.2.0",
-    "validatorjs": "^3.18.1"
+    "validatorjs": "^3.18.1",
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
