@@ -1,3 +1,5 @@
+require('dotenv').config();
+const webpack = require('webpack');
 const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -9,6 +11,8 @@ const webpackMerge = require('webpack-merge');
 const common = require('./webpack.common');
 
 const CURRENT_WORKING_DIR = process.cwd();
+const NODE_ENV = process.env.NODE_ENV;
+const BASE_API_URL = process.env.BASE_API_URL;
 
 const config = {
   mode: 'production',
@@ -109,6 +113,12 @@ const config = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(NODE_ENV),
+        BASE_API_URL: JSON.stringify(BASE_API_URL)
+      }
+    }),
     new HtmlWebpackPlugin({
       template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
       inject: true,
