@@ -5,8 +5,8 @@
   "main": "server/index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "export SET NODE_OPTIONS=--openssl-legacy-provider npm run clean && cross-env NODE_ENV=production webpack --mode production --config webpack/webpack.prod.js",
-    "dev:client": "export SET NODE_OPTIONS=--openssl-legacy-provider cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
+    "build": "npm run clean && cross-env NODE_ENV=production webpack --mode production --config webpack/webpack.prod.js",
+    "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js",
     "dev:server": "nodemon",
     "dev": "npm-run-all --parallel dev:*",
     "start": "cross-env NODE_ENV=production node server/index.js",

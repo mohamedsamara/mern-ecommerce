@@ -10,7 +10,6 @@ package.json.bak
 .DS_Store
 
 # config file
-.vscode
 .env
 
 # debug
