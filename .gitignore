@@ -1,9 +1,9 @@
 # dependencies
-/node_modules
+node_modules
 
 # production
-/build
-/dist
+build
+dist
   
 # misc
 package.json.bak

@@ -63,7 +63,7 @@ const config = {
   plugins: [
     new Dotenv(),
     new HtmlWebpackPlugin({
-      template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
+      template: path.join(CURRENT_WORKING_DIR, 'public/index.html'),
       inject: true
     })
   ],
@@ -74,10 +74,7 @@ const config = {
     compress: true,
     hot: true,
     disableHostCheck: false,
-    historyApiFallback: true,
-    proxy: {
-      '/api': 'http://localhost:3000'
-    }
+    historyApiFallback: true
   },
   devtool: 'eval-source-map'
 };

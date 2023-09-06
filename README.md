@@ -45,20 +45,6 @@ $ cd project
 $ npm install
 ```
 
-## Setup
-
-```
- Create .env file that include:
-
-  * MONGO_URI & JWT_SECRET
-  * PORT & BASE_SERVER_URL & BASE_API_URL & BASE_CLIENT_URL
-  * MAILCHIMP_KEY & MAILCHIMP_LIST_KEY => Mailchimp configuration
-  * MAILGUN_KEY & MAILGUN_DOMAIN & MAILGUN_EMAIL_SENDER => Mailgun configuration
-  * GOOGLE_CLIENT_ID & GOOGLE_CLIENT_SECRET & GOOGLE_CALLBACK_URL => Google Auth configuration
-  * FACEBOOK_CLIENT_ID & FACEBOOK_CLIENT_SECRET & FACEBOOK_CALLBACK_URL => Facebook Auth configuration
-  * AWS_ACCESS_KEY_ID & AWS_SECRET_ACCESS_KEY & AWS_REGION & AWS_BUCKET_NAME => AWS configuration
-```
-
 ## Start development
 
 ```
