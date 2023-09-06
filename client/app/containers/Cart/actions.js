@@ -22,7 +22,7 @@ import {
   RESET_PRODUCT_SHOP
 } from '../Product/constants';
 
-import { CART_ID, CART_ITEMS, CART_TOTAL } from '../../constants';
+import { API_URL, CART_ID, CART_ITEMS, CART_TOTAL } from '../../constants';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
 import { toggleCart } from '../Navigation/actions';
@@ -159,7 +159,7 @@ export const getCartId = () => {
 
       // create cart id if there is no one
       if (!cartId) {
-        const response = await axios.post(`/api/cart/add`, { products });
+        const response = await axios.post(`${API_URL}/cart/add`, { products });
 
         dispatch(setCartId(response.data.cartId));
       }

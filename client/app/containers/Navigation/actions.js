@@ -14,6 +14,7 @@ import {
   SUGGESTIONS_FETCH_REQUEST,
   SUGGESTIONS_CLEAR_REQUEST
 } from './constants';
+import { API_URL } from '../../constants';
 
 export const toggleMenu = () => {
   return {
@@ -47,7 +48,7 @@ export const onSuggestionsFetchRequested = value => {
     try {
       if (inputValue && inputValue.length % 3 === 0) {
         const response = await axios.get(
-          `/api/product/list/search/${inputValue}`
+          `${API_URL}/product/list/search/${inputValue}`
         );
         dispatch({
           type: SUGGESTIONS_FETCH_REQUEST,

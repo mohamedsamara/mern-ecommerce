@@ -12,7 +12,7 @@ const common = require('./webpack.common');
 
 const CURRENT_WORKING_DIR = process.cwd();
 const NODE_ENV = process.env.NODE_ENV;
-const BASE_API_URL = process.env.BASE_API_URL;
+const API_URL = process.env.API_URL;
 
 const config = {
   mode: 'production',
@@ -116,11 +116,11 @@ const config = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(NODE_ENV),
-        BASE_API_URL: JSON.stringify(BASE_API_URL)
+        API_URL: JSON.stringify(API_URL)
       }
     }),
     new HtmlWebpackPlugin({
-      template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
+      template: path.join(CURRENT_WORKING_DIR, 'public/index.html'),
       inject: true,
       minify: {
         removeComments: true,
@@ -148,12 +148,12 @@ const config = {
       ios: true,
       icons: [
         {
-          src: path.resolve('client/public/images/pwa.png'),
+          src: path.resolve('public/images/pwa.png'),
           destination: 'images',
           sizes: [72, 96, 128, 144, 192, 384, 512]
         },
         {
-          src: path.resolve('client/public/images/pwa.png'),
+          src: path.resolve('public/images/pwa.png'),
           sizes: [120, 152, 167, 180],
           destination: 'images',
           ios: true

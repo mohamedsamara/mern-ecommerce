@@ -8,7 +8,7 @@
     "dist"
   ],
   "verbose": false,
-  "watch": ["server"],
+  "watch": ["./"],
   "env": {
     "NODE_ENV": "development"
   }

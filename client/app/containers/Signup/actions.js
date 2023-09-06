@@ -20,6 +20,7 @@ import { setAuth } from '../Authentication/actions';
 import setToken from '../../utils/token';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
+import { API_URL } from '../../constants';
 
 export const signupChange = (name, value) => {
   let formData = {};
@@ -69,7 +70,7 @@ export const signUp = () => {
         ...newUser
       };
 
-      const response = await axios.post('/api/auth/register', user);
+      const response = await axios.post(`${API_URL}/auth/register`, user);
 
       const successfulOptions = {
         title: `You have signed up successfully! You will be receiving an email as well. Thank you!`,

@@ -315,20 +315,10 @@ router.get(
       id: req.user.id
     };
 
-    jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
-      const jwtToken = `Bearer ${token}`;
-
-      const htmlWithEmbeddedJWT = `
-    <html>
-      <script>
-        window.localStorage.setItem('token', '${jwtToken}');
-        window.location.href = '/auth/success';
-      </script>
-    </html>       
-    `;
-
-      res.send(htmlWithEmbeddedJWT);
-    });
+    const token = jwt.sign(payload, secret, { expiresIn: tokenLife });
+    const jwtToken = `Bearer ${token}`;
+    res.cookie(keys.app.jwtCookie, jwtToken);
+    res.redirect(`${keys.app.clientURL}/auth/success`);
   }
 );
 
@@ -350,21 +340,10 @@ router.get(
     const payload = {
       id: req.user.id
     };
-
-    jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
-      const jwtToken = `Bearer ${token}`;
-
-      const htmlWithEmbeddedJWT = `
-    <html>
-      <script>
-        window.localStorage.setItem('token', '${jwtToken}');
-        window.location.href = '/auth/success';
-      </script>
-    </html>       
-    `;
-
-      res.send(htmlWithEmbeddedJWT);
-    });
+    const token = jwt.sign(payload, secret, { expiresIn: tokenLife });
+    const jwtToken = `Bearer ${token}`;
+    res.cookie(keys.app.jwtCookie, jwtToken);
+    res.redirect(`${keys.app.clientURL}/auth/success`);
   }
 );
 

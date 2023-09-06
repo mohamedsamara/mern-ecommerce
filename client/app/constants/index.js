@@ -1,4 +1,4 @@
-export const BASE_API_URL = process.env.BASE_API_URL;
+export const API_URL = process.env.API_URL;
 
 export const SOCKET_URL =
   window.location.host.indexOf('localhost') >= 0
@@ -40,3 +40,5 @@ export const EMAIL_PROVIDER = {
   Google: 'Google',
   Facebook: 'Facebook'
 };
+
+export const JWT_COOKIE = 'x-jwt-cookie';

@@ -14,6 +14,7 @@ import {
 } from './constants';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
+import { API_URL } from '../../constants';
 
 export const newsletterChange = (name, value) => {
   return {
@@ -41,7 +42,10 @@ export const subscribeToNewsletter = () => {
         return dispatch({ type: SET_NEWSLETTER_FORM_ERRORS, payload: errors });
       }
 
-      const response = await axios.post('/api/newsletter/subscribe', user);
+      const response = await axios.post(
+        `${API_URL}/newsletter/subscribe`,
+        user
+      );
 
       const successfulOptions = {
         title: `${response.data.message}`,
