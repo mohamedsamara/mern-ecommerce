@@ -29,3 +29,5 @@ exports.EMAIL_PROVIDER = {
   Google: 'Google',
   Facebook: 'Facebook'
 };
+
+exports.JWT_COOKIE = 'x-jwt-cookie';

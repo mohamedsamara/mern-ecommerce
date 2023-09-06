@@ -2,8 +2,7 @@ module.exports = {
   app: {
     name: 'Mern Ecommerce',
     apiURL: `${process.env.BASE_API_URL}`,
-    clientURL: process.env.CLIENT_URL,
-    jwtCookie: 'x-jwt-cookie'
+    clientURL: process.env.CLIENT_URL
   },
   port: process.env.PORT || 3000,
   database: {

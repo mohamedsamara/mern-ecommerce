@@ -20,7 +20,6 @@
     "dotenv": "^8.0.0",
     "font-awesome": "^4.7.0",
     "history": "^4.9.0",
-    "js-cookie": "^3.0.5",
     "mobile-detect": "^1.4.4",
     "rc-slider": "^9.7.2",
     "react": "^16.8.6",
