@@ -7,6 +7,9 @@
     "build": "npm run clean && cross-env NODE_ENV=production webpack --mode production --config webpack/webpack.prod.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js"
   },
+  "engines": {
+    "node": "16.16.0"
+  },
   "dependencies": {
     "@fontsource/poppins": "^4.5.9",
     "autosuggest-highlight": "^3.1.1",
