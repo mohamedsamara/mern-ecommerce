@@ -31,7 +31,7 @@ npm run seed:db [email-***@****.com] [password-******] // This is just an exampl
 
 ## Demo
 
-This application is deployed on Render Please check it out :smile: [here](https://mern-store.onrender.com).
+This application is deployed on Vercel Please check it out :smile: [here](https://mern-store-gold.vercel.app).
 
 See admin dashboard [demo](https://mernstore-bucket.s3.us-east-2.amazonaws.com/admin.mp4)
 
