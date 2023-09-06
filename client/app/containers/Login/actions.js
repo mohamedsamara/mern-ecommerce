@@ -21,6 +21,7 @@ import handleError from '../../utils/error';
 import { clearCart } from '../Cart/actions';
 import { clearAccount } from '../Account/actions';
 import { allFieldsValidation } from '../../utils/validation';
+import { API_URL } from '../../constants';
 
 export const loginChange = (name, value) => {
   let formData = {};
@@ -56,7 +57,7 @@ export const login = () => {
     dispatch({ type: SET_LOGIN_LOADING, payload: true });
 
     try {
-      const response = await axios.post('/api/auth/login', user);
+      const response = await axios.post(`${API_URL}/auth/login`, user);
 
       const firstName = response.data.user.firstName;
 

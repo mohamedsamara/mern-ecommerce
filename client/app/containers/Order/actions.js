@@ -21,6 +21,7 @@ import {
 import { clearCart, getCartId } from '../Cart/actions';
 import { toggleCart } from '../Navigation/actions';
 import handleError from '../../utils/error';
+import { API_URL } from '../../constants';
 
 export const updateOrderStatus = value => {
   return {
@@ -41,7 +42,7 @@ export const fetchOrders = (page = 1) => {
     try {
       dispatch(setOrderLoading(true));
 
-      const response = await axios.get(`/api/order`, {
+      const response = await axios.get(`${API_URL}/order`, {
         params: {
           page: page ?? 1,
           limit: 20
@@ -73,7 +74,7 @@ export const fetchAccountOrders = (page = 1) => {
     try {
       dispatch(setOrderLoading(true));
 
-      const response = await axios.get(`/api/order/me`, {
+      const response = await axios.get(`${API_URL}/order/me`, {
         params: {
           page: page ?? 1,
           limit: 20
@@ -105,7 +106,7 @@ export const searchOrders = filter => {
     try {
       dispatch(setOrderLoading(true));
 
-      const response = await axios.get(`/api/order/search`, {
+      const response = await axios.get(`${API_URL}/order/search`, {
         params: {
           search: filter.value
         }
@@ -130,7 +131,7 @@ export const fetchOrder = (id, withLoading = true) => {
         dispatch(setOrderLoading(true));
       }
 
-      const response = await axios.get(`/api/order/${id}`);
+      const response = await axios.get(`${API_URL}/order/${id}`);
 
       dispatch({
         type: FETCH_ORDER,
@@ -151,7 +152,7 @@ export const cancelOrder = () => {
     try {
       const order = getState().order.order;
 
-      await axios.delete(`/api/order/cancel/${order._id}`);
+      await axios.delete(`${API_URL}/order/cancel/${order._id}`);
 
       dispatch(push(`/dashboard/orders`));
     } catch (error) {
@@ -165,11 +166,14 @@ export const updateOrderItemStatus = (itemId, status) => {
     try {
       const order = getState().order.order;
 
-      const response = await axios.put(`/api/order/status/item/${itemId}`, {
-        orderId: order._id,
-        cartId: order.cartId,
-        status
-      });
+      const response = await axios.put(
+        `${API_URL}/order/status/item/${itemId}`,
+        {
+          orderId: order._id,
+          cartId: order.cartId,
+          status
+        }
+      );
 
       if (response.data.orderCancelled) {
         dispatch(push(`/dashboard/orders`));
@@ -198,7 +202,7 @@ export const addOrder = () => {
       const total = getState().cart.cartTotal;
 
       if (cartId) {
-        const response = await axios.post(`/api/order/add`, {
+        const response = await axios.post(`${API_URL}/order/add`, {
           cartId,
           total
         });

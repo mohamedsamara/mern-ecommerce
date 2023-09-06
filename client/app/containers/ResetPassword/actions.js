@@ -17,6 +17,7 @@ import {
 import { signOut } from '../Login/actions';
 import handleError from '../../utils/error';
 import { allFieldsValidation } from '../../utils/validation';
+import { API_URL } from '../../constants';
 
 export const resetPasswordChange = (name, value) => {
   let formData = {};
@@ -54,7 +55,7 @@ export const resetPassword = token => {
         });
       }
 
-      const response = await axios.post(`/api/auth/reset/${token}`, user);
+      const response = await axios.post(`${API_URL}/auth/reset/${token}`, user);
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
@@ -98,7 +99,7 @@ export const resetAccountPassword = () => {
         });
       }
 
-      const response = await axios.post(`/api/auth/reset`, user);
+      const response = await axios.post(`${API_URL}/auth/reset`, user);
       const successfulOptions = {
         title: `${response.data.message}`,
         position: 'tr',
