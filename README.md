@@ -37,7 +37,7 @@ See admin dashboard [demo](https://mernstore-bucket.s3.us-east-2.amazonaws.com/a
 
 ## Install
 
-Some basic Git commands are:
+Some basic Git comman    ds are:
 
 ```
 $ git clone https://github.com/mohamedsamara/mern-ecommerce.git
