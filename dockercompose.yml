@@ -1,0 +1,18 @@
+version: '3'
+services:
+  client:
+    build: client
+    network_mode: host
+    ports:
+      - '8080:8080'
+  server:
+    build: server
+    network_mode: host
+    environment:
+      - PORT=3000
+      - BASE_API_URL=api
+      - CLIENT_URL=http://localhost:8080
+      - JWT_SECRET=update_your_JWT_secret
+      - MONGO_URI=update_your_mongo_URI
+    ports:
+      - '3000:3000'
