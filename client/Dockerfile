@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
+
 # Install dependencies
 RUN npm install
 
@@ -17,7 +18,7 @@ RUN mv .env.example .env
 # Build the client for production
 RUN npm run build
 
-# Expose port 3000 for the client
+# Expose port 8080 for the client
 EXPOSE 8080
 
 # Start the client

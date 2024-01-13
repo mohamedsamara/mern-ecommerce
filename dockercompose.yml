@@ -2,12 +2,10 @@ version: '3'
 services:
   client:
     build: client
-    network_mode: host
     ports:
       - '8080:8080'
   server:
     build: server
-    network_mode: host
     environment:
       - PORT=3000
       - BASE_API_URL=api
