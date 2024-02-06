@@ -17,8 +17,7 @@ exports.s3Upload = async image => {
       Bucket: keys.aws.bucketName,
       Key: image.originalname,
       Body: image.buffer,
-      ContentType: image.mimetype,
-      ACL: 'public-read'
+      ContentType: image.mimetype
     };
 
     const s3Upload = await s3bucket.upload(params).promise();
