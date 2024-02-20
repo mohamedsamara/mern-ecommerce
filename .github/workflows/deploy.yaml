@@ -11,7 +11,7 @@ on:
 jobs:
   build-upload:
     runs-on: ubuntu-latest
-    environment: ${{ GITHUB_BASE_REF }}
+    environment: ${GITHUB_BASE_REF}
     steps:
       - uses: actions/checkout@v3
 
