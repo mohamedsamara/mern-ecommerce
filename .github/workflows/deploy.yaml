@@ -17,7 +17,10 @@ jobs:
 
       
       - name: Check if docker available or not
-        run : which docker
+        run : |
+          which docker
+          echo ${DOCKER_REGISTRY_FE}
+          echo ${DOCKER_REGISTRY_BE}
       
 
       - name: Login to Docker Hub
