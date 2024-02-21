@@ -19,8 +19,9 @@ jobs:
       - name: Check if docker available or not
         run : |
           which docker
-          echo ${DOCKER_REGISTRY_FE}
-          echo ${DOCKER_REGISTRY_BE}
+          echo ${{ vars.DOCKER_REGISTRY_FE }}
+          echo ${{ vars.DOCKER_REGISTRY_BE }}
+          exit 1
       
 
       - name: Login to Docker Hub
