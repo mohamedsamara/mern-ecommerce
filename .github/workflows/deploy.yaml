@@ -21,7 +21,6 @@ jobs:
           which docker
           echo ${{ vars.DOCKER_REGISTRY_FE }}
           echo ${{ vars.DOCKER_REGISTRY_BE }}
-          exit 1
       
 
       - name: Login to Docker Hub
@@ -38,10 +37,10 @@ jobs:
       - name: upload docker images
         run: |
           docker images
-          docker tag mern-fe-:$(git log -1 --pretty=format:%h) ${DOCKER_REGISTRY_FE}:$(git log -1 --pretty=format:%h)
-          docker tag mern-be:$(git log -1 --pretty=format:%h) ${DOCKER_REGISTRY_BE}:$(git log -1 --pretty=format:%h)
+          docker tag mern-fe-:$(git log -1 --pretty=format:%h) ${{ vars.DOCKER_REGISTRY_FE }}:$(git log -1 --pretty=format:%h)
+          docker tag mern-be:$(git log -1 --pretty=format:%h) ${{ vars.DOCKER_REGISTRY_BE }}:$(git log -1 --pretty=format:%h)
 
           # push
-          docker push ${DOCKER_REGISTRY_FE}-fe:$(git log -1 --pretty=format:%h)
-          docker push ${DOCKER_REGISTRY_BE}-be:$(git log -1 --pretty=format:%h)
+          docker push ${{ vars.DOCKER_REGISTRY_FE }}-fe:$(git log -1 --pretty=format:%h)
+          docker push ${{ vars.DOCKER_REGISTRY_BE }}:$(git log -1 --pretty=format:%h)
  
