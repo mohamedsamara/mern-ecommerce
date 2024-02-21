@@ -17,7 +17,8 @@ jobs:
 
       
       - name: Check if docker available or not
-        run : which docker;echo ${GITHUB_BASE_REF}
+        run : which docker
+      
 
       - name: Login to Docker Hub
         uses: docker/login-action@v3
@@ -25,4 +26,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-   
+      - name: build fronend
+        run : docker build -t mern-fe:$(git log -1 --pretty=format:%h) ./client
+      
+      - name: build backend
+        run: docker build -t mern-be:$(git log -1 --pretty=format:%h) ./server
+      - name: upload docker images
+        run: |
+          docker images
+          docker tag mern-fe-:$(git log -1 --pretty=format:%h) dpaktamang/mern-ecomerce-fe:$(git log -1 --pretty=format:%h)
+          docker tag mern-be:$(git log -1 --pretty=format:%h) dpaktamang/mern-ecomerce-be:$(git log -1 --pretty=format:%h)
+
+          # push
+          docker push ${DOCKER_REGISTRY_FE}-fe:$(git log -1 --pretty=format:%h)
+          docker push ${DOCKER_REGISTRY_BE}-be:$(git log -1 --pretty=format:%h)
+ 
