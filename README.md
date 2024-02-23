@@ -43,7 +43,6 @@ $ docker compose -f dockercompose.yml up
 ```
 npm run seed:db [email-***@****.com] [password-******] // This is just an example.
 ```
-#this is just for commit
 
 ## Demo
 
