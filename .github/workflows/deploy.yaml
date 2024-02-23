@@ -43,4 +43,25 @@ jobs:
           # push
           docker push ${{ vars.DOCKER_REGISTRY_FE }}:$(git log -1 --pretty=format:%h)
           docker push ${{ vars.DOCKER_REGISTRY_BE }}:$(git log -1 --pretty=format:%h)
- 
+  create_ec2:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+       - name: create ec2 instance
+        working-directory: .github/IaC
+        run: |
+          terraform init
+          terraform validate
+          terraform plan
+          terraform apply -auto-approve
