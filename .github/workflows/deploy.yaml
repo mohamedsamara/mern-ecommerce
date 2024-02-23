@@ -41,7 +41,7 @@ jobs:
           docker push ${{ vars.DOCKER_REGISTRY_FE }}:$(git log -1 --pretty=format:%h)
           docker push ${{ vars.DOCKER_REGISTRY_BE }}:$(git log -1 --pretty=format:%h)
 
-  deploy:
+  create_ec2:
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name }}
     needs: build-upload
@@ -64,3 +64,21 @@ jobs:
           terraform validate
           terraform plan
           terraform apply -auto-approve
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    needs:
+     - build-upload
+     - create_ec2
+   steps:
+     - uses: actions/checkout@v3
+     - name: update mern app
+       working-directory: .github/scripts
+       run: |
+         sudo apt-get update
+         sudo apt-get install -y expect
+         echo updating app
+         public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+         sleep 10
+         ./deploy.sh $public_ip
