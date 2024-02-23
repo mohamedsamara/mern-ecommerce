@@ -58,7 +58,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
-       - name: create ec2 instance
+      - name: create ec2 instance
         working-directory: .github/IaC
         run: |
           terraform init
