@@ -69,16 +69,16 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name }}
     needs:
-     - build-upload
-     - create_ec2
-   steps:
-     - uses: actions/checkout@v3
-     - name: update mern app
-       working-directory: .github/scripts
-       run: |
-         sudo apt-get update
-         sudo apt-get install -y expect
-         echo updating app
-         public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
-         sleep 10
-         ./deploy.sh $public_ip
+      - build-upload
+      - create_ec2
+    steps:
+      - uses: actions/checkout@v3
+      - name: update mern app
+        working-directory: .github/scripts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y expect
+          echo updating app
+          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+          sleep 10
+          ./deploy.sh $public_ip
