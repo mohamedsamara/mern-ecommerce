@@ -81,4 +81,5 @@ jobs:
           echo updating app
           public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-production" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
           sleep 10
+          echo $public_ip ...
           ./deploy.sh $public_ip
