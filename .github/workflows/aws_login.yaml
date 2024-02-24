@@ -1,16 +1,17 @@
 name: Create Lab Machine
+
 on:
   workflow_dispatch:
     inputs:
       aws_access_key_id:
         description: 'Input key id'
         required: true
-        type: choice
+        type: string
         default: 'NULL'
       aws_secret_access_key:
         description: 'Input secret key'
         required: true
-        type: choice
+        type: string
         default: 'NULL'
 
 jobs:
@@ -20,17 +21,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: aws-actions/configure-aws-credentials
+      - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ github.event.inputs.aws_access_key_id }}
           aws-secret-access-key: ${{ github.event.inputs.aws_secret_access_key }}
           aws-region: us-east-1
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false
-
       - name: create ec2 instance
         working-directory: .github/IaC
         run: |
