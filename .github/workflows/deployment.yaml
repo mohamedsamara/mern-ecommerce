@@ -1,0 +1,94 @@
+name: Build and upload docker image
+on:
+  pull_request:
+    branches:
+      - 'master'
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build-upload:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check if docker available or not
+        run: |
+          which docker
+          echo ${{ vars.DOCKER_REGISTRY_FE }}
+          echo ${{ vars.DOCKER_REGISTRY_BE }}
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: build fronend
+        run: docker build -t mern-fe:$(git log -1 --pretty=format:%h) ./client
+
+      - name: build backend
+        run: docker build -t mern-be:$(git log -1 --pretty=format:%h) ./server
+      - name: upload docker images
+        run: |
+          docker images
+          docker tag mern-fe:$(git log -1 --pretty=format:%h) ${{ vars.DOCKER_REGISTRY_FE }}:$(git log -1 --pretty=format:%h)
+          docker tag mern-be:$(git log -1 --pretty=format:%h) ${{ vars.DOCKER_REGISTRY_BE }}:$(git log -1 --pretty=format:%h)
+
+          # push
+          docker push ${{ vars.DOCKER_REGISTRY_FE }}:$(git log -1 --pretty=format:%h)
+          docker push ${{ vars.DOCKER_REGISTRY_BE }}:$(git log -1 --pretty=format:%h)
+
+  create_ec2:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    needs: build-upload
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+      - name: create ec2 instance
+        working-directory: .github/IaC
+        run: |
+          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+          if [ -z $public_ip ]; then
+            terraform init
+            terraform validate
+            terraform plan
+            terraform apply -auto-approve
+          fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    needs:
+      - build-upload
+      - create_ec2
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: update mern app
+        working-directory: .github/scripts
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y expect
+          echo updating app
+          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+          sleep 10
+          bash ./deploy.sh $public_ip
