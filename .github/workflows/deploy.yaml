@@ -59,7 +59,7 @@ jobs:
       - name: create ec2 instance
         working-directory: .github/IaC
         run: |
-          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous1" --query "Reservations[*].Instances[*].PublicIpAddress" --output text | tr -d '[:space:]')
+          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-suwal" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
           echo $public_ip
           if [ -z $public_ip ]; then
             terraform init
@@ -90,7 +90,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y expect
           echo updating app
-          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous1" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-suwal" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
           echo $public_ip
-          sleep 120
+          sleep 10
           expect ./deploy.sh $public_ip
