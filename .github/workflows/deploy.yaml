@@ -85,6 +85,7 @@ jobs:
       - name: update mern app
         working-directory: .github/scripts
         run: |
+          set -e
           sudo apt-get update
           sudo apt-get install -y expect
           echo updating app
