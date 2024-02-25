@@ -44,7 +44,6 @@ jobs:
   create_ec2:
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name }}
-    needs: build-upload
     steps:
       - uses: actions/checkout@v3
 
