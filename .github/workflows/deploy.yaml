@@ -59,7 +59,8 @@ jobs:
       - name: create ec2 instance
         working-directory: .github/IaC
         run: |
-          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous1" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous1" --query "Reservations[*].Instances[*].PublicIpAddress" --output text | tr -d '[:space:]')
+          echo $public_ip
           if [ -z $public_ip ]; then
             terraform init
             terraform validate
