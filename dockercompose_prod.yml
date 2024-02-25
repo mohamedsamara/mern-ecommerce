@@ -1,0 +1,16 @@
+version: '3'
+services:
+  client:
+    image: $FE_IMAGE:$TAG
+    ports:
+      - '8080:8080'
+  server:
+    image: $BE_IMAGE:$TAG
+    environment:
+      - PORT=3000
+      - BASE_API_URL=api
+      - CLIENT_URL=http://localhost:8080
+      - JWT_SECRET=update_your_JWT_secret
+      - MONGO_URI=update_your_mongo_URI
+    ports:
+      - '3000:3000'

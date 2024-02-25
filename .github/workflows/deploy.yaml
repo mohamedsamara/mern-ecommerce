@@ -86,6 +86,7 @@ jobs:
       - name: update mern app
         working-directory: .github/scripts
         run: |
+          set -e
           sudo apt-get update
           sudo apt-get install -y expect
           echo updating app
@@ -93,4 +94,10 @@ jobs:
           public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-production" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
           sleep 10
           echo $public_ip ...
-          bash ./deploy.sh $public_ip
+          image_tag=$(git log -1 --pretty=format:%h)
+          ./deploy.sh \
+            $public_ip \
+            ${{ vars.DOCKER_REGISTRY_FE }} \
+            ${{ vars.DOCKER_REGISTRY_BE }} \
+            $image_tag \
+            ${{ github.ref_name }}
