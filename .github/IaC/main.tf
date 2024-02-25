@@ -60,7 +60,7 @@ resource "aws_instance" "mern-instance" {
 
 
   tags = {
-    Name    = "mern-instance-deployment-mansun"
+    Name    = "mern-instance-production"
     Project = "devops"
   }
 
@@ -71,7 +71,7 @@ output "public_ip" {
   value = aws_instance.mern-instance.public_ip
 }
 output "private_ip" {
-  value = aws_instance.mern-instance.private_ip 
+  value = aws_instance.mern-instance.private_ip
 }
 
 
