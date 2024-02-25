@@ -60,7 +60,7 @@ resource "aws_instance" "mern-instance" {
 
 
   tags = {
-    Name    = "mern-instance-luminous1"
+    Name    = "mern-instance-suwal"
     Project = "devops"
   }
 
