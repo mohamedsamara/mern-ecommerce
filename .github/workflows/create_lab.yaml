@@ -1,4 +1,4 @@
-name: Create Lab Machine sarun
+name: Create Lab Machine
 
 on:
   workflow_dispatch:
@@ -6,12 +6,12 @@ on:
       aws_access_key_id:
         description: 'Input key id'
         required: true
-        type: string
+        type: choice
         default: "NULL"
       aws_secret_access_key:
         description: 'Input secret key'
         required: true
-        type: string
+        type: choice
         default: "NULL"
 
 jobs:
@@ -38,3 +38,6 @@ jobs:
           terraform plan
           terraform apply -auto-approve
   
+  
+  
+   
