@@ -6,5 +6,8 @@
   "prettier.trailingComma": "none",
   "jumpToAliasFile.alias": {
     "app": "client/app"
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///c%3A/Users/Acer/OneDrive/Desktop/devops/mern-ecommerce/.github/workflows/deploy.yaml"
   }
 }
