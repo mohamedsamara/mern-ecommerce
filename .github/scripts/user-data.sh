@@ -23,9 +23,5 @@ systemctl restart sshd
 
 echo -e "changeme\nchangeme" | sudo -S passwd ubuntu
 
-deploy:
-   runs-on: ubuntu-latest
-   environment: ${{ github.ref_name }}
-   steps:
-     - uses: actions/checkout@v3
+
 
