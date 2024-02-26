@@ -1,4 +1,4 @@
-name: Create Lab Machine 2
+name: Create Lab Machine
 
 on:
   workflow_dispatch:
