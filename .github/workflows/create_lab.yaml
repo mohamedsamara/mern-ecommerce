@@ -1,4 +1,4 @@
-name: Create Lab Machine
+name: Create Lab Machine sarun
 
 on:
   workflow_dispatch:
