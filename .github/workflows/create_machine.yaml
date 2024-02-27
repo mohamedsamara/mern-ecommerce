@@ -1,4 +1,4 @@
-name: Create Lab Machine
+name: Create Lab Machine 
 
 on:
   workflow_dispatch:
@@ -7,12 +7,12 @@ on:
         description: 'Input key id'
         required: true
         type: string
-        default: 'NULL'
+        default: "NULL"
       aws_secret_access_key:
         description: 'Input secret key'
         required: true
         type: string
-        default: 'NULL'
+        default: "NULL"
 
 jobs:
   create-ec2-instance:
@@ -20,7 +20,7 @@ jobs:
     environment: ${{ github.ref_name }}
     steps:
       - uses: actions/checkout@v3
-
+      
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ github.event.inputs.aws_access_key_id }}
@@ -29,7 +29,7 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_wrapper: false
+          terraform_wrapper: false 
       - name: create ec2 instance
         working-directory: .github/IaC
         run: |
@@ -37,3 +37,4 @@ jobs:
           terraform validate
           terraform plan
           terraform apply -auto-approve
+  
