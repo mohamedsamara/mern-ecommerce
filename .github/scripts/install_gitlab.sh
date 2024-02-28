@@ -20,5 +20,6 @@ cat /home/ubuntu/.ssh/id_ecdsa.pub > /home/ubuntu/.ssh/authorized_keys
 cd .github/Ansible
 ansible all -m ping
 ansible-galaxy role install geerlingguy.gitlab
+cd ~/mern-ecommerce/.github/Ansible
 ansible-playbook main.yaml
 
