@@ -43,7 +43,7 @@ jobs:
      - name: create ec2 instance
        working-directory: .github/IaC
        run: |
-         public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-production" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
+         public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-Sarun-deploy" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
          if [ -z $public_ip ];then
            terraform init
            terraform validate
