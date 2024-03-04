@@ -1,0 +1,24 @@
+#cloud-config
+# Create a group
+groups:
+  - ubuntu
+
+# Create users, in addition to the users provided by default
+users:
+  - default
+  - name: ubuntu
+    gecos: ubuntu
+    shell: /bin/bash
+    primary_group: ubuntu
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    lock_passwd: false
+    ssh_authorized_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWv68zjy6/jE7hZzOYmENpVXpFOONlgO+TGRNmepBOEVwpy+KBHxmNU3mNiu6L2f6XX0hQ0KH5MrBR30/Udl8+82by+UG1Nrksa1tinIgDipvkIforn/IabLCee9QLdf5D9lDC94sJkOSF99Pkus4Q+nNqzfp8l5TEGbyT61bx2fsz7adL1oLBOxi/fwfDValSnPjZlglckL/PvWT3kLiVgw6X16XTw3M5k6UJ78coHLG7CTG02WLzVXdwkk7PBfTzj6IRO7WAE8MflP0Jfh57mUHr5sWteJf0prA9PLsNpUK8aGUCI0WhO+bvcweFKJQDeBrlNIxD7LSfGdT8e4tj3d0/qSWc0ZrXteoLZqYI2FT7jWf8G/G0pTVSTlaoioZ5ioZ6OIvC1+gUEf2X5iNFZBoAUtwadHTmJAAuBlWXbYwh6qOUgaGKtoC6f2LioKCK8f0M+di/2cZI05/h9A5R2hsOGu7nuFh8jBWKd85woDFqOoxNlN8N85hp+9UrYV8= gitlab_access" # an SSH public key that is authorized
+                      # to connect to this account
+# Run a few commands (update apt's repo indexes and install curl)
+runcmd:
+  - sudo apt-get update
+  - sudo apt install curl -q -y
+  - echo "Done"
+  # - echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDWv68zjy6/jE7hZzOYmENpVXpFOONlgO+TGRNmepBOEVwpy+KBHxmNU3mNiu6L2f6XX0hQ0KH5MrBR30/Udl8+82by+UG1Nrksa1tinIgDipvkIforn/IabLCee9QLdf5D9lDC94sJkOSF99Pkus4Q+nNqzfp8l5TEGbyT61bx2fsz7adL1oLBOxi/fwfDValSnPjZlglckL/PvWT3kLiVgw6X16XTw3M5k6UJ78coHLG7CTG02WLzVXdwkk7PBfTzj6IRO7WAE8MflP0Jfh57mUHr5sWteJf0prA9PLsNpUK8aGUCI0WhO+bvcweFKJQDeBrlNIxD7LSfGdT8e4tj3d0/qSWc0ZrXteoLZqYI2FT7jWf8G/G0pTVSTlaoioZ5ioZ6OIvC1+gUEf2X5iNFZBoAUtwadHTmJAAuBlWXbYwh6qOUgaGKtoC6f2LioKCK8f0M+di/2cZI05/h9A5R2hsOGu7nuFh8jBWKd85woDFqOoxNlN8N85hp+9UrYV8= gitlab_access" > /home/ubuntu/.ssh/authorized_keys
