@@ -1,63 +1,40 @@
 name: Create Lab Machine
 
 on:
- workflow_dispatch:
-   inputs:
-     aws_access_key_id:
-       description: 'Input key id'
-       required: true
-       type: string
-       default: "NULL"
-     aws_secret_access_key:
-       description: 'Input secret key'
-       required: true
-       type: string
-       default: "NULL"
-     create_lab_machine:
-       description: 'Input key id'
-       required: true
-       type: choice
-       default: "ec2-instance"
-       options:
-         - Gitlab
-         - Jenkins
-         - K8S
-         - ec2-instance
+  workflow_dispatch:
+    inputs:
+      aws_access_key_id:
+        description: 'Input key id'
+        required: true
+        type: string
+        default: "NULL"
+      aws_secret_access_key:
+        description: 'Input secret key'
+        required: true
+        type: string
+        default: "NULL"
 
 jobs:
- create-ec2-instance:
-   runs-on: ubuntu-latest
-   environment: ${{ github.ref_name }}
-   steps:
-     - uses: actions/checkout@v3
-    
-     - uses: aws-actions/configure-aws-credentials@v4
-       with:
-         aws-access-key-id: ${{ github.event.inputs.aws_access_key_id }}
-         aws-secret-access-key: ${{ github.event.inputs.aws_secret_access_key }}
-         aws-region: us-east-1
-     - name: Setup Terraform
-       uses: hashicorp/setup-terraform@v2
-       with:
-         terraform_wrapper: false
-     - name: create ec2 instance
-       working-directory: .github/IaC
-       run: |
-         public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-Sarun-deploy" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
-         if [ -z $public_ip ];then
-           terraform init
-           terraform validate
-           terraform plan
-           terraform apply -auto-approve
-         fi
-     - name: Create Gitlab Instance
-       working-directory: .github/scripts
-       run: |
-         sudo apt-get update
-         sudo apt-get install -y expect
-         if [[ "${{ github.event.inputs.create_lab_machine }}" == "Gitlab" ]]; then
-           public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
-           expect ./trigger_gitlab_install.sh $public_ip
-         fi
+  create-ec2-instance:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ github.event.inputs.aws_access_key_id }}
+          aws-secret-access-key: ${{ github.event.inputs.aws_secret_access_key }}
+          aws-region: us-east-1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false 
+      - name: create ec2 instance
+        working-directory: .github/IaC
+        run: |
+          terraform init
+          terraform validate
+          terraform plan
+          terraform apply -auto-approve
 
-  
