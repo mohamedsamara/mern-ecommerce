@@ -1,0 +1,65 @@
+name: Create Google Compute VM
+on:
+  workflow_dispatch:
+    inputs:
+      google-credential:
+        description: Input gcp credential in base64
+        required: true
+        type: string
+        default: ""
+      ssh-pub-key:
+        description: SSH Public key
+        required: true
+        type: string
+        default: ""
+      project-id:
+        description: Input project id
+        required: true
+        type: string
+        default: ""
+jobs:
+  create_google_vm:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+    env:
+      SSH_PUBKEY: ${{ github.event.inputs.ssh-pub-key }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gettext-base
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_wrapper: false
+
+      - name: Update cloud-init configuration
+        working-directory: .github/IaC
+        run: |
+          envsubst < cloud-config.yaml > cloud-config-updated.yaml
+          mv cloud-config-updated.yaml cloud-config.yaml
+
+      # - name: Add Credential
+      #   run: |
+      #     gh secret set GOOGLE_CREDENTIALS < ${{ github.event.inputs.google-credential }}
+      
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+      
+      - name:  Create Google Comput
+        working-directory: .github/IaC
+        run: |
+          public_ip=$(gcloud compute instances describe test --zone "us-central1-a" --project "${{ github.event.inputs.project-id}}" | grep natIP | awk -F\: '{print $2}')
+          ssh -q -o BatchMode=yes -o ConnectTimeout=5 -o StrictHostKeyChecking=no -i /home/sicmapp/.ssh/id_rsa "echo 2>&1" && echo $host SSH_OK || echo $host SSH_NOK
+          terraform init
+          terraform validate
+          terraform plan
+          terraform apply -auto-approve -var="branch_name=$branch_name"

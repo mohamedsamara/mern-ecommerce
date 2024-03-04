@@ -60,7 +60,7 @@ resource "aws_instance" "mern-instance" {
 
 
   tags = {
-    Name    = "mern-instance-user_lumi"
+    Name    = "mern-instance-user"
     Project = "devops"
   }
 
@@ -82,7 +82,6 @@ output "aws_security_group" {
 output "subnet_cidr_blocks" {
   value = [for s in data.aws_subnet.default : s.id]
 }
-
 
 
 

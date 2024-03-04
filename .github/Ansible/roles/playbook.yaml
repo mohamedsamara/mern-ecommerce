@@ -1,0 +1,25 @@
+---
+- name: Install GitLab or Jenkins
+  hosts: all
+  become: true
+
+  vars_files:
+    - vars/main.yml
+
+  vars:
+    jenkins_hostname: jenkins.example.com
+    java_packages:
+      - openjdk-11-jdk
+
+  roles:
+    - name: Install Java
+      when: server == 'jenkins'
+      role: geerlingguy.java
+
+    - name: Install Jenkins
+      when: server == 'jenkins'
+      role: geerlingguy.jenkins
+
+    - name: Install GitLab
+      when: server == 'gitlab'
+      role: geerlingguy.gitlab
