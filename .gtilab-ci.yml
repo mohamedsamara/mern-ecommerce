@@ -1,0 +1,17 @@
+stages:
+ - build_and_upload
+before_script:
+ - docker info
+
+build-upload:
+ stage: build_and_upload
+ tags:
+   - deepak
+ environment:
+   name: $CI_COMMIT_REF_NAME
+ script:
+   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+   - docker build -t mern-fe:$CI_COMMIT_SHORT_SHA ./client
+   - docker build -t mern-be:$CI_COMMIT_SHORT_SHA ./server
+   - docker push $DOCKER_REGISTRY_FE:$CI_COMMIT_SHORT_SHA
+   - docker push $DOCKER_REGISTRY_BE:$CI_COMMIT_SHORT_SHA
