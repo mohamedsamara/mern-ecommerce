@@ -6,7 +6,7 @@ before_script:
 build-upload:
  stage: build_and_upload
  tags:
-   - deepak
+   - Deploy-sarun
  environment:
    name: $CI_COMMIT_REF_NAME
  script:
