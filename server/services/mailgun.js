@@ -25,7 +25,7 @@ exports.sendEmail = async (email, type, host, data) => {
     const message = prepareTemplate(type, host, data);
 
     const config = {
-      from: `MERN Store! <${sender}>`,
+      from: `Vera's Little Homestead! <${sender}>`,
       to: email,
       subject: message.subject,
       text: message.text

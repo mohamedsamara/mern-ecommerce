@@ -91,8 +91,8 @@ const ProductFilter = props => {
           <div className='mx-2 mb-3'>
             <RangeSlider
               marks={priceMarks}
-              defaultValue={[1, 2500]}
-              max={5000}
+              defaultValue={[1, 50]}
+              max={100}
               onChange={v => {
                 filterProducts('price', v);
               }}

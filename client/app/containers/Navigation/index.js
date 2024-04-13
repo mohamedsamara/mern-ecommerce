@@ -180,7 +180,7 @@ class Navigation extends React.PureComponent {
                   />
                 )}
                 <Link to='/'>
-                  <h1 className='logo'>MERN Store</h1>
+                  <h1 className='logo'>Vera's Little Homestead</h1>
                 </Link>
               </div>
             </Col>
@@ -235,7 +235,7 @@ class Navigation extends React.PureComponent {
                   onClick={toggleCart}
                 />
                 <Nav navbar>
-                  {brands && brands.length > 0 && (
+                  {/* {brands && brands.length > 0 && (
                     <Dropdown
                       nav
                       inNavbar
@@ -255,7 +255,7 @@ class Navigation extends React.PureComponent {
                         </div>
                       </DropdownMenu>
                     </Dropdown>
-                  )}
+                  )} */}
                   <NavItem>
                     <NavLink
                       tag={ActiveLink}

@@ -89,7 +89,7 @@ class ProductPage extends React.PureComponent {
                       </h1>
                       <p className='sku'>{product.sku}</p>
                       <hr />
-                      {product.brand && (
+                      {/* {product.brand && (
                         <p className='by'>
                           see more from{' '}
                           <Link
@@ -99,7 +99,7 @@ class ProductPage extends React.PureComponent {
                             {product.brand.name}
                           </Link>
                         </p>
-                      )}
+                      )} */}
                       <p className='item-desc'>{product.description}</p>
                       <p className='price'>${product.price}</p>
                     </div>

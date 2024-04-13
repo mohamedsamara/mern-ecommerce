@@ -49,11 +49,11 @@ const ProductList = props => {
                   <div className='item-body'>
                     <div className='item-details p-3'>
                       <h1 className='item-name'>{product.name}</h1>
-                      {product.brand && Object.keys(product.brand).length > 0 && (
+                      {/* {product.brand && Object.keys(product.brand).length > 0 && (
                         <p className='by'>
                           By <span>{product.brand.name}</span>
                         </p>
-                      )}
+                      )} */}
                       <p className='item-desc mb-0'>{product.description}</p>
                     </div>
                   </div>
