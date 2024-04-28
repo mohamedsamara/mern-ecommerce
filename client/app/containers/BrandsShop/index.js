@@ -16,13 +16,13 @@ import LoadingIndicator from '../../components/Common/LoadingIndicator';
 class BrandsShop extends React.PureComponent {
   componentDidMount() {
     const slug = this.props.match.params.slug;
-    this.props.fetchBrandProducts(slug);
+    this.props.filterProducts('brand', slug);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.match.params.slug !== prevProps.match.params.slug) {
       const slug = this.props.match.params.slug;
-      this.props.fetchBrandProducts(slug);
+      this.props.filterProducts('brand', slug);
     }
   }
 

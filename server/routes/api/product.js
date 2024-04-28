@@ -86,6 +86,7 @@ router.get('/list', async (req, res) => {
       max,
       min,
       category,
+      brand,
       page = 1,
       limit = 10
     } = req.query;
@@ -95,18 +96,31 @@ router.get('/list', async (req, res) => {
     const basicQuery = getStoreProductsQuery(min, max, rating);
 
     const userDoc = await checkAuth(req);
-    const categoryDoc = await Category.findOne(
-      { slug: categoryFilter.category, isActive: true },
-      'products -_id'
-    );
+    const categoryDoc = await Category.findOne({
+      slug: categoryFilter.category,
+      isActive: true
+    });
 
-    if (categoryDoc && categoryFilter !== category) {
+    if (categoryDoc) {
       basicQuery.push({
         $match: {
           isActive: true,
           _id: {
             $in: Array.from(categoryDoc.products)
           }
+        }
+      });
+    }
+
+    const brandDoc = await Brand.findOne({
+      slug: brand,
+      isActive: true
+    });
+
+    if (brandDoc) {
+      basicQuery.push({
+        $match: {
+          'brand._id': { $eq: brandDoc._id }
         }
       });
     }
