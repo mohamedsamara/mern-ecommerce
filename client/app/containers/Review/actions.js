@@ -170,10 +170,11 @@ export const addProductReview = () => {
       }
 
       const santizedReview = santizeFields(newReview);
-      const response = await axios.post(
-        `${API_URL}/review/add`,
-        santizedReview
-      );
+
+      const response = await axios.post(`${API_URL}/review/add`, {
+        ...santizedReview,
+        isRecommended: review.isRecommended.value
+      });
 
       const successfulOptions = {
         title: `${response.data.message}`,
