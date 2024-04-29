@@ -144,34 +144,6 @@ export const fetchStoreProduct = slug => {
   };
 };
 
-export const fetchBrandProducts = slug => {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(setProductLoading(true));
-
-      const response = await axios.get(`${API_URL}/product/list/brand/${slug}`);
-
-      const s = getState().product.advancedFilters;
-      dispatch({
-        type: SET_ADVANCED_FILTERS,
-        payload: Object.assign(s, {
-          pages: response.data.pages,
-          pageNumber: response.data.page,
-          totalProducts: response.data.totalProducts
-        })
-      });
-      dispatch({
-        type: FETCH_STORE_PRODUCTS,
-        payload: response.data.products
-      });
-    } catch (error) {
-      handleError(error, dispatch);
-    } finally {
-      dispatch(setProductLoading(false));
-    }
-  };
-};
-
 export const fetchProductsSelect = () => {
   return async (dispatch, getState) => {
     try {
@@ -271,7 +243,7 @@ export const addProduct = () => {
         taxable: product.taxable.value,
         brand:
           user.role !== ROLES.Merchant
-            ? brand != 0
+            ? brand !== 0
               ? brand
               : null
             : brands[1].value
