@@ -14,7 +14,7 @@ export const allFieldsValidation = (data, rules, options) => {
 export const santizeFields = data => {
   const fields = { ...data };
 
-  for (let field in fields) {
+  for (const field in fields) {
     if (typeof field === 'string') {
       fields[field] = DOMPurify.sanitize(fields[field], {
         USE_PROFILES: { html: false }

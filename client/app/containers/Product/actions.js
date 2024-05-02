@@ -74,23 +74,27 @@ export const setProductLoading = value => {
   };
 };
 
-// fetch store products by filterProducts api
+export const filterProducts2 = (n, v) => {
+  return async (dispatch, getState) => {
+    const advancedFilters = getState().product.advancedFilters;
+    const payload = productsFilterOrganizer(n, v, advancedFilters);
+
+    dispatch({ type: SET_ADVANCED_FILTERS, payload });
+  };
+};
+
+// fetch/filter store products api
 export const filterProducts = (n, v) => {
   return async (dispatch, getState) => {
     try {
-      n ?? dispatch({ type: RESET_ADVANCED_FILTERS });
-
       dispatch(setProductLoading(true));
       const advancedFilters = getState().product.advancedFilters;
-      let payload = productsFilterOrganizer(n, v, advancedFilters);
+      const payload = productsFilterOrganizer(n, v, advancedFilters);
+
       dispatch({ type: SET_ADVANCED_FILTERS, payload });
       const sortOrder = getSortOrder(payload.order);
-      payload = { ...payload, sortOrder };
-
       const response = await axios.get(`${API_URL}/product/list`, {
-        params: {
-          ...payload
-        }
+        params: { ...payload, sortOrder }
       });
       const { products, totalPages, currentPage, count } = response.data;
 
@@ -131,34 +135,6 @@ export const fetchStoreProduct = slug => {
       dispatch({
         type: FETCH_STORE_PRODUCT,
         payload: product
-      });
-    } catch (error) {
-      handleError(error, dispatch);
-    } finally {
-      dispatch(setProductLoading(false));
-    }
-  };
-};
-
-export const fetchBrandProducts = slug => {
-  return async (dispatch, getState) => {
-    try {
-      dispatch(setProductLoading(true));
-
-      const response = await axios.get(`${API_URL}/product/list/brand/${slug}`);
-
-      const s = getState().product.advancedFilters;
-      dispatch({
-        type: SET_ADVANCED_FILTERS,
-        payload: Object.assign(s, {
-          pages: response.data.pages,
-          pageNumber: response.data.page,
-          totalProducts: response.data.totalProducts
-        })
-      });
-      dispatch({
-        type: FETCH_STORE_PRODUCTS,
-        payload: response.data.products
       });
     } catch (error) {
       handleError(error, dispatch);
@@ -267,7 +243,7 @@ export const addProduct = () => {
         taxable: product.taxable.value,
         brand:
           user.role !== ROLES.Merchant
-            ? brand != 0
+            ? brand !== 0
               ? brand
               : null
             : brands[1].value
@@ -461,7 +437,7 @@ const productsFilterOrganizer = (n, v, s) => {
       return {
         name: s.name,
         category: v,
-        brand: s.brand,
+        brand: 'all',
         min: s.min,
         max: s.max,
         rating: s.rating,
@@ -472,7 +448,7 @@ const productsFilterOrganizer = (n, v, s) => {
     case 'brand':
       return {
         name: s.name,
-        category: s.category,
+        category: 'all',
         brand: v,
         min: s.min,
         max: s.max,
@@ -532,8 +508,8 @@ const productsFilterOrganizer = (n, v, s) => {
     default:
       return {
         name: s.name,
-        category: s.category,
-        brand: s.brand,
+        category: 'all',
+        brand: 'all',
         min: s.min,
         max: s.max,
         rating: s.rating,

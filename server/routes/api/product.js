@@ -86,6 +86,7 @@ router.get('/list', async (req, res) => {
       max,
       min,
       category,
+      brand,
       page = 1,
       limit = 10
     } = req.query;
@@ -95,18 +96,31 @@ router.get('/list', async (req, res) => {
     const basicQuery = getStoreProductsQuery(min, max, rating);
 
     const userDoc = await checkAuth(req);
-    const categoryDoc = await Category.findOne(
-      { slug: categoryFilter.category, isActive: true },
-      'products -_id'
-    );
+    const categoryDoc = await Category.findOne({
+      slug: categoryFilter.category,
+      isActive: true
+    });
 
-    if (categoryDoc && categoryFilter !== category) {
+    if (categoryDoc) {
       basicQuery.push({
         $match: {
           isActive: true,
           _id: {
             $in: Array.from(categoryDoc.products)
           }
+        }
+      });
+    }
+
+    const brandDoc = await Brand.findOne({
+      slug: brand,
+      isActive: true
+    });
+
+    if (brandDoc) {
+      basicQuery.push({
+        $match: {
+          'brand._id': { $eq: brandDoc._id }
         }
       });
     }
@@ -141,98 +155,6 @@ router.get('/list', async (req, res) => {
     });
   } catch (error) {
     console.log('error', error);
-    res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
-    });
-  }
-});
-
-// fetch store products by brand api
-router.get('/list/brand/:slug', async (req, res) => {
-  try {
-    const slug = req.params.slug;
-
-    const brand = await Brand.findOne({ slug, isActive: true });
-
-    if (!brand) {
-      return res.status(404).json({
-        message: `Cannot find brand with the slug: ${slug}.`
-      });
-    }
-
-    const userDoc = await checkAuth(req);
-
-    if (userDoc) {
-      const products = await Product.aggregate([
-        {
-          $match: {
-            isActive: true,
-            brand: brand._id
-          }
-        },
-        {
-          $lookup: {
-            from: 'wishlists',
-            let: { product: '$_id' },
-            pipeline: [
-              {
-                $match: {
-                  $and: [
-                    { $expr: { $eq: ['$$product', '$product'] } },
-                    { user: new Mongoose.Types.ObjectId(userDoc.id) }
-                  ]
-                }
-              }
-            ],
-            as: 'isLiked'
-          }
-        },
-        {
-          $lookup: {
-            from: 'brands',
-            localField: 'brand',
-            foreignField: '_id',
-            as: 'brands'
-          }
-        },
-        {
-          $addFields: {
-            isLiked: { $arrayElemAt: ['$isLiked.isLiked', 0] }
-          }
-        },
-        {
-          $unwind: '$brands'
-        },
-        {
-          $addFields: {
-            'brand.name': '$brands.name',
-            'brand._id': '$brands._id',
-            'brand.isActive': '$brands.isActive'
-          }
-        },
-        { $project: { brands: 0 } }
-      ]);
-
-      res.status(200).json({
-        products: products.reverse().slice(0, 8),
-        page: 1,
-        pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
-        totalProducts: products.length
-      });
-    } else {
-      const products = await Product.find({
-        brand: brand._id,
-        isActive: true
-      }).populate('brand', 'name');
-
-      res.status(200).json({
-        products: products.reverse().slice(0, 8),
-        page: 1,
-        pages: products.length > 0 ? Math.ceil(products.length / 8) : 0,
-        totalProducts: products.length
-      });
-    }
-  } catch (error) {
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
