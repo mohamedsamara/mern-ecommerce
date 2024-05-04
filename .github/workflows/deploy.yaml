@@ -12,7 +12,8 @@ jobs:
   build-upload:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Check Docker availability
         run: docker --version
@@ -26,30 +27,41 @@ jobs:
       - name: Build and push frontend Docker image
         run: |
           docker build -t mern-fe:${{ github.sha }} ./client
-          docker push mern-fe:${{ github.sha }}
+          docker tag mern-fe:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/mern-fe:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/mern-fe:${{ github.sha }}
 
       - name: Build and push backend Docker image
         run: |
           docker build -t mern-be:${{ github.sha }} ./server
-          docker push mern-be:${{ github.sha }}
+          docker tag mern-be:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/mern-be:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/mern-be:${{ github.sha }}
 
   create_ec2:
     runs-on: ubuntu-latest
     needs: build-upload
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # Add AWS credentials setup step here...
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+      - name: Setup AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          terraform_wrapper: false
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'
 
-      - name: Create EC2 instance
+      - name: Initialize Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: '1.0.0'
+
+      - name: Apply Terraform configuration
         working-directory: .github/IaC
         run: |
-          # Add Terraform apply command here...
+          terraform init
+          terraform validate
+          terraform plan -out=tfplan
+          terraform apply tfplan -auto-approve
 
   deploy:
     runs-on: ubuntu-latest
@@ -57,11 +69,18 @@ jobs:
       - build-upload
       - create_ec2
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # Add AWS credentials setup step here...
+      - name: Setup AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: 'us-east-1'
 
       - name: Update MERN app on EC2
         working-directory: .github/scripts
         run: |
-          # Add deployment script command here...
+          # Execute deployment script to update the MERN app on EC2 instance
+          bash deploy.sh
