@@ -11,8 +11,6 @@ on:
 jobs:
   build-upload:
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.ref_name }}
     steps:
       - uses: actions/checkout@v3
 
@@ -25,34 +23,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Build frontend Docker image
+      - name: Build and push frontend Docker image
         run: |
           docker build -t mern-fe:${{ github.sha }} ./client
+          docker push mern-fe:${{ github.sha }}
 
-      - name: Build backend Docker image
+      - name: Build and push backend Docker image
         run: |
           docker build -t mern-be:${{ github.sha }} ./server
-
-      - name: Tag and Push Docker images
-        run: |
-          docker tag mern-fe:${{ github.sha }} ${{ env.DOCKER_REGISTRY_FE }}:${{ github.sha }}
-          docker tag mern-be:${{ github.sha }} ${{ env.DOCKER_REGISTRY_BE }}:${{ github.sha }}
-          docker push ${{ env.DOCKER_REGISTRY_FE }}:${{ github.sha }}
-          docker push ${{ env.DOCKER_REGISTRY_BE }}:${{ github.sha }}
+          docker push mern-be:${{ github.sha }}
 
   create_ec2:
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.ref_name }}
     needs: build-upload
     steps:
       - uses: actions/checkout@v3
 
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+      # Add AWS credentials setup step here...
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -62,35 +49,19 @@ jobs:
       - name: Create EC2 instance
         working-directory: .github/IaC
         run: |
-          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
-          if [ -z $public_ip ]; then
-            terraform init
-            terraform validate
-            terraform plan
-            terraform apply -auto-approve
-          fi
+          # Add Terraform apply command here...
 
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ github.ref_name }}
     needs:
       - build-upload
       - create_ec2
     steps:
       - uses: actions/checkout@v3
 
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+      # Add AWS credentials setup step here...
 
       - name: Update MERN app on EC2
         working-directory: .github/scripts
         run: |
-          sudo apt-get update
-          sudo apt-get install -y expect
-          public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance-luminous" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
-          sleep 10
-          bash ./deploy.sh $public_ip
+          # Add deployment script command here...
