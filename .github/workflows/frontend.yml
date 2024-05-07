@@ -35,9 +35,9 @@ jobs:
      - name: configureawscredentials
        uses: aws-actions/configure-aws-credentials@v2
        with:
-         role-to-assume: ${{ secrets.AWS_STS_ROLE }}
-         role-session-name: cicd
-         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
      # - name: Get .env
      #   run: aws ssm get-parameter --name "/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/env" --with-decryption --query 'Parameter.Value' --output text | tr -d '"' >.env
@@ -77,10 +77,10 @@ jobs:
      - name: configureawscredentials
        uses: aws-actions/configure-aws-credentials@v2
        with:
-         role-to-assume: ${{ secrets.AWS_STS_ROLE }}
-         role-session-name: cicd
-         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+          
      # - name: Get deployment env
      #   id: deployment_env
        # run: |
