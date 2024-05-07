@@ -3,7 +3,7 @@ name: Build and Deploy Frontend
 on:
  push:
    branches:
-     - master
+     - mansunproject
      # - develop
 
 jobs:
