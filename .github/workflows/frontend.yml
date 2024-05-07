@@ -1,0 +1,100 @@
+name: Build and Deploy Frontend
+
+on:
+ push:
+   branches:
+     - main
+     # - develop
+
+jobs:
+ build:
+   runs-on: ubuntu-latest
+   permissions:
+     packages: write
+     contents: read
+     id-token: write
+   steps:
+     - uses: actions/checkout@v3
+
+     - uses: actions/setup-node@v3
+       with:
+         node-version: 18
+         cache: 'npm'
+
+     - name: Cache node modules
+       uses: actions/cache@v3
+       with:
+         path: ${{ format('{0}/{1}', env.working_dir, 'node_modules') }}
+         key: build-${{ hashFiles('package-lock.json') }}
+         restore-keys: |
+           build-
+
+     - name: install dependencies
+       run: npm install --prefer-offline --no-fund
+
+     - name: configureawscredentials
+       uses: aws-actions/configure-aws-credentials@v2
+       with:
+         role-to-assume: ${{ secrets.AWS_STS_ROLE }}
+         role-session-name: cicd
+         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+     # - name: Get .env
+     #   run: aws ssm get-parameter --name "/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/env" --with-decryption --query 'Parameter.Value' --output text | tr -d '"' >.env
+
+     - name: Echo Secrets to .env File
+       run: |
+         rm -rf .env
+         echo "REACT_APP_WEB3_AUTH_CLIENT_ID=${{ secrets.REACT_APP_WEB3_AUTH_CLIENT_ID }}" >> .env
+         echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> .env
+         echo "REACT_APP_WEB3_AUTH_ENV=${{ secrets.REACT_APP_WEB3_AUTH_ENV }}" >> .env
+         echo "REACT_APP_WC_PROJECT_ID=${{ secrets.REACT_APP_WC_PROJECT_ID }}" >> .env
+
+
+     - name: build assets
+       run: CI=false npm run build
+
+     - name: 'Upload Artifact'
+       uses: actions/upload-artifact@v3
+       with:
+         name: built-assets
+         path: build
+         retention-days: 1
+
+ deploy:
+   needs: ["build"]
+   runs-on: ubuntu-latest
+   permissions:
+     packages: write
+     contents: read
+     id-token: write
+   steps:
+     - name: Download built artifact
+       uses: actions/download-artifact@v3
+       with:
+         name: built-assets
+
+     - name: configureawscredentials
+       uses: aws-actions/configure-aws-credentials@v2
+       with:
+         role-to-assume: ${{ secrets.AWS_STS_ROLE }}
+         role-session-name: cicd
+         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+     # - name: Get deployment env
+     #   id: deployment_env
+       # run: |
+       #   content=$(aws ssm get-parameter --name "/$GITHUB_REPOSITORY/$GITHUB_REF_NAME/deployment/env" --with-decryption --query 'Parameter.Value' --output text)
+       #   echo "::set-output name=values::$content"
+
+     - name: Upload built assets
+       # env:
+         # bucket_name: "coolcat-journeys-${{ github.ref_name }}"
+       run: aws s3 sync . s3://${{ secrets.BUCKET_NAME }} --delete --only-show-errors --cache-control 'max-age=31536000' --no-progress
+     - name: cloudfront invalidation
+       # env:
+         # distribution_id: "${{ fromJson(steps.deployment_env.outputs.values).distribution_id }}"
+       run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/index.html"
+
+
+
