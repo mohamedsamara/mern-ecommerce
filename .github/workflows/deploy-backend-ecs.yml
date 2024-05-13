@@ -6,10 +6,6 @@ on:
       - mansunproject
       # - develop
 
- permissions:
-  id-token: write # This is required for requesting the JWT
-     
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,8 +21,8 @@ jobs:
       - name: configureawscredentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::590183770431:role/githubtoawsoicd
-    
+          role-to-assume: ${{ secrets.AWS_STS_ROLE }}
+          role-session-name: cicd
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Set TAG environment variable
