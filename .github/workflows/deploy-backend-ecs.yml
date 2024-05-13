@@ -1,0 +1,71 @@
+name: Build and push Docker image
+
+on:
+  push:
+    branches:
+      - mansunproject
+      # - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: configureawscredentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_STS_ROLE }}
+          role-session-name: cicd
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Set TAG environment variable
+      #   run: echo "TAG=${{ github.sha }}_${{ github.ref_slug }}" >> $GITHUB_ENV
+        run: echo "TAG=latest" >> $GITHUB_ENV
+        
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        run: |
+          ECR_REGISTRY="${{ secrets.ECR_REGISTRY }}"
+          ECR_REGISTRY=${ECR_REGISTRY%%/*}
+          echo "ECR_REGISTRY=$ECR_REGISTRY"
+          docker build -t mernbe .
+          aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
+          docker tag anichessecr:latest ${{ secrets.ECR_REGISTRY }}:${{ env.TAG }}
+          docker push ${{ secrets.ECR_REGISTRY }}:${{ env.TAG }}
+          echo "image=${{ secrets.ECR_REGISTRY }}:${{ env.TAG }}" >> $GITHUB_OUTPUT
+
+      - name: Download task definition
+        run: |
+          aws ecs describe-task-definition --task-definition mernbe --query taskDefinition > task-definition.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: backend
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: mern-api
+          cluster: mern-ecommerce
+          wait-for-service-stability: true
+
+  
+      
+      
+
+
+
+
+

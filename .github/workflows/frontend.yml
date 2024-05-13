@@ -1,11 +1,11 @@
----
 name: Build and Deploy Frontend
 on:
   push:
     branches:
       - mansunproject
+
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -27,52 +27,21 @@ jobs:
       - name: install dependencies
         run: npm install --prefer-offline --no-fund
       - name: configureawscredentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v3
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Echo Secrets to .env File
-        run: >
+        run: |
           rm -rf .env
-
           echo "REACT_APP_WEB3_AUTH_CLIENT_ID=${{ secrets.REACT_APP_WEB3_AUTH_CLIENT_ID }}" >> .env
-
           echo "REACT_APP_API_BASE_URL=${{ secrets.REACT_APP_API_BASE_URL }}" >> .env
-
           echo "REACT_APP_WEB3_AUTH_ENV=${{ secrets.REACT_APP_WEB3_AUTH_ENV }}" >> .env
-
           echo "REACT_APP_WC_PROJECT_ID=${{ secrets.REACT_APP_WC_PROJECT_ID }}" >> .env
       - name: build assets
         run: CI=false npm run build
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: built-assets
-          path: build
-          retention-days: 1
-  deploy:
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-      id-token: write
-    steps:
-      - name: Download built artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: built-assets
-      - name: configureawscredentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Upload built assets
-        run: aws s3 sync . s3://${{ secrets.BUCKET_NAME }} --delete --only-show-errors
-          --cache-control 'max-age=31536000' --no-progress
-      - name: cloudfront invalidation
-        run: aws cloudfront create-invalidation --distribution-id ${{
-          secrets.DISTRIBUTION_ID }} --paths "/index.html"
+      - name: Upload built assets to S3 and CloudFront Invalidation
+        run: |
+          aws s3 sync . s3://${{ secrets.BUCKET_NAME }} --delete --only-show-errors --cache-control 'max-age=31536000' --no-progress
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/index.html"

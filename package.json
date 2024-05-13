@@ -7,6 +7,7 @@
     "dev": "npm-run-all --parallel dev:*",
     "dev:client": "cd client && npm run dev",
     "dev:server": "cd server && npm run dev",
+    "build":" cd client && npm run",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
