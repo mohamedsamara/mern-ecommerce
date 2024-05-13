@@ -1,4 +1,4 @@
-ame: Create Lab Machine - gitlab,jenkins,k8s
+name: Create web app infra
 
 on:
   workflow_dispatch:
@@ -13,20 +13,9 @@ on:
         required: true
         type: string
         default: "NULL"
-      create_lab_machine:
-        description: 'Input key id'
-        required: true
-        type: choice
-        default: "ec2-instance"
-        options:
-          - Gitlab
-          - Jenkins
-          - K8S
-          - ec2-instance
-          - ecs
 
 jobs:
-  create-lab-instance:
+  create-infra:
     runs-on: ubuntu-latest
     environment: ${{ github.ref_name }}
     steps:
@@ -41,21 +30,10 @@ jobs:
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_wrapper: false 
-      - name: create ecs cluster
-        working-directory: .github/IaC/ecs
+      - name: provision infra
+        working-directory: terraform
         run: |
-          if [[ "${{ github.event.inputs.create_lab_machine }}" == "ecs" ]]; then
-            terraform init
-            terraform validate
-            terraform plan
-            terraform apply -auto-approve
-          fi
-      - name: Create Gitlab Instance
-        working-directory: .github/scripts
-        run: |
-          if [[ "${{ github.event.inputs.create_lab_machine }}" == "Gitlab" ]]; then
-            public_ip=$(aws ec2 describe-instances --filters "Name=tag-value,Values=mern-instance" --query "Reservations[*].Instances[*].PublicIpAddress" --output text)
-            ./trigger_gitlab_install.sh $public_ip
-          fi
-  
-  
+          terraform init
+          terraform validate
+          terraform plan
+          terraform apply -auto-approve
