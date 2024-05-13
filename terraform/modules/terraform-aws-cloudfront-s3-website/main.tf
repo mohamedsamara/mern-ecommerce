@@ -62,17 +62,18 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
 
   policy = <<EOF
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "PublicReadGetObject",
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${aws_s3_bucket.s3_bucket.id}/*"
-    }
-  ]
-}
+    "Version": "2012-10-17",
+    "Id": "Policy1715618116478",
+    "Statement": [
+        {
+            "Sid": "Stmt1715618102980",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::mansun/*"
+        }
+    ]
+
 EOF
 }
 
