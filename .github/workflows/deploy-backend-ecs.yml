@@ -26,7 +26,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: arn:aws:iam::590183770431:role/githubtoawsoicd
-          role-session-name: cicd
+    
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Set TAG environment variable
