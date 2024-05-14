@@ -4,7 +4,8 @@
   "description": "MERN Ecommerce Client",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && cross-env NODE_ENV=production webpack --mode production --config webpack/webpack.prod.js",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts --max_old_space_size=4096 start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts --max_old_space_size=4096 build",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack/webpack.dev.js"
   },
   "engines": {
