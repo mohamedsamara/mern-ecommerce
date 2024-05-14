@@ -18,7 +18,7 @@ An ecommerce store built with MERN stack, and utilizes third party API's. This e
   * Redux to manage application's state
   * Redux Thunk middleware to handle asynchronous redux actions
 
-## Quickstart Guide
+## Quickstart Guide,,
 
 To run this project locally you can use docker compose provided in the repository. Here is a guide on how to run this project locally using docker compose.
 
