@@ -1,10 +1,9 @@
-name: Build and push Docker image
+name: Build and Push Docker Image
 
 on:
   push:
     branches:
       - mansunproject
-      # - develop
 
 jobs:
   deploy:
@@ -18,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: configureawscredentials
+      - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_STS_ROLE }}
@@ -26,20 +25,23 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Set TAG environment variable
-      #   run: echo "TAG=${{ github.sha }}_${{ github.ref_slug }}" >> $GITHUB_ENV
         run: echo "TAG=latest" >> $GITHUB_ENV
         
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         run: |
           ECR_REGISTRY="${{ secrets.ECR_REGISTRY }}"
-          ECR_REGISTRY=${ECR_REGISTRY%%/*}
-          echo "ECR_REGISTRY=$ECR_REGISTRY"
-          docker build -t mernbe .
+          ECR_REPOSITORY="mansunrepo"
+          IMAGE_URI="${ECR_REGISTRY}:${{ env.TAG }}"
+          echo "ECR_REGISTRY=${ECR_REGISTRY}"
+          echo "IMAGE_URI=${IMAGE_URI}"
+          cd server
+
+          docker build -t ${ECR_REPOSITORY} .
           aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | docker login --username AWS --password-stdin ${ECR_REGISTRY}
-          docker tag anichessecr:latest ${{ secrets.ECR_REGISTRY }}:${{ env.TAG }}
-          docker push ${{ secrets.ECR_REGISTRY }}:${{ env.TAG }}
-          echo "image=${{ secrets.ECR_REGISTRY }}:${{ env.TAG }}" >> $GITHUB_OUTPUT
+          docker tag ${ECR_REPOSITORY}:latest ${IMAGE_URI}
+          docker push ${IMAGE_URI}
+          echo "image=${IMAGE_URI}" >> $GITHUB_OUTPUT
 
       - name: Download task definition
         run: |
@@ -60,12 +62,3 @@ jobs:
           service: mern-api
           cluster: mern-ecommerce
           wait-for-service-stability: true
-
-  
-      
-      
-
-
-
-
-
