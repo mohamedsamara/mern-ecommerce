@@ -6,7 +6,7 @@ module.exports = {
   },
   port: process.env.PORT || 3000,
   database: {
-    url: "mongodb://127.0.0.1:27017/mern_ecommerce"
+    url: "mongodb+srv://ashutoshpaudyal1:mongo@practicedb.fiytqfg.mongodb.net/mern_ecommerce?retryWrites=true&w=majority"
   },
   jwt: {
     secret: '8385B635696DDB2B63A16C3AAA9E7',
