@@ -16,10 +16,7 @@ const AddressSchema = new Schema({
   state: {
     type: String
   },
-  country: {
-    type: String
-  },
-  zipCode: {
+  PINCode: {
     type: String
   },
   isDefault: {
