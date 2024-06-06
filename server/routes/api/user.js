@@ -108,7 +108,7 @@ router.put('/', auth, async (req, res) => {
 
 router.put('/password', auth, async (req, res) => {
   try {
-    const user = req.user._id;
+    const users = req.user._id;
     const { oldPassword, newPassword } = req.body;
 
     const user = await User.findOne({ _id: user }).select('+password');
