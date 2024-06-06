@@ -106,4 +106,43 @@ router.put('/', auth, async (req, res) => {
   }
 });
 
+router.put('/password', auth, async (req, res) => {
+  try {
+    const user = req.user._id;
+    const { oldPassword, newPassword } = req.body;
+
+    const user = await User.findOne({ _id: user }).select('+password');
+
+    if (!user) {
+      return res.status(400).json({
+        error: 'We could not find any user with the provided credentials.'
+      });
+    }
+
+    const isPasswordMatch = await user.comparePassword(oldPassword);
+
+    if (!isPasswordMatch) {
+      return res.status(400).json({
+        error: 'Your current password is incorrect. Please try again.'
+      });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Your password has been successfully updated!'
+    });
+
+    return;
+
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+}
+);
+
 module.exports = router;

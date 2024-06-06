@@ -1,0 +1,58 @@
+name: Auto PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  pull_request_review_comment:
+    types: [created] 
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Pull Docker image
+        run: docker pull arshikjaved/pr-review:v1.0
+      
+      - name: Get commit SHA
+        id: commit_sha
+        run: echo "::set-output name=commit_sha::${{ github.event.pull_request.head.sha }}"
+
+      - name: Get PR number
+        id: pr_number
+        run: echo "::set-output name=pr_number::${{ github.event.pull_request.number }}"
+      
+
+      - name: Set script name
+        id: script_name
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "::set-output name=script::generate_response.py"
+          else
+            echo "::set-output name=script::reply_thread.py"
+          fi
+
+      - name: Analyze code
+        if: github.event_name == 'pull_request' || (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@CodeHawk'))
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          COMMENT_BODY: ${{ github.event.comment.body }}
+          ACTION: ${{ github.event.action }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+          FILE_PATH: ${{ github.event.comment.path }}
+          LINE_NUMBER: ${{ github.event.comment.line }}
+          REPOSITORY_OWNER: ${{ github.repository_owner }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          SCRIPT: ${{ github.event_name == 'pull_request' && 'generate_response.py' || 'reply_thread.py' }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        
+        run: |
+          if [ "${{ env.SCRIPT }}" == "generate_response.py" ]; then
+            docker run --rm -e OWNER='SyedArshikJavedMoinee' -e REPO_NAME='pr_auto' -e COMMIT_SHA="${{ steps.commit_sha.outputs.commit_sha }}" -e PR_NUMBER="${{ steps.pr_number.outputs.pr_number }}" -e ACTION="${{env.ACTION}}" -e EVENT_NAME="${{ env.EVENT_NAME }}" arshikjaved/pr-review:v1.0 sh -c "python /app/generate_response.py --owner 'SyedArshikJavedMoinee' --repo-name 'pr_auto' --commit-sha '${{ env.COMMIT_SHA }}' --pr-number '${{ env.PR_NUMBER }}' --event-name '${{ env.EVENT_NAME }}' --action '${{ env.ACTION }}'"
+          else
+            docker run --rm -e OWNER='SyedArshikJavedMoinee' -e REPO_NAME='pr_auto' -e COMMIT_SHA="${{ steps.commit_sha.outputs.commit_sha }}" -e PR_NUMBER="${{ steps.pr_number.outputs.pr_number }}" -e EVENT_NAME="${{ env.EVENT_NAME }}" arshikjaved/pr-review:v1.0 sh -c "python /app/reply_thread.py --owner 'SyedArshikJavedMoinee' --repo-name 'pr_auto' --commit-sha '${{ env.COMMIT_SHA }}' --pr-number '${{ env.PR_NUMBER }}' --event-name '${{ env.EVENT_NAME }}' --comment-body '${{ env.COMMENT_BODY }}' --comment-id '${{ env.COMMENT_ID }}' --file-path '${{ env.FILE_PATH }}' --line-number '${{ env.LINE_NUMBER }}'"
+          fi
