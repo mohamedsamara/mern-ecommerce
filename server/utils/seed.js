@@ -1,7 +1,7 @@
 const chalk = require('chalk');
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const faker = require('@faker-js/faker');
+const { faker } = require('@faker-js/faker');
 
 const setupDB = require('./db'); 
 const { ROLES } = require('../constants');
@@ -19,30 +19,34 @@ const seedDB = async () => {
 
     if (!email || !password) throw new Error('Missing arguments');
 
-    // Seed admin user
-    const user = new User({
-      email,
-      password,
-      firstName: 'admin',
-      lastName: 'admin',
-      role: ROLES.Admin
-    });
-    
-    const existingUser = await User.findOne({ email: user.email });
-    if (existingUser) throw new Error('User collection is already seeded!');
+    // Check if admin user exists
+    const existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      console.log(`${chalk.yellow('!')} ${chalk.yellow('Seeding admin user...')}`);
 
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(user.password, salt);
-    user.password = hash;
+      // Seed admin user
+      const user = new User({
+        email,
+        password,
+        firstName: 'admin',
+        lastName: 'admin',
+        role: ROLES.Admin
+      });
 
-    await user.save();
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(user.password, salt);
+      user.password = hash;
 
-    console.log(`${chalk.green('✓')} ${chalk.green('Admin user seeded.')}`);
+      await user.save();
+      console.log(`${chalk.green('✓')} ${chalk.green('Admin user seeded.')}`);
+    } else {
+      console.log(`${chalk.yellow('!')} ${chalk.yellow('Admin user already exists, skipping seeding for admin user.')}`);
+    }
 
     // Seed brands
     for (let i = 0; i < 10; i++) {
       const brand = new Brand({
-        name: faker.company.companyName(),
+        name: faker.company.name(),
         description: faker.lorem.sentence(),
         isActive: true
       });
@@ -55,14 +59,14 @@ const seedDB = async () => {
     const brands = await Brand.find().select('_id');
     for (let i = 0; i < 50; i++) {
       const product = new Product({
-        sku: faker.random.alphaNumeric(10),
+        sku: faker.string.alphanumeric(10),
         name: faker.commerce.productName(),
         description: faker.lorem.sentence(),
-        quantity: faker.random.number({ min: 1, max: 100 }),
+        quantity: faker.number.int({ min: 1, max: 100 }),
         price: faker.commerce.price(),
-        taxable: faker.random.boolean(),
+        taxable: faker.datatype.boolean(),
         isActive: true,
-        brand: brands[faker.random.number(brands.length - 1)]._id
+        brand: brands[faker.number.int(brands.length - 1)]._id
       });
 
       await product.save();
