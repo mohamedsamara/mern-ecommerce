@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const { faker } = require('@faker-js/faker');
 
-const setupDB = require('./db'); 
+const setupDB = require('./db');
 const { ROLES } = require('../constants');
 const User = require('../models/user');
 const Brand = require('../models/brand');
@@ -100,11 +100,13 @@ const seedDB = async () => {
       }
       console.log(`${chalk.green('✓')} ${chalk.green('Products seeded and associated with categories.')}`);
     }
-
   } catch (error) {
     console.log(`${chalk.red('x')} ${chalk.red('Error while seeding database')}`);
     console.log(error);
     return null;
+  } finally {
+    await mongoose.connection.close();
+    console.log(`${chalk.blue('✓')} ${chalk.blue('Database connection closed!')}`);
   }
 };
 
