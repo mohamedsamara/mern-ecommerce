@@ -22,7 +22,7 @@ const DisabledMerchantAccount = props => {
         </p>
         <div className='mt-2'>
           <i className='fa fa-phone mr-2' />
-          <span>Call us 951-999-9999</span>
+          <span>Call us 9814389639</span>
         </div>
       </div>
     </div>
