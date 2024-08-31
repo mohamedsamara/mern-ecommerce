@@ -72,7 +72,6 @@ const config = {
     open: true,
     inline: true,
     compress: true,
-    // host: '0.0.0.0',
     hot: true,
     disableHostCheck: true,
     historyApiFallback: true
