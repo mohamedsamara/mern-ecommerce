@@ -11,38 +11,39 @@ const options = {
 Mongoose.plugin(slug, options);
 
 // Brand Schema
-const BrandSchema = new Schema({
-  name: {
-    type: String,
-    trim: true
+const BrandSchema = new Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: true
+    },
+    slug: {
+      type: String,
+      slug: 'name',
+      unique: true,
+      required: true
+    },
+    image: {
+      data: Buffer,
+      contentType: String
+    },
+    description: {
+      type: String,
+      trim: true,
+      maxlength: 500
+    },
+    isActive: {
+      type: Boolean,
+      default: true
+    },
+    merchant: {
+      type: Schema.Types.ObjectId,
+      ref: 'Merchant',
+      default: null
+    }
   },
-  slug: {
-    type: String,
-    slug: 'name',
-    unique: true
-  },
-  image: {
-    data: Buffer,
-    contentType: String
-  },
-  description: {
-    type: String,
-    trim: true
-  },
-  isActive: {
-    type: Boolean,
-    default: true
-  },
-  merchant: {
-    type: Schema.Types.ObjectId,
-    ref: 'Merchant',
-    default: null
-  },
-  updated: Date,
-  created: {
-    type: Date,
-    default: Date.now
-  }
-});
+  { timestamps: true }
+);
 
 module.exports = Mongoose.model('Brand', BrandSchema);

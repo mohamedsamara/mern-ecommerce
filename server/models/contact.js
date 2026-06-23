@@ -5,14 +5,20 @@ const { Schema } = Mongoose;
 const ContactSchema = new Schema({
   name: {
     type: String,
-    trim: true
+    trim: true,
+    required: true
   },
   email: {
-    type: String
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email']
   },
   message: {
     type: String,
-    trim: true
+    trim: true,
+    required: true
   },
   updated: Date,
   created: {

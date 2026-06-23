@@ -10,19 +10,26 @@ const UserSchema = new Schema({
     type: String,
     required: () => {
       return this.provider !== 'email' ? false : true;
-    }
+    },
+    trim: true,
+    lowercase: true,
+    sparse: true
   },
   phoneNumber: {
-    type: String
+    type: String,
+    trim: true
   },
   firstName: {
-    type: String
+    type: String,
+    trim: true
   },
   lastName: {
-    type: String
+    type: String,
+    trim: true
   },
   password: {
-    type: String
+    type: String,
+    minlength: 0
   },
   merchant: {
     type: Schema.Types.ObjectId,
@@ -41,7 +48,8 @@ const UserSchema = new Schema({
     type: String
   },
   avatar: {
-    type: String
+    type: String,
+    trim: true
   },
   role: {
     type: String,
