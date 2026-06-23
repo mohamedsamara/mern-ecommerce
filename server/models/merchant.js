@@ -8,16 +8,23 @@ const { Schema } = Mongoose;
 const MerchantSchema = new Schema({
   name: {
     type: String,
-    trim: true
+    trim: true,
+    required: true
   },
   email: {
-    type: String
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+    match: [/^\S+@\S+\.\S+$/, 'Please enter a valid email']
   },
   phoneNumber: {
-    type: String
+    type: String,
+    trim: true
   },
   brandName: {
-    type: String
+    type: String,
+    trim: true
   },
   business: {
     type: String,
