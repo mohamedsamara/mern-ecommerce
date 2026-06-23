@@ -8,16 +8,24 @@ const { Schema } = Mongoose;
 const CartItemSchema = new Schema({
   product: {
     type: Schema.Types.ObjectId,
-    ref: 'Product'
+    ref: 'Product',
+    required: true
   },
-  quantity: Number,
+  quantity: {
+    type: Number,
+    required: true,
+    min: 1,
+    default: 1
+  },
   purchasePrice: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   },
   totalPrice: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   },
   priceWithTax: {
     type: Number,
