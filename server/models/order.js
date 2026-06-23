@@ -5,15 +5,18 @@ const { Schema } = Mongoose;
 const OrderSchema = new Schema({
   cart: {
     type: Schema.Types.ObjectId,
-    ref: 'Cart'
+    ref: 'Cart',
+    required: true
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: true
   },
   total: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 0
   },
   updated: Date,
   created: {
