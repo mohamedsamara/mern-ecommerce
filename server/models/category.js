@@ -12,12 +12,10 @@ Mongoose.plugin(slug, options);
 
 // Category Schema
 const CategorySchema = new Schema({
-  _id: {
-    type: Schema.ObjectId,
-    auto: true
-  },
   name: {
     type: String,
+    trim: true,
+    required: true,
     trim: true
   },
   slug: {
@@ -31,7 +29,8 @@ const CategorySchema = new Schema({
   },
   description: {
     type: String,
-    trim: true
+    trim: true,
+    maxlength: 500
   },
   isActive: {
     type: Boolean,
