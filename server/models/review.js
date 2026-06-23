@@ -9,24 +9,31 @@ const ReviewSchema = new Schema({
   product: {
     type: Schema.Types.ObjectId,
     ref: 'Product',
-    default: null
+    default: null,
+    required: true
   },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    default: null
+    default: null,
+    required: true
   },
   title: {
     type: String,
-    trim: true
+    trim: true,
+    trquired: true
   },
   rating: {
     type: Number,
-    default: 0
+    default: 0,
+    min: 1,
+    max: 5,
+    required: true
   },
   review: {
     type: String,
-    trim: true
+    trim: true,
+    required: true
   },
   isRecommended: {
     type: Boolean,
