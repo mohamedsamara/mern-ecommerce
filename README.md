@@ -1,8 +1,8 @@
-# MERN Ecommerce
+# MTD Ecommerce
 
 ## Description
 
-An ecommerce store built with MERN stack, and utilizes third party API's. This ecommerce store enable three main different flows or implementations:
+An ecommerce store built with MTD stack, and utilizes third party API's. This ecommerce store enable three main different flows or implementations:
 
 1. Buyers browse the store categories, products and brands
 2. Sellers or Merchants manage their own brand component

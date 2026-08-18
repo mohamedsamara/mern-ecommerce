@@ -79,6 +79,7 @@ router.post('/login', async (req, res) => {
     });
   }
 });
+//new method changed
 
 router.post('/register', async (req, res) => {
   try {
@@ -322,6 +323,8 @@ router.get(
   }
 );
 
+//new api for facebook login
+//
 router.get(
   '/facebook',
   passport.authenticate('facebook', {

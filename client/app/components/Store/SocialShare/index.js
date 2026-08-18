@@ -16,11 +16,9 @@ import {
 const SocialShare = props => {
   const { product } = props;
 
-  const shareMsg = `I ♥ ${
-    product.name
-  } product on Mern Store!  Here's the link, ${
-    window.location.protocol !== 'https' ? 'http' : 'https'
-  }://${window.location.host}/product/${product.slug}`;
+  const shareMsg = `I ♥ ${product.name
+    } product on MTD Store!  Here's the link, ${window.location.protocol !== 'https' ? 'http' : 'https'
+    }://${window.location.host}/product/${product.slug}`;
 
   return (
     <ul className='d-flex flex-row mx-0 mb-0 justify-content-center justify-content-md-start share-box'>

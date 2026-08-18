@@ -2,10 +2,9 @@ exports.resetEmail = (host, resetToken) => {
   const message = {
     subject: 'Reset Password',
     text:
-      `${
-        'You are receiving this because you have requested to reset your password for your account.\n\n' +
-        'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-        'http://'
+      `${'You are receiving this because you have requested to reset your password for your account.\n\n' +
+      'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+      'http://'
       }${host}/reset-password/${resetToken}\n\n` +
       `If you did not request this, please ignore this email and your password will remain unchanged.\n`
   };
@@ -27,11 +26,10 @@ exports.confirmResetPasswordEmail = () => {
 exports.merchantSignup = (host, { resetToken, email }) => {
   const message = {
     subject: 'Merchant Registration',
-    text: `${
-      'Congratulations! Your application has been accepted. Please complete your Merchant account signup by clicking on the link below. \n\n' +
+    text: `${'Congratulations! Your application has been accepted. Please complete your Merchant account signup by clicking on the link below. \n\n' +
       'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
       'http://'
-    }${host}/merchant-signup/${resetToken}?email=${email}\n\n`
+      }${host}/merchant-signup/${resetToken}?email=${email}\n\n`
   };
 
   return message;
@@ -79,7 +77,7 @@ exports.contactEmail = () => {
 
 exports.merchantApplicationEmail = () => {
   const message = {
-    subject: 'Sell on MERN Store',
+    subject: 'Sell on MTD Store',
     text: `We received your request! Our team will contact you soon. \n\n`
   };
 
@@ -88,7 +86,7 @@ exports.merchantApplicationEmail = () => {
 
 exports.merchantDeactivateAccount = () => {
   const message = {
-    subject: 'Merchant account on MERN Store',
+    subject: 'Merchant account on MTD Store',
     text:
       `Your merchant account has been disabled. \n\n` +
       `Please contact admin to request access again.`

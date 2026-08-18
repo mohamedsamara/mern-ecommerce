@@ -1,7 +1,7 @@
 {
   "name": "mern-ecommerce",
   "version": "1.0.0",
-  "description": "MERN Ecommerce",
+  "description": "MTD Ecommerce",
   "main": "server/index.js",
   "scripts": {
     "dev": "npm-run-all --parallel dev:*",

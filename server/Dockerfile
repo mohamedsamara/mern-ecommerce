@@ -13,6 +13,8 @@ RUN npm install
 # Copy the rest of the server code
 COPY . .
 
+ENV npm_config_cache=/tmp/.npm
+
 # Expose port 3000 for the server
 EXPOSE 3000
 
