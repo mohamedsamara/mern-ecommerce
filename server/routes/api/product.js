@@ -54,29 +54,42 @@ router.get('/item/:slug', async (req, res) => {
 // fetch product name search api
 router.get('/list/search/:name', async (req, res) => {
   try {
-    const name = req.params.name;
+    const name = req.params.name.trim();
+
+    if (!name) {
+      return res.status(400).json({
+        message: 'Search term is required.'
+      });
+    }
+
+    // Treat user input as literal text, not regex syntax.
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
     const productDoc = await Product.find(
-      { name: { $regex: new RegExp(name), $options: 'is' }, isActive: true },
+      {
+        name: { $regex: escapedName, $options: 'i' },
+        isActive: true
+      },
       { name: 1, slug: 1, imageUrl: 1, price: 1, _id: 0 }
     );
 
-    if (productDoc.length < 0) {
+    if (productDoc.length === 0) {
       return res.status(404).json({
         message: 'No product found.'
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       products: productDoc
     });
   } catch (error) {
-    res.status(400).json({
+    console.error('Product search failed:', error.message);
+
+    return res.status(500).json({
       error: 'Your request could not be processed. Please try again.'
     });
   }
 });
-
 // fetch store products by advanced filters api
 router.get('/list', async (req, res) => {
   try {
@@ -90,7 +103,7 @@ router.get('/list', async (req, res) => {
       page = 1,
       limit = 10
     } = req.query;
-    sortOrder = JSON.parse(sortOrder);
+    sortOrder = sortOrder ? JSON.parse(sortOrder) : { createdAt: -1 };
 
     const categoryFilter = category ? { category } : {};
     const basicQuery = getStoreProductsQuery(min, max, rating);
