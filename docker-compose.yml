@@ -1,11 +1,11 @@
-version: '3'
-
 services:
   client:
     build: client
     container_name: client
     ports:
       - '8080:8080'
+    depends_on:
+      - server
     networks:
       - app-network
 
@@ -16,17 +16,14 @@ services:
       - PORT=3000
       - BASE_API_URL=api
       - CLIENT_URL=http://localhost:8080
-      - JWT_SECRET=update_your_JWT_secret
-      - MONGO_URI=mongodb://mongo:27017/mern_ecommerce # Default Mongo URL & DB name when running project locally
+      - JWT_SECRET=remplacez_par_une_valeur_aleatoire
+      - MONGO_URI=mongodb://mongo:27017/mern_ecommerce
     ports:
       - '3000:3000'
-    command: [
-        'sh',
-        '-c',
-        'npm run seed:db admin@example.com admin123 && npm start'
-      ] # Default email and password arguments to database seed script - update your admin email and password
+    command: ['sh', '-c', 'npm run seed:db admin@example.com admin123 && npm start']
     depends_on:
       - mongo
+    restart: on-failure
     networks:
       - app-network
 
@@ -36,8 +33,13 @@ services:
     command: mongod --quiet --logpath /dev/null
     ports:
       - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
     networks:
       - app-network
+
+volumes:
+  mongo-data:
 
 networks:
   app-network:
