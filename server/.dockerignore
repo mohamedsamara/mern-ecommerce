@@ -1,0 +1,11 @@
+# Fichiers d'environnement locaux
+.env
+.env.*
+!.env.example
+
+# Dependances installees sur l'ordinateur
+node_modules/
+
+# Rapports et journaux locaux
+coverage/
+npm-debug.log*
