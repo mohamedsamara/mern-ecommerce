@@ -1,32 +1,35 @@
-# Use official Node.js 14 as base image
-FROM node:16.20.2-buster-slim as build
 
-# Set working directory
+# Stage 1: Build React frontend
+FROM node:16.20.2-buster-slim AS build
+
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Install dependencies using the lockfile
 COPY package*.json ./
+RUN npm ci \
+    --maxsockets=1 \
+    --fetch-retries=5 \
+    --fetch-timeout=600000 \
+    --fetch-retry-mintimeout=20000 \
+    --fetch-retry-maxtimeout=120000
 
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the client code
+# Copy application source
 COPY . .
 
-RUN mv .env.example .env
+# Frontend API URL is embedded during the build
+ARG API_URL=/api
+ENV API_URL=${API_URL}
 
-# Build the client for production
+# Build production frontend
 RUN npm run build
 
 
+# Stage 2: Serve frontend using Nginx
 FROM nginx:alpine
-# Copy the build artifacts from the build stage
+
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-# NGINX default configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 8080
 EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
-

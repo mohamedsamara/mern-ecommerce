@@ -294,56 +294,64 @@ router.post('/reset', auth, async (req, res) => {
   }
 });
 
-router.get(
-  '/google',
-  passport.authenticate('google', {
-    session: false,
-    scope: ['profile', 'email'],
-    accessType: 'offline',
-    approvalPrompt: 'force'
-  })
-);
+// Google OAuth (optional)
+if (keys.google.clientID && keys.google.clientSecret && keys.google.callbackURL) {
+  router.get(
+    '/google',
+    passport.authenticate('google', {
+      session: false,
+      scope: ['profile', 'email'],
+      accessType: 'offline',
+      approvalPrompt: 'force'
+    })
+  );
 
-router.get(
-  '/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: `${keys.app.clientURL}/login`,
-    session: false
-  }),
-  (req, res) => {
-    const payload = {
-      id: req.user.id
-    };
+  router.get(
+    '/google/callback',
+    passport.authenticate('google', {
+      failureRedirect: `${keys.app.clientURL}/login`,
+      session: false
+    }),
+    (req, res) => {
+      const payload = { id: req.user.id };
+      const token = jwt.sign(payload, secret, { expiresIn: tokenLife });
+      const jwtToken = `Bearer ${token}`;
+      res.redirect(`${keys.app.clientURL}/auth/success?token=${jwtToken}`);
+    }
+  );
+} else {
+  router.get(['/google', '/google/callback'], (req, res) => {
+    res.status(503).json({ error: 'Google login is not configured.' });
+  });
+}
 
-    // TODO find another way to send the token to frontend
-    const token = jwt.sign(payload, secret, { expiresIn: tokenLife });
-    const jwtToken = `Bearer ${token}`;
-    res.redirect(`${keys.app.clientURL}/auth/success?token=${jwtToken}`);
-  }
-);
+// Facebook OAuth (optional)
+if (keys.facebook.clientID && keys.facebook.clientSecret && keys.facebook.callbackURL) {
+  router.get(
+    '/facebook',
+    passport.authenticate('facebook', {
+      session: false,
+      scope: ['public_profile', 'email']
+    })
+  );
 
-router.get(
-  '/facebook',
-  passport.authenticate('facebook', {
-    session: false,
-    scope: ['public_profile', 'email']
-  })
-);
-
-router.get(
-  '/facebook/callback',
-  passport.authenticate('facebook', {
-    failureRedirect: `${keys.app.clientURL}/login`,
-    session: false
-  }),
-  (req, res) => {
-    const payload = {
-      id: req.user.id
-    };
-    const token = jwt.sign(payload, secret, { expiresIn: tokenLife });
-    const jwtToken = `Bearer ${token}`;
-    res.redirect(`${keys.app.clientURL}/auth/success?token=${jwtToken}`);
-  }
-);
+  router.get(
+    '/facebook/callback',
+    passport.authenticate('facebook', {
+      failureRedirect: `${keys.app.clientURL}/login`,
+      session: false
+    }),
+    (req, res) => {
+      const payload = { id: req.user.id };
+      const token = jwt.sign(payload, secret, { expiresIn: tokenLife });
+      const jwtToken = `Bearer ${token}`;
+      res.redirect(`${keys.app.clientURL}/auth/success?token=${jwtToken}`);
+    }
+  );
+} else {
+  router.get(['/facebook', '/facebook/callback'], (req, res) => {
+    res.status(503).json({ error: 'Facebook login is not configured.' });
+  });
+}
 
 module.exports = router;

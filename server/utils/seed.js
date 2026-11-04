@@ -102,8 +102,8 @@ const seedDB = async () => {
     }
   } catch (error) {
     console.log(`${chalk.red('x')} ${chalk.red('Error while seeding database')}`);
-    console.log(error);
-    return null;
+    console.error(error);
+    throw error;
   } finally {
     await mongoose.connection.close();
     console.log(`${chalk.blue('✓')} ${chalk.blue('Database connection closed!')}`);
@@ -116,5 +116,6 @@ const seedDB = async () => {
     await seedDB();
   } catch (error) {
     console.error(`Error initializing database: ${error.message}`);
+    process.exitCode = 1;
   }
 })();

@@ -1,43 +1,80 @@
-version: '3'
-
 services:
   client:
-    build: client
-    container_name: client
+    build:
+      context: ./client
+      args:
+        API_URL: /api
+    container_name: mern-client
     ports:
-      - '8080:8080'
+      - "8080:8080"
+    depends_on:
+      - server
+    restart: unless-stopped
     networks:
       - app-network
 
   server:
-    build: server
-    container_name: server
+    build:
+      context: ./server
+    container_name: mern-server
+    env_file:
+      - .env
     environment:
-      - PORT=3000
-      - BASE_API_URL=api
-      - CLIENT_URL=http://localhost:8080
-      - JWT_SECRET=update_your_JWT_secret
-      - MONGO_URI=mongodb://mongo:27017/mern_ecommerce # Default Mongo URL & DB name when running project locally
-    ports:
-      - '3000:3000'
-    command: [
-        'sh',
-        '-c',
-        'npm run seed:db admin@example.com admin123 && npm start'
-      ] # Default email and password arguments to database seed script - update your admin email and password
+      PORT: 3000
+      BASE_API_URL: api
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8080}
+      MONGO_URI: mongodb://mongo:27017/mern_ecommerce
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in .env}
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
+    restart: unless-stopped
     networks:
       - app-network
 
   mongo:
-    image: mongo:latest
-    container_name: mongodb
-    command: mongod --quiet --logpath /dev/null
-    ports:
-      - '27017:27017'
+    image: mongo:4.2.24
+    container_name: mern-mongodb
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test:
+        - CMD
+        - mongo
+        - --quiet
+        - --eval
+        - "db.adminCommand('ping').ok"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
     networks:
       - app-network
+
+  seed:
+    build:
+      context: ./server
+    container_name: mern-seed
+    profiles:
+      - seed
+    env_file:
+      - .env
+    environment:
+      MONGO_URI: mongodb://mongo:27017/mern_ecommerce
+    command:
+      - sh
+      - -c
+      - 'npm run seed:db "$$ADMIN_EMAIL" "$$ADMIN_PASSWORD"'
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: "no"
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
 
 networks:
   app-network:
