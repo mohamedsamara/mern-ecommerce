@@ -1,0 +1,11 @@
+require('./address');
+require('./brand');
+require('./cart');
+require('./category');
+require('./contact');
+require('./merchant');
+require('./order');
+require('./product');
+require('./review');
+require('./user');
+require('./wishlist');

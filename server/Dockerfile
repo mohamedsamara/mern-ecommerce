@@ -1,20 +1,22 @@
-# Use official Node.js 14 as base image
+# Stage 1: Backend application
 FROM node:16.20.2-buster-slim
 
-# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
+# Copy dependency files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install exact dependencies from package-lock.json
+RUN npm ci \
+    --maxsockets=1 \
+    --fetch-retries=5 \
+    --fetch-timeout=600000 \
+    --fetch-retry-mintimeout=20000 \
+    --fetch-retry-maxtimeout=120000
 
-# Copy the rest of the server code
+# Copy application source
 COPY . .
 
-# Expose port 3000 for the server
 EXPOSE 3000
 
-# Default command to start the application
 CMD ["npm", "start"]
