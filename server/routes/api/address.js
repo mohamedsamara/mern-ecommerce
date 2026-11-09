@@ -50,7 +50,7 @@ router.get('/:id', async (req, res) => {
     const addressDoc = await Address.findOne({ _id: addressId });
 
     if (!addressDoc) {
-      res.status(404).json({
+      return res.status(404).json({
         message: `Cannot find Address with the id: ${addressId}.`
       });
     }
